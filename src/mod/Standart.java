@@ -1,18 +1,15 @@
 package mod;
 import basemod.Basemod;
-import basemod.Block;
-import basemod.Item;
 import java.util.*;
 import level.Coord;
 
 
-public class Standart implements Basemod {
-public ArrayList<Block> blocks;
-public List tiles[];
-public ArrayList<Item> items;
+public class Standart extends Basemod {
+
 
     @Override
     public void init() {
+     needparam=true;
      blocks=new ArrayList();   
       //
     }
@@ -21,5 +18,7 @@ public ArrayList<Item> items;
     public void action(int id, int id2, int act, Coord coord) {
       //
     }
+public Standart (){
 
+}
 }

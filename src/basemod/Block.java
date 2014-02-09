@@ -1,13 +1,16 @@
 package basemod;
+
+import render.tile.Tile;
+
 public class Block {
     
-public Boolean tileeq;
+public Tile[] tiles;
 public Integer modid;
 public String parametres[];
 //public Guiblock gui;
 
-public Block Block(Boolean tileeq,String[] param){
-    this.tileeq=tileeq;
+public Block Block(Tile[] tiles,String[] param){
+    this.tiles=tiles;
     this.parametres=param;
     
     return(this);
