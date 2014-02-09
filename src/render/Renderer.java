@@ -16,6 +16,11 @@ import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.newt.event.MouseListener;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.newt.event.awt.AWTMouseAdapter;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import javax.media.opengl.glu.GLU;
 
 public class Renderer implements Runnable,GLEventListener{
@@ -23,12 +28,12 @@ public static boolean running = true;
 public static Player player;
 public static GL2 gl;
 public static GLU glu;
-
+public static int width=800,height=600;
 public framework.Renderer Renderer;
 
 public static void frame(){
     java.awt.Frame frame = new java.awt.Frame("The Game");
-    frame.setSize(800,600);
+    frame.setSize(width,height);
     frame.setLayout(new java.awt.BorderLayout());
 
     final Animator animator = new Animator();
@@ -50,6 +55,11 @@ public static void frame(){
     frame.add(canvas, java.awt.BorderLayout.CENTER);
     frame.validate();
 
+    Toolkit t = Toolkit.getDefaultToolkit();
+    Image i = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+    Cursor noCursor = t.createCustomCursor(i, new Point(0, 0), "none");
+    frame.setCursor(noCursor);
+    
     frame.setVisible(true);
     animator.start();
     }
@@ -106,7 +116,8 @@ public void run(){
           System.err.println("Gears: Reshape "+x+"/"+y+" "+width+"x"+height);
 gl = drawable.getGL().getGL2();
     gl.setSwapInterval(1);
-
+this.width=width;
+this.height=height;
     float h = (float)height / (float)width;
             
     gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -122,7 +133,7 @@ gl = drawable.getGL().getGL2();
     @Override
    public void init(GLAutoDrawable drawable) {
     player = new Player(0,0,0);   
-              //   \  pos  /   \vect/
+
     gl  = drawable.getGL().getGL2();
   //  glu =new GLU();
 
@@ -174,14 +185,24 @@ gl = drawable.getGL().getGL2();
     @Override
     public void keyPressed(KeyEvent e) {
         int kc = e.getKeyCode();
-        if(KeyEvent.VK_LEFT == kc) {
-          cam.vx-= 1;
+        if(KeyEvent.VK_ESCAPE == kc){
+         running=false;   
+        } else if(KeyEvent.VK_LEFT == kc) {
+         player.x-= 1;
         } else if(KeyEvent.VK_RIGHT == kc) {
-          cam.vx += 1;
+         player.x += 1;
         } else if(KeyEvent.VK_UP == kc) {
-        cam.vz -= 1;
+         player.y -= 1;
         } else if(KeyEvent.VK_DOWN == kc) {
-        cam.vz += 1;
+         player.y += 1;
+        } else if(KeyEvent.VK_W == kc) {
+         player.cx -= 1;
+        } else if(KeyEvent.VK_S == kc) {
+         player.cx += 1;
+        } else if(KeyEvent.VK_A == kc) {
+         player.cy -= 1;
+        } else if(KeyEvent.VK_D == kc) {
+         player.cy += 1;
         }
     }
   }
@@ -206,27 +227,16 @@ gl = drawable.getGL().getGL2();
       public void mouseDragged(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        int width=0, height=0;
-        Object source = e.getSource();
-        if(source instanceof Window) {
-            Window window = (Window) source;
-            width=window.getWidth();
-            height=window.getHeight();
-        } else if (GLProfile.isAWTAvailable() && source instanceof java.awt.Component) {
-            java.awt.Component comp = (java.awt.Component) source;
-            width=comp.getWidth();
-            height=comp.getHeight();
-        } else {
-            throw new RuntimeException("Event source neither Window nor Component: "+source);
-        }
-     //   float thetaY = 360.0f * ( (float)(x-prevMouseX)/(float)width);
-      //  float thetaX = 360.0f * ( (float)(prevMouseY-y)/(float)height);
-        
-      //  prevMouseX = x;
-      //  prevMouseY = y;
 
-     //   view_rotx += thetaX;
-     //   view_roty += thetaY;
+        float thetaY = 360.0f * ( (float)(x-player.prevx)/(float)width);
+        float thetaX = 360.0f * ( (float)(player.prevy-y)/(float)height);
+        
+        player.prevx = x;
+        player.prevy = y;
+
+        player.cx += thetaX;
+        player.cy += thetaY;
+        
       }
   }
 //--------------------------

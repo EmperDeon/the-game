@@ -1,7 +1,7 @@
 package render;
 public class Player {
 public String name;    
-public int x,y,z,cx,cy;
+public int x,y,z,cx,cy,prevx,prevy;
 
 public Player (int x,int y,int z){
 this.x=x;
