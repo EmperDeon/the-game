@@ -16,23 +16,30 @@ import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.newt.event.MouseListener;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.newt.event.awt.AWTMouseAdapter;
-import com.jogamp.opengl.util.gl2.GLUT;
 import javax.media.opengl.glu.GLU;
 
 public class Renderer implements Runnable,GLEventListener{
 public static boolean running = true;
-public static Camera cam;
+public static Player player;
 public static GL2 gl;
 public static GLU glu;
 
 public framework.Renderer Renderer;
+
 public static void frame(){
     java.awt.Frame frame = new java.awt.Frame("The Game");
     frame.setSize(800,600);
     frame.setLayout(new java.awt.BorderLayout());
 
     final Animator animator = new Animator();
-    frame.addWindowListener(new java.awt.event.WindowAdapter() {public void windowClosing(java.awt.event.WindowEvent e) {new Thread(new Runnable() {public void run() {animator.stop();System.exit(0);}}).start();}});
+    frame.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+    public void windowClosing(java.awt.event.WindowEvent e) {
+        new Thread(new Runnable() {
+        @Override
+    public void run() {
+        animator.stop();System.exit(0);
+    }}).start();}});
 
     GLCanvas canvas = new GLCanvas();
     animator.add(canvas);
@@ -57,23 +64,10 @@ public void run(){
 }
 
     @Override
-    public void dispose(GLAutoDrawable glad) {
-    System.err.println("Gears: Dispose");
+    public void dispose(GLAutoDrawable gl) {
+    System.err.println("Display: Dispose");
     }
-void setCamera(int w,int h){
-    /*
-        // Change to projection matrix.
-        gl.glMatrixMode(GL2.GL_PROJECTION);
-        gl.glLoadIdentity();
-
-        // Perspective.
-        float widthHeightRatio = (float) w / (float) h;
-        glu.gluPerspective(75, widthHeightRatio, 1, 1000);
-        glu.gluLookAt(0, 0, 3, 0, 0, 0, 3, 0, -1);
-
-        // Change back to model view matrix.
-        gl.glMatrixMode(GL2.GL_MODELVIEW);*/
-}
+    
     @Override
     public void display(GLAutoDrawable drawable) {
  //Renderer.render(drawable);
@@ -81,9 +75,7 @@ void setCamera(int w,int h){
     gl = drawable.getGL().getGL2();
 
     gl.glClearColor(0.0f, 0.4f, 1.0f, 0.0f);
-      
 
-    
     if (GLProfile.isAWTAvailable() && 
         (drawable instanceof javax.media.opengl.awt.GLJPanel) &&
         !((javax.media.opengl.awt.GLJPanel) drawable).isOpaque() &&
@@ -104,20 +96,9 @@ void setCamera(int w,int h){
         gl.glVertex3f(x,y+1,0);
       }
     gl.glEnd();
-        setCamera(drawable.getWidth(),drawable.getHeight());
 }
     }
- /*       gl.glMatrixMode(GL2.GL_PROJECTION);
-       gl.glLoadIdentity();
 
-        // Perspective.
-
-        glu.gluPerspective(70, drawable.getWidth()/drawable.getHeight(), 500, 300);
-        glu.gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
-
-        // Change back to model view matrix.
-        gl.glMatrixMode(GL2.GL_MODELVIEW);
-        gl.glLoadIdentity();*/
     
 
     @Override
@@ -139,12 +120,12 @@ gl = drawable.getGL().getGL2();
     }
 
     @Override
-    public void init(GLAutoDrawable drawable) {
-    cam=new Camera(0 , 0 , 0 , 0 ,  0);    
+   public void init(GLAutoDrawable drawable) {
+    player = new Player(0,0,0);   
               //   \  pos  /   \vect/
     gl  = drawable.getGL().getGL2();
-    glu =new GLU();
- //
+  //  glu =new GLU();
+
     float pos[] = { 5.0f, 5.0f, 10.0f, 0.0f };
     float red[] = { 0.8f, 0.1f, 0.0f, 0.7f };
     float green[] = { 0.0f, 0.8f, 0.2f, 0.7f };
