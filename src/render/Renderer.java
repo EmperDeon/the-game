@@ -81,7 +81,7 @@ public void run(){
     @Override
     public void display(GLAutoDrawable drawable) {
  //Renderer.render(drawable);
-
+if(!running)System.exit(-1);
     gl = drawable.getGL().getGL2();
 
     gl.glClearColor(0.0f, 0.4f, 1.0f, 0.0f);
@@ -94,7 +94,10 @@ public void run(){
     } else {
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
     }
-    
+    gl.glPopMatrix();
+    gl.glTranslatef(player.x, player.y, player.z);
+    gl.glRotatef(-20, 1, 0, 0);
+    gl.glPushMatrix();
    for (int x = -50; x <50; x++)
     { 
     gl.glBegin(GL2.GL_QUADS);
@@ -106,7 +109,11 @@ public void run(){
         gl.glVertex3f(x,y+1,0);
       }
     gl.glEnd();
+    
 }
+   
+   
+   
     }
 
     
@@ -132,7 +139,7 @@ this.height=height;
 
     @Override
    public void init(GLAutoDrawable drawable) {
-    player = new Player(0,0,0);   
+    player = new Player(0,0,2);   
 
     gl  = drawable.getGL().getGL2();
   //  glu =new GLU();
