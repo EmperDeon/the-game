@@ -25,6 +25,7 @@ import javax.media.opengl.glu.GLU;
 
 public class Renderer implements Runnable,GLEventListener{
 public static boolean running = true;
+public boolean b=true;
 public static Player player;
 public static GL2 gl;
 public static GLU glu;
@@ -81,7 +82,7 @@ public void run(){
     @Override
     public void display(GLAutoDrawable drawable) {
  //Renderer.render(drawable);
-if(!running)System.exit(-1);
+        
     gl = drawable.getGL().getGL2();
 
     gl.glClearColor(0.0f, 0.4f, 1.0f, 0.0f);
@@ -94,16 +95,24 @@ if(!running)System.exit(-1);
     } else {
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
     }
-    gl.glPopMatrix();
-    gl.glTranslatef(player.x, player.y, player.z);
-    gl.glRotatef(-20, 1, 0, 0);
-    gl.glPushMatrix();
+   if(b) gl.glPopMatrix();
+   //if(b) gl.glTranslatef(player.x, player.y, player.z);
+   if(b){ gl.glTranslatef( 0, player.vx, 0); if (player.vx!=0)player.vx=0;}
+   if(b){ gl.glTranslatef( player.vy, 0, 0); if (player.vy!=0)player.vy=0;}
+   if(b){ gl.glTranslatef( 0, player.vz, 0); if (player.vz!=0)player.vz=0;}
+   
+   if(b){ gl.glRotatef(player.vcx, 0, 0, 1); if (player.vcx!=0)player.vcx=0;}
+   if(b){ gl.glRotatef(player.vcy, 1, 0, 0); if (player.vcy!=0)player.vcy=0;}
+   if(b){ gl.glPushMatrix();b=true; }
+
    for (int x = -50; x <50; x++)
     { 
     gl.glBegin(GL2.GL_QUADS);
     for (int y = -50; y <50; y++)
       {
+       
         gl.glVertex3f(x,y,0);
+        gl.glColor3f(100, 100, 10);                         
         gl.glVertex3f(x+1,y,0);
         gl.glVertex3f(x+1,y+1,0);
         gl.glVertex3f(x,y+1,0);
@@ -142,7 +151,7 @@ this.height=height;
     player = new Player(0,0,2);   
 
     gl  = drawable.getGL().getGL2();
-  //  glu =new GLU();
+    glu = new GLU();
 
     float pos[] = { 5.0f, 5.0f, 10.0f, 0.0f };
     float red[] = { 0.8f, 0.1f, 0.0f, 0.7f };
@@ -195,21 +204,21 @@ this.height=height;
         if(KeyEvent.VK_ESCAPE == kc){
          running=false;   
         } else if(KeyEvent.VK_LEFT == kc) {
-         player.x-= 1;
+         player.vx-= 1;
         } else if(KeyEvent.VK_RIGHT == kc) {
-         player.x += 1;
+         player.vx += 1;
         } else if(KeyEvent.VK_UP == kc) {
-         player.y -= 1;
+         player.vy -= 1;
         } else if(KeyEvent.VK_DOWN == kc) {
-         player.y += 1;
+         player.vy += 1;
         } else if(KeyEvent.VK_W == kc) {
-         player.cx -= 1;
+         player.vcy -= 1;
         } else if(KeyEvent.VK_S == kc) {
-         player.cx += 1;
+         player.vcy += 1;
         } else if(KeyEvent.VK_A == kc) {
-         player.cy -= 1;
+         player.vcx -= 1;
         } else if(KeyEvent.VK_D == kc) {
-         player.cy += 1;
+         player.vcx += 1;
         }
     }
   }
@@ -240,10 +249,9 @@ this.height=height;
         
         player.prevx = x;
         player.prevy = y;
-
+        
         player.cx += thetaX;
         player.cy += thetaY;
-        
       }
   }
 //--------------------------
