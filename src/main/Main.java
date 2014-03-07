@@ -4,9 +4,7 @@ public class Main implements Runnable{
 //public Tile tile;
 @Override
 public void run(){
-    
    
-    
 }
 
 

@@ -22,6 +22,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import javax.media.opengl.glu.GLU;
+import level.Level;
 
 public class Renderer implements Runnable,GLEventListener{
 public static boolean running = true;
@@ -31,6 +32,7 @@ public static GL2 gl;
 public static GLU glu;
 public static int width=800,height=600;
 public framework.Renderer Renderer;
+private Level level;
 
 public static void frame(){
     java.awt.Frame frame = new java.awt.Frame("The Game");
@@ -70,8 +72,9 @@ public static void destroy(){
 }
 @Override
 public void run(){
- frame();
-
+ //frame();
+level = new Level();
+level.save();
 }
 
     @Override
@@ -112,7 +115,7 @@ public void run(){
       {
        
         gl.glVertex3f(x,y,0);
-        gl.glColor3f(100, 100, 10);                         
+        gl.glColor3f(1, 0, 1);                         
         gl.glVertex3f(x+1,y,0);
         gl.glVertex3f(x+1,y+1,0);
         gl.glVertex3f(x,y+1,0);
@@ -124,8 +127,6 @@ public void run(){
    
    
     }
-
-    
 
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -194,7 +195,6 @@ this.height=height;
     }
     }
 
-
 //---------------------------
 
   class GearsKeyAdapter extends KeyAdapter {      
@@ -222,6 +222,7 @@ this.height=height;
         }
     }
   }
+  
   class GearsMouseAdapter extends MouseAdapter {
       @Override
       public void mousePressed(MouseEvent e) {
@@ -254,5 +255,4 @@ this.height=height;
         player.cy += thetaY;
       }
   }
-//--------------------------
 }

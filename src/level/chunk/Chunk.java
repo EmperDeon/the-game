@@ -1,16 +1,18 @@
 package level.chunk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import level.LevBlock;
 import main.Main;
 import render.RendTileCoord;
 import render.tile.Tile;
 
-public class Chunk {
+public class Chunk implements Serializable{
  public LevBlock[][][] blocks;
  public int idx;
  public int idy;
  public ArrayList<RendTileCoord> tilerend;
+ 
  public Chunk(int x,int y){
   this.idx=x;
   this.idy=y;
@@ -80,5 +82,9 @@ public class Chunk {
  public Chunk gen(){
   
   return(this);
+ }
+ 
+ public void tick(){
+  //
  }
 }
