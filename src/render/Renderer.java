@@ -73,8 +73,6 @@ public static void destroy(){
 @Override
 public void run(){
  //frame();
-level = new Level();
-level.save();
 }
 
     @Override

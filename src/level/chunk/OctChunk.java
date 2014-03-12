@@ -2,11 +2,12 @@ package level.chunk;
  import java.io.Serializable;
 
 public class OctChunk  implements Serializable{
- private final String dir="game/save/";
+ private final String dir;
  private final Chunk[] chs;
  private final String fl;
  
-public OctChunk(String s){
+public OctChunk(String wr,String s){
+ this.dir="game/"+wr+"/rg";
  fl=s+".rg";
  chs=new Chunk[64];
  for(int i = 0;i<64;i++)
