@@ -10,12 +10,12 @@ public class Level {
 private final ArrayList<OctChunk> ch=new ArrayList();
 
 public Level(){
-load();
+ load();
 }
 
 public void load(){
  
- for(int i = 0;i<64;i++)
+ for(int i = 0;i<9;i++)
   ch.add(new OctChunk("octch"+i)); 
 }
 
