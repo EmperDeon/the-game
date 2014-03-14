@@ -1,16 +1,20 @@
 package main;
 
 import level.Level;
+import utils.Options;
+import utils.Error;
 
 public class Main implements Runnable{
 //public Tile tile;
- private Level level;    
+ private Level level; 
+ private Error err;
 @Override
 public void run(){
- level = new Level("world1",false);   
- String[] s= utils.Separ.getval("val:ex1,ex2,ex3");
- for(int i=0;i<s.length;i++)
-  System.out.println(s[i]);
+ level = new Level("test",true,err);
+ level.save();
+ Options op = new Options("game/options.db",err); 
+ op.save();
+         
 }
 
 

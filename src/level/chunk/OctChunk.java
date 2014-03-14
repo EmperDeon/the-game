@@ -6,8 +6,8 @@ public class OctChunk  implements Serializable{
  private final Chunk[] chs;
  private final String fl;
  
-public OctChunk(String wr,String s){
- this.dir="game/"+wr+"/rg";
+public OctChunk(String wr,String s,int x,int y){
+ this.dir="game/saves/"+wr+"/rg/";
  fl=s+".rg";
  chs=new Chunk[64];
  for(int i = 0;i<64;i++)
@@ -26,6 +26,6 @@ public String getF(){
 }
 
 public String getD(){
- return dir;
+ return dir+fl;
 }
 }
