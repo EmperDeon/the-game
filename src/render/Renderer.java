@@ -31,7 +31,6 @@ public static Player player;
 public static GL2 gl;
 public static GLU glu;
 public static int width=800,height=600;
-public framework.Renderer Renderer;
 private Level level;
 
 public static void frame(){

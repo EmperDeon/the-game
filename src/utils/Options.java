@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Options implements Serializable{
+public final class Options implements Serializable{
  private ArrayList<String> opt=new ArrayList();   
  private String file;
  private String dir;
@@ -18,11 +18,16 @@ public class Options implements Serializable{
   
  public Options(String file,Error err){
   this.err=err;    
+  this.file=file;
+  this.dir=getDir(file);
   load();
+//  System.out.println(err.get());
  }
  
- public Options(String[] opt,Error err){
+ public Options(String[] opt,String file,Error err){
   this.err=err;
+  this.file=file;
+  this.dir=getDir(file);
   this.opt.addAll(Arrays.asList(opt));   
  }
  
@@ -63,7 +68,7 @@ public class Options implements Serializable{
   if(file.lastIndexOf("\\")!=-1){   
    return file.substring(0, file.lastIndexOf("\\")+1);
   }else{
-   err.add("Options.save().finddir",new Exception());
+   err.add("Options.getDir()",new Exception());
    return null;
    }
   }
@@ -72,17 +77,16 @@ public class Options implements Serializable{
   export(this.file);
  }
  
- public void export(String file){
-  
-  
-  File fos = new File(file);
+ public void export(String filel){
+  String dirl = getDir(filel);
+  File fos = new File(filel);
   if(!fos.canWrite())
    fos.mkdirs();
   fos.delete();
 
-  try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
-   writer.write("!dir:"+this.dir+"\n");
-   writer.write("!file:"+this.file+"\n");
+  try(BufferedWriter writer = new BufferedWriter(new FileWriter(filel))){
+   writer.write("!dir:"+dirl+"\n");
+   writer.write("!file:"+filel+"\n");
       
    for(int i=0; i<opt.size();i++)
     writer.write(this.opt.get(i)+"\n");

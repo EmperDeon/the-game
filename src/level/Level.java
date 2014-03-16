@@ -11,34 +11,48 @@ import utils.Options;
 import utils.Error;
 public class Level {
 
-private Options options;    
+public Options options;    
     
 private final ArrayList<OctChunk> ch = new ArrayList();
 private final ArrayList<int[][]> nom = new ArrayList();
 private final String name;
 private final Error err;
 
-public Level(String name, Boolean created,Error err){
+public Level(String name,Error err){
  this.err=err;   
- if(created){ // Создано ?   
+ File f = new File("game/saves/"+name+"/rg");
+ if(f.canRead()&&f.listFiles()[0]!=null){ // Создано ?   
   this.name=name;   
   load("game/saves/"+name+"/");
  }else{   
   this.name=name;
   
-  for(int x = 0;x<3;x++)  
-   for(int y = 0;y<3;y++)
-    ch.add(new OctChunk(name, "region"+x+"-"+y,x,y)); 
+  options = new Options(new String[]{
+                "name:"+name
+            },"game/saves/"+name+"/level.db",this.err);
+  
+  for(int x = -1;x<=1;x++)  
+   for(int y = -1;y<=1;y++)
+    ch.add(new OctChunk(name,x,y,options)); 
  }    
 }
 
+//public void genOctChunk(int x,int y){
+// 
+//}
+
 public final void load(String dir){
- options = new Options(dir+"level.db",this.err);
+ File f = new File(dir+"level.db");   
+ if(f.canRead()){ options = new Options(dir+"level.db",this.err);}
+            else{ options = new Options(new String[]{
+                "name:"+name,
+                "",
+                ""
+            },dir+"level.db",this.err); }
  
- File f= new File(dir+"rg/");
+ f= new File(dir+"rg/");
  File[] dr = f.listFiles();
- //System.out.println(f.listFiles());
- 
+
  for (File dr1 : dr) {
   try {
    ObjectInputStream serial = new ObjectInputStream(new FileInputStream(dr1));
@@ -51,7 +65,7 @@ public final void load(String dir){
 
 
 public void save(){
-    
+ options.save();
     
  for(int i=0;i<ch.size();i++)
  try {     
@@ -72,5 +86,9 @@ public void tick(){
  for(int i=0;i<ch.size();i++)
   ch.get(i).tick();  
  
+}
+
+public OctChunk get(int x){
+ return ch.get(x);
 }
 }

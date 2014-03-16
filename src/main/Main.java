@@ -7,14 +7,17 @@ import utils.Error;
 public class Main implements Runnable{
 //public Tile tile;
  private Level level; 
- private Error err;
+ private Error err=new Error();
 @Override
 public void run(){
- level = new Level("test",true,err);
- level.save();
- Options op = new Options("game/options.db",err); 
- op.save();
-         
+// level = new Level("test",err);
+ 
+// level.save();
+
+ //Options op = new Options("game/options.db",err); 
+ //op.save();
+ 
+ err.check();
 }
 
 

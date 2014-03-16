@@ -11,7 +11,7 @@ public class Chunk implements Serializable{
  public LevBlock[][][] blocks;
  public int idx;
  public int idy;
- public ArrayList<RendTileCoord> tilerend;
+ private ArrayList<RendTileCoord> tilerend;
  
  public Chunk(int x,int y){
   this.idx=x;
@@ -57,31 +57,11 @@ public class Chunk implements Serializable{
  
  public void Render(){
   Tile tile[][];     
-  float u0;
-  float u1;
-  float v0;
-  float v1;
 
-  float x0;
-  float x1;
-  float y0;
-  float y1;
-  float z0;
-  float z1;
-  int[] coord; 
-  int tex;
- for(int i=0;i<tilerend.size();i++)
-  {
- //  coord=tilerend.get(i).coords;
-//   tile=Main.getMod(coord[0]).tiles.get(coord[1]);
-   tex=0;
-     
-  }
  }
  
- public Chunk gen(){
-  
-  return(this);
+ public void gen(){
+ // 
  }
  
  public void tick(){
