@@ -22,6 +22,8 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.media.opengl.glu.GLU;
 import level.Level;
 
@@ -31,12 +33,15 @@ public boolean b=true;
 public static Player player;
 public static GL2 gl;
 public static GLU glu;
-public static int width=800,height=600;
+public int width=800,height=600;
 private Level level;
+
+private String sec="";
+public int fps=0;
 
 public static void frame(){
     java.awt.Frame frame = new java.awt.Frame("The Game");
-    frame.setSize(width,height);
+    frame.setSize(800,600);
     frame.setLayout(new java.awt.BorderLayout());
 
     final Animator animator = new Animator();
@@ -72,7 +77,7 @@ public static void destroy(){
 }
 @Override
 public void run(){
- //frame();
+ frame();
 }
 
     @Override
@@ -121,9 +126,16 @@ public void run(){
     gl.glEnd();
     
 }
-   
-   
-   
+   // FPS
+   Date date=new Date();
+   if(sec.equals(new SimpleDateFormat("ss").format(date))) 
+    fps+=1;
+   else{
+    sec = new SimpleDateFormat("ss").format(date);
+    System.out.println(fps);
+    fps=0;
+   }
+   // FPS
     }
 
     @Override
@@ -131,8 +143,8 @@ public void run(){
           System.err.println("Gears: Reshape "+x+"/"+y+" "+width+"x"+height);
 gl = drawable.getGL().getGL2();
     gl.setSwapInterval(1);
-this.width=width;
-this.height=height;
+    this.width=width;
+    this.height=height;
     float h = (float)height / (float)width;
             
     gl.glMatrixMode(GL2.GL_PROJECTION);
