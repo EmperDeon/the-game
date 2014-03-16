@@ -10,12 +10,12 @@ public class Main implements Runnable{
  private Error err=new Error();
 @Override
 public void run(){
-// level = new Level("test",err);
- 
-// level.save();
+ level = new Level("test",err);
 
- //Options op = new Options("game/options.db",err); 
- //op.save();
+ level.save();
+
+ Options op = new Options("game/options.db",err); 
+ op.save();
  
  err.check();
 }
