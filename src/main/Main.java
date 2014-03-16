@@ -3,13 +3,12 @@ package main;
 import level.Level;
 import utils.Options;
 import utils.Error;
-import utils.MTimer;
 
 public class Main implements Runnable{
 //public Tile tile;
  private Level level; 
  private final Error err=new Error();
- private MTimer timer;
+// private MTimer timer;
 @Override
 public void run(){
  level = new Level("test",err);

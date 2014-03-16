@@ -1,5 +1,6 @@
 package render;
 
+import player.Player;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
