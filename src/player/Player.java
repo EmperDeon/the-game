@@ -1,15 +1,21 @@
 package player;
-public class Player {
-public String name;    
-public int x,y,z,cx,cy,prevx,prevy;
-public int vx,vy,vz,vcx,vcy;
 
-public Player (int x,int y,int z){
-this.x=x;
-this.y=y;
-this.z=z;
-this.cx=0;
-this.cy=0;
+import level.Level;
+import utils.Vec2f;
+import utils.Vec3f;
+
+public class Player {
+private String name;    
+public Vec3f coord = new Vec3f();
+public Vec2f cam = new Vec2f();
+private final Level level;
+
+
+public Player (int x,int y,int z,Level level){
+ this.level=level;
+ this.coord.x=x;
+ this.coord.y=y;
+ this.coord.z=z;
 }
 
 public void tick(){

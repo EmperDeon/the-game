@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.media.opengl.glu.GLU;
 import level.Level;
+import utils.Vec2f;
+import utils.Vec3f;
 
 public class Renderer implements Runnable,GLEventListener{
 public static boolean running = true;
@@ -35,6 +37,9 @@ public static GL2 gl;
 public static GLU glu;
 public int width=800,height=600;
 private Level level;
+
+private Vec3f plcoord = new Vec3f();
+private Vec2f cmcoord = new Vec2f();
 
 private String sec="";
 public int fps=0;
@@ -103,12 +108,12 @@ public void run(){
     }
    if(b) gl.glPopMatrix();
    //if(b) gl.glTranslatef(player.x, player.y, player.z);
-   if(b){ gl.glTranslatef( 0, player.vx, 0); if (player.vx!=0)player.vx=0;}
-   if(b){ gl.glTranslatef( player.vy, 0, 0); if (player.vy!=0)player.vy=0;}
-   if(b){ gl.glTranslatef( 0, player.vz, 0); if (player.vz!=0)player.vz=0;}
+   if(b){ gl.glTranslatef( 0, plcoord.x, 0); if (plcoord.x!=0)plcoord.x=0;}
+   if(b){ gl.glTranslatef( plcoord.y, 0, 0); if (plcoord.y!=0)plcoord.y=0;}
+   if(b){ gl.glTranslatef( 0, plcoord.z, 0); if (plcoord.z!=0)plcoord.z=0;}
    
-   if(b){ gl.glRotatef(player.vcx, 0, 0, 1); if (player.vcx!=0)player.vcx=0;}
-   if(b){ gl.glRotatef(player.vcy, 1, 0, 0); if (player.vcy!=0)player.vcy=0;}
+   if(b){ gl.glRotatef(cmcoord.x, 0, 0, 1); if (cmcoord.x!=0)cmcoord.x=0;}
+   if(b){ gl.glRotatef(cmcoord.y, 1, 0, 0); if (cmcoord.y!=0)cmcoord.y=0;}
    if(b){ gl.glPushMatrix();b=true; }
 
    for (int x = -50; x <50; x++)
@@ -159,7 +164,7 @@ gl = drawable.getGL().getGL2();
 
     @Override
    public void init(GLAutoDrawable drawable) {
-    player = new Player(0,0,2);   
+    player = new Player(0,0,2,level);   
 
     gl  = drawable.getGL().getGL2();
     glu = new GLU();
@@ -214,26 +219,29 @@ gl = drawable.getGL().getGL2();
         if(KeyEvent.VK_ESCAPE == kc){
          running=false;   
         } else if(KeyEvent.VK_LEFT == kc) {
-         player.vx-= 1;
+         plcoord.x-= 1.5;
         } else if(KeyEvent.VK_RIGHT == kc) {
-         player.vx += 1;
+         plcoord.x += 1.5;
         } else if(KeyEvent.VK_UP == kc) {
-         player.vy -= 1;
+         plcoord.y -= 1.5;
         } else if(KeyEvent.VK_DOWN == kc) {
-         player.vy += 1;
+         plcoord.y += 1.5;
         } else if(KeyEvent.VK_W == kc) {
-         player.vcy -= 1;
+         cmcoord.y -= 1;
         } else if(KeyEvent.VK_S == kc) {
-         player.vcy += 1;
+         cmcoord.y += 1;
         } else if(KeyEvent.VK_A == kc) {
-         player.vcx -= 1;
+         cmcoord.x -= 1;
         } else if(KeyEvent.VK_D == kc) {
-         player.vcx += 1;
+         cmcoord.x += 1;
         }
     }
   }
   
   class GearsMouseAdapter extends MouseAdapter {
+      int prevx;
+      int prevy;
+      
       @Override
       public void mousePressed(MouseEvent e) {
     ////    prevMouseX = e.getX();
@@ -255,14 +263,14 @@ gl = drawable.getGL().getGL2();
         int x = e.getX();
         int y = e.getY();
 
-        float thetaY = 360.0f * ( (float)(x-player.prevx)/(float)width);
-        float thetaX = 360.0f * ( (float)(player.prevy-y)/(float)height);
+        float thetaY = 360.0f * ( (float)(x-prevx)/(float)width);
+        float thetaX = 360.0f * ( (float)(prevy-y)/(float)height);
         
-        player.prevx = x;
-        player.prevy = y;
+        prevx = x;
+        prevy = y;
         
-        player.cx += thetaX;
-        player.cy += thetaY;
+        cmcoord.x += thetaX;
+        cmcoord.y += thetaY;
       }
   }
 }

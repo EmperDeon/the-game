@@ -19,6 +19,7 @@ public class Error {
    for(int i=0;i<errex.size();i++)
     System.out.println(get(i)); 
    errcl.clear();
+   errex.clear();
   }
  }
  

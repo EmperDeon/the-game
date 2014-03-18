@@ -1,30 +1,41 @@
 package main;
 
 import level.Level;
+import player.Player;
 import utils.Options;
 import utils.Error;
+import utils.MTimer;
 
 public class Main implements Runnable{
-//public Tile tile;
- private Level level; 
  private final Error err=new Error();
-// private MTimer timer;
-@Override
-public void run(){
- level = new Level("test",err);
-
- level.save();
-
- Options op = new Options("game/options.db",err); 
- op.save();
+ private final Options opt = new Options("game/options.db",err);  
+ private final MTimer timer = new MTimer();
+ private Level level = new Level("test",err);
+ private Player player;
+//public Tile tile;  
  
- err.check();
-}
+ public static void main(String[] args){
+  new Thread(new Main()).start();
+  new Thread(new render.Renderer()).start();
+ } 
+  
+ @Override
+ public void run(){
+  init();
 
+//  timer.start(player, level);
+  
+  destroy();
+ }
+ 
+ public void init(){
 
+  opt.save();
+ } 
+
+ public void destroy(){
+  err.check();
+  level.save();
+ }
     
-public static void main(String[] args){
-new Thread(new Main()).start();
-//new Thread(new render.Renderer()).start();
-}    
 }
