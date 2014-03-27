@@ -6,7 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
- 
+public class MyRobot {
+    public static void main(String[] args) {
+        myFrame frame = new myFrame(); // создаем объект класса myFrame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // задаем действие обработчику на кнопку "крестик"
+        frame.show(); // выводим на экран нашу форму
+    }
+}
 class myFrame extends JFrame
 {
     private Robot robot;
@@ -23,6 +29,7 @@ class myFrame extends JFrame
         panel.add(bt1); // добавляем нашу кнопку на панель
         bt1.addActionListener(new ActionListener() { // добавляем обработчик на нашу кнопку
             public void actionPerformed(ActionEvent e) {
+                
                 for(int i=0; i<10; i++) // здесь и происходят все действие с нашим роботом
                 {
                     robot.mouseMove(500, 500 + 15 * i); // двигаем мышку на заданную координату x,y
@@ -45,10 +52,4 @@ class myFrame extends JFrame
     }
 }
  
-public class MyRobot {
-    public static void main(String[] args) {
-        myFrame frame = new myFrame(); // создаем объект класса myFrame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // задаем действие обработчику на кнопку "крестик"
-        frame.show(); // выводим на экран нашу форму
-    }
-}
+

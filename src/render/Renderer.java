@@ -38,8 +38,8 @@ public static GLU glu;
 public int width=800,height=600;
 private Level level;
 
-private Vec3f plcoord = new Vec3f();
-private Vec2f cmcoord = new Vec2f();
+private final Vec3f plcoord = new Vec3f();
+private final Vec2f cmcoord = new Vec2f();
 
 private String sec="";
 public int fps=0;
@@ -92,7 +92,6 @@ public void run(){
     
     @Override
     public void display(GLAutoDrawable drawable) {
- //Renderer.render(drawable);
         
     gl = drawable.getGL().getGL2();
 
@@ -196,8 +195,8 @@ gl = drawable.getGL().getGL2();
     gl.glEnable(GL2.GL_NORMALIZE);
 
  
-    MouseListener Mouse = new GearsMouseAdapter();    
-    KeyListener Keyboard = new GearsKeyAdapter();
+    MouseListener Mouse = new RMouseAdapter();    
+    KeyListener Keyboard = new RKeyAdapter();
 
     if (drawable instanceof Window) {
         Window window = (Window) drawable;
@@ -212,7 +211,7 @@ gl = drawable.getGL().getGL2();
 
 //---------------------------
 
-  class GearsKeyAdapter extends KeyAdapter {      
+  class RKeyAdapter extends KeyAdapter {      
     @Override
     public void keyPressed(KeyEvent e) {
         int kc = e.getKeyCode();
@@ -238,7 +237,7 @@ gl = drawable.getGL().getGL2();
     }
   }
   
-  class GearsMouseAdapter extends MouseAdapter {
+  class RMouseAdapter extends MouseAdapter {
       int prevx;
       int prevy;
       
@@ -246,14 +245,15 @@ gl = drawable.getGL().getGL2();
       public void mousePressed(MouseEvent e) {
     ////    prevMouseX = e.getX();
      //   prevMouseY = e.getY();
-        if ((e.getModifiers() & e.BUTTON3_MASK) != 0) {
+          
+        if ((e.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
      //     mouseRButtonDown = true;
         }
       }
         
       @Override
       public void mouseReleased(MouseEvent e) {
-        if ((e.getModifiers() & e.BUTTON3_MASK) != 0) {
+        if ((e.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
        //   mouseRButtonDown = false;
         }
       }

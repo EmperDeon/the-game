@@ -3,9 +3,8 @@ package level.chunk;
 import java.io.Serializable;
 import java.util.ArrayList;
 import level.LevBlock;
-import main.Main;
 import render.RendTileCoord;
-import render.tile.Tile;
+import utils.Id;
 
 public class Chunk implements Serializable{
  public LevBlock[][][] blocks;
@@ -16,7 +15,8 @@ public class Chunk implements Serializable{
  public Chunk(int x,int y){
   this.idx=x;
   this.idy=y;
-  blocks=new LevBlock[16][16][128];
+  gen();
+  blocks=new LevBlock[16][16][256];
   //[16][16][128]
  }
  public void heightmap(){
@@ -26,8 +26,8 @@ public class Chunk implements Serializable{
    for(int iz=0;iz<127;iz++)
     {
      if(blocks[ix][iy][iz] != null){   
-     mid=blocks[ix][iy][iz].modid;  
-     tid=blocks[ix][iy][iz].blockid;
+     mid=Integer.parseInt(blocks[ix][iy][iz].id.getMid());  
+     tid=Integer.parseInt(blocks[ix][iy][iz].id.getBid());
      
      if (blocks[ix][iy-1][iz] == null){// 0
       tilerend.add(new RendTileCoord(ix,iy,iz,0,mid,tid));
@@ -55,14 +55,20 @@ public class Chunk implements Serializable{
  
  }
  
- public void Render(){
-  Tile tile[][];     
-
+ public void Render(){    
+//
  }
  
  public void gen(){
- // 
- }
+ blocks=new LevBlock[16][16][256];    
+ for(int x = 0;x<16;x++)
+  for(int y = 0;y<16;y++)   
+   for(int z = 0;z<255;z++)
+    if(z<100) 
+     blocks[x][y][z] = new LevBlock(new Id("1:1,1"),null);
+    else
+     blocks[x][y][z] = null;   
+       }
  
  public void tick(){
   //

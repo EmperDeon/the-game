@@ -1,25 +1,37 @@
 package level;
+
+import java.util.ArrayList;
+import main.Main;
+import utils.Id;
+import utils.Separ;
+
 public class LevBlock {
     
-public int subid;
-public int blockid;
-public int modid;
-public String parameters[];
+public Id id;
+public ArrayList<String> param= new ArrayList();
 //public Guiblock gui;
 
-public LevBlock Block(int mid,int bid,int sid,String[] param){
- this.modid=mid;
- this.blockid=bid;
- this.subid=sid;
- this.parameters=param;   
- return(this);
+public LevBlock(Id id,ArrayList<String> param){
+ this.id=id;
+ this.param.addAll(param);   
 }
 
-public String getparam(int i){
+public String getparam(String key){
+  String s = "";
   try{
-   return(parameters[i]);
+   if(param.contains(key))   
+   for (String par : param) {
+    if (Separ.getkey(par).equals(key)) {
+     s = Separ.getkey(par);
+    }
+   }
   }catch(Exception e){
-   return("Err");
+   Main.getErr().add("LevBlock", e);
   }
+  return(s);
+ }
+
+ public Id getId(){
+  return this.id;
  }
 }
