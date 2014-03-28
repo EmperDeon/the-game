@@ -1,13 +1,13 @@
 package basemod;
 public class Item {
     
-public Boolean tileeq;
+public Boolean Texeq;
 public String parametres[];
 public String type;
 public int modid;
 
-public Item Item(Boolean tileeq,String[] param){
-    this.tileeq=tileeq;
+public Item Item(Boolean Texeq,String[] param){
+    this.Texeq=Texeq;
     this.parametres=param;
     
     return(this);

@@ -1,5 +1,7 @@
 package main;
 
+import basemod.CoreModContainer;
+import basemod.ModContainer;
 import level.Level;
 import player.Player;
 import utils.Options;
@@ -12,16 +14,20 @@ public class Main implements Runnable{
  private final MTimer timer = new MTimer();
  private Level level = new Level("test",err);
  private Player player;
-//public Tile tile;  
+ private ModContainer mods= new ModContainer("game/mods");
+ private CoreModContainer core = new CoreModContainer("game/coremods");
+//public Tex Tex;  
  
  public static void main(String[] args){
  // MyRobot.main(null);
   new Thread(new Main()).start();
   new Thread(new render.Renderer()).start();
  } 
+ 
  public static Error getErr(){
   return err;
  }
+ 
  @Override
  public void run(){
   init();

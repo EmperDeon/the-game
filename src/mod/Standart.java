@@ -1,21 +1,23 @@
 package mod;
-import basemod.Basemod;
+import basemod.BaseMod;
 import java.util.*;
-import level.Coord;
+import utils.vec.Vec5i;
 
 
-public class Standart extends Basemod {
+
+public class Standart extends BaseMod {
 
 
     @Override
     public void init() {
      needparam=true;
-     blocks=new ArrayList();   
+     blocks=new ArrayList(); 
+     Texs = new ArrayList();
       //
     }
 
     @Override
-    public void action(int id, int id2, int act, Coord coord) {
+    public void action(int id, int id2, int act, Vec5i coord) {
       //
     }
 public Standart (){

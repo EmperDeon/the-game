@@ -26,8 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.media.opengl.glu.GLU;
 import level.Level;
-import utils.Vec2f;
-import utils.Vec3f;
+import utils.vec.Vec2f;
+import utils.vec.Vec3f;
 
 public class Renderer implements Runnable,GLEventListener{
 public static boolean running = true;

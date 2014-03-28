@@ -1,16 +1,16 @@
 package basemod;
 
-import render.tile.Tile;
+import utils.Id;
 
 public class Block {
     
-public Tile[] tiles;
+public Id Texid[];
 public Integer modid;
 public String parametres[];
 //public Guiblock gui;
 
-public Block Block(Tile[] tiles,String[] param){
-    this.tiles=tiles;
+public Block Block(Id[] Texs,String[] param){
+    this.Texid=Texs;
     this.parametres=param;
     
     return(this);

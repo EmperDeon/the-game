@@ -1,8 +1,6 @@
 package level;
 
-import render.tile.Tile;
 import java.util.Random;
-import level.NoiseMap;
 
 public class LevelGen
 {
@@ -51,9 +49,9 @@ private Random random = new Random();
 
         int i = (y * this.height + z) * this.width + x;
         int id = 0;
-   //     if (y == dh) id = Tile.grass.id;
-     //   if (y < dh) id = Tile.dirt.id;
-     //   if (y <= rh) id = Tile.rock.id;
+   //     if (y == dh) id = Tex.grass.id;
+     //   if (y < dh) id = Tex.dirt.id;
+     //   if (y <= rh) id = Tex.rock.id;
         blocks[i] = ((byte)id);
         }
     }
@@ -97,7 +95,7 @@ private Random random = new Random();
             if ((dd < size * size) && (xx >= 1) && (yy >= 1) && (zz >= 1) && (xx < this.width - 1) && (yy < this.depth - 1) && (zz < this.height - 1))
               {
               int ii = (yy * this.height + zz) * this.width + xx;
-      //        if (blocks[ii] == Tile.rock.id)
+      //        if (blocks[ii] == Tex.rock.id)
                 {
                 blocks[ii] = 0;
                 }
@@ -108,8 +106,3 @@ private Random random = new Random();
   return blocks;
   }
 }
-
-/* Location:           C:\Users\Илья\AppData\Roaming\.minecraft\versions\c0.0.11a\c0.0.11a.jar
- * Qualified Name:     minecraft.level.LevelGen
- * JD-Core Version:    0.6.2
- */

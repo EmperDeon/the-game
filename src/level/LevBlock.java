@@ -4,16 +4,23 @@ import java.util.ArrayList;
 import main.Main;
 import utils.Id;
 import utils.Separ;
+import utils.TId;
 
 public class LevBlock {
-    
+
+public Boolean Bparams;    
 public Id id;
+public TId tid;
 public ArrayList<String> param= new ArrayList();
 //public Guiblock gui;
 
-public LevBlock(Id id,ArrayList<String> param){
+public LevBlock(Id id,TId tid,ArrayList<String> param){
  this.id=id;
- this.param.addAll(param);   
+ this.tid=tid;
+ if(param!=null) {
+  this.param.addAll(param); 
+  this.Bparams=true;
+ }  
 }
 
 public String getparam(String key){
