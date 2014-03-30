@@ -6,17 +6,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import level.chunk.Chunk;
+import level.chunk.ChunkContainer;
 import level.chunk.OctChunk;
-import utils.Options;
 import utils.Error;
+import utils.Options;
 public class Level {
 
 public Options options;    
-
-private final ArrayList<Chunk> lch = new ArrayList();
-private final ArrayList<Chunk> rch = new ArrayList();
-private String chids[][];
+private int chpr = 32;
+private final ChunkContainer lch = new ChunkContainer();
+private final ChunkContainer rch = new ChunkContainer();
 private final String name;
 private final Error err;
 
@@ -36,14 +35,25 @@ public Level(String name,Error err){
                 "lchunks:", 
                 "pos:0,0" // coord chunk with player
             },"game/saves/"+name+"/level.db",this.err);
-  ArrayList<OctChunk> ch = new ArrayList();
+  OctChunk ch;
   
-  for(int x = -1;x<=1;x++)  
-   for(int y = -1;y<=1;y++)
-    ch.add(new OctChunk(name,x,y,options)); 
+  int i;
   
-  int occhpr = 1;
+  for(int x = -(chpr/8);x<=(chpr/8);x++)  
+   for(int y = -(chpr/8);y<=(chpr/8);y++){
+    ch = new OctChunk(name,x,y,options); 
+    addChid(ch);
+   }
  }    
+}
+
+public final void addChid(OctChunk ch){
+ int i = 0;   
+ for(int cx=0;cx<8;cx++)
+  for(int cy=0;cy<8;cy++){
+   rch.add(i, ch.getCh(cx, cy));
+   i++;    
+  }
 }
 
 public void render(){
@@ -53,7 +63,8 @@ public void render(){
 public final void load(String dir){
  File f = new File(dir+"level.db");   
  if(f.canRead()){ options = new Options(dir+"level.db",this.err);}
-            else{ options = new Options(new String[]{                "name:"+name
+            else{ options = new Options(new String[]{                
+                "name:"+name
             },dir+"level.db",this.err); }
  
  f= new File(dir+"rg/");
