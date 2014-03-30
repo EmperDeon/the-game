@@ -38,7 +38,7 @@ public static GLU glu;
 public int width=800,height=600;
 private Level level;
 
-private final Vec3f plcoord = new Vec3f();
+private final Vec3f plcoord = new Vec3f(0,0,0);
 private final Vec2f cmcoord = new Vec2f();
 
 private String sec="";
@@ -105,6 +105,7 @@ public void run(){
     } else {
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
     }
+    /*
    if(b) gl.glPopMatrix();
    //if(b) gl.glTranslatef(player.x, player.y, player.z);
    if(b){ gl.glTranslatef( 0, plcoord.x, 0); if (plcoord.x!=0)plcoord.x=0;}
@@ -129,7 +130,10 @@ public void run(){
       }
     gl.glEnd();
     
-}
+}*/
+    
+    level.render();
+    
    // FPS
    Date date=new Date();
    if(sec.equals(new SimpleDateFormat("ss").format(date))) 
@@ -163,7 +167,7 @@ gl = drawable.getGL().getGL2();
 
     @Override
    public void init(GLAutoDrawable drawable) {
-    player = new Player(0,0,2,level);   
+    player = new Player(new Vec3f(0,0,0),level);   
 
     gl  = drawable.getGL().getGL2();
     glu = new GLU();

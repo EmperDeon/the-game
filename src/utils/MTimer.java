@@ -31,7 +31,7 @@ public class MTimer {
   class Clevel extends TimerTask {
   @Override
   public void run(){
-   level.tick();
+ //  level.tick();
   }
  }
 }
