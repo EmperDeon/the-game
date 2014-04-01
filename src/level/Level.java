@@ -1,9 +1,7 @@
 package level;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import level.chunk.ChunkContainer;
@@ -67,25 +65,7 @@ public final void load(String dir){
                 "name:"+name
             },dir+"level.db",this.err); }
  
- f= new File(dir+"rg/");
- File[] dr = f.listFiles();
- 
-ArrayList<OctChunk> chs = new ArrayList();
-
- for (File dr1 : dr) {
-  try {
-   ObjectInputStream serial = new ObjectInputStream(new FileInputStream(dr1));
-   chs.add((OctChunk)serial.readObject());
-  }catch (IOException | ClassNotFoundException ex) {
-   err.add("Level.load()",ex);
-  }  
- }
- 
- ArrayList<int[][][]> nom = new ArrayList();
- 
- for(OctChunk ch : chs){
-  nom.add(ch.getNom());
- }
+ rch.loadAll(dir);
  
 }
 
@@ -93,6 +73,7 @@ ArrayList<OctChunk> chs = new ArrayList();
 public void save(){
  options.save();
  
+ rch.save();
  ArrayList<OctChunk> ch = new ArrayList();
  
  for(int i=0;i<ch.size();i++)

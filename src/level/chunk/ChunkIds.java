@@ -41,4 +41,15 @@ public class ChunkIds {
   }
   return false;
  }
+ 
+ public void free(int x,int y){
+  int i = 0;
+  for (ChunkId ch : chid){
+   if (ch.test(x, y)) {
+    id.remove(i);
+    chid.remove(i);
+   }
+   i++;
+   }
+ }
 }

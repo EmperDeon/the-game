@@ -10,6 +10,6 @@ public class ChunkId {
  }
  
  public boolean test(int x,int y){
-  return this.x==x&&this.y==y;
+  return this.x==x && this.y==y;
  }
 }
