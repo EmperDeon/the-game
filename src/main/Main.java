@@ -4,9 +4,9 @@ import basemod.CoreModContainer;
 import basemod.ModContainer;
 import level.Level;
 import player.Player;
-import utils.Options;
 import utils.Error;
 import utils.MTimer;
+import utils.Options;
 import utils.vec.Vec3f;
 
 public class Main implements Runnable{
@@ -22,10 +22,9 @@ public class Main implements Runnable{
  public static Error getErr(){
   return err;
  }
-  
+
  public void init(){
-  level.save();
- // opt.save();
+ // level.save();
  }
  
  @Override
@@ -41,7 +40,7 @@ public class Main implements Runnable{
 
  public void destroy(){
   err.check();
-  level.save();
+  //level.save();
  }
  
    public static void main(String[] args){

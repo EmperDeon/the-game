@@ -13,17 +13,16 @@ private final int chpr = 8;
 private final ChunkContainer rch;
 private final String name;
 private final Error err;
-
-private void loadCh(){}
+public Boolean loaded = false;
 
 public Level(String name,Error err){
  this.err=err;   
- File f = new File("game/saves/"+name+"/rg");
- if(f.canRead()&&f.listFiles()[0]!=null){ // Created ?   
-  this.name = name;
-  this.rch = new ChunkContainer("game/saves/"+name+"/");
-  load("game/saves/"+name+"/");
- }else{   
+// File f = new File("game/saves/"+name+"/rg");
+// if(f.canRead()&&f.listFiles()[0]!=null){ // Created ?   
+//  this.name = name;
+//  this.rch = new ChunkContainer("game/saves/"+name+"/",chpr);
+//  load("game/saves/"+name+"/");
+// }else{   
   this.name=name;
   
   options = new Options(new String[]{
@@ -32,17 +31,16 @@ public Level(String name,Error err){
                 "pos:0,0" // coord chunk with player
             },"game/saves/"+name+"/level.db",this.err);
   
-  this.rch = new ChunkContainer("game/saves/"+name+"/");
+  this.rch = new ChunkContainer("game/saves/"+name+"/",chpr);
   //this.lch = new ChunkContainer("game/saves/"+name+"/");
   
   for(int x = -(chpr/8);x<=(chpr/8);x++)  
    for(int y = -(chpr/8);y<=(chpr/8);y++){
     rch.addAll(new OctChunk(name,x,y,options)); 
    }
-  
-  
-  
- }    
+  save();
+  this.loaded = true;
+ //}    
 }
 
 public void render(){
@@ -56,8 +54,8 @@ public final void load(String dir){
                 "name:"+name
             },dir+"level.db",this.err); }
 
- rch.loadAll(dir);
- 
+ this.rch.loadAll();
+ this.loaded = true;
 }
 
 

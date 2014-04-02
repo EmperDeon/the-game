@@ -10,11 +10,17 @@ public class ChunkContainer {
  private final ArrayList<Chunk> chs = new ArrayList();
  private final ChunkIds ids = new ChunkIds();
  private int last = 0;
- private String dir;
+ private final String dir;
+ private int chpr;
  //private int[] free = new int [1];
  
- public ChunkContainer(String dir){
-  //
+ public ChunkContainer(String dir,int chpr){
+  this.dir = dir;
+  this.chpr = chpr;
+ }
+ 
+ public void gen(){
+  
  }
  
  public void add(Chunk ch){
@@ -27,16 +33,16 @@ public class ChunkContainer {
  public void addAll(OctChunk ch){
   ArrayList<Chunk> c = ch.getAllCh();  
   for (Chunk c1 : c) {
-   if(!test(c1.idx,c1.idy))  {
+  // if(!test(c1.idx,c1.idy))  {
     chs.add(c1);
     ids.add(last+1, c1.idx, c1.idy);
     last+=1;
-   }
+ // }
   }
  }
  
- public void loadAll(String dir){
- File  f= new File(dir+"rg/");
+ public void loadAll(){
+ File  f= new File(this.dir+"rg/");
  File[] dr = f.listFiles();
  
  OctChunk ch1;
@@ -66,7 +72,7 @@ public class ChunkContainer {
  }
  
  public void save(){
-     
+//  loadAll();   
      
   ArrayList<OctChunk> r = new ArrayList();
   int i = chs.size();
@@ -79,7 +85,7 @@ public class ChunkContainer {
        ch[cx][cy]= chs.get(i2);
        i++;
       }
-     r.add(new OctChunk(i1+""+i1,i1,i1,ch));
+     r.add(new OctChunk(i1+"",i1,i1,ch));
      i++;
     }
  }
