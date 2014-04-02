@@ -24,8 +24,8 @@ public class Main implements Runnable{
  }
   
  public void init(){
-  
-  opt.save();
+  level.save();
+ // opt.save();
  }
  
  @Override
@@ -47,6 +47,6 @@ public class Main implements Runnable{
    public static void main(String[] args){
  // MyRobot.main(null);
   new Thread(new Main()).start();
-  new Thread(new render.Renderer()).start();
+  //new Thread(new render.Renderer()).start();
  }   
 }

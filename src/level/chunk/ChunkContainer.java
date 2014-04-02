@@ -9,23 +9,29 @@ import java.util.ArrayList;
 public class ChunkContainer {
  private final ArrayList<Chunk> chs = new ArrayList();
  private final ChunkIds ids = new ChunkIds();
+ private int last = 0;
+ private String dir;
  //private int[] free = new int [1];
  
- public ChunkContainer(){
+ public ChunkContainer(String dir){
   //
  }
  
- public void add(int i,Chunk ch){
+ public void add(Chunk ch){
   if(!test(ch.idx,ch.idy)) {  
-   chs.add(i,ch);
-   ids.add(i, ch.idx, ch.idy);
+   chs.add(last+1,ch);
+   ids.add(last+1, ch.idx, ch.idy);
+   last+=1;
   } 
  }
  public void addAll(OctChunk ch){
   ArrayList<Chunk> c = ch.getAllCh();  
   for (Chunk c1 : c) {
-   if(!test(c1.idx,c1.idy))  
+   if(!test(c1.idx,c1.idy))  {
     chs.add(c1);
+    ids.add(last+1, c1.idx, c1.idy);
+    last+=1;
+   }
   }
  }
  
@@ -33,13 +39,12 @@ public class ChunkContainer {
  File  f= new File(dir+"rg/");
  File[] dr = f.listFiles();
  
-ArrayList<OctChunk> chs = new ArrayList();
-OctChunk ch ;
+ OctChunk ch1;
  for (File dr1 : dr) {
   try {
    ObjectInputStream serial = new ObjectInputStream(new FileInputStream(dr1));
-   ch = ((OctChunk)serial.readObject());
-   addAll(ch);
+   ch1 = ((OctChunk)serial.readObject());
+   addAll(ch1);
   }catch (IOException | ClassNotFoundException ex) {
    //err.add("Level.load()",ex);
   } 
@@ -61,6 +66,8 @@ OctChunk ch ;
  }
  
  public void save(){
+     
+     
   ArrayList<OctChunk> r = new ArrayList();
   int i = chs.size();
     for(int i1 = 0;i1<i/64;i1++){
@@ -75,6 +82,14 @@ OctChunk ch ;
      r.add(new OctChunk(i1+""+i1,i1,i1,ch));
      i++;
     }
+ }
+ 
+ public Chunk get(int i){
+  return chs.get(i);
+ }
+ 
+ public Chunk get(int x,int y){
+  return chs.get(ids.getIdC(x, y));
  }
 }
 //  77
