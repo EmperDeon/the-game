@@ -14,18 +14,15 @@ public final class Options implements Serializable{
  private ArrayList<String> opt=new ArrayList();   
  private String file;
  private String dir;
- private final Error err;
   
- public Options(String file,Error err){
-  this.err=err;    
+ public Options(String file){    
   this.file=file;
   this.dir=getDir(file);
   load();
 //  System.out.println(err.get());
  }
  
- public Options(String[] opt,String file,Error err){
-  this.err=err;
+ public Options(String[] opt,String file){
   this.file=file;
   this.dir=getDir(file);
   this.opt.addAll(Arrays.asList(opt));   
@@ -58,7 +55,7 @@ public final class Options implements Serializable{
    }
   }   
  }catch(Exception ex){
-  err.add("Options.load()",ex);
+  main.Main.err.add("Options.load()",ex);
  }
 }
  public String getDir(String file){
@@ -68,7 +65,7 @@ public final class Options implements Serializable{
   if(file.lastIndexOf("\\")!=-1){   
    return file.substring(0, file.lastIndexOf("\\")+1);
   }else{
-   err.add("Options.getDir()",new Exception());
+   main.Main.err.add("Options.getDir()",new Exception());
    return null;
    }
   }
@@ -91,7 +88,7 @@ public final class Options implements Serializable{
    for(int i=0; i<opt.size();i++)
     writer.write(this.opt.get(i)+"\n");
   } catch (IOException ex) {
-      err.add("Options.save()",ex);
+      main.Main.err.add("Options.save()",ex);
   }
  }
 }

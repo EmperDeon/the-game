@@ -3,8 +3,9 @@ import java.io.File;
 import level.chunk.Chunk;
 import level.chunk.ChunkContainer;
 import level.chunk.OctChunk;
-import utils.Error;
 import utils.Options;
+import utils.TermEx;
+import utils.vec.Vec2f;
 public class Level {
 
 public Options options;    
@@ -12,11 +13,10 @@ private final int chpr = 8;
 //private final ChunkContainer lch;
 private final ChunkContainer rch;
 private final String name;
-private final Error err;
 public Boolean loaded = false;
+public Vec2f pos = new Vec2f();
 
-public Level(String name,Error err){
- this.err=err;   
+public Level(String name) throws TermEx{  
 // File f = new File("game/saves/"+name+"/rg");
 // if(f.canRead()&&f.listFiles()[0]!=null){ // Created ?   
 //  this.name = name;
@@ -29,16 +29,16 @@ public Level(String name,Error err){
                 "name:"+name,
                 "lchunks:", 
                 "pos:0,0" // coord chunk with player
-            },"game/saves/"+name+"/level.db",this.err);
+            },"game/saves/"+name+"/level.db");
   
-  this.rch = new ChunkContainer("game/saves/"+name+"/",chpr);
+  this.rch = new ChunkContainer("game/saves/"+name+"/rg/");
   //this.lch = new ChunkContainer("game/saves/"+name+"/");
   
   for(int x = -(chpr/8);x<=(chpr/8);x++)  
    for(int y = -(chpr/8);y<=(chpr/8);y++){
     rch.addAll(new OctChunk(name,x,y,options)); 
    }
-  save();
+  //save();
   this.loaded = true;
  //}    
 }
@@ -49,12 +49,17 @@ public void render(){
 
 public final void load(String dir){
  File f = new File(dir+"level.db");   
- if(f.canRead()){ options = new Options(dir+"level.db",this.err);}
-            else{ options = new Options(new String[]{                
+ if(f.canRead()){ 
+     options = new Options(dir+"level.db");
+ }else{
+     options = new Options(new String[]{                
                 "name:"+name
-            },dir+"level.db",this.err); }
+            },dir+"level.db"); 
+ }
 
- this.rch.loadAll();
+ 
+ 
+ this.rch.loadAll(pos,chpr);
  this.loaded = true;
 }
 

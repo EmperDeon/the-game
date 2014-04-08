@@ -7,13 +7,15 @@ import player.Player;
 import utils.Error;
 import utils.MTimer;
 import utils.Options;
+import utils.TermEx;
 import utils.vec.Vec3f;
 
 public class Main implements Runnable{
- private static final Error err=new Error();
- private final Options opt = new Options("game/options.db",err);  
+ public static final Error err=new Error();
+ 
+ private final Options opt = new Options("game/options.db");  
  private final MTimer timer = new MTimer();
- private final Level level = new Level("test",err);
+ private Level level;
  private final Player player = new Player(new Vec3f(0,0,0),level);
  private final ModContainer mods= new ModContainer("game/mods");
  private final CoreModContainer core = new CoreModContainer("game/coremods");
@@ -23,17 +25,22 @@ public class Main implements Runnable{
   return err;
  }
 
- public void init(){
- // level.save();
+ public void init() throws TermEx{
+  this.level = new Level("test");   
+  level.save();
  }
  
  @Override
  public void run(){
-  init();
+  try{    
+   init();
 
 //  timer.start(player, level);
   
-  destroy();
+   destroy();
+  }catch(TermEx ex){
+   System.exit(666);
+  } 
  }
  
  

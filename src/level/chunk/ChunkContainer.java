@@ -5,18 +5,34 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import utils.TermEx;
+import utils.vec.Vec2f;
 
 public class ChunkContainer {
  private final ArrayList<Chunk> chs = new ArrayList();
  private final ChunkIds ids = new ChunkIds();
  private int last = 0;
- private final String dir;
- private int chpr;
+ private final String dir;//  game/save/name/
+ private final OctChunkIds oids;
  //private int[] free = new int [1];
  
- public ChunkContainer(String dir,int chpr){
-  this.dir = dir;
-  this.chpr = chpr;
+ public ChunkContainer(String dir) throws TermEx{
+ this.dir = dir; 
+ 
+ File f = new File(dir+"OctChIds.db");   
+ if(f.canRead()){ 
+  try{
+   OctChunkIds ch1;
+   ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.dir+"OctChIds.db")));
+   oids = ((OctChunkIds)serial.readObject());
+  }catch(IOException | ClassNotFoundException ex){
+   main.Main.err.add("ChunkContainer . OctChunkIds . load()", ex);
+   throw new TermEx();
+  }
+ }else{
+  oids = new OctChunkIds(dir);
+ }
+  
  }
  
  public void gen(){
@@ -41,20 +57,20 @@ public class ChunkContainer {
   }
  }
  
- public void loadAll(){
- File  f= new File(this.dir+"rg/");
- File[] dr = f.listFiles();
+ public void loadAll(Vec2f pos,int chpr){
+  
+ }
  
+ public void loadOct(String file){
+ try{
  OctChunk ch1;
- for (File dr1 : dr) {
-  try {
-   ObjectInputStream serial = new ObjectInputStream(new FileInputStream(dr1));
+   ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.dir+"rg/"+file)));
    ch1 = ((OctChunk)serial.readObject());
    addAll(ch1);
-  }catch (IOException | ClassNotFoundException ex) {
-   //err.add("Level.load()",ex);
-  } 
-  }
+ }catch(IOException | ClassNotFoundException ex){
+  
+ }
+  
  }
  
  public boolean test(int x,int y){
@@ -75,19 +91,7 @@ public class ChunkContainer {
 //  loadAll();   
      
   ArrayList<OctChunk> r = new ArrayList();
-  int i = chs.size();
-    for(int i1 = 0;i1<i/64;i1++){
-     Chunk[][] ch = new Chunk[8][8];   
-     int i2 = 0;
-     for(int cx = 0;cx<8;cx++)
-      for(int cy = 0;cy<8;cy++){ 
-       
-       ch[cx][cy]= chs.get(i2);
-       i++;
-      }
-     r.add(new OctChunk(i1+"",i1,i1,ch));
-     i++;
-    }
+  
  }
  
  public Chunk get(int i){

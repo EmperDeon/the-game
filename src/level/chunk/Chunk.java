@@ -17,7 +17,7 @@ public class Chunk implements Serializable{
  public Chunk(int x,int y){
   this.idx=x;
   this.idy=y;
-  gen();
+  //gen();
   blocks=new LevBlock[16][16][256];
   //[16][16][128]
  }
