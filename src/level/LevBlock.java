@@ -33,7 +33,7 @@ public String getparam(String key){
     }
    }
   }catch(Exception e){
-   Main.getErr().add("LevBlock", e);
+   Main.err.add("LevBlock", e);
   }
   return(s);
  }

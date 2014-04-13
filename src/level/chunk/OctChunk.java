@@ -1,7 +1,6 @@
 package level.chunk;
  import java.io.Serializable;
 import java.util.ArrayList;
-import utils.Options;
 
 public class OctChunk  implements Serializable{
  private final String dir;
@@ -10,8 +9,8 @@ public class OctChunk  implements Serializable{
  private final int x;
  private final int y;
  
-public OctChunk(String nm,int x,int y,Options opt){
- this.dir="game/saves/"+nm+"/rg/";
+public OctChunk(String nm,int x,int y){
+ this.dir=main.Main.mdir + "saves/"+nm+"/rg/";
  fl="region"+x+""+y+".rg";
  
  this.x=x;
@@ -25,7 +24,7 @@ public OctChunk(String nm,int x,int y,Options opt){
 }
 
 public OctChunk(String nm,int x,int y,Chunk[][] ch){
- this.dir="game/saves/"+nm+"/rg/";
+ this.dir=main.Main.mdir + "saves/"+nm+"/rg/";
  fl="region"+x+""+y+".rg";
  
  this.x=x;
@@ -64,7 +63,10 @@ public OctChunkId getId(){
    ids[i] = new ChunkId(ch.idx,ch.idy);
    i++;
   } 
- 
  return new OctChunkId("region"+this.x+""+this.y+".rg",ids);
+}
+
+public void replaceChunk(int x,int y,Chunk ch){
+ this.chs[x][y] = ch;
 }
 }

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class CoreModContainer {
  private final ArrayList<CoreMod> cont;
- private String dir;
+ private final String dir;
  
- public CoreModContainer(String dir){
+ public CoreModContainer(){
   this.cont = new ArrayList();
-  this.dir=dir;
+  this.dir = main.Main.mdir + "coremods/";
  }
  
  public void add(){

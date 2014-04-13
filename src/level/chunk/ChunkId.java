@@ -1,6 +1,8 @@
 package level.chunk;
 
-public class ChunkId {
+import java.io.Serializable;
+
+public class ChunkId implements Serializable{
  public Integer x;
  public Integer y;
  

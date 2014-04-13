@@ -8,9 +8,9 @@ public class ModContainer {
  private final ArrayList< BaseMod > cont;
  private final String dir;
  
- public ModContainer(String dir){
+ public ModContainer(){
   this.cont=new ArrayList();
-  this.dir=dir;
+  this.dir = main.Main.mdir + "mods/";
  }
  
  public ModContainer(String dir,BaseMod b){

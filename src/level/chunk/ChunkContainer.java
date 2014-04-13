@@ -2,41 +2,57 @@ package level.chunk;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import main.Main;
 import utils.TermEx;
 import utils.vec.Vec2f;
 
-public class ChunkContainer {
+public final class ChunkContainer {
+ 
+    
  private final ArrayList<Chunk> chs = new ArrayList();
  private final ChunkIds ids = new ChunkIds();
+ private final OctChunkIds oids;
+ private final ArrayList<ChunkId> red= new ArrayList();
+ 
  private int last = 0;
  private final String dir;//  game/save/name/
- private final OctChunkIds oids;
+
  //private int[] free = new int [1];
  
  public ChunkContainer(String dir) throws TermEx{
- this.dir = dir; 
- 
- File f = new File(dir+"OctChIds.db");   
- if(f.canRead()){ 
-  try{
-   OctChunkIds ch1;
-   ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.dir+"OctChIds.db")));
-   oids = ((OctChunkIds)serial.readObject());
-  }catch(IOException | ClassNotFoundException ex){
-   main.Main.err.add("ChunkContainer . OctChunkIds . load()", ex);
-   throw new TermEx();
-  }
- }else{
+  this.dir = dir; 
+  if(!new File(main.Main.mdir+"saves/World1/rg/").canRead())
+   gen("World1",8);
   oids = new OctChunkIds(dir);
  }
-  
- }
  
- public void gen(){
+ public void gen(String name, int chpr){
+  ArrayList<OctChunk> oct = new ArrayList();   
+  for(int x = -(chpr/8);x<=(chpr/8);x++)  
+   for(int y = -(chpr/8);y<=(chpr/8);y++){
+    oct.add(new OctChunk(name,x,y)); 
+   }
   
+  File f = new File(main.Main.mdir+"saves/"+name+"/rg/");
+  f.mkdirs();
+  
+  for(OctChunk oc : oct){
+   addAll(oc);   
+   
+   try {
+    ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(oc.getD()));
+    serial.writeObject(oc);
+    serial.flush();
+   }catch (IOException ex) {
+    Main.err.add("OctChunkIds . Save()", ex);
+    System.err.println(oc.getD());
+   }
+  }
  }
  
  public void add(Chunk ch){
