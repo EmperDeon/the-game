@@ -2,9 +2,9 @@ package level;
 import java.io.File;
 import level.chunk.Chunk;
 import level.chunk.ChunkContainer;
+import level.chunk.ChunkId;
 import utils.Options;
 import utils.TermEx;
-import utils.vec.Vec2f;
 public class Level {
 
 public Options options;    
@@ -13,15 +13,15 @@ private final int chpr = 8;
 private final ChunkContainer rch;
 private final String name;
 public Boolean loaded = false;
-public Vec2f pos = new Vec2f();
+public ChunkId pos = new ChunkId(0,0);
 
 public Level(String name) throws TermEx{  
-// File f = new File(main.Main.mdir + "saves/"+name+"/rg");
-// if(f.canRead()&&f.listFiles()[0]!=null){ // Created ?   
-//  this.name = name;
-//  this.rch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/",chpr);
-//  load(main.Main.mdir + "saves/"+name+"/");
-// }else{   
+ File f = new File(main.Main.mdir + "saves/"+name+"/rg");
+ if(f.canRead()&&f.listFiles()!=null){ // Created ?   
+  this.name = name;
+  this.rch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/");
+  load(main.Main.mdir + "saves/"+name+"/");
+ }else{   
   this.name=name;
   
   options = new Options(new String[]{
@@ -36,7 +36,7 @@ public Level(String name) throws TermEx{
 
   //save();
   this.loaded = true;
- //}    
+ }    
 }
 
 public void render(){
@@ -47,13 +47,16 @@ public final void load(String dir){
  File f = new File(dir+"level.db");   
  if(f.canRead()){ 
      options = new Options(dir+"level.db");
+     
+     pos.x = Integer.parseInt(options.get("pos")[0]);
+     pos.y = Integer.parseInt(options.get("pos")[1]);
  }else{
      options = new Options(new String[]{                
                 "name:"+name
             },dir+"level.db"); 
  }
 
- this.rch.loadAll(pos,chpr);
+ this.rch.load(new ChunkId(0,0),8);
  
  this.loaded = true;
 }

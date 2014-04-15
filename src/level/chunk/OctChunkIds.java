@@ -24,25 +24,25 @@ public void load() throws TermEx{
    try{
     ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.file)));
     this.chids = ((ArrayList<OctChunkId>)serial.readObject());
-    System.out.println("Loaded");
    }catch(IOException | ClassNotFoundException ex){
     main.Main.err.add("ChunkContainer . OctChunkIds . load()", ex);
     throw new TermEx("ChunkContainer . OctChunkIds . load() - error read OctChunk");
    }
-  }else{
+  }else{   
    this.chids = new ArrayList();
    File[] oct = d.listFiles(); 
 
-   for (File oct1 : oct) {
+   for (File oc : oct) {
+    System.out.println(oc.getAbsolutePath());
     try{
-     ObjectInputStream serial = new ObjectInputStream(new FileInputStream(oct1));
-     chids.add(  ((OctChunk)serial.readObject()).getId() );
-    }catch(IOException | ClassNotFoundException ex){
-     main.Main.err.add("ChunkContainer . OctChunkIds . load()", ex);
-     throw new TermEx("ChunkContainer . OctChunkIds . load() - no ChIds");
+     ObjectInputStream fi = new ObjectInputStream(new FileInputStream(oc));
+     OctChunk o = (OctChunk)fi.readObject();
+
+    }catch(IOException |ClassNotFoundException ex){
+     throw new TermEx("ChunkContainer . OctChunkIds . load() - error read rg/");
     }  
+    
    }
-  System.out.println("Loaded"); 
   save();
   }
  }else{
@@ -62,8 +62,8 @@ public void save(){
 } 
  
 public OctChunkIds(String dir) throws TermEx{// if not created
- this.dir  = dir;
  this.file = dir + "OctChIds.db";
+ this.dir  = dir + "rg/";
  load();
 }
  
@@ -71,7 +71,7 @@ public OctChunkIds (ArrayList<OctChunk> chs,String dir){
  for(OctChunk ch : chs){
   chids.add(ch.getId());
  } 
- this.dir  = dir;
+ this.dir  = dir + "rg/";
  this.file = dir + "OctChIds.db";
 }
 
@@ -85,3 +85,17 @@ public String search(int x,int y){
  return null;
 }
 }
+/*
+
+for (File oc : oct) {
+    System.out.println(oc.getAbsolutePath());
+    try{
+     ObjectInputStream serial = new ObjectInputStream(new FileInputStream(oc));
+     OctChunk o = (OctChunk)serial.readObject();
+     OctChunkId i = o.getId();
+     chids.add( i );
+    }catch(IOException | ClassNotFoundException ex){
+     throw new TermEx("ChunkContainer . OctChunkIds . load() - no ChIds");
+    }  
+
+*/

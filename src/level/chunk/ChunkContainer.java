@@ -7,9 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import level.LevBlock;
 import main.Main;
 import utils.TermEx;
-import utils.vec.Vec2f;
+import utils.vec.Vec3i;
 
 public final class ChunkContainer {
  
@@ -26,9 +27,10 @@ public final class ChunkContainer {
  
  public ChunkContainer(String dir) throws TermEx{
   this.dir = dir; 
-  if(!new File(main.Main.mdir+"saves/World1/rg/").canRead())
+  if(!new File(main.Main.mdir+"saves/World1/rg").canRead())
    gen("World1",8);
   oids = new OctChunkIds(dir);
+  System.out.println(chs.size());
  }
  
  public void gen(String name, int chpr){
@@ -62,6 +64,7 @@ public final class ChunkContainer {
    last+=1;
   } 
  }
+ 
  public void addAll(OctChunk ch){
   ArrayList<Chunk> c = ch.getAllCh();  
   for (Chunk c1 : c) {
@@ -73,8 +76,25 @@ public final class ChunkContainer {
   }
  }
  
- public void loadAll(Vec2f pos,int chpr){
+ public void load(ChunkId pos,int chpr){ 
+  int x1 = (pos.x - chpr)/8;
+  int x2 = (pos.x + chpr)/8;
+  int y1 = (pos.y - chpr)/8;
+  int y2 = (pos.y + chpr)/8;
+
+  for(int i1 = x1 ; i1<=x2 ; i1++)
+   for(int i2 = y1 ; i2<=y2 ; i2++)
+    loadOct("region"+i1+""+i2+".rg");   
   
+  System.out.println(x1+" "+x2);
+ }
+
+ public void redact(ChunkId cpos, Vec3i bpos, LevBlock block){
+  chs.get(ids.getIdC(cpos.x, cpos.y)).redact(bpos,block);
+ }
+ 
+ public void redactObl(ChunkId cpos, Vec3i pos1, Vec3i pos2, LevBlock block){
+  chs.get(ids.getIdC(cpos.x, cpos.y)).redactObl(pos1, pos2, block);
  }
  
  public void loadOct(String file){
@@ -86,7 +106,7 @@ public final class ChunkContainer {
  }catch(IOException | ClassNotFoundException ex){
   
  }
-  
+  System.out.println(chs.size());
  }
  
  public boolean test(int x,int y){
@@ -118,4 +138,3 @@ public final class ChunkContainer {
   return chs.get(ids.getIdC(x, y));
  }
 }
-//  77

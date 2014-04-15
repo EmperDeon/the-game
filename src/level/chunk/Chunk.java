@@ -6,6 +6,7 @@ import level.LevBlock;
 import render.RendTexCoord;
 import utils.Id;
 import utils.TId;
+import utils.vec.Vec3i;
 import utils.vec.Vec5i;
 
 public class Chunk implements Serializable{
@@ -59,6 +60,14 @@ public class Chunk implements Serializable{
  
  public void Render(){    
 //
+ }
+ 
+ public void redact(Vec3i pos, LevBlock block){
+  this.blocks[pos.x][pos.y][pos.z] = block;
+ }
+ 
+ public void redactObl(Vec3i pos1, Vec3i pos2, LevBlock block){
+  this.blocks[pos1.x][pos1.y][pos1.z] = block;
  }
  
  public void gen(){
