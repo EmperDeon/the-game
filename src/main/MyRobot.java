@@ -1,12 +1,5 @@
 package main;
- 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import javax.swing.*;
-public class MyRobot {
+/*public class MyRobot {
     public static void main(String[] args) {
         myFrame frame = new myFrame(); // создаем объект класса myFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // задаем действие обработчику на кнопку "крестик"
@@ -50,6 +43,6 @@ class myFrame extends JFrame
         pane.add(panel); // добавляем нашу панель в контейнер
         pack(); // задает размер нашему фрейму исходя из размеров нашей кнопки
     }
-}
+}*/
  
 
