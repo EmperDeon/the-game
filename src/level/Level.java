@@ -56,7 +56,7 @@ public final void load(String dir){
             },dir+"level.db"); 
  }
 
- this.rch.load(new ChunkId(0,0),8);
+ //this.rch.load(new ChunkId(0,0),8);
  
  this.loaded = true;
 }

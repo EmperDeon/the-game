@@ -18,7 +18,7 @@ public final class ChunkContainer {
  private final ArrayList<Chunk> chs = new ArrayList();
  private final ChunkIds ids = new ChunkIds();
  private final OctChunkIds oids;
- private final ArrayList<ChunkId> red= new ArrayList();
+ private final ArrayList<ChunkId> rch= new ArrayList();
  
  private int last = 0;
  private final String dir;//  game/save/name/
@@ -27,10 +27,14 @@ public final class ChunkContainer {
  
  public ChunkContainer(String dir) throws TermEx{
   this.dir = dir; 
+  
   if(!new File(main.Main.mdir+"saves/World1/rg").canRead())
    gen("World1",8);
+  
   oids = new OctChunkIds(dir);
-  System.out.println(chs.size());
+  
+  load(new ChunkId(0,0),8);
+  
  }
  
  public void gen(String name, int chpr){
@@ -86,7 +90,7 @@ public final class ChunkContainer {
    for(int i2 = y1 ; i2<=y2 ; i2++)
     loadOct("region"+i1+""+i2+".rg");   
   
-  System.out.println(x1+" "+x2);
+  
  }
 
  public void redact(ChunkId cpos, Vec3i bpos, LevBlock block){
@@ -99,14 +103,12 @@ public final class ChunkContainer {
  
  public void loadOct(String file){
  try{
- OctChunk ch1;
    ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.dir+"rg/"+file)));
-   ch1 = ((OctChunk)serial.readObject());
-   addAll(ch1);
+   addAll((OctChunk)serial.readObject());
  }catch(IOException | ClassNotFoundException ex){
-  
+  ex.printStackTrace();
  }
-  System.out.println(chs.size());
+System.out.println("Loaded: " + file + " : " +chs.size() );
  }
  
  public boolean test(int x,int y){
@@ -124,10 +126,34 @@ public final class ChunkContainer {
  }
  
  public void save(){
-//  loadAll();   
+  if(!rch.isEmpty()){
+   for(ChunkId id : rch){
+    String file = oids.search(id.x, id.y);
+    
+    OctChunk oc;
+    try{
+      ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.dir+"rg/"+file)));
+     oc = (OctChunk)serial.readObject();
+    }catch(IOException | ClassNotFoundException ex){
+     oc = null;
+    }
+    
+    if(oc != null){
+     oc.replaceChunk(id.x, id.y, chs.get(ids.getIdC(id.x, id.y)));
      
-  ArrayList<OctChunk> r = new ArrayList();
-  
+     try {
+      ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(file));
+      serial.writeObject(oc);
+      serial.flush();
+      System.out.println("Saved:" + file);
+     }catch (IOException ex) {
+      Main.err.add("ChunkContainer . Save()", ex);
+     }
+    }
+   }
+  }else{
+   System.out.println("No changed");
+  }
  }
  
  public Chunk get(int i){
