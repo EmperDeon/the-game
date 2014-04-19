@@ -2,13 +2,10 @@ package main;
 
 import basemod.CoreModContainer;
 import basemod.ModContainer;
-import level.Level;
-import player.Player;
 import utils.Error;
 import utils.MTimer;
 import utils.Options;
 import utils.TermEx;
-import utils.vec.Vec3f;
 
 public class Main implements Runnable{
     
@@ -20,16 +17,12 @@ public class Main implements Runnable{
  
  private Options opt;  
  private MTimer timer;
- private Level level;
- private Player player;
  private ModContainer mods;
  private CoreModContainer core;
   
  public void init() throws TermEx{ 
-  this.level  = new Level("World1"); 
-  this.timer  = new MTimer();
   this.opt    = new Options(mdir + "options.db");
-  this.player = new Player(new Vec3f(0,0,0),level);
+
   this.core   = new CoreModContainer();
   this.mods   = new ModContainer();
  }
@@ -39,7 +32,6 @@ public class Main implements Runnable{
   try{    
    init();
 
-  timer.start(player, level);
 //   while (running){  
 //    Tm.wait();
 //   }

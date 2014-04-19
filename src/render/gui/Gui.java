@@ -23,6 +23,7 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
+import render.Renderer;
 import utils.vec.Vec2f;
 import utils.vec.Vec3f;
 
@@ -35,15 +36,22 @@ public int width=800,height=600;
 
 public int fps;
 private String sec="";
-
-private GuiType guit = new GuiType(GuiType.Menu);
+private final Renderer rend;
+private final GuiType guit = new GuiType(GuiType.Init);
 private final GuiMain guim= new GuiMain();
-private final GuiRenderer guir= new GuiRenderer();
+private final GuiRenderer guir ;
 
 private final Vec3f plcoord = new Vec3f(0,0,0);
 private final Vec2f cmcoord = new Vec2f();
 
-public static void frame(){
+public Gui(Renderer rend){
+ this.rend = rend;
+ this.guir = new GuiRenderer(rend);
+ 
+ frame();
+}
+
+public void frame(){
     java.awt.Frame frame = new java.awt.Frame("The Game");
     frame.setSize(800,600);
     frame.setLayout(new java.awt.BorderLayout());
@@ -61,7 +69,7 @@ public static void frame(){
     GLCanvas canvas = new GLCanvas();
     animator.add(canvas);
 
-    final Gui gears = new Gui();
+    final Gui gears = this;
     canvas.addGLEventListener(gears);
 
     frame.add(canvas, java.awt.BorderLayout.CENTER);
@@ -76,15 +84,14 @@ public static void frame(){
     animator.start();
    }
 
-
-    @Override
-    public void dispose(GLAutoDrawable gl) {
+   @Override
+   public void dispose(GLAutoDrawable gl) {
     System.err.println("Display: Dispose");
-    }
+   }
     
     
     @Override
-    public void display(GLAutoDrawable drawable) {
+    public void display(GLAutoDrawable drawable) { // Render
         
     gl = drawable.getGL().getGL2();
 
@@ -115,7 +122,7 @@ public static void frame(){
     fps=0;
    }
    // FPS
-    }
+  }
 
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -248,6 +255,4 @@ gl = drawable.getGL().getGL2();
         cmcoord.y += thetaY;
       }
   }
-
-
 }

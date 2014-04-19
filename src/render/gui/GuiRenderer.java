@@ -1,10 +1,14 @@
 package render.gui;
 
 import javax.media.opengl.GLAutoDrawable;
+import render.Renderer;
 
 public class GuiRenderer {
- public GuiRenderer(){
-  
+ private Renderer rend;
+ public GuiRenderer(Renderer rend){
+
+   this.rend = rend;
+
  }
     
  public void render(GLAutoDrawable drawable){
@@ -35,6 +39,6 @@ public class GuiRenderer {
     
 }*/
     
-    //level.render();
+  rend.render();
  }
 }

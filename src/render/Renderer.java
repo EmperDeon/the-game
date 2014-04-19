@@ -1,29 +1,31 @@
 package render;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
 import level.Level;
 import player.Player;
 import render.gui.Gui;
+import utils.MTimer;
+import utils.TermEx;
 import utils.vec.Vec2f;
 import utils.vec.Vec3f;
 
 public class Renderer implements Runnable{
 public static boolean running = true;
-public boolean b=true;
-public static Player player;
-public static GL2 gl;
-public static GLU glu;
 public int width=800,height=600;
-private Level level;
-private final Gui gui = new Gui();
+public Level level;
+
+private MTimer timer;
+private Player player;
+
+private final Gui gui = new Gui(this);
 private final Vec3f plcoord = new Vec3f(0,0,0);
 private final Vec2f cmcoord = new Vec2f();
 
 private String sec="";
 public int fps=0;
-public void init(){
- gui.frame();
+public void init() throws TermEx{
+  this.level  = new Level("World1"); 
+  this.player = new Player(new Vec3f(0,0,0),level);
+  this.timer  = new MTimer();
 }
 
 public static void destroy(){
@@ -31,10 +33,15 @@ public static void destroy(){
 }
 @Override
 public void run(){
- init();
- 
- destroy();
+ try {
+  init();
+  
+  destroy();
+ } catch ( TermEx ex ) {
+  Thread.currentThread().interrupt();
+ }
 }
 
+public void render(){}
     
 }
