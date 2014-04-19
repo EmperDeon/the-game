@@ -1,5 +1,4 @@
-package main;
-/*public class MyRobot {
+public class MyRobot {
     public static void main(String[] args) {
         myFrame frame = new myFrame(); // создаем объект класса myFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // задаем действие обработчику на кнопку "крестик"
@@ -43,6 +42,6 @@ class myFrame extends JFrame
         pane.add(panel); // добавляем нашу панель в контейнер
         pack(); // задает размер нашему фрейму исходя из размеров нашей кнопки
     }
-}*/
+}
  
 
