@@ -1,16 +1,37 @@
 package render.gui;
 
+import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import render.Renderer;
 
 public class GuiRenderer {
- private Renderer rend;
+ private final Renderer rend;
  public GuiRenderer(Renderer rend){
 
    this.rend = rend;
 
  }
     
+ public void init(GLAutoDrawable drawable) {  
+
+    GL2 gl  = drawable.getGL().getGL2();
+   // glu = new GLU();
+
+    float pos[] = { 5.0f, 5.0f, 10.0f, 0.0f };
+    float red[] = { 0.8f, 0.1f, 0.0f, 0.7f };
+    float green[] = { 0.0f, 0.8f, 0.2f, 0.7f };
+    float blue[] = { 0.2f, 0.2f, 1.0f, 0.7f };
+
+    gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, pos, 0);
+    gl.glEnable(GL2.GL_CULL_FACE);
+    gl.glEnable(GL2.GL_LIGHTING);
+    gl.glEnable(GL2.GL_LIGHT0);
+    gl.glEnable(GL2.GL_DEPTH_TEST);
+    gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_LINE);
+    
+    gl.glEnable(GL2.GL_NORMALIZE);
+   }
+ 
  public void render(GLAutoDrawable drawable){
    /*
    if(b) gl.glPopMatrix();

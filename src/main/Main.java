@@ -10,8 +10,11 @@ import utils.TermEx;
 public class Main implements Runnable{
     
  public static final Error err=new Error();
- public static Thread Tm = new Thread(new Main());
- public static Thread Tr = new Thread(new render.Renderer());
+ 
+ public final static render.Renderer rend = new render.Renderer();
+ public static Thread Tm = new Thread( new Main() );
+ public static Thread Tr = new Thread( rend );
+
  public boolean running = true;
  public final static String mdir = "/usr/games/game/"; 
  
@@ -20,11 +23,14 @@ public class Main implements Runnable{
  private ModContainer mods;
  private CoreModContainer core;
   
- public void init() throws TermEx{ 
+ public void init() throws TermEx, InterruptedException{ 
   this.opt    = new Options(mdir + "options.db");
 
   this.core   = new CoreModContainer();
   this.mods   = new ModContainer();
+  
+  Thread.sleep(3000);
+  rend.initfinal();
  }
  
  @Override
@@ -40,7 +46,9 @@ public class Main implements Runnable{
   }catch(TermEx ex){//System.getProperties().list(System.out);
    System.err.println(ex.s);
    Tm.interrupt();
-  } // | InterruptedException
+  } catch ( InterruptedException ex ) {
+   
+  } 
  }
   
 
@@ -53,6 +61,6 @@ public class Main implements Runnable{
  
  public static void main(String[] args){
   Tm.start();
-  //Tr.start();
+  Tr.start();
  }   
 }

@@ -1,12 +1,7 @@
 package render.gui;
 
 import com.jogamp.newt.Window;
-import com.jogamp.newt.event.KeyAdapter;
-import com.jogamp.newt.event.KeyEvent;
-import com.jogamp.newt.event.KeyListener;
-import com.jogamp.newt.event.MouseAdapter;
-import com.jogamp.newt.event.MouseEvent;
-import com.jogamp.newt.event.MouseListener;
+import com.jogamp.newt.event.*;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.newt.event.awt.AWTMouseAdapter;
 import com.jogamp.opengl.util.Animator;
@@ -22,38 +17,35 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
-import javax.media.opengl.glu.GLU;
 import render.Renderer;
 import utils.vec.Vec2f;
 import utils.vec.Vec3f;
 
 public class Gui implements GLEventListener{
-public static boolean running = true;
-public boolean b=true;
-public static GL2 gl;
-public static GLU glu;
-public int width=800,height=600;
+ public static boolean running = true;
+ public int width=800,height=600;
 
-public int fps;
-private String sec="";
-private final Renderer rend;
-private final GuiType guit = new GuiType(GuiType.Init);
-private final GuiMain guim= new GuiMain();
-private final GuiRenderer guir ;
-
-private final Vec3f plcoord = new Vec3f(0,0,0);
-private final Vec2f cmcoord = new Vec2f();
-
-public Gui(Renderer rend){
- this.rend = rend;
- this.guir = new GuiRenderer(rend);
+ public int fps;
  
- frame();
-}
+ private String sec="";
+ private final Renderer rend;
+ private final GuiType guit = new GuiType(GuiType.Init);
+ private final GuiMain guim= new GuiMain();
+ private final GuiRenderer guir ;
 
-public void frame(){
+ private final Vec3f plcoord = new Vec3f(0,0,0);
+ private final Vec2f cmcoord = new Vec2f();
+
+ public Gui(Renderer rend){
+  this.rend = rend;
+  this.guir = new GuiRenderer(rend);
+ 
+  frame();
+ }
+
+public final void frame(){
     java.awt.Frame frame = new java.awt.Frame("The Game");
-    frame.setSize(800,600);
+    frame.setSize(width,height);
     frame.setLayout(new java.awt.BorderLayout());
 
     final Animator animator = new Animator();
@@ -92,23 +84,25 @@ public void frame(){
     
     @Override
     public void display(GLAutoDrawable drawable) { // Render
-        
-    gl = drawable.getGL().getGL2();
+     if(guit.type != GuiType.Init)    {
+      GL2 gl = drawable.getGL().getGL2();
 
-    gl.glClearColor(0.0f, 0.4f, 1.0f, 0.0f);
+      gl.glClearColor(0.0f, 0.4f, 1.0f, 0.0f);
 
-    if (GLProfile.isAWTAvailable() && 
-        (drawable instanceof javax.media.opengl.awt.GLJPanel) &&
-        !((javax.media.opengl.awt.GLJPanel) drawable).isOpaque() &&
-        ((javax.media.opengl.awt.GLJPanel) drawable).shouldPreserveColorBufferIfTranslucent()) {
-      gl.glClear(GL2.GL_DEPTH_BUFFER_BIT);
-    } else {
-      gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
-    }
+      if (GLProfile.isAWTAvailable() && 
+       (drawable instanceof javax.media.opengl.awt.GLJPanel) &&
+       !((javax.media.opengl.awt.GLJPanel) drawable).isOpaque() &&
+       ((javax.media.opengl.awt.GLJPanel) drawable).shouldPreserveColorBufferIfTranslucent()) {
+       gl.glClear(GL2.GL_DEPTH_BUFFER_BIT);
+      } else {
+       gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+      }
+     }
     switch(guit.type)
     {
-     case GuiType.Menu:guim.render(drawable);
-     case GuiType.Game:guir.render(drawable);
+     case GuiType.Init:guim.renderI(drawable); ;
+     case GuiType.Menu:guim.renderM(drawable);
+   //  case GuiType.Game:guir.render(drawable);
     }
    
     
@@ -126,10 +120,9 @@ public void frame(){
 
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-          System.err.println("Gears: Reshape "+x+"/"+y+" "+width+"x"+height);
-gl = drawable.getGL().getGL2();
-    gl.setSwapInterval(1);
-    this.width=width;
+     GL2 gl = drawable.getGL().getGL2();
+     gl.setSwapInterval(1);
+ /*   this.width=width;
     this.height=height;
     float h = (float)height / (float)width;
             
@@ -140,27 +133,18 @@ gl = drawable.getGL().getGL2();
     gl.glMatrixMode(GL2.GL_MODELVIEW);
     gl.glLoadIdentity();
     gl.glTranslatef(0.0f, 0.0f, -40.0f);
-
+*/ 
+    switch(guit.type)
+     {
+      case GuiType.Init:guim.reshapeI(drawable); ;
+      case GuiType.Menu:guim.reshapeM(drawable);
+     }
     }
 
     @Override
-   public void init(GLAutoDrawable drawable) {
-  //  player = new Player(new Vec3f(0,0,0),level);   
-
-    gl  = drawable.getGL().getGL2();
-    glu = new GLU();
-
-    float pos[] = { 5.0f, 5.0f, 10.0f, 0.0f };
-    float red[] = { 0.8f, 0.1f, 0.0f, 0.7f };
-    float green[] = { 0.0f, 0.8f, 0.2f, 0.7f };
-    float blue[] = { 0.2f, 0.2f, 1.0f, 0.7f };
-
-    gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, pos, 0);
-    gl.glEnable(GL2.GL_CULL_FACE);
-    gl.glEnable(GL2.GL_LIGHTING);
-    gl.glEnable(GL2.GL_LIGHT0);
-    gl.glEnable(GL2.GL_DEPTH_TEST);
-    gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_LINE);   
+   public void init(GLAutoDrawable drawable) {  
+  
+    
   //  gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);
     /* make the gears 
     if(0>=gear1) {
@@ -174,8 +158,7 @@ gl = drawable.getGL().getGL2();
         System.out.println("gear1 list reused: "+gear1);
     }
     */        
-    gl.glEnable(GL2.GL_NORMALIZE);
-
+    guim.initI(drawable);
  
     MouseListener Mouse = new RMouseAdapter();    
     KeyListener Keyboard = new RKeyAdapter();
@@ -190,7 +173,9 @@ gl = drawable.getGL().getGL2();
         new AWTKeyAdapter(Keyboard).addTo(comp);
     }
     }
-
+public void initfinal(){
+ this.guit.type = GuiType.Menu;
+}
 //---------------------------
 
   class RKeyAdapter extends KeyAdapter {      

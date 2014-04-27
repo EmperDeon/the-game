@@ -20,8 +20,6 @@ private final Gui gui = new Gui(this);
 private final Vec3f plcoord = new Vec3f(0,0,0);
 private final Vec2f cmcoord = new Vec2f();
 
-private String sec="";
-public int fps=0;
 public void init() throws TermEx{
   this.level  = new Level("World1"); 
   this.player = new Player(new Vec3f(0,0,0),level);
@@ -31,6 +29,7 @@ public void init() throws TermEx{
 public static void destroy(){
  
 }
+
 @Override
 public void run(){
  try {
@@ -42,6 +41,12 @@ public void run(){
  }
 }
 
-public void render(){}
+public void render(){
+ level.render();
+}
+
+public void initfinal(){
+ this.gui.initfinal();
+}
     
 }
