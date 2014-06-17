@@ -32,7 +32,7 @@ public class Gui implements GLEventListener{
  private final GuiType guit = new GuiType(GuiType.Init);
  private final GuiMain guim= new GuiMain();
  private final GuiRenderer guir ;
-
+ private GLAutoDrawable drawable;
  private final Vec3f plcoord = new Vec3f(0,0,0);
  private final Vec2f cmcoord = new Vec2f();
 
@@ -84,6 +84,7 @@ public final void frame(){
     
     @Override
     public void display(GLAutoDrawable drawable) { // Render
+     this.drawable = drawable;
      if(guit.type != GuiType.Init)    {
       GL2 gl = drawable.getGL().getGL2();
 
@@ -175,6 +176,7 @@ public final void frame(){
     }
 public void initfinal(){
  this.guit.type = GuiType.Menu;
+ this.guim.initM(drawable);
 }
 //---------------------------
 

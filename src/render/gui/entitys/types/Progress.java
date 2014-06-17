@@ -1,5 +1,6 @@
 package render.gui.entitys.types;
 
+import javax.media.opengl.GLAutoDrawable;
 import utils.vec.Vec4i;
 
 public class Progress extends Entity{
@@ -11,7 +12,7 @@ public class Progress extends Entity{
  }
  
  @Override
- public void render(){
+ public void render(GLAutoDrawable drawable){
   
- };
+ }
 }

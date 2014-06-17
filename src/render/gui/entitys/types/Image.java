@@ -1,0 +1,50 @@
+package render.gui.entitys.types;
+
+import javax.media.opengl.GL2;
+import javax.media.opengl.GLAutoDrawable;
+import render.Tex;
+import render.gui.entitys.Type;
+import utils.vec.Vec4i;
+
+public class Image extends Entity{
+ private final Tex tex;
+ public Image (Tex tex) {
+  super(Type.Image , new Vec4i(0,0,0,0));
+  this.tex = tex;
+  System.out.println(tex.id+" id image");
+ }
+ 
+ @Override
+ public void free( GLAutoDrawable drawable){
+  tex.free(drawable.getGL(), 1);
+ }
+
+ @Override
+ public void render(GLAutoDrawable drawable){
+ 
+  GL2 gl2 = drawable.getGL().getGL2();
+  gl2.glClear(GL2.GL_COLOR_BUFFER_BIT);
+  gl2.glLoadIdentity();
+  gl2.glTranslatef(-1f, 1f, 0);
+  gl2.glScalef(2.0f, -2.0f, 0f);
+                
+  if(tex != null) 
+   tex.bind(gl2,1);
+  
+  gl2.glBegin(GL2.GL_QUADS);
+  gl2.glTexCoord2f(0, 0);
+  gl2.glVertex3f(0.0f, 0.0f, 0.0f);
+                
+  gl2.glTexCoord2f(1, 0);
+  gl2.glVertex3f(1.0f, 0.0f, 0.0f);
+                
+  gl2.glTexCoord2f(1, 1);
+  gl2.glVertex3f(1.0f, 1.0f, 0.0f);
+               
+  gl2.glTexCoord2f(0, 1);
+  gl2.glVertex3f(0.0f, 1.0f, 0.0f);
+  gl2.glEnd();
+  
+  gl2.glBindTexture (GL2.GL_TEXTURE_2D, 0);
+ }
+}

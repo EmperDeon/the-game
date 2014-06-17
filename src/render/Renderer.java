@@ -21,9 +21,9 @@ private final Vec3f plcoord = new Vec3f(0,0,0);
 private final Vec2f cmcoord = new Vec2f();
 
 public void init() throws TermEx{
-  this.level  = new Level("World1"); 
-  this.player = new Player(new Vec3f(0,0,0),level);
-  this.timer  = new MTimer();
+ // this.level  = new Level("World1"); 
+ // this.player = new Player(new Vec3f(0,0,0),level);
+ // this.timer  = new MTimer();
 }
 
 public static void destroy(){
@@ -42,7 +42,7 @@ public void run(){
 }
 
 public void render(){
- level.render();
+// level.render();
 }
 
 public void initfinal(){

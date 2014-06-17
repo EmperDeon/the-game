@@ -12,9 +12,10 @@ public class Main implements Runnable{
  public static final Error err=new Error();
  
  public final static render.Renderer rend = new render.Renderer();
- public static Thread Tm = new Thread( new Main() );
- public static Thread Tr = new Thread( rend );
-
+ public final static Main main = new Main();
+ public final static Thread Tm = new Thread( main );
+ public final static Thread Tr = new Thread( rend );
+ 
  public boolean running = true;
  public final static String mdir = "/usr/games/game/"; 
  
@@ -43,7 +44,7 @@ public class Main implements Runnable{
 //   }
   
    destroy();
-  }catch(TermEx ex){//System.getProperties().list(System.out);
+  }catch(TermEx ex){
    System.err.println(ex.s);
    Tm.interrupt();
   } catch ( InterruptedException ex ) {
