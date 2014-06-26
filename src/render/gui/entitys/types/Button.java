@@ -9,13 +9,13 @@ import render.gui.entitys.Type;
 import utils.vec.Vec4i;
 
 public class Button extends Entity{
- public String s;
- private Boolean firstrun = true; 
- private Tex tex ;
+ private final String s;
+ private final Tex tex ;
  //public Action act;
  public Button ( Vec4i pos , String s /*, Action act*/, Tex tex) {
   super(Type.Button , pos );
   this.s = s;
+  this.tex = tex;
  }
  
  @Override
@@ -31,17 +31,19 @@ public class Button extends Entity{
   tex.bind(gl);
               
   gl2.glBegin(GL2.GL_QUADS);
-   gl2.glTexCoord2f(0, 0);
-   gl2.glVertex3f(0.0f, 0.0f, 0.0f);
   
-   gl2.glTexCoord2f(1f , 0);
-   gl2.glVertex3f(1f, 0.0f, 0.0f);
+   gl2.glTexCoord2f(0.0f, 0.0f);
+   gl2.glVertex3f(  0.0f, 0.0f, 0.0f);
+  
+   gl2.glTexCoord2f(1.0f, 0.0f);
+   gl2.glVertex3f(  1.0f, 0.0f, 0.0f);
    
-   gl2.glTexCoord2f(1f, 1f);
-   gl2.glVertex3f(1f, 1f, 0.0f);
+   gl2.glTexCoord2f(1.0f, 1.0f);
+   gl2.glVertex3f(  1.0f, 1.0f, 0.0f);
    
-   gl2.glTexCoord2f(0, 1f);
-   gl2.glVertex3f(0.0f, 1f, 0.0f);
+   gl2.glTexCoord2f(0.0f, 1.0f);
+   gl2.glVertex3f(  0.0f, 1.0f, 0.0f);
+   
   gl2.glEnd();
    
   tex.unbind(gl);
@@ -57,16 +59,18 @@ public class Button extends Entity{
         gl.glBindTexture(GL2.GL_TEXTURE_2D, var5.getTextureObject());
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_NEAREST);
         gl.glPushMatrix();
+        
         gl.glBegin(GL2.GL_QUADS);
-        gl.glTexCoord2f(0.0F, 1.0F);
-        gl.glVertex3f(var1, var2, 0.0F);
-        gl.glTexCoord2f(1.0F, 1.0F);
-        gl.glVertex3f(var1 + (var3 - var1), var2, 0.0F);
-        gl.glTexCoord2f(1.0F, 0.0F);
-        gl.glVertex3f(var1 + (var3 - var1), var2 + (var4 - var2), 0.0F);
-        gl.glTexCoord2f(0.0F, 0.0F);
-        gl.glVertex3f(var1, var2 + (var4 - var2), 0.0F);
+         gl.glTexCoord2f(0.0F, 1.0F);
+         gl.glVertex3f(var1, var2, 0.0F);
+         gl.glTexCoord2f(1.0F, 1.0F);
+         gl.glVertex3f(var1 + (var3 - var1), var2, 0.0F);
+         gl.glTexCoord2f(1.0F, 0.0F);
+         gl.glVertex3f(var1 + (var3 - var1), var2 + (var4 - var2), 0.0F);
+         gl.glTexCoord2f(0.0F, 0.0F);
+         gl.glVertex3f(var1, var2 + (var4 - var2), 0.0F);
         gl.glEnd();
+        
         gl.glPopMatrix();
         gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
         gl.glDisable(GL2.GL_ALPHA_TEST);
@@ -75,8 +79,8 @@ public class Button extends Entity{
     }
  
  @Override
- public void free(GLAutoDrawable drawable){
-  tex.free(drawable.getGL());
+ public void free(GL gl){
+  tex.free(gl);
  }
  
 }

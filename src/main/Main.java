@@ -30,7 +30,7 @@ public class Main implements Runnable{
   this.core   = new CoreModContainer();
   this.mods   = new ModContainer();
   
-  Thread.sleep(3000);
+  Thread.sleep(1500);
   rend.initfinal();
  }
  

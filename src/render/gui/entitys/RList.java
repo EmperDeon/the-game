@@ -1,8 +1,9 @@
 package render.gui.entitys;
 
-import render.gui.entitys.types.Entity;
 import java.util.ArrayList;
+import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
+import render.gui.entitys.types.Entity;
 
 public class RList {
  public ArrayList<Entity> list;
@@ -26,9 +27,9 @@ public class RList {
   list.clear();
  }
  
- public void free(GLAutoDrawable drawable){
+ public void free(GL gl){
  for(Entity ent : list)
-   ent.free(drawable);
+   ent.free(gl);
   
   }
 }

@@ -1,5 +1,6 @@
 package render.gui.entitys.types;
 
+import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import render.gui.entitys.Type;
 import utils.vec.Vec4i;
@@ -15,5 +16,5 @@ public class Entity {
  
  public void render(GLAutoDrawable drawable){}
  
- public void free( GLAutoDrawable drawable){}
+ public void free(GL gl){}
 }

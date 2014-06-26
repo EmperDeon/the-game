@@ -1,6 +1,5 @@
 package render.gui;
 
-import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import render.Tex;
 import render.gui.entitys.RList;
@@ -15,23 +14,17 @@ public class GuiMain {
   
  }
     
- public void initI(GLAutoDrawable drawable){
+ public void initI(GLAutoDrawable draw){
 
-   rendlist.add(new Image(new Tex(drawable.getGL() ,"/usr/games/game/res/test.png")));
-   //texture = Tex.loadClassPath(drawable.getGL(), "/jogl/util/data/av/test-ntsc01-160x90.png");
+   rendlist.add(new Image(new Tex(draw.getGL() ,"/usr/games/game/res/init.png")));
 
  }
  
- public void initM(GLAutoDrawable drawable){
-  rendlist.free(drawable); 
+ public void initM(GLAutoDrawable draw){
+  rendlist.free(draw.getGL()); 
   rendlist.clear();
 
-   rendlist.add(new Button(new Vec4i(0,0,20,20),
-                "-", 
-                new Tex(
-                 drawable.getGL(),
-                 "/usr/games/game/res/test.png"))
-               );
+  rendlist.add(new Button(new Vec4i(0,0,20,20),"-",new Tex(draw.getGL(),"/usr/games/game/res/bstart.png")));
 
  }
  
@@ -41,14 +34,13 @@ public class GuiMain {
  
  public void renderI(GLAutoDrawable draw){
   rendlist.render(draw);
-  draw.getGL().getGL2().glBindTexture(GL2.GL_TEXTURE_2D , 0);
  }
   
- public void renderM(GLAutoDrawable drawable){
-  rendlist.render(drawable);
+ public void renderM(GLAutoDrawable draw){
+  rendlist.render(draw);
  }
 
- public void reshapeM(GLAutoDrawable drawable){
+ public void reshapeM(GLAutoDrawable draw){
  }
  
 }

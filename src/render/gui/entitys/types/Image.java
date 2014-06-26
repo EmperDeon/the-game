@@ -1,5 +1,6 @@
 package render.gui.entitys.types;
 
+import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import render.Tex;
@@ -11,25 +12,24 @@ public class Image extends Entity{
  public Image (Tex tex) {
   super(Type.Image , new Vec4i(0,0,0,0));
   this.tex = tex;
-  System.out.println(tex.id+" id image");
  }
  
  @Override
- public void free( GLAutoDrawable drawable){
-  tex.free(drawable.getGL(), 1);
+ public void free( GL gl){
+  tex.free(gl);
  }
 
  @Override
  public void render(GLAutoDrawable drawable){
- 
-  GL2 gl2 = drawable.getGL().getGL2();
+  GL gl = drawable.getGL();
+  GL2 gl2 = gl.getGL2();
+  
   gl2.glClear(GL2.GL_COLOR_BUFFER_BIT);
   gl2.glLoadIdentity();
   gl2.glTranslatef(-1f, 1f, 0);
   gl2.glScalef(2.0f, -2.0f, 0f);
                 
-  if(tex != null) 
-   tex.bind(gl2,1);
+   tex.bind(gl);
   
   gl2.glBegin(GL2.GL_QUADS);
   gl2.glTexCoord2f(0, 0);
@@ -45,6 +45,6 @@ public class Image extends Entity{
   gl2.glVertex3f(0.0f, 1.0f, 0.0f);
   gl2.glEnd();
   
-  gl2.glBindTexture (GL2.GL_TEXTURE_2D, 0);
+  tex.unbind(gl);
  }
 }

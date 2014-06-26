@@ -1,42 +1,37 @@
 package render;
- import com.jogamp.opengl.util.texture.Texture;
- import com.jogamp.opengl.util.texture.TextureData;
- import com.jogamp.opengl.util.texture.TextureIO;
+ import com.jogamp.common.util.IOUtil;
+ import com.jogamp.opengl.util.texture.*;
  import static com.jogamp.opengl.util.texture.TextureIO.newTextureData;
- import java.io.File;
- import java.io.IOException;
- import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
- import javax.media.opengl.GLException;
- import javax.media.opengl.GLProfile;
+ import java.io.*;
+ import javax.media.opengl.*;
  import main.Main;
      
  public class Tex {
-  private Texture text;
+  private Texture texture;
   
   public Tex(GL gl, String s) {
    try {
-    File file = new File ("/usr/games/game/res/bsett.png");
+    File file = new File (s);
     GLProfile glp = gl.getGLProfile();
-    TextureData data = newTextureData(glp, file, false, TextureIO.PNG);
-    this.text = new Texture(gl, data);
+    TextureData data = newTextureData(glp, file, true, IOUtil.getFileSuffix(file));
+    this.texture = new Texture(gl, data);
     data.flush();
    } catch ( IOException | GLException ex ) {
-    Main.err.add("Button . render()", ex);
+    Main.err.add("Tex . init()", ex);
    }
   }
      
   public void bind(GL gl) {
-   text.enable(gl);
-   text.bind(gl);
-   gl.getGL2().glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL.GL_REPLACE);
+   texture.enable(gl);
+   texture.bind(gl);
+   //gl.getGL2().glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL.GL_REPLACE);
   }
   
   public void free(GL gl) {
-   text.destroy(gl);
+   texture.destroy(gl);
   }
   
   public void unbind(GL gl) {
-   text.disable(gl);
+   texture.disable(gl);
   }
  }
