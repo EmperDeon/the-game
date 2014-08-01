@@ -48,7 +48,7 @@ public Chunk getCh(int x,int y){
 }
 
 public ArrayList<Chunk> getAllCh(){
- ArrayList<Chunk> c = new ArrayList();
+ ArrayList<Chunk> c = new ArrayList<>();
  for(int cx = 0;cx<8;cx++)   
   for(int cy = 0;cy<8;cy++)
    c.add(chs[cx][cy]);

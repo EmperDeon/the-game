@@ -1,15 +1,15 @@
 package basemod;
 
-import utils.Id;
+import utils.Iid;
 
 public class Block {
     
-public Id Texid[];
+public Iid Texid[];
 public Integer modid;
 public String parametres[];
 //public Guiblock gui;
 
-public Block Block(Id[] Texs,String[] param){
+public Block Block(Iid[] Texs,String[] param){
     this.Texid=Texs;
     this.parametres=param;
     

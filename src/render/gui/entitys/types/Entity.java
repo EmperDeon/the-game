@@ -3,13 +3,13 @@ package render.gui.entitys.types;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import render.gui.entitys.Type;
-import utils.vec.Vec4i;
+import utils.vec.Vec4;
 
 public class Entity {
  public Type t;
- public Vec4i pos;
+ public Vec4<Double> pos;
 
- public Entity(int t, Vec4i pos){
+ public Entity(int t, Vec4<Double> pos){
   this.t = new Type(t);
   this.pos = pos;
  }

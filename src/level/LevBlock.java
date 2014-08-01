@@ -2,19 +2,19 @@ package level;
 
 import java.util.ArrayList;
 import main.Main;
-import utils.Id;
+import utils.Iid;
 import utils.Separ;
 import utils.TId;
 
 public class LevBlock {
 
 public Boolean Bparams;    
-public Id id;
+public Iid id;
 public TId tid;
-public ArrayList<String> param= new ArrayList();
+public ArrayList<String> param= new ArrayList<>();
 //public Guiblock gui;
 
-public LevBlock(Id id,TId tid,ArrayList<String> param){
+public LevBlock(Iid id,TId tid,ArrayList<String> param){
  this.id=id;
  this.tid=tid;
  if(param!=null) {
@@ -33,12 +33,12 @@ public String getparam(String key){
     }
    }
   }catch(Exception e){
-   Main.err.add("LevBlock", e);
+   Main.err.addE("LevBlock", e);
   }
   return(s);
  }
 
- public Id getId(){
+ public Iid getId(){
   return this.id;
  }
 }

@@ -7,7 +7,7 @@ public class CoreModContainer {
  private final String dir;
  
  public CoreModContainer(){
-  this.cont = new ArrayList();
+  this.cont = new ArrayList<>();
   this.dir = main.Main.mdir + "coremods/";
  }
  

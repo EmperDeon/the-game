@@ -1,12 +1,12 @@
 package render.gui.entitys.types;
 
 import javax.media.opengl.GLAutoDrawable;
-import utils.vec.Vec4i;
+import utils.vec.Vec4;
 
 public class Progress extends Entity{
  public int prog;
  
- public Progress ( int t , Vec4i pos ,int prog) {
+ public Progress ( int t , Vec4<Double> pos ,int prog) {
   super(t , pos);
   this.prog = prog;
  }

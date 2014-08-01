@@ -6,16 +6,16 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import render.Tex;
 import render.gui.entitys.Type;
-import utils.vec.Vec4i;
+import utils.vec.Vec4;
 
 public class Button extends Entity{
  private final String s;
  private final Tex tex ;
  //public Action act;
- public Button ( Vec4i pos , String s /*, Action act*/, Tex tex) {
+ public Button (GLAutoDrawable draw, Vec4<Double> pos , String s /*, Action act*/, String t) {
   super(Type.Button , pos );
   this.s = s;
-  this.tex = tex;
+  this.tex = new Tex(draw.getGL(), t);
  }
  
  @Override

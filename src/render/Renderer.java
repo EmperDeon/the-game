@@ -5,8 +5,6 @@ import player.Player;
 import render.gui.Gui;
 import utils.MTimer;
 import utils.TermEx;
-import utils.vec.Vec2f;
-import utils.vec.Vec3f;
 
 public class Renderer implements Runnable{
 public static boolean running = true;
@@ -17,8 +15,6 @@ private MTimer timer;
 private Player player;
 
 private final Gui gui = new Gui(this);
-private final Vec3f plcoord = new Vec3f(0,0,0);
-private final Vec2f cmcoord = new Vec2f();
 
 public void init() throws TermEx{
  // this.level  = new Level("World1"); 

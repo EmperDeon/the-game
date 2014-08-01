@@ -5,13 +5,12 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import render.Tex;
 import render.gui.entitys.Type;
-import utils.vec.Vec4i;
 
-public class Image extends Entity{
+public class LoadingI extends Entity{
  private final Tex tex;
- public Image (Tex tex) {
-  super(Type.Image , new Vec4i(0,0,0,0));
-  this.tex = tex;
+ public LoadingI (GLAutoDrawable draw, String s) {
+  super(Type.Image , null);
+  tex = new Tex(draw.getGL() ,s);
  }
  
  @Override
@@ -32,17 +31,19 @@ public class Image extends Entity{
    tex.bind(gl);
   
   gl2.glBegin(GL2.GL_QUADS);
-  gl2.glTexCoord2f(0, 0);
-  gl2.glVertex3f(0.0f, 0.0f, 0.0f);
+  
+   gl2.glTexCoord2f(0.0f, 0.0f);
+   gl2.glVertex3f(  0.0f, 1.0f, 0.0f);
+                 
+   gl2.glTexCoord2f(1.0f, 0.0f);
+   gl2.glVertex3f(  1.0f, 1.0f, 0.0f);
+                 
+   gl2.glTexCoord2f(1.0f, 1.0f);
+   gl2.glVertex3f(  1.0f, 0.0f, 0.0f);
                 
-  gl2.glTexCoord2f(1, 0);
-  gl2.glVertex3f(1.0f, 0.0f, 0.0f);
-                
-  gl2.glTexCoord2f(1, 1);
-  gl2.glVertex3f(1.0f, 1.0f, 0.0f);
-               
-  gl2.glTexCoord2f(0, 1);
-  gl2.glVertex3f(0.0f, 1.0f, 0.0f);
+   gl2.glTexCoord2f(0.0f, 1.0f);
+   gl2.glVertex3f(  0.0f, 0.0f, 0.0f);
+   
   gl2.glEnd();
   
   tex.unbind(gl);

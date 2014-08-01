@@ -9,12 +9,12 @@ public class ModContainer {
  private final String dir;
  
  public ModContainer(){
-  this.cont=new ArrayList();
+  this.cont=new ArrayList<>();
   this.dir = main.Main.mdir + "mods/";
  }
  
  public ModContainer(String dir,BaseMod b){
-  this.cont=new ArrayList();
+  this.cont=new ArrayList<>();
   this.cont.add(b);
   this.dir=dir;
  }

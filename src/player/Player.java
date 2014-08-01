@@ -1,18 +1,18 @@
 package player;
 
 import level.Level;
-import utils.vec.Vec2f;
-import utils.vec.Vec3f;
+import utils.vec.Vec2;
+import utils.vec.Vec3;
 
 public class Player {
-private String name = "";    
-public Vec3f coord ;
-public Vec2f cam = new Vec2f();
+private final String name = "";    
+public Vec3<Double> coord ;
+public Vec2<Double> cam = new Vec2<>();
 private final Level level;
 
 private Health health;
 
-public Player (Vec3f coord,Level level){
+public Player (Vec3<Double> coord,Level level){
  this.level=level;
  this.coord=coord;
 }

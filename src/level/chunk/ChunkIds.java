@@ -3,8 +3,8 @@ package level.chunk;
 import java.util.ArrayList;
 
 public class ChunkIds {
- private final ArrayList<Integer> id = new ArrayList();
- private final ArrayList<ChunkId> chid = new ArrayList();
+ private final ArrayList<Integer> id = new ArrayList<>();
+ private final ArrayList<ChunkId> chid = new ArrayList<>();
  
  public ChunkIds(){
   // 

@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import level.LevBlock;
 import main.Main;
 import utils.TermEx;
-import utils.vec.Vec3i;
+import utils.vec.Vec3;
 
 public final class ChunkContainer {
  
     
- private final ArrayList<Chunk> chs = new ArrayList();
+ private final ArrayList<Chunk> chs = new ArrayList<>();
  private final ChunkIds ids = new ChunkIds();
  private final OctChunkIds oids;
- private final ArrayList<ChunkId> rch= new ArrayList();
+ private final ArrayList<ChunkId> rch= new ArrayList<>();
  
  private int last = 0;
  private final String dir;//  game/save/name/
@@ -38,7 +38,7 @@ public final class ChunkContainer {
  }
  
  public void gen(String name, int chpr){
-  ArrayList<OctChunk> oct = new ArrayList();   
+  ArrayList<OctChunk> oct = new ArrayList<>();   
   for(int x = -(chpr/8);x<=(chpr/8);x++)  
    for(int y = -(chpr/8);y<=(chpr/8);y++){
     oct.add(new OctChunk(name,x,y)); 
@@ -55,7 +55,7 @@ public final class ChunkContainer {
     serial.writeObject(oc);
     serial.flush();
    }catch (IOException ex) {
-    Main.err.add("OctChunkIds . Save()", ex);
+    Main.err.addE("OctChunkIds . Save()", ex);
     System.err.println(oc.getD());
    }
   }
@@ -93,17 +93,17 @@ public final class ChunkContainer {
   
  }
 
- public void redact(ChunkId cpos, Vec3i bpos, LevBlock block){
+ public void redact(ChunkId cpos, Vec3<Integer> bpos, LevBlock block){
   chs.get(ids.getIdC(cpos.x, cpos.y)).redact(bpos,block);
  }
  
- public void redactObl(ChunkId cpos, Vec3i pos1, Vec3i pos2, LevBlock block){
+ public void redactObl(ChunkId cpos, Vec3<Integer> pos1, Vec3<Integer> pos2, LevBlock block){
   chs.get(ids.getIdC(cpos.x, cpos.y)).redactObl(pos1, pos2, block);
  }
  
  public void loadOct(String file){
  try{
-   ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.dir+"rg/"+file)));
+   ObjectInputStream serial = new ObjectInputStream(new FileInputStream(this.dir+"rg/"+file));
    addAll((OctChunk)serial.readObject());
  }catch(IOException | ClassNotFoundException ex){
   ex.printStackTrace();
@@ -147,7 +147,7 @@ System.out.println("Loaded: " + file + " : " +chs.size() );
       serial.flush();
       System.out.println("Saved:" + file);
      }catch (IOException ex) {
-      Main.err.add("ChunkContainer . Save()", ex);
+      Main.err.addE("ChunkContainer . Save()", ex);
      }
     }
    }

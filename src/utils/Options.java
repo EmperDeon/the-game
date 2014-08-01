@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class Options implements Serializable{
- private ArrayList<String> opt=new ArrayList();   
+ private ArrayList<String> opt=new ArrayList<>();   
  private String file;
  private String dir;
   
@@ -55,7 +55,7 @@ public final class Options implements Serializable{
    }
   }   
  }catch(Exception ex){
-  main.Main.err.add("Options.load()",ex);
+  main.Main.err.addE("Options.load()",ex);
  }
 }
  public String getDir(String file){
@@ -65,7 +65,7 @@ public final class Options implements Serializable{
   if(file.lastIndexOf("\\")!=-1){   
    return file.substring(0, file.lastIndexOf("\\")+1);
   }else{
-   main.Main.err.add("Options.getDir()",new Exception());
+   main.Main.err.addE("Options.getDir()",new Exception());
    return null;
    }
   }
@@ -88,7 +88,7 @@ public final class Options implements Serializable{
    for(int i=0; i<opt.size();i++)
     writer.write(this.opt.get(i)+"\n");
   } catch (IOException ex) {
-      main.Main.err.add("Options.save()",ex);
+      main.Main.err.addE("Options.save()",ex);
   }
  }
 }

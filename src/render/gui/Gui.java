@@ -18,8 +18,8 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import render.Renderer;
-import utils.vec.Vec2f;
-import utils.vec.Vec3f;
+import utils.vec.Vec2;
+import utils.vec.Vec3;
 
 public class Gui implements GLEventListener{
  public static boolean running = true;
@@ -33,8 +33,8 @@ public class Gui implements GLEventListener{
  private final GuiMain guim= new GuiMain();
  private final GuiRenderer guir ;
  private GLAutoDrawable drawable;
- private final Vec3f plcoord = new Vec3f(0,0,0);
- private final Vec2f cmcoord = new Vec2f();
+ private final Vec3<Double> plcoord = new Vec3(0,0,0);
+ private final Vec2<Double> cmcoord = new Vec2(0,0);
 
  public Gui(Renderer rend){
   this.rend = rend;
