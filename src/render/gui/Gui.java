@@ -23,10 +23,10 @@ import utils.vec.Vec3;
 
 public class Gui implements GLEventListener{
  public static boolean running = true;
- public int width=800,height=600;
-
+ 
  public int fps;
  
+ private final Vec2<Integer> wh;
  private String sec="";
  private final Renderer rend;
  private final GuiType guit = new GuiType(GuiType.Init);
@@ -39,13 +39,16 @@ public class Gui implements GLEventListener{
  public Gui(Renderer rend){
   this.rend = rend;
   this.guir = new GuiRenderer(rend);
- 
+  wh = new Vec2<>();
+  wh.sX(640);//wh.sX(main.Main.OPTIONS.getI("gui_w"));
+  wh.sY(360);//wh.sY(main.Main.OPTIONS.getI("gui_h"));
+  
   frame();
  }
 
 public final void frame(){
     java.awt.Frame frame = new java.awt.Frame("The Game");
-    frame.setSize(width,height);
+    frame.setSize(wh.gX(),wh.gY());
     frame.setLayout(new java.awt.BorderLayout());
 
     final Animator animator = new Animator();
@@ -101,8 +104,8 @@ public final void frame(){
      }
     switch(guit.type)
     {
-     case GuiType.Init:guim.renderI(drawable); ;
-     case GuiType.Menu:guim.renderM(drawable);
+     case GuiType.Init:guim.render(drawable); ;
+     case GuiType.Menu:guim.render(drawable);
    //  case GuiType.Game:guir.render(drawable);
     }
    
@@ -137,8 +140,8 @@ public final void frame(){
 */ 
     switch(guit.type)
      {
-      case GuiType.Init:guim.reshapeI(drawable); ;
-      case GuiType.Menu:guim.reshapeM(drawable);
+      case GuiType.Init:guim.reshape(drawable); ;
+      case GuiType.Menu:guim.reshape(drawable);
      }
     }
 
@@ -183,7 +186,7 @@ public void initfinal(){
   class RKeyAdapter extends KeyAdapter {      
     @Override
     public void keyPressed(KeyEvent e) {
-        int kc = e.getKeyCode();
+     /*   int kc = e.getKeyCode();
         if(KeyEvent.VK_ESCAPE == kc){
          running=false;   
         } else if(KeyEvent.VK_LEFT == kc) {
@@ -201,8 +204,8 @@ public void initfinal(){
         } else if(KeyEvent.VK_A == kc) {
          cmcoord.x -= 1;
         } else if(KeyEvent.VK_D == kc) {
-         cmcoord.x += 1;
-        }
+         cmcoord.gX() += 1;
+        }*/
     }
   }
   
@@ -232,14 +235,14 @@ public void initfinal(){
         int x = e.getX();
         int y = e.getY();
 
-        float thetaY = 360.0f * ( (float)(x-prevx)/(float)width);
-        float thetaX = 360.0f * ( (float)(prevy-y)/(float)height);
+        float thetaY = 360.0f * ( (float)(x-prevx)/(float)wh.gX());
+        float thetaX = 360.0f * ( (float)(prevy-y)/(float)wh.gY());
         
         prevx = x;
         prevy = y;
         
-        cmcoord.x += thetaX;
-        cmcoord.y += thetaY;
+  //      cmcoord.x += thetaX;
+  //      cmcoord.y += thetaY;
       }
   }
 }

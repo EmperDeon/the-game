@@ -3,21 +3,25 @@ package render.gui.entitys.types;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
-import render.Tex;
 import render.gui.entitys.Type;
+import render.tex.Tex;
+import render.tex.TexCoords;
 
 public class LoadingI extends Entity{
  private final Tex tex;
- public LoadingI (GLAutoDrawable draw, String s) {
+ public LoadingI (GLAutoDrawable draw, Tex tex) {
   super(Type.Image , null);
-  tex = new Tex(draw.getGL() ,s);
+  this.tex = tex;
  }
  
  @Override
  public void free( GL gl){
   tex.free(gl);
  }
-
+ 
+ @Override
+ public void action(){}
+ 
  @Override
  public void render(GLAutoDrawable drawable){
   GL gl = drawable.getGL();
@@ -29,23 +33,24 @@ public class LoadingI extends Entity{
   gl2.glScalef(2.0f, -2.0f, 0f);
                 
    tex.bind(gl);
-  
+   TexCoords crd = tex.getCoords();
   gl2.glBegin(GL2.GL_QUADS);
   
-   gl2.glTexCoord2f(0.0f, 0.0f);
-   gl2.glVertex3f(  0.0f, 1.0f, 0.0f);
-                 
-   gl2.glTexCoord2f(1.0f, 0.0f);
-   gl2.glVertex3f(  1.0f, 1.0f, 0.0f);
-                 
-   gl2.glTexCoord2f(1.0f, 1.0f);
-   gl2.glVertex3f(  1.0f, 0.0f, 0.0f);
-                
-   gl2.glTexCoord2f(0.0f, 1.0f);
+   gl2.glTexCoord2f(crd.left(), crd.top());
    gl2.glVertex3f(  0.0f, 0.0f, 0.0f);
+                 
+   gl2.glTexCoord2f(crd.right(), crd.top());
+   gl2.glVertex3f(  1.0f, 0.0f, 0.0f);
+                 
+   gl2.glTexCoord2f(crd.right(), crd.bottom());
+   gl2.glVertex3f(  1.0f, 1.0f, 0.0f);
+                
+   gl2.glTexCoord2f(crd.left(), crd.bottom());
+   gl2.glVertex3f(  0.0f, 1.0f, 0.0f);
    
   gl2.glEnd();
   
   tex.unbind(gl);
  }
+ 
 }

@@ -1,6 +1,6 @@
 package basemod;
 import java.util.ArrayList;
-import render.Tex;
+import render.tex.Tex;
 import utils.TId;
 import utils.vec.Vec4;
 public class BaseMod {

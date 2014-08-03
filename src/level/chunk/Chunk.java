@@ -13,10 +13,11 @@ public class Chunk implements Serializable{
  public int idx;
  public int idy;
  public ArrayList<RendTexCoord> Texrend;
- 
+ public ChunkId id;
  public Chunk(int x,int y){
   this.idx=x;
   this.idy=y;
+  this.id = new ChunkId(x,y);
   //gen();
   blocks=new LevBlock[16][16][256];
   //[16][16][128]
@@ -62,11 +63,11 @@ public class Chunk implements Serializable{
  }
  
  public void redact(Vec3<Integer> pos, LevBlock block){
-  this.blocks[pos.x][pos.y][pos.z] = block;
+  this.blocks[pos.gX()][pos.gY()][pos.gZ()] = block;
  }
  
  public void redactObl(Vec3<Integer> pos1, Vec3<Integer> pos2, LevBlock block){
-  this.blocks[pos1.x][pos1.y][pos1.z] = block;
+  this.blocks[pos1.gX()][pos1.gY()][pos1.gZ()] = block;
  }
  
  public void gen(){

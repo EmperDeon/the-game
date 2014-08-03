@@ -1,17 +1,16 @@
 package utils;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 
 public final class Options implements Serializable{
- private ArrayList<String> opt=new ArrayList<>();   
+ private HashMap<String, String> opt = new HashMap<>();   
  private String file;
  private String dir;
   
@@ -19,44 +18,37 @@ public final class Options implements Serializable{
   this.file=file;
   this.dir=getDir(file);
   load();
-//  System.out.println(err.get());
+ }
+
+ 
+ public String get(String key){   
+  if(this.opt.containsKey(key))
+   return this.opt.get(key);
+  else{
+   main.Main.ERR_LOG.addE("Options.get()",new Exception("Error with getting value with key "+key));
+   return null;
+  }
  }
  
- public Options(String[] opt,String file){
-  this.file=file;
-  this.dir=getDir(file);
-  this.opt.addAll(Arrays.asList(opt));   
+ public Double getD(String key){
+  return Double.parseDouble(get(key));
  }
  
- public String[] get(String opt){  
-  String[] tmp = new String[]{"Err"};   
-  for(int i=0;i<this.opt.size();i++)
-   if(this.opt.get(i).startsWith(opt))
-    tmp = Separ.getval(this.opt.get(i));
-  return tmp;
+ public Integer getI(String key){
+  return Integer.parseInt(get(key));
  }
  
- public void add(String val){
-  this.opt.add(val);
+ public void add(String key, String val){
+  this.opt.put(key , val);
  }
  
- public void load(){
-  try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-   String line;
-   while ((line = reader.readLine()) != null) {
-    if(line.startsWith("!dir")){
-     this.dir=line.split(":")[1];
-    }else{
-    if(line.startsWith("!file")){
-     this.file=line.split(":")[1];
-    }else{
-     add(line);
-    }
-   }
-  }   
- }catch(Exception ex){
-  main.Main.err.addE("Options.load()",ex);
- }
+ public void load(){  
+  try (ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(file))) {
+   serial.writeObject(this);
+  } catch (IOException ex) {
+   main.Main.ERR_LOG.addE("Options.load()", ex);
+  }
+
 }
  public String getDir(String file){
   if(file.lastIndexOf("/")!=-1){
@@ -65,7 +57,7 @@ public final class Options implements Serializable{
   if(file.lastIndexOf("\\")!=-1){   
    return file.substring(0, file.lastIndexOf("\\")+1);
   }else{
-   main.Main.err.addE("Options.getDir()",new Exception());
+   main.Main.ERR_LOG.addE("Options.getDir()",new Exception());
    return null;
    }
   }
@@ -75,20 +67,19 @@ public final class Options implements Serializable{
  }
  
  public void export(String filel){
-  String dirl = getDir(filel);
   File fos = new File(filel);
   if(!fos.canWrite())
    fos.mkdirs();
   fos.delete();
 
-  try(BufferedWriter writer = new BufferedWriter(new FileWriter(filel))){
-   writer.write("!dir:"+dirl+"\n");
-   writer.write("!file:"+filel+"\n");
-      
-   for(int i=0; i<opt.size();i++)
-    writer.write(this.opt.get(i)+"\n");
-  } catch (IOException ex) {
-      main.Main.err.addE("Options.save()",ex);
+  try {
+   ObjectInputStream serial = new ObjectInputStream(new FileInputStream(file));
+   Options tmp = ( Options ) serial.readObject();
+   this.dir = tmp.dir;
+   this.file = tmp.file;
+   this.opt = tmp.opt;
+  } catch (IOException | ClassNotFoundException ex) {
+   main.Main.ERR_LOG.addE("Options.export()",ex);
   }
  }
 }

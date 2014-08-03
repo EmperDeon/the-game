@@ -1,9 +1,8 @@
 package level;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import main.Main;
 import utils.Iid;
-import utils.Separ;
 import utils.TId;
 
 public class LevBlock {
@@ -11,14 +10,14 @@ public class LevBlock {
 public Boolean Bparams;    
 public Iid id;
 public TId tid;
-public ArrayList<String> param= new ArrayList<>();
+public HashMap<String,String> param = new HashMap<>();
 //public Guiblock gui;
 
-public LevBlock(Iid id,TId tid,ArrayList<String> param){
+public LevBlock(Iid id,TId tid,HashMap<String,String> param){
  this.id=id;
  this.tid=tid;
  if(param!=null) {
-  this.param.addAll(param); 
+  this.param.putAll(param); 
   this.Bparams=true;
  }  
 }
@@ -26,16 +25,13 @@ public LevBlock(Iid id,TId tid,ArrayList<String> param){
 public String getparam(String key){
   String s = "";
   try{
-   if(param.contains(key))   
-   for (String par : param) {
-    if (Separ.getkey(par).equals(key)) {
-     s = Separ.getkey(par);
-    }
-   }
+   if(param.containsKey(key))   
+    return param.get(key);
   }catch(Exception e){
-   Main.err.addE("LevBlock", e);
+   Main.ERR_LOG.addE("LevBlock", e);
   }
-  return(s);
+  Main.ERR_LOG.addE("LevBlock", new Exception("Error with getting value with key "+key));
+  return "Err";
  }
 
  public Iid getId(){

@@ -1,23 +1,21 @@
-package render;
+package render.tex;
  import com.jogamp.common.util.IOUtil;
  import com.jogamp.opengl.GLExtensions;
- import com.jogamp.opengl.util.texture.TextureCoords;
- import com.jogamp.opengl.util.texture.TextureData;
- import com.jogamp.opengl.util.texture.TextureIO;
- import static com.jogamp.opengl.util.texture.TextureIO.newTextureData;
- import com.jogamp.opengl.util.texture.spi.DDSImage;
+ import render.tex.spi.DDSImage;
  import java.io.File;
  import java.io.IOException;
+ import java.io.Serializable;
  import java.nio.Buffer;
- import java.nio.ByteBuffer;
- import javax.media.nativewindow.NativeWindowFactory;
+import java.nio.ByteBuffer;
+import javax.media.nativewindow.NativeWindowFactory;
  import javax.media.opengl.*;
  import javax.media.opengl.glu.GLU;
  import main.Main;
      
- public class Tex {
+ public class Tex implements Serializable{
+  private File file;
   private int target;
-  private int texID = 0;
+  private int texID;
   private int texWidth;
   private int texHeight;
   private int imgWidth;
@@ -26,21 +24,26 @@ package render;
   private boolean mustFlipVertically;
   private boolean usingAutoMipmapGeneration;
   private int estimatedMemorySize;
-  private TextureCoords coords;
-  private TextureData data;
+  private TexCoords coords;
   
   public Tex(GL gl, String s) {
-   File file = new File (s);
+   file = new File (s);
    GLProfile glp;
    try {
     glp = gl.getGLProfile();
-    data = newTextureData(glp, file, true, IOUtil.getFileSuffix(file));
-    update(gl);
+    TexData data = TexIO.newTexData(glp, file, true, IOUtil.getFileSuffix(file));
+    update(gl, data);
     data.flush();
    } catch (  IOException | GLException ex ) {
-    Main.err.addE("Tex . init()", ex);
+    Main.ERR_LOG.addE("Tex . init()", ex);
    }
   }
+  public Tex( GL gl, TexData data){}
+  public Tex(int textureID,int target,int texWidth,int texHeight,int imgWdth,int imgHeight,boolean mustFlipVertically){}
+  public Tex(int target){}
+  public Tex(TexData data){}
+
+  public int getTarget(){return this.target;}
   public void bind(GL gl) {
    try{
     if( !gl.isGLcore() && GLES2.GL_TEXTURE_EXTERNAL_OES != target) {
@@ -49,7 +52,7 @@ package render;
     validateTexID(gl);
     gl.glBindTexture(target, texID);
     } catch ( NullPointerException | GLException ex ) {
-     Main.err.addE("Tex . bind()", ex);
+     Main.ERR_LOG.addE("Tex . bind()", ex);
     }
    }
   public void free(GL gl) {
@@ -63,20 +66,21 @@ package render;
     gl.glDisable(target);
    }     
   }
+  public TexCoords getCoords(){return coords;}
   private boolean validateTexID(GL gl) {
    if( 0 == texID ) {
     if( null != gl ) {
      int[] tmp = new int[1];
      gl.glGenTextures(1, tmp, 0);
      texID = tmp[0];
-     System.out.println(texID + " texID");
+     System.out.println(tmp[0] + " texID");
     /* if ( 0 == texID ) {
       Main.err.addE("Tex . bind()", 
                    new GLException("Create texture ID invalid: texID "+texID+", glerr 0x"
                                    +Integer.toHexString(gl.glGetError())));
       }*/
      } else 
-      Main.err.addE("Tex . bind()", 
+      Main.ERR_LOG.addE("Tex . bind()", 
                    new GLException("No GL context given, can't create texture ID"));      
      }
      return 0 != texID;
@@ -104,7 +108,7 @@ package render;
    return false;
   }
   private static boolean haveTexRect(GL gl) {
-   return (TextureIO.isTexRectEnabled() && // !disableTexRect &&
+   return (TexIO.isTexRectEnabled() && // !disableTexRect &&
     gl.isExtensionAvailable(GLExtensions.ARB_texture_rectangle));
   }
   private void setImageSize(int width, int height, int target) {
@@ -112,19 +116,19 @@ package render;
    imgHeight = height;
    if (target == GL2.GL_TEXTURE_RECTANGLE_ARB) {
     if (mustFlipVertically) {
-     coords = new TextureCoords(0, imgHeight, imgWidth, 0);
+     coords = new TexCoords(0, imgHeight, imgWidth, 0);
     } else {
-     coords = new TextureCoords(0, 0, imgWidth, imgHeight);
+     coords = new TexCoords(0, 0, imgWidth, imgHeight);
     }
    } else {
     if (mustFlipVertically) {
-     coords = new TextureCoords(0,                                      // l
+     coords = new TexCoords(0,                                      // l
                                 (float) imgHeight / (float) texHeight,  // b
                                 (float) imgWidth / (float) texWidth,    // r
                                 0                                       // t
                                );
      } else {
-      coords = new TextureCoords(0,                                      // l
+      coords = new TexCoords(0,                                      // l
                                  0,                                      // b
                                  (float) imgWidth / (float) texWidth,    // r
                                  (float) imgHeight / (float) texHeight   // t
@@ -132,7 +136,7 @@ package render;
      }
     }
    }
-  private void checkCompressedTextureExtensions(GL gl, TextureData data) {
+  private void checkCompressedTextureExtensions(GL gl, TexData data) {
     if (data.isDataCompressed()) {
      switch (data.getInternalFormat()) {
       case GL.GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
@@ -141,23 +145,23 @@ package render;
       case GL.GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
       if (!gl.isExtensionAvailable(GLExtensions.EXT_texture_compression_s3tc) &&
        !gl.isExtensionAvailable(GLExtensions.NV_texture_compression_vtc)) {
-       Main.err.addE("Tex . checkCompressedTextureExtensions()", 
+       Main.ERR_LOG.addE("Tex . checkCompressedTextureExtensions()", 
                     new GLException("DXTn compressed textures not supported by this graphics card"));
       }break;
       default:break;
      }
     }
    }
-  private void update(GL gl){
+  private void update(GL gl, TexData data){
    validateTexID(gl);
-
+   
    imgWidth = data.getWidth();
    imgHeight = data.getHeight();
    aspectRatio = (float) imgWidth / (float) imgHeight;
    mustFlipVertically = data.getMustFlipVertically();
 
    int texTarget = 0;
-   int texParamTarget = this.target;
+   int texParamTarget;
 
    boolean haveAutoMipmapGeneration =
     (gl.isExtensionAvailable(GLExtensions.VERSION_1_4) ||
@@ -209,14 +213,14 @@ package render;
    if (!done) {
     if (data.isDataCompressed()) {
       if (data.getMipmapData() != null) {
-       Main.err.addE("Tex . update() ",new GLException("Mipmapped non-power-of-two compressed textures only supported on OpenGL 2.0 hard(GL_ARB_texture_non_power_of_two)"));
+       Main.ERR_LOG.addE("Tex . update() ",new GLException("Mipmapped non-power-of-two compressed textures only supported on OpenGL 2.0 hard(GL_ARB_texture_non_power_of_two)"));
      }
 
      expandingCompressedTexture = true;
     }
 
     if (data.getBorder() != 0) {
-     Main.err.addE("Tex . update() ", new RuntimeException("Scaling up a non-power-of-two texture which has a border won't work"));
+     Main.ERR_LOG.addE("Tex . update() ", new RuntimeException("Scaling up a non-power-of-two texture which has a border won't work"));
     }
     texWidth = nextPowerOfTwo(imgWidth);
     texHeight = nextPowerOfTwo(imgHeight);
@@ -234,7 +238,7 @@ package render;
     gl.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, data.getAlignment());
  
     if (data.isDataCompressed()) {
-     Main.err.addE("Tex . update() ", new GLException("May not request mipmap generation for compressed textures"));
+     Main.ERR_LOG.addE("Tex . update() ", new GLException("May not request mipmap generation for compressed textures"));
     }
  
     try {
@@ -264,7 +268,7 @@ package render;
                 gl.glTexImage2D(texTarget, i, data.getInternalFormat(),
                                 width, height, data.getBorder(),
                                 data.getPixelFormat(), data.getPixelType(), null);
-                updateSubImageImpl(gl, texTarget, i);
+                updateSubImageImpl(gl, texTarget, i, data);
             }
  
             width = Math.max(width / 2, 1);
@@ -283,7 +287,7 @@ package render;
        gl.glCompressedTexImage2D(texTarget, 0, data.getInternalFormat(),
                                  texWidth, texHeight, data.getBorder(),
                                  buf.capacity(), buf);
-       updateSubImageImpl(gl, texTarget, 0);
+       updateSubImageImpl(gl, texTarget, 0, data);
       }
      } else {
       if (data.getMipmap() && haveAutoMipmapGeneration && gl.isGL2ES1()) {
@@ -294,7 +298,7 @@ package render;
       gl.glTexImage2D(texTarget, 0, data.getInternalFormat(),
                       texWidth, texHeight, data.getBorder(),
                       data.getPixelFormat(), data.getPixelType(), null);
-      updateSubImageImpl(gl, texTarget, 0);
+      updateSubImageImpl(gl, texTarget, 0, data);
      }
     }
    }
@@ -321,7 +325,7 @@ package render;
 
    estimatedMemorySize = data.getEstimatedMemorySize();
   }
-  private void updateSubImageImpl(GL gl, int newTarget, int mipmapLevel) throws GLException {
+  private void updateSubImageImpl(GL gl, int newTarget, int mipmapLevel, TexData data) throws GLException {
 
    data.setHaveEXTABGR(gl.isExtensionAvailable(GLExtensions.EXT_abgr));
    data.setHaveGL12(gl.isExtensionAvailable(GLExtensions.VERSION_1_2));

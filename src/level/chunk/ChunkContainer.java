@@ -7,24 +7,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import level.LevBlock;
 import main.Main;
-import utils.TermEx;
+import utils.exceptions.TermEx;
 import utils.vec.Vec3;
 
 public final class ChunkContainer {
- 
-    
- private final ArrayList<Chunk> chs = new ArrayList<>();
- private final ChunkIds ids = new ChunkIds();
+ private final HashMap<ChunkId, Chunk> chs = new HashMap();
+ private final HashSet<ChunkId> rch= new HashSet<>();
  private final OctChunkIds oids;
- private final ArrayList<ChunkId> rch= new ArrayList<>();
- 
- private int last = 0;
+
  private final String dir;//  game/save/name/
 
- //private int[] free = new int [1];
- 
  public ChunkContainer(String dir) throws TermEx{
   this.dir = dir; 
   
@@ -55,28 +51,20 @@ public final class ChunkContainer {
     serial.writeObject(oc);
     serial.flush();
    }catch (IOException ex) {
-    Main.err.addE("OctChunkIds . Save()", ex);
+    Main.ERR_LOG.addE("OctChunkIds . Save()", ex);
     System.err.println(oc.getD());
    }
   }
  }
  
  public void add(Chunk ch){
-  if(!test(ch.idx,ch.idy)) {  
-   chs.add(last+1,ch);
-   ids.add(last+1, ch.idx, ch.idy);
-   last+=1;
-  } 
+   chs.put(ch.id, ch);
  }
  
- public void addAll(OctChunk ch){
-  ArrayList<Chunk> c = ch.getAllCh();  
-  for (Chunk c1 : c) {
-  // if(!test(c1.idx,c1.idy))  {
-    chs.add(c1);
-    ids.add(last+1, c1.idx, c1.idy);
-    last+=1;
- // }
+ public void addAll(OctChunk och){
+  ArrayList<Chunk> oc = och.getAllCh();  
+  for (Chunk ch : oc) {
+   add(ch);
   }
  }
  
@@ -89,40 +77,38 @@ public final class ChunkContainer {
   for(int i1 = x1 ; i1<=x2 ; i1++)
    for(int i2 = y1 ; i2<=y2 ; i2++)
     loadOct("region"+i1+""+i2+".rg");   
-  
-  
  }
 
- public void redact(ChunkId cpos, Vec3<Integer> bpos, LevBlock block){
-  chs.get(ids.getIdC(cpos.x, cpos.y)).redact(bpos,block);
+ public void redact(ChunkId cid, Vec3<Integer> bpos, LevBlock block){
+  chs.get(cid).redact(bpos,block);
+  rch.add(cid);
  }
  
- public void redactObl(ChunkId cpos, Vec3<Integer> pos1, Vec3<Integer> pos2, LevBlock block){
-  chs.get(ids.getIdC(cpos.x, cpos.y)).redactObl(pos1, pos2, block);
+ public void redactObl(ChunkId cid, Vec3<Integer> pos1, Vec3<Integer> pos2, LevBlock block){
+  chs.get(cid).redactObl(pos1, pos2, block);
+  rch.add(cid);
  }
  
  public void loadOct(String file){
- try{
+  try{
    ObjectInputStream serial = new ObjectInputStream(new FileInputStream(this.dir+"rg/"+file));
    addAll((OctChunk)serial.readObject());
- }catch(IOException | ClassNotFoundException ex){
-  ex.printStackTrace();
- }
-System.out.println("Loaded: " + file + " : " +chs.size() );
+  }catch(IOException | ClassNotFoundException ex){
+  Main.ERR_LOG.addE("OctChunkIds.loadOct()", ex);
+  }
+  System.out.println("Loaded: " + file + " : " +chs.size() );
  }
  
  public boolean test(int x,int y){
-  return ids.test(x,y);
+  return chs.containsKey(new ChunkId(x,y));
  }
  
  public void clear(){
   chs.clear();
-  ids.clear();
  }
  
  public void free(int x,int y){
-  chs.remove(ids.getIdC(x, y));
-  ids.free(x,y);
+  chs.remove(new ChunkId(x,y));
  }
  
  public void save(){
@@ -139,7 +125,7 @@ System.out.println("Loaded: " + file + " : " +chs.size() );
     }
     
     if(oc != null){
-     oc.replaceChunk(id.x, id.y, chs.get(ids.getIdC(id.x, id.y)));
+     oc.replaceChunk(id.x, id.y, chs.get(id));
      
      try {
       ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(file));
@@ -147,7 +133,7 @@ System.out.println("Loaded: " + file + " : " +chs.size() );
       serial.flush();
       System.out.println("Saved:" + file);
      }catch (IOException ex) {
-      Main.err.addE("ChunkContainer . Save()", ex);
+      Main.ERR_LOG.addE("ChunkContainer . Save()", ex);
      }
     }
    }
@@ -156,11 +142,7 @@ System.out.println("Loaded: " + file + " : " +chs.size() );
   }
  }
  
- public Chunk get(int i){
-  return chs.get(i);
- }
- 
  public Chunk get(int x,int y){
-  return chs.get(ids.getIdC(x, y));
+  return chs.get(new ChunkId(x,y));
  }
 }

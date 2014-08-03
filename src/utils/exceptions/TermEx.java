@@ -1,4 +1,4 @@
-package utils;
+package utils.exceptions;
 public class TermEx extends Exception{
  public String s;
  

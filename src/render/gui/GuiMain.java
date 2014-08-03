@@ -2,45 +2,36 @@ package render.gui;
 
 import javax.media.opengl.GLAutoDrawable;
 import render.gui.entitys.RList;
-import utils.vec.Vec4;
+import utils.GuiId;
 
 public class GuiMain {
- private final String STD_LOAD = "/usr/games/game/res/init.png";
- private final String STD_BUTT = "/usr/games/game/res/bstart.png";
- 
- private final RList rendlist = new RList();
+
+ private GuiId gid = new GuiId(0);
+ private RList rendlist;
  public GuiMain(){
   
  }
     
  public void initI(GLAutoDrawable draw){
-  rendlist.draw(draw);
-  rendlist.addL( STD_LOAD );
+  rendlist = new RList(draw);
+  
 
+  //rendlist.addL( STD_LOAD );
  }
  
  public void initM(GLAutoDrawable draw){
-  rendlist.free(draw.getGL()); 
-  rendlist.clear();
-  
-  rendlist.addB(new Vec4<>(0d,0d,20d,20d)," Label ",STD_BUTT);
 
+  gid = new GuiId(1);
+  
+ // rendlist.save();
  }
  
- public void reshapeI(GLAutoDrawable drawable){
+ public void reshape(GLAutoDrawable drawable){
   //
  }
  
- public void renderI(GLAutoDrawable draw){
-  rendlist.render(draw);
- }
-  
- public void renderM(GLAutoDrawable draw){
-  rendlist.render(draw);
+ public void render(GLAutoDrawable draw){
+  rendlist.render(draw, gid);
  }
 
- public void reshapeM(GLAutoDrawable draw){
-  
- }
- 
 }

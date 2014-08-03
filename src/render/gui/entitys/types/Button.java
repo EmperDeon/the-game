@@ -1,62 +1,72 @@
 package render.gui.entitys.types;
 
-import com.jogamp.opengl.util.texture.Texture;
+import java.util.Objects;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
-import render.Tex;
 import render.gui.entitys.Type;
+import render.tex.Tex;
+import render.tex.TexCoords;
+import utils.Action;
+import utils.CoordConv;
 import utils.vec.Vec4;
 
 public class Button extends Entity{
  private final String s;
  private final Tex tex ;
- //public Action act;
- public Button (GLAutoDrawable draw, Vec4<Double> pos , String s /*, Action act*/, String t) {
+ private final Vec4<Float> pos;
+ private final Action act;
+ private final CoordConv CC = main.Main.CC;
+ public Button (GLAutoDrawable draw, Vec4<Integer> pos , String s , Action act, Tex tex) {
   super(Type.Button , pos );
   this.s = s;
-  this.tex = new Tex(draw.getGL(), t);
+  this.tex = tex;
+  this.act = act;
+  this.pos = CC.conv4(pos);
+ }
+ 
+ @Override
+ public void action(){
+  act.action();
  }
  
  @Override
  public void render(GLAutoDrawable drawable){
   GL gl = drawable.getGL();
   GL2 gl2 = gl.getGL2();
- 
+  
   gl2.glClear(GL2.GL_COLOR_BUFFER_BIT);
-  gl2.glLoadIdentity();
-  gl2.glTranslatef(-1f, 1f, 0);
-  gl2.glScalef(1.0f, -1.0f, 0f);
    
   tex.bind(gl);
-              
+  TexCoords crd = tex.getCoords();
+  
   gl2.glBegin(GL2.GL_QUADS);
   
-   gl2.glTexCoord2f(0.0f, 0.0f);
-   gl2.glVertex3f(  0.0f, 0.0f, 0.0f);
-  
-   gl2.glTexCoord2f(1.0f, 0.0f);
-   gl2.glVertex3f(  1.0f, 0.0f, 0.0f);
-   
-   gl2.glTexCoord2f(1.0f, 1.0f);
-   gl2.glVertex3f(  1.0f, 1.0f, 0.0f);
-   
-   gl2.glTexCoord2f(0.0f, 1.0f);
-   gl2.glVertex3f(  0.0f, 1.0f, 0.0f);
+   gl2.glTexCoord2f(crd.left(), crd.top());
+   gl2.glVertex3f(  pos.gX1() , pos.gY1(), 0.0f);
+                 
+   gl2.glTexCoord2f(crd.right(), crd.top());
+   gl2.glVertex3f(  pos.gX2()  , pos.gY1(), 0.0f);
+                 
+   gl2.glTexCoord2f(crd.right(), crd.bottom());
+   gl2.glVertex3f(  pos.gX2()  , pos.gY2(), 0.0f);
+                
+   gl2.glTexCoord2f(crd.left(), crd.bottom());
+   gl2.glVertex3f(  pos.gX1() , pos.gY2(), 0.0f);
    
   gl2.glEnd();
    
-  tex.unbind(gl);
+  tex.unbind(gl); 
  }
  
-     public static void drawQuad(GLAutoDrawable draw, float var1, float var2, float var3, float var4, Texture var5) {
+     public void drawQuad(GLAutoDrawable draw, float var1, float var2, float var3, float var4) {
         GL2 gl = draw.getGL().getGL2();
         gl.glEnable(GL2.GL_TEXTURE_2D);
         gl.glEnable(GL2.GL_BLEND);
         gl.glEnable(GL2.GL_ALPHA_TEST);
         gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
         gl.glAlphaFunc(GL2.GL_EQUAL, 1.0F);
-        gl.glBindTexture(GL2.GL_TEXTURE_2D, var5.getTextureObject());
+        tex.bind(gl);
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_NEAREST);
         gl.glPushMatrix();
         
@@ -77,10 +87,31 @@ public class Button extends Entity{
         gl.glDisable(GL2.GL_BLEND);
         gl.glDisable(GL2.GL_TEXTURE_2D);
     }
- 
- @Override
- public void free(GL gl){
-  tex.free(gl);
+
+ @Override public void free(GL gl){tex.free(gl);}
+ @Override public int hashCode(){
+  return s.hashCode() + tex.hashCode() + pos.hashCode();
  }
- 
+ @Override public boolean equals ( Object obj ) {
+  if ( obj == null ) {
+   return false;
+  }
+  if ( getClass() != obj.getClass() ) {
+   return false;
+  }
+  final Button other = ( Button ) obj;
+  if ( !Objects.equals(this.s , other.s) ) {
+   return false;
+  }
+  if ( !Objects.equals(this.tex , other.tex) ) {
+   return false;
+  }
+  if ( !Objects.equals(this.pos , other.pos) ) {
+   return false;
+  }
+  if ( !Objects.equals(this.act , other.act) ) {
+   return false;
+  }
+  return true;
+ }
 }

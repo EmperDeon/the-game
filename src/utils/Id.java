@@ -1,2 +1,2 @@
 package utils;
-interface Id {}
+public interface Id {}

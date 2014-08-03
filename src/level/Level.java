@@ -4,7 +4,7 @@ import level.chunk.Chunk;
 import level.chunk.ChunkContainer;
 import level.chunk.ChunkId;
 import utils.Options;
-import utils.TermEx;
+import utils.exceptions.TermEx;
 public class Level {
 
 public Options options;    
@@ -24,11 +24,11 @@ public Level(String name) throws TermEx{
  }else{   
   this.name=name;
   
-  options = new Options(new String[]{
-                "name:"+name,
-                "lchunks:", 
-                "pos:0,0" // coord chunk with player
-            }, main.Main.mdir + "saves/"+name+"/level.db");
+  options = new Options(main.Main.mdir + "saves/"+name+"/level.db");
+  options.add("name",name);
+  options.add("lchunks",null);
+  options.add("pos_x","0");
+  options.add("pos_y","0");
   
   this.rch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/rg/");
   //this.lch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/");
@@ -48,12 +48,11 @@ public final void load(String dir){
  if(f.canRead()){ 
      options = new Options(dir+"level.db");
      
-     pos.x = Integer.parseInt(options.get("pos")[0]);
-     pos.y = Integer.parseInt(options.get("pos")[1]);
+     pos.x = options.getI("pos_x");
+     pos.y = options.getI("pos_y");
  }else{
-     options = new Options(new String[]{                
-                "name:"+name
-            },dir+"level.db"); 
+     options = new Options(dir+"level.db");
+     options.add("name",name);
  }
 
  //this.rch.load(new ChunkId(0,0),8);
@@ -75,8 +74,9 @@ public void save(){
  
 }
 */
- public Chunk get(int x){
- return rch.get(x);
+
+public Chunk get(int x,int y){
+ return rch.get(x,y);
 }
 
 }
