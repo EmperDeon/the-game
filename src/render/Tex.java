@@ -22,10 +22,10 @@ package render;
   private int texHeight;
   private int imgWidth;
   private int imgHeight;
-  private float aspectRatio;
+//  private float aspectRatio;
   private boolean mustFlipVertically;
-  private boolean usingAutoMipmapGeneration;
-  private int estimatedMemorySize;
+//  private boolean usingAutoMipmapGeneration;
+//  private int estimatedMemorySize;
   private TextureCoords coords;
   
   public Tex(GL gl, String s) {
@@ -152,7 +152,7 @@ package render;
    
    imgWidth = data.getWidth();
    imgHeight = data.getHeight();
-   aspectRatio = (float) imgWidth / (float) imgHeight;
+   //aspectRatio = (float) imgWidth / (float) imgHeight;
    mustFlipVertically = data.getMustFlipVertically();
 
    int texTarget = 0;
@@ -287,7 +287,7 @@ package render;
      } else {
       if (data.getMipmap() && haveAutoMipmapGeneration && gl.isGL2ES1()) {
        gl.glTexParameteri(texParamTarget, GL2ES1.GL_GENERATE_MIPMAP, GL.GL_TRUE);
-       usingAutoMipmapGeneration = true;
+      // usingAutoMipmapGeneration = true;
       }
  
       gl.glTexImage2D(texTarget, 0, data.getInternalFormat(),
@@ -318,7 +318,7 @@ package render;
        this.target = texTarget;
    }
 
-   estimatedMemorySize = data.getEstimatedMemorySize();
+   //estimatedMemorySize = data.getEstimatedMemorySize();
   }
   private void updateSubImageImpl(GL gl, int newTarget, int mipmapLevel, TextureData data) throws GLException {
 
