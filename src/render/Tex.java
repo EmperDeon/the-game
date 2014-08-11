@@ -1,18 +1,20 @@
-package render.tex;
+package render;
  import com.jogamp.common.util.IOUtil;
  import com.jogamp.opengl.GLExtensions;
- import render.tex.spi.DDSImage;
+ import com.jogamp.opengl.util.texture.TextureCoords;
+ import com.jogamp.opengl.util.texture.TextureData;
+ import com.jogamp.opengl.util.texture.TextureIO;
+ import com.jogamp.opengl.util.texture.spi.DDSImage;
  import java.io.File;
  import java.io.IOException;
- import java.io.Serializable;
  import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import javax.media.nativewindow.NativeWindowFactory;
+ import java.nio.ByteBuffer;
+ import javax.media.nativewindow.NativeWindowFactory;
  import javax.media.opengl.*;
  import javax.media.opengl.glu.GLU;
  import main.Main;
      
- public class Tex implements Serializable{
+ public class Tex{
   private File file;
   private int target;
   private int texID;
@@ -24,27 +26,26 @@ import javax.media.nativewindow.NativeWindowFactory;
   private boolean mustFlipVertically;
   private boolean usingAutoMipmapGeneration;
   private int estimatedMemorySize;
-  private TexCoords coords;
+  private TextureCoords coords;
   
   public Tex(GL gl, String s) {
+   System.out.println("Tex "+s+" init");
+   
    file = new File (s);
    GLProfile glp;
    try {
     glp = gl.getGLProfile();
-    TexData data = TexIO.newTexData(glp, file, true, IOUtil.getFileSuffix(file));
+    TextureData data = TextureIO.newTextureData(glp, file, true, IOUtil.getFileSuffix(file));
     update(gl, data);
     data.flush();
    } catch (  IOException | GLException ex ) {
     Main.ERR_LOG.addE("Tex . init()", ex);
    }
   }
-  public Tex( GL gl, TexData data){}
-  public Tex(int textureID,int target,int texWidth,int texHeight,int imgWdth,int imgHeight,boolean mustFlipVertically){}
-  public Tex(int target){}
-  public Tex(TexData data){}
 
   public int getTarget(){return this.target;}
   public void bind(GL gl) {
+   System.out.println("Tex "+texID+" bind");
    try{
     if( !gl.isGLcore() && GLES2.GL_TEXTURE_EXTERNAL_OES != target) {
      gl.glEnable(target);
@@ -66,22 +67,16 @@ import javax.media.nativewindow.NativeWindowFactory;
     gl.glDisable(target);
    }     
   }
-  public TexCoords getCoords(){return coords;}
+  public TextureCoords getCoords(){return coords;}
   private boolean validateTexID(GL gl) {
    if( 0 == texID ) {
     if( null != gl ) {
      int[] tmp = new int[1];
      gl.glGenTextures(1, tmp, 0);
      texID = tmp[0];
-     System.out.println(tmp[0] + " texID");
-    /* if ( 0 == texID ) {
-      Main.err.addE("Tex . bind()", 
-                   new GLException("Create texture ID invalid: texID "+texID+", glerr 0x"
-                                   +Integer.toHexString(gl.glGetError())));
-      }*/
+     System.out.println("Tex "+texID+" validate");
      } else 
-      Main.ERR_LOG.addE("Tex . bind()", 
-                   new GLException("No GL context given, can't create texture ID"));      
+      Main.ERR_LOG.addE("Tex . bind()", new GLException("No GL context given, can't create texture ID"));      
      }
      return 0 != texID;
     }
@@ -108,7 +103,7 @@ import javax.media.nativewindow.NativeWindowFactory;
    return false;
   }
   private static boolean haveTexRect(GL gl) {
-   return (TexIO.isTexRectEnabled() && // !disableTexRect &&
+   return (TextureIO.isTexRectEnabled() && // !disableTexRect &&
     gl.isExtensionAvailable(GLExtensions.ARB_texture_rectangle));
   }
   private void setImageSize(int width, int height, int target) {
@@ -116,19 +111,19 @@ import javax.media.nativewindow.NativeWindowFactory;
    imgHeight = height;
    if (target == GL2.GL_TEXTURE_RECTANGLE_ARB) {
     if (mustFlipVertically) {
-     coords = new TexCoords(0, imgHeight, imgWidth, 0);
+     coords = new TextureCoords(0, imgHeight, imgWidth, 0);
     } else {
-     coords = new TexCoords(0, 0, imgWidth, imgHeight);
+     coords = new TextureCoords(0, 0, imgWidth, imgHeight);
     }
    } else {
     if (mustFlipVertically) {
-     coords = new TexCoords(0,                                      // l
+     coords = new TextureCoords(0,                                      // l
                                 (float) imgHeight / (float) texHeight,  // b
                                 (float) imgWidth / (float) texWidth,    // r
                                 0                                       // t
                                );
      } else {
-      coords = new TexCoords(0,                                      // l
+      coords = new TextureCoords(0,                                      // l
                                  0,                                      // b
                                  (float) imgWidth / (float) texWidth,    // r
                                  (float) imgHeight / (float) texHeight   // t
@@ -136,7 +131,7 @@ import javax.media.nativewindow.NativeWindowFactory;
      }
     }
    }
-  private void checkCompressedTextureExtensions(GL gl, TexData data) {
+  private void checkCompressedTextureExtensions(GL gl, TextureData data) {
     if (data.isDataCompressed()) {
      switch (data.getInternalFormat()) {
       case GL.GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
@@ -152,7 +147,7 @@ import javax.media.nativewindow.NativeWindowFactory;
      }
     }
    }
-  private void update(GL gl, TexData data){
+  private void update(GL gl, TextureData data){
    validateTexID(gl);
    
    imgWidth = data.getWidth();
@@ -325,7 +320,7 @@ import javax.media.nativewindow.NativeWindowFactory;
 
    estimatedMemorySize = data.getEstimatedMemorySize();
   }
-  private void updateSubImageImpl(GL gl, int newTarget, int mipmapLevel, TexData data) throws GLException {
+  private void updateSubImageImpl(GL gl, int newTarget, int mipmapLevel, TextureData data) throws GLException {
 
    data.setHaveEXTABGR(gl.isExtensionAvailable(GLExtensions.EXT_abgr));
    data.setHaveGL12(gl.isExtensionAvailable(GLExtensions.VERSION_1_2));

@@ -1,12 +1,12 @@
 package render.gui.entitys.types;
 
+import com.jogamp.opengl.util.texture.TextureCoords;
 import java.util.Objects;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import render.gui.entitys.Type;
-import render.tex.Tex;
-import render.tex.TexCoords;
+import render.Tex;
 import utils.Action;
 import utils.CoordConv;
 import utils.vec.Vec4;
@@ -17,10 +17,10 @@ public class Button extends Entity{
  private final Vec4<Float> pos;
  private final Action act;
  private final CoordConv CC = main.Main.CC;
- public Button (GLAutoDrawable draw, Vec4<Integer> pos , String s , Action act, Tex tex) {
+ public Button (GLAutoDrawable draw, Vec4<Integer> pos , String s , Action act) {
   super(Type.Button , pos );
   this.s = s;
-  this.tex = tex;
+  this.tex = new Tex(draw.getGL(),"/usr/games/game/res/button.png");
   this.act = act;
   this.pos = CC.conv4(pos);
  }
@@ -38,12 +38,12 @@ public class Button extends Entity{
   gl2.glClear(GL2.GL_COLOR_BUFFER_BIT);
    
   tex.bind(gl);
-  TexCoords crd = tex.getCoords();
+  TextureCoords crd = tex.getCoords();
   
   gl2.glBegin(GL2.GL_QUADS);
   
-   gl2.glTexCoord2f(crd.left(), crd.top());
-   gl2.glVertex3f(  pos.gX1() , pos.gY1(), 0.0f);
+   gl2.glTexCoord2f(crd.left(),  crd.top());
+   gl2.glVertex3f(  pos.gX1() ,  pos.gY1(), 0.0f);
                  
    gl2.glTexCoord2f(crd.right(), crd.top());
    gl2.glVertex3f(  pos.gX2()  , pos.gY1(), 0.0f);
@@ -51,8 +51,8 @@ public class Button extends Entity{
    gl2.glTexCoord2f(crd.right(), crd.bottom());
    gl2.glVertex3f(  pos.gX2()  , pos.gY2(), 0.0f);
                 
-   gl2.glTexCoord2f(crd.left(), crd.bottom());
-   gl2.glVertex3f(  pos.gX1() , pos.gY2(), 0.0f);
+   gl2.glTexCoord2f(crd.left(),  crd.bottom());
+   gl2.glVertex3f(  pos.gX1() ,  pos.gY2(), 0.0f);
    
   gl2.glEnd();
    

@@ -2,7 +2,7 @@ package basemod;
 
 import java.util.ArrayList;
 import utils.TId;
-import render.tex.Tex;
+import render.Tex;
 
 public class ModContainer {
  private final ArrayList< BaseMod > cont;

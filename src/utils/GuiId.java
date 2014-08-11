@@ -1,8 +1,7 @@
 package utils;
-import java.io.Serializable;
 import java.util.Objects;
 
-public class GuiId implements Id, Serializable{
+public class GuiId implements Id, Comparable{
   private final Integer id;
   
   public GuiId(Integer id){
@@ -27,4 +26,10 @@ public class GuiId implements Id, Serializable{
    }
    return true;
   }
+
+ @Override
+ public int compareTo ( Object o ) {
+  GuiId i = (GuiId) o;
+  return this.id.compareTo(i.id);
+ }
  }

@@ -5,8 +5,6 @@ import render.gui.entitys.RList;
 import utils.GuiId;
 
 public class GuiMain {
-
- private GuiId gid = new GuiId(0);
  private RList rendlist;
  public GuiMain(){
   
@@ -14,16 +12,11 @@ public class GuiMain {
     
  public void initI(GLAutoDrawable draw){
   rendlist = new RList(draw);
-  
-
-  //rendlist.addL( STD_LOAD );
+  rendlist.change(new GuiId(0));
  }
  
  public void initM(GLAutoDrawable draw){
-
-  gid = new GuiId(1);
-  
- // rendlist.save();
+  rendlist.change(new GuiId(1));
  }
  
  public void reshape(GLAutoDrawable drawable){
@@ -31,7 +24,7 @@ public class GuiMain {
  }
  
  public void render(GLAutoDrawable draw){
-  rendlist.render(draw, gid);
+  rendlist.render(draw);
  }
 
 }

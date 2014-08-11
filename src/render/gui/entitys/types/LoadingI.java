@@ -1,17 +1,17 @@
 package render.gui.entitys.types;
 
+import com.jogamp.opengl.util.texture.TextureCoords;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import render.gui.entitys.Type;
-import render.tex.Tex;
-import render.tex.TexCoords;
+import render.Tex;
 
 public class LoadingI extends Entity{
  private final Tex tex;
- public LoadingI (GLAutoDrawable draw, Tex tex) {
+ public LoadingI (GLAutoDrawable draw) {
   super(Type.Image , null);
-  this.tex = tex;
+  this.tex = new Tex(draw.getGL() ,"/usr/games/game/res/init.png");
  }
  
  @Override
@@ -33,7 +33,7 @@ public class LoadingI extends Entity{
   gl2.glScalef(2.0f, -2.0f, 0f);
                 
    tex.bind(gl);
-   TexCoords crd = tex.getCoords();
+   TextureCoords crd = tex.getCoords();
   gl2.glBegin(GL2.GL_QUADS);
   
    gl2.glTexCoord2f(crd.left(), crd.top());
