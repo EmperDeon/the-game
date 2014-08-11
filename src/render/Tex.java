@@ -22,15 +22,10 @@ package render;
   private int texHeight;
   private int imgWidth;
   private int imgHeight;
-//  private float aspectRatio;
   private boolean mustFlipVertically;
-//  private boolean usingAutoMipmapGeneration;
-//  private int estimatedMemorySize;
-  private TextureCoords coords;
+  public TextureCoords coords;
   
   public Tex(GL gl, String s) {
-   System.out.println("Tex "+s+" init");
-   
    file = new File (s);
    GLProfile glp;
    try {
@@ -43,7 +38,6 @@ package render;
    }
   }
 
-  public int getTarget(){return this.target;}
   public void bind(GL gl) {
    System.out.println("Tex "+texID+" bind");
    try{
@@ -67,14 +61,12 @@ package render;
     gl.glDisable(target);
    }     
   }
-  public TextureCoords getCoords(){return coords;}
   private boolean validateTexID(GL gl) {
    if( 0 == texID ) {
     if( null != gl ) {
      int[] tmp = new int[1];
      gl.glGenTextures(1, tmp, 0);
      texID = tmp[0];
-     System.out.println("Tex "+texID+" validate");
      } else 
       Main.ERR_LOG.addE("Tex . bind()", new GLException("No GL context given, can't create texture ID"));      
      }
