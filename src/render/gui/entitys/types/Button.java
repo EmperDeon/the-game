@@ -37,8 +37,17 @@ public class Button extends Entity{
   
   gl2.glClear(GL2.GL_COLOR_BUFFER_BIT);
    
-  tex.bind(gl);
-  TextureCoords crd = tex.getCoords();
+   gl2.glEnable(GL2.GL_TEXTURE_2D);
+   gl2.glEnable(GL2.GL_BLEND);
+   gl2.glEnable(GL2.GL_ALPHA_TEST);
+   gl2.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+   gl2.glAlphaFunc(GL2.GL_EQUAL, 1.0F);
+   tex.bind(gl);
+   gl2.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_NEAREST);
+   gl2.glPushMatrix();
+  
+//  tex.bind(gl);
+  TextureCoords crd = tex.coords;
   
   gl2.glBegin(GL2.GL_QUADS);
   
@@ -56,7 +65,13 @@ public class Button extends Entity{
    
   gl2.glEnd();
    
-  tex.unbind(gl); 
+  //tex.unbind(gl); 
+  
+  gl2.glPopMatrix();
+  tex.unbind(gl);
+  gl2.glDisable(GL2.GL_ALPHA_TEST);
+  gl2.glDisable(GL2.GL_BLEND);
+  gl2.glDisable(GL2.GL_TEXTURE_2D);
  }
  
      public void drawQuad(GLAutoDrawable draw, float var1, float var2, float var3, float var4) {

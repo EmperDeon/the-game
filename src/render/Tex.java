@@ -39,7 +39,6 @@ package render;
   }
 
   public void bind(GL gl) {
-   System.out.println("Tex "+texID+" bind");
    try{
     if( !gl.isGLcore() && GLES2.GL_TEXTURE_EXTERNAL_OES != target) {
      gl.glEnable(target);
@@ -61,6 +60,7 @@ package render;
     gl.glDisable(target);
    }     
   }
+  
   private boolean validateTexID(GL gl) {
    if( 0 == texID ) {
     if( null != gl ) {

@@ -32,25 +32,38 @@ public class LoadingI extends Entity{
   gl2.glTranslatef(-1f, 1f, 0);
   gl2.glScalef(2.0f, -2.0f, 0f);
                 
+   gl2.glEnable(GL2.GL_TEXTURE_2D);
+   gl2.glEnable(GL2.GL_BLEND);
+   gl2.glEnable(GL2.GL_ALPHA_TEST);
+   gl2.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+   gl2.glAlphaFunc(GL2.GL_EQUAL, 1.0F);
    tex.bind(gl);
-   TextureCoords crd = tex.getCoords();
+   gl2.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_NEAREST);
+   gl2.glPushMatrix();
+
+  TextureCoords crd = tex.coords;
+  
   gl2.glBegin(GL2.GL_QUADS);
   
-   gl2.glTexCoord2f(crd.left(), crd.top());
-   gl2.glVertex3f(  0.0f, 0.0f, 0.0f);
+   gl2.glTexCoord2f(crd.left(),  crd.top());
+   gl2.glVertex3f(  0.0f ,  0.0f, 0.0f);
                  
    gl2.glTexCoord2f(crd.right(), crd.top());
-   gl2.glVertex3f(  1.0f, 0.0f, 0.0f);
+   gl2.glVertex3f(  1.0f  , 0.0f, 0.0f);
                  
    gl2.glTexCoord2f(crd.right(), crd.bottom());
-   gl2.glVertex3f(  1.0f, 1.0f, 0.0f);
+   gl2.glVertex3f(  1.0f  , 1.0f, 0.0f);
                 
-   gl2.glTexCoord2f(crd.left(), crd.bottom());
-   gl2.glVertex3f(  0.0f, 1.0f, 0.0f);
+   gl2.glTexCoord2f(crd.left(),  crd.bottom());
+   gl2.glVertex3f(  0.0f,   1.0f, 0.0f);
    
   gl2.glEnd();
-  
+
+  gl2.glPopMatrix();
   tex.unbind(gl);
+  gl2.glDisable(GL2.GL_ALPHA_TEST);
+  gl2.glDisable(GL2.GL_BLEND);
+  gl2.glDisable(GL2.GL_TEXTURE_2D);
  }
  
 }
