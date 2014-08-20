@@ -1,30 +1,161 @@
 package render.gui;
-import com.jogamp.newt.Window;
-import com.jogamp.newt.event.*;
-import com.jogamp.newt.event.awt.AWTKeyAdapter;
-import com.jogamp.newt.event.awt.AWTMouseAdapter;
+
 import com.jogamp.opengl.util.Animator;
-import com.jogamp.opengl.util.awt.TextRenderer;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
+import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
-import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
-import render.Renderer;
-import render.gui.entitys.RList;
-import utils.Action;
-import utils.vec.Vec2;
-import utils.vec.Vec3;
-import utils.vec.Vec4;
+import javax.media.opengl.glu.GLU;
+import javax.swing.JFrame;
+import org.fenggui.Display;
+import org.fenggui.actor.ScreenshotActor;
+import org.fenggui.binding.render.jogl.EventBinding;
+import org.fenggui.binding.render.jogl.JOGLBinding;
 
-public class Gui implements GLEventListener{
- public static boolean running = true;
+public class Gui extends JFrame{
+    private static final long     serialVersionUID = 1L;
+  private GL2                    gl;
+  private GLU                   glu              = new GLU();
+  private GLCanvas              canvas;
+  private Display               display          = null;
+  private GLEventListener       eventListener    = null;
+  private float                 rotwAngle         = 0;
+  private long                  lastFrame        = 0;
+
+  public Gui()
+  {
+    canvas = new GLCanvas();
+
+    eventListener = new GLEventListenerImplementation();
+
+    canvas.addGLEventListener(eventListener);
+
+    getContentPane().add(canvas, java.awt.BorderLayout.CENTER);
+    setSize(800, 800);
+    setTitle("FengGUI - Test Template");
+
+    Animator animator = new Animator(canvas);
+    animator.setRunAsFastAsPossible(true);
+    animator.setPrintExceptions(true);
+    animator.start();
+
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+  }
+
+  public final void setVisible(boolean b)
+  {
+    super.setVisible(b);
+
+  }
+
+  public GLCanvas getCanvas()
+  {
+    return canvas;
+  }
+
+  private class GLEventListenerImplementation implements GLEventListener
+  {
+    private ScreenshotActor screenshotActor;
+
+    public void display(GLAutoDrawable arg0)
+    {
+      gl.glLoadIdentity();
+      gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+
+      display.display();
+      
+      screenshotActor.renderToDos(display.getBinding().getOpenGL(), display.getWidth(), display.getHeight());
+    }
+
+    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height)
+    {
+      gl.glViewport(0, 0, width, height);
+      gl.glMatrixMode(GL2.GL_PROJECTION);
+      gl.glLoadIdentity();
+      glu.gluPerspective(45, (double) width / (double) height, 4, 1000);
+      gl.glMatrixMode(GL2.GL_MODELVIEW);
+      gl.glLoadIdentity();
+
+      //
+    }
+
+    public void displayChanged(GLAutoDrawable arg0, boolean arg1, boolean arg2)
+    {
+      // does nothing
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.java.games.jogl.GLEventListener#init(net.java.games.jogl.GLDrawable)
+     */
+    public void init(GLAutoDrawable drawable)
+    {
+      gl = drawable.getGL().getGL2();
+      gl.glClearColor(146f / 255f, 164f / 255f, 1, 0.0f);
+      gl.glEnable(GL.GL_BLEND);
+
+      gl.glDisable(GL.GL_TEXTURE_2D);
+      gl.glEnable(GL2.GL_DEPTH_TEST);
+      gl.glDepthFunc(GL2.GL_LEQUAL);
+      gl.glShadeModel(GL2.GL_SMOOTH);
+      gl.glEnable(GL2.GL_LIGHTING);
+      gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, new float[] { 146f / 255f, 164f / 255f, 1f, 1.0f }, 0);
+      gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, new float[] { 1f, 1f, 1f, 1.0f }, 0);
+      gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, new float[] { -100, -100, 400 }, 0);
+      gl.glEnable(GL2.GL_LIGHT1);
+
+      buildGUI();
+
+      lastFrame = System.nanoTime();
+      screenshotActor = new ScreenshotActor();
+      screenshotActor.hook(display);
+    }
+
+   @Override
+   public void dispose(GLAutoDrawable drawable) {
+   
+   }
+
+  }
+
+  public static void main(String[] args)
+  {
+    Gui f = new Gui();
+    f.setTitle("FengGUI - Test Almost Everything");
+    f.setVisible(true);
+  }
+
+  public void buildGUI()
+  {
+    display = new Display(new JOGLBinding(canvas));
+
+    new EventBinding(canvas, display);
+
+  //  Everything e = new Everything(runsAsWebstart);
+  //  e.buildGUI(display);
+
+    /*
+    Menu menu = new Menu(display);
+    menu.addItem(new MenuItem("Test 1"));
+    menu.addItem(new MenuItem("Test 2"));
+    menu.addItem(new MenuItem("Test 3"));
+    menu.addItem(new MenuItem("Test 4"));
+    menu.setXY(50, 50);
+    menu.setSizeToMinSize();
+    */
+  }
+
+  public void setDisplay(Display display)
+  {
+    this.display = display;
+  }
+
+}
+/*
+  public static boolean running = true;
  
  public Fps fps;
  
@@ -130,6 +261,8 @@ public final void frame(){
 
     @Override
    public void init(GLAutoDrawable draw) {  
+    BuildGUI();
+    
     // 0 - Loading
     this.rendlist.addId(GuiType.Init);
     this.rendlist.addInit(GuiType.Init, draw);
@@ -162,6 +295,10 @@ public void initfinal(){
 }
 //---------------------------
 
+ public void BuildGUI(){
+  
+ }
+
   class RKeyAdapter extends KeyAdapter {      
     @Override
     public void keyPressed(KeyEvent e) {
@@ -184,7 +321,7 @@ public void initfinal(){
          cmcoord.x -= 1;
         } else if(KeyEvent.VK_D == kc) {
          cmcoord.gX() += 1;
-        }*/
+        }
     }
   }
   
@@ -238,5 +375,5 @@ public void initfinal(){
     } else {
         System.out.println("gear1 list reused: "+gear1);
     }
-    */   
-}
+    
+ */
