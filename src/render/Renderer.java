@@ -13,12 +13,12 @@ public class Renderer implements Runnable{
  private MTimer timer;
  private Player player;
 
- private final Gui gui = new Gui();
+ private Gui gui;
 
  public void init() throws TermEx{
-  // this.level  = new Level("World1"); 
-  // this.player = new Player(new Vec3f(0,0,0),level);
-  // this.timer  = new MTimer();
+  this.gui = new Gui();
+  gui.setTitle("The Game");
+  gui.setVisible(true);
  }
  
  public void render(){

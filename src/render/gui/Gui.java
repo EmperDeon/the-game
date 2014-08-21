@@ -10,9 +10,11 @@ import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
 import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
+import org.fenggui.experimental.FPSLabel;
 
 public class Gui extends JFrame{
   private static final long     serialVersionUID = 1L;
+  private EventBinding eventbinding ;
   private GL2                   gl;
   private GLU                   glu              = new GLU();
   private GLCanvas              canvas;
@@ -84,13 +86,12 @@ public class Gui extends JFrame{
       // does nothing
     }
 
-    public void init(GLAutoDrawable drawable)
-    {
+    public void init(GLAutoDrawable drawable){
       gl = drawable.getGL().getGL2();
       gl.glClearColor(146f / 255f, 164f / 255f, 1, 0.0f);
-      gl.glEnable(GL.GL_BLEND);
+      gl.glEnable(GL2.GL_BLEND);
 
-      gl.glDisable(GL.GL_TEXTURE_2D);
+      gl.glDisable(GL2.GL_TEXTURE_2D);
       gl.glEnable(GL2.GL_DEPTH_TEST);
       gl.glDepthFunc(GL2.GL_LEQUAL);
       gl.glShadeModel(GL2.GL_SMOOTH);
@@ -114,19 +115,17 @@ public class Gui extends JFrame{
 
   }
 
-  public static void main(String[] args)
-  {
-    Gui f = new Gui();
-    f.setTitle("FengGUI - Test Almost Everything");
-    f.setVisible(true);
-  }
-
   public void buildGUI()
   {
     display = new Display(canvas);
 
-    new EventBinding(canvas, display);
-
+    eventbinding = new EventBinding(canvas, display);
+    
+    FPSLabel w = new FPSLabel();
+    w.setXY(100,200);
+    
+    display.addWidget(0,w);
+    
   //  Everything e = new Everything(runsAsWebstart);
   //  e.buildGUI(display);
 
