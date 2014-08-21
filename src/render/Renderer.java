@@ -1,17 +1,13 @@
 package render;
 
-import level.Level;
-import player.Player;
 import render.gui.Gui;
-import utils.MTimer;
 import utils.exceptions.TermEx;
 
 public class Renderer implements Runnable{
  public static boolean running = true;
- public Level level;
-
- private MTimer timer;
- private Player player;
+//
+// private MTimer timer;
+// private Player player;
 
  private Gui gui;
 
@@ -41,6 +37,6 @@ public class Renderer implements Runnable{
  }
 
  public void initfinal(){
-  //this.gui.initfinal();
+  this.gui.changeGui(1);
  }
 }

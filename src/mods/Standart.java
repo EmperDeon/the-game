@@ -1,4 +1,4 @@
-package mod;
+package mods;
 import basemod.BaseMod;
 import java.util.*;
 import utils.vec.Vec4;

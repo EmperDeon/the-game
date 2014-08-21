@@ -139,12 +139,8 @@ public class Gui extends JFrame{
     menu.setSizeToMinSize();
     */
   }
-
-  public void setDisplay(Display display)
-  {
-    this.display = display;
-  }
-
+  
+  public void changeGui(Integer id){ this.display.changeGui(id); }
 }
 /*
   public static boolean running = true;
