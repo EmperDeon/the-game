@@ -5,11 +5,13 @@ import javax.media.opengl.GLAutoDrawable;
 import utils.vec.Vec4;
 
 public class Label extends Entity{
- public String s;
+ private final String s;
+ private final Vec4<Integer> pos;
  
  public Label ( int t , Vec4<Integer> pos , String s) {
   super(t , pos);
-  this.s = s;
+  this.s   = s;
+  this.pos = pos;
  }
 
  @Override

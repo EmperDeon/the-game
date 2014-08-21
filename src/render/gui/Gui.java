@@ -8,14 +8,12 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
-import org.fenggui.Display;
 import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
-import org.fenggui.binding.render.jogl.JOGLBinding;
 
 public class Gui extends JFrame{
-    private static final long     serialVersionUID = 1L;
-  private GL2                    gl;
+  private static final long     serialVersionUID = 1L;
+  private GL2                   gl;
   private GLU                   glu              = new GLU();
   private GLCanvas              canvas;
   private Display               display          = null;
@@ -27,7 +25,7 @@ public class Gui extends JFrame{
   {
     canvas = new GLCanvas();
 
-    eventListener = new GLEventListenerImplementation();
+    eventListener = new Listener();
 
     canvas.addGLEventListener(eventListener);
 
@@ -55,7 +53,7 @@ public class Gui extends JFrame{
     return canvas;
   }
 
-  private class GLEventListenerImplementation implements GLEventListener
+  private class Listener implements GLEventListener
   {
     private ScreenshotActor screenshotActor;
 
@@ -86,11 +84,6 @@ public class Gui extends JFrame{
       // does nothing
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.java.games.jogl.GLEventListener#init(net.java.games.jogl.GLDrawable)
-     */
     public void init(GLAutoDrawable drawable)
     {
       gl = drawable.getGL().getGL2();
@@ -130,7 +123,7 @@ public class Gui extends JFrame{
 
   public void buildGUI()
   {
-    display = new Display(new JOGLBinding(canvas));
+    display = new Display(canvas);
 
     new EventBinding(canvas, display);
 

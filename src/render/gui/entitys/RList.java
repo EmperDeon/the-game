@@ -36,4 +36,4 @@ public final class RList{
   map.add(new Button(draw, pos, label, act));
   this.ids.get(id).add(map.size()-1);
  }
-}
+} 

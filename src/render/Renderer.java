@@ -13,7 +13,7 @@ public class Renderer implements Runnable{
  private MTimer timer;
  private Player player;
 
- private final Gui gui = new Gui(this);
+ private final Gui gui = new Gui();
 
  public void init() throws TermEx{
   // this.level  = new Level("World1"); 
@@ -41,6 +41,6 @@ public class Renderer implements Runnable{
  }
 
  public void initfinal(){
-  this.gui.initfinal();
+  //this.gui.initfinal();
  }
 }
