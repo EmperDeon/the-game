@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import utils.Error;
-import utils.CoordConv;
 import utils.MTimer;
 import utils.Options;
 import utils.exceptions.TermEx;
@@ -18,7 +17,6 @@ public class Main implements Runnable{
  public final static Logger log  = Logger.getLogger(Main.class.getName()); 
  public final static Options OPTIONS = new Options(mdir + "options.db"); 
  public final static Error ERR_LOG   = new Error();
- public final static CoordConv CC = new CoordConv(OPTIONS);
  
  public final static render.Renderer rend = new render.Renderer();
  public final static Main main = new Main();

@@ -1,15 +1,13 @@
 package render.gui;
-
 import java.util.ArrayList;
 import javax.media.opengl.awt.GLCanvas;
 import org.fenggui.IWidget;
 import org.fenggui.binding.render.jogl.JOGLBinding;
 import org.fenggui.event.WidgetListChangedEvent;
-import org.fenggui.util.Log;
-
 public class Display extends org.fenggui.Display{
  private final ArrayList<ArrayList<Integer>>   guiIds = new ArrayList<>(20);
  private final ArrayList<Integer>       alwaysVisible = new ArrayList<>(5);
+ private Integer curr = 0;
  
  public Display (GLCanvas canvas){
   super(new JOGLBinding(canvas));
@@ -26,39 +24,29 @@ public class Display extends org.fenggui.Display{
    
    i++;
   }
+  this.curr = id;
  }
-
  public synchronized void addWidget(Integer id, IWidget... widgets){
   ArrayList<Integer> ids = new ArrayList<>();
+  
+  
   for (IWidget w : widgets){
-   addWidgetInternal(w, this.notifyList.size());
+
+   notifyList.add(notifyList.size(), w);
+   w.setParent(this);
+   if (getDisplay() != null)
+    w.addedToWidgetTree();
+   
    ids.add(this.notifyList.size());
+   if(!id.equals(curr))
+    w.setVisible(false);
   }
+  
   this.guiIds.add(id, ids);
   updateMinSize();
   widgetAdded(new WidgetListChangedEvent(this, widgets));
  }
-  
- private synchronized void addWidgetInternal(IWidget c, int position)
- {
-  if (position > notifyList.size())
-        position = notifyList.size();
-
-      if (notifyList.contains(c))
-      {
-        Log.warn("Container.addWidget: Widget " + c + " is already in the container (" + this + ")");
-      }
-      else
-      {
-        //if(relyFocus() == null && c.relyFocus() != null) setRelyFocus(c);
-        notifyList.add(position, c);
-
-        c.setParent(this);
-
-        if (getDisplay() != null)
-          c.addedToWidgetTree();
-      }
-  }
-
-  
+ public synchronized void addWidget(Integer id, ArrayList<IWidget> widgets){
+  addWidget(id, (IWidget[])widgets.toArray());
+ }
 }
