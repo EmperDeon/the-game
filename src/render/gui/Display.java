@@ -49,4 +49,10 @@ public class Display extends org.fenggui.Display{
  public synchronized void addWidget(Integer id, ArrayList<IWidget> widgets){
   addWidget(id, (IWidget[])widgets.toArray());
  }
+ public synchronized void resize(){
+  notifyList.stream().forEach(( w ) -> {
+   w.resize(getWidth(), getHeight());
+  });
+
+ }
 }

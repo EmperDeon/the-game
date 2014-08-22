@@ -1,7 +1,6 @@
 package render.gui;
 
 import com.jogamp.opengl.util.Animator;
-import java.util.ArrayList;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -12,6 +11,7 @@ import javax.swing.JFrame;
 import org.fenggui.IWidget;
 import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
+import render.gui.widgets.Loading;
 import render.gui.widgets.StandartButton;
 
 public class Gui extends JFrame{
@@ -43,27 +43,27 @@ public class Gui extends JFrame{
 
 
   public void buildGUI(){
-   ArrayList<IWidget> list = new ArrayList<>();
+   IWidget w;
    // 0 - Loading
-   list.add(new StandartButton("Test 1",100,400));
+   w = new Loading(display);
+   display.addWidget(0, w);
    
+   w  = new StandartButton("Test 1",100,400);
+   display.addWidget(1, w);
    
-   list.add(new StandartButton("Test 2",100,200));
+   w = new StandartButton("Test 2",100,200);
+   display.addWidget(1, w);
+
    // display.addWidget(0, 
    //  new StandartFPS(100,200)
     
   //  );
-    display.addWidget(0,new ArrayList<IWidget>());
 
-    display.addWidget(0, 
-     new StandartButton("Test 2",100,200)
-    
-    );
 
   }
-  
+  public void resize(){ this.display.resize(); }
   public void changeGui(Integer id){ 
-//this.display.changeGui(id);
+   //this.display.changeGui(id);
   }
   @Override public final void setVisible(boolean b){ super.setVisible(b); }
   public GLCanvas getCanvas(){ return canvas; }
@@ -88,7 +88,9 @@ public class Gui extends JFrame{
     glu.gluPerspective(45, (double) width / (double) height, 4, 1000);
     gl.glMatrixMode(GL2.GL_MODELVIEW);
     gl.glLoadIdentity();
-    }
+    
+    resize();
+   }
    
    public void displayChanged(GLAutoDrawable arg0, boolean arg1, boolean arg2){}
    
