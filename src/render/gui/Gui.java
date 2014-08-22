@@ -67,6 +67,7 @@ public class Gui extends JFrame{
   }
   @Override public final void setVisible(boolean b){ super.setVisible(b); }
   public GLCanvas getCanvas(){ return canvas; }
+   
   
   
   private class Listener implements GLEventListener{
