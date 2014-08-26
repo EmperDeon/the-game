@@ -1,6 +1,7 @@
 package render.gui;
 
 import com.jogamp.opengl.util.Animator;
+import java.util.ArrayList;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -8,11 +9,13 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
-import org.fenggui.IWidget;
 import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
 import render.gui.widgets.Loading;
-import render.gui.widgets.StandartButton;
+import render.gui.widgets.StdBackground;
+import render.gui.widgets.StdButton;
+import render.gui.widgets.WidgetsContainer;
+import utils.vec.Vec2;
 
 public class Gui extends JFrame{
   private static final long     serialVersionUID = 1L;
@@ -43,16 +46,30 @@ public class Gui extends JFrame{
 
 
   public void buildGUI(){
-   IWidget w;
-   // 0 - Loading
-   w = new Loading(display);
-   display.addWidget(0, w);
+   ArrayList<ArrayList<Integer>> ids = new ArrayList<>();
+   ArrayList<Integer> id = new ArrayList<>();
+   id.add(0);
+   id.add(1);
+
+   ids.add(id);
+   WidgetsContainer cont = new WidgetsContainer(new Vec2<>(20,20), 
+           new Vec2<>(100,20),ids);
    
-   w  = new StandartButton("Test 1",100,400);
-   display.addWidget(1, w);
+   cont.addW(new StdBackground("/usr/games/game/res/null.png"));
+   cont.addW(new Loading());
+ // 0 - Loading
+   display.addWidget(0, new StdBackground("/usr/games/game/res/null.png"));
+   display.addWidget(0, new Loading());
    
-   w = new StandartButton("Test 2",100,200);
-   display.addWidget(1, w);
+ // 1 - Main menu
+   display.addWidget(1, new StdBackground("/usr/games/game/res/bg.png"));
+   cont.addW(new StdButton("Text 1",100,400, (e -> {
+     
+   })));
+   cont.addW(new StdButton("Test 2",100,200, (e -> {
+ 
+   })));
+   display.addWidget(1,cont);
 
    // display.addWidget(0, 
    //  new StandartFPS(100,200)
@@ -63,7 +80,7 @@ public class Gui extends JFrame{
   }
   public void resize(){ this.display.resize(); }
   public void changeGui(Integer id){ 
-   //this.display.changeGui(id);
+   this.display.changeGui(id);
   }
   @Override public final void setVisible(boolean b){ super.setVisible(b); }
   public GLCanvas getCanvas(){ return canvas; }
