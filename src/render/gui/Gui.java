@@ -51,6 +51,7 @@ public class Gui extends JFrame{
    id.add(0);
    id.add(1);
 
+   
    ids.add(id);
    WidgetsContainer cont = new WidgetsContainer(new Vec2<>(20,20), 
            new Vec2<>(100,20),ids);
