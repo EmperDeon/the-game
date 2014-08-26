@@ -13,8 +13,8 @@ import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
 import render.gui.widgets.Loading;
 import render.gui.widgets.StdButton;
+import render.gui.widgets.StdWidget;
 import render.gui.widgets.WidgetsContainer;
-import utils.vec.Vec2;
 
 public class Gui extends JFrame{
   private static final long     serialVersionUID = 1L;
@@ -45,30 +45,19 @@ public class Gui extends JFrame{
 
 
   public void buildGUI(){
-   ArrayList<ArrayList<Integer>> ids = new ArrayList<>();
-   ArrayList<Integer> id = new ArrayList<>();
-   id.add(0);
-   id.add(1);
-
-   
-   ids.add(id);
-   WidgetsContainer cont = new WidgetsContainer(new Vec2<>(20,20), 
-                                                new Vec2<>(200,20),
-                                                ids);
-   cont.setDisplay(this.display);
+   ArrayList<StdWidget> cont = new ArrayList<>();
+  
  // 0 - Loading
    display.setBack("res/null.png");
    display.addWidget(new Loading());
    
  // 1 - Main menu
    display.setBack("res/bg.png");
-   cont.addW(new StdButton("Text 1", (e -> {
-     
-   })));
-   cont.addW(new StdButton("Test 2", (e -> {
- 
-   })));
-   display.addWidget(1,cont);
+      
+   cont.add(new StdButton("Text 1", (e -> { })));
+   cont.add(new StdButton("Test 2", (e -> { })));
+
+   display.addWidget(1, new WidgetsContainer(cont, display));
 
    // display.addWidget(0, 
    //  new StandartFPS(100,200)

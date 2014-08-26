@@ -1,5 +1,6 @@
 package render.gui;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.media.opengl.awt.GLCanvas;
 import main.Main;
 import org.fenggui.IWidget;
@@ -20,7 +21,7 @@ public class Display extends org.fenggui.Display{
  
  public Display (GLCanvas canvas){
   super(new JOGLBinding(canvas));
-  this.always = new WidgetsContainer();
+  this.always = new WidgetsContainer(new ArrayList<>(), this);
  }
  
  public void changeGui(Integer id){

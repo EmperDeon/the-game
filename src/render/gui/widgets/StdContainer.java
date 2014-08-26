@@ -37,12 +37,12 @@ public abstract class StdContainer implements IWidget{
  protected final TreeMap<String,Object> data   = new TreeMap<>();
  protected final Vec2<Integer>          mcoord = new Vec2<>();
  protected final Vec2<Integer>          xy     = new Vec2<>();
-
+ protected final Vec2<Integer>          wh     = new Vec2<>();
+ 
  protected String          name;
  protected Boolean         visible = true;
  protected Display         display;
  protected IBasicContainer parent;
- protected Dimension       size;
  protected ILayoutData     layoutData = null;
  
  public StdContainer(){
@@ -130,8 +130,8 @@ public abstract class StdContainer implements IWidget{
  @Override public int getY () {return xy.gY();}
  @Override public Point getPosition () {return new Point(xy.gX(),xy.gY());}
  @Override public IBasicContainer getParent () {return this.parent;}
- @Override public Dimension getSize () {return this.size;}
- @Override public Dimension getMinSize () {return size;} 
+ @Override public Dimension getSize () {return new Dimension(wh.gX(),wh.gY());}
+ @Override public Dimension getMinSize () {return new Dimension(wh.gX(),wh.gY());} 
  @Override public Object getData ( String key ) {return this.data.get(key);}
  @Override public boolean isVisible () {return visible;}
  @Override public Display getDisplay () {return display;}
@@ -175,7 +175,7 @@ public abstract class StdContainer implements IWidget{
  @Override public void setY ( int y ) {xy.sY(y);}
  @Override public void setPosition ( Point p ) {xy.sX(p.getX()); xy.sY(p.getY());}
  @Override public void setParent ( IBasicContainer object ) {this.parent=object;}
- @Override public void setSize ( Dimension d ) {this.size=d; }
+ @Override public void setSize ( Dimension d ) {wh.sX(d.getWidth()); wh.sY(d.getHeight()); }
  @Override public void setData ( String key , Object data ) {this.data.put(key , data);}
  @Override public void setVisible ( boolean visible ) {this.visible=visible;}
  public void setDisplay(Display d){this.display = d;} 
