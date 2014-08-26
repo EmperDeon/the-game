@@ -1,9 +1,12 @@
 package render.gui;
+import java.io.IOException;
 import javax.media.opengl.awt.GLCanvas;
+import main.Main;
 import org.fenggui.IWidget;
 import org.fenggui.binding.render.Binding;
 import org.fenggui.binding.render.Graphics;
 import org.fenggui.binding.render.IOpenGL;
+import org.fenggui.binding.render.Pixmap;
 import org.fenggui.binding.render.jogl.JOGLBinding;
 import org.fenggui.event.WidgetListChangedEvent;
 import render.gui.widgets.WidgetsContainer;
@@ -11,6 +14,7 @@ import utils.vec.Vec2;
 public class Display extends org.fenggui.Display{
  private final Vec2<Integer>    t             = new Vec2<>();
  private final WidgetsContainer always ;
+ private Pixmap          background;
  private Integer                curr          = 0;
 
  
@@ -32,6 +36,12 @@ public class Display extends org.fenggui.Display{
   updateMinSize();
   widgetAdded(new WidgetListChangedEvent(this, w));
  }
+ public void setBack(String b){try {
+  this.background = new Pixmap(Binding.getInstance().getTexture(Main.mdir+b));
+  } catch ( IOException ex ) {
+   Main.ERR_LOG.addE("Display.setBackground()", ex);
+  }
+} 
  public synchronized void resize(){
   notifyList.get(curr).resize(getWidth(), getHeight());
   t.sX(getWidth());
@@ -64,42 +74,18 @@ public class Display extends org.fenggui.Display{
     gl.pushMatrix();
     gl.loadIdentity();
     gl.setupStateVariables(isDepthTestEnabled());
-
+    
+    
     // opengl.translateZ(-50);
-
     Graphics g = binding.getGraphics();
+    
     g.resetTransformations();
     g.resetClipSpace();
     g.forceColor(true);
-// Standart container
-    IWidget c = notifyList.get(curr);
-    gl.pushMatrix();
 
-    clipWidget(g, c);
-
-    g.translate(c.getX(), c.getY());
-
-    c.paint(g);
-
-    g.translate(-c.getX(), -c.getY());
-
-    g.removeLastClipSpace();
-    gl.popMatrix();
-// End standart container
-// Always visible container   
-    gl.pushMatrix();
-
-    clipWidget(g, always);
-
-    g.translate(always.getX(), always.getY());
-
-    always.paint(g);
-
-    g.translate(-always.getX(), -always.getY());
-
-    g.removeLastClipSpace();
-    gl.popMatrix();
-//end
+    paintB(); 
+    paintW(notifyList.get(curr));
+    paintW(always); 
 
     g.resetClipSpace();
 
@@ -134,4 +120,38 @@ public class Display extends org.fenggui.Display{
     }
     return false;
   }
+ private void paintW(IWidget w){
+  Binding binding = this.getBinding();
+  IOpenGL gl = binding.getOpenGL();
+  Graphics g = binding.getGraphics();
+  
+  gl.pushMatrix();
+
+  clipWidget(g, w);
+
+  g.translate(w.getX(), w.getY());
+
+  w.paint(g);
+
+  g.translate(-w.getX(), -w.getY());
+
+  g.removeLastClipSpace();
+  gl.popMatrix();
+ }
+ private void paintB(){
+  Binding binding = this.getBinding();
+  IOpenGL gl = binding.getOpenGL();
+  Graphics g = binding.getGraphics();
+  
+  gl.pushMatrix();
+
+  g.translate(-50, -50);
+
+  g.drawImage(background, getWidth() / 2, getHeight() / 2);
+
+  g.translate(50, 50);
+
+  g.removeLastClipSpace();
+  gl.popMatrix();
+ }
 }

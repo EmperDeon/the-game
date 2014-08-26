@@ -178,5 +178,6 @@ public abstract class StdContainer implements IWidget{
  @Override public void setSize ( Dimension d ) {this.size=d; }
  @Override public void setData ( String key , Object data ) {this.data.put(key , data);}
  @Override public void setVisible ( boolean visible ) {this.visible=visible;}
+ public void setDisplay(Display d){this.display = d;} 
  public void setLayoutData(ILayoutData layoutData){this.layoutData = layoutData;}
 }

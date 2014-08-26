@@ -15,19 +15,18 @@ import org.fenggui.util.fonttoolkit.FontFactory;
 
 public class StdButton extends StdWidget{
 
- public StdButton(String text, int x, int y,IButtonPressedListener l){
+ public StdButton(String text,IButtonPressedListener l){
   super("res/stdbe.png","res/stdbf.png","res/stdbd");
   setText(text);
   this.setEnabled(false);
-  setXY(x,y);
   addButtonPressedListener(l);
   setFont();
  }
  @Override
  public void resize(int w, int h){
-   setXY((w - 200)/2,(h - 40)/2);
-   setWidth(200);
-   setHeight(40);
+//   setXY((w - 200)/2,(h - 40)/2);
+//   setWidth(200);
+//   setHeight(40);
  }
  private void setFont(){
   TextAppearance appearance = this.getAppearance();

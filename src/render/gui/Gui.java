@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
 import render.gui.widgets.Loading;
-import render.gui.widgets.StdBackground;
 import render.gui.widgets.StdButton;
 import render.gui.widgets.WidgetsContainer;
 import utils.vec.Vec2;
@@ -54,20 +53,19 @@ public class Gui extends JFrame{
    
    ids.add(id);
    WidgetsContainer cont = new WidgetsContainer(new Vec2<>(20,20), 
-           new Vec2<>(100,20),ids);
-   
-   cont.addW(new StdBackground("/usr/games/game/res/null.png"));
-   cont.addW(new Loading());
+                                                new Vec2<>(200,20),
+                                                ids);
+   cont.setDisplay(this.display);
  // 0 - Loading
-   display.addWidget(0, new StdBackground("/usr/games/game/res/null.png"));
-   display.addWidget(0, new Loading());
+   display.setBack("res/null.png");
+   display.addWidget(new Loading());
    
  // 1 - Main menu
-   display.addWidget(1, new StdBackground("/usr/games/game/res/bg.png"));
-   cont.addW(new StdButton("Text 1",100,400, (e -> {
+   display.setBack("res/bg.png");
+   cont.addW(new StdButton("Text 1", (e -> {
      
    })));
-   cont.addW(new StdButton("Test 2",100,200, (e -> {
+   cont.addW(new StdButton("Test 2", (e -> {
  
    })));
    display.addWidget(1,cont);
