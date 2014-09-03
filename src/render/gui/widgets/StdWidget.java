@@ -5,8 +5,8 @@ import org.fenggui.Button;
 import org.fenggui.binding.render.Binding;
 import org.fenggui.binding.render.Pixmap;
 import org.fenggui.decorator.background.PixmapBackground;
-import org.fenggui.event.key.KeyAdapter;
-import org.fenggui.event.mouse.MouseAdapter;
+import org.fenggui.event.key.IKeyListener;
+import org.fenggui.event.mouse.IMouseListener;
 import org.fenggui.util.Dimension;
 
 /**
@@ -18,8 +18,8 @@ import org.fenggui.util.Dimension;
 public class StdWidget extends Button
 {
   Dimension size = new Dimension(5, 5);
-  private MouseAdapter mhook;
-  private KeyAdapter khook;
+  private IMouseListener mhook;
+  private IKeyListener khook;
   /**
    * Constructs a new GameMenuButton. Needs to be called in the OpenGL thread.
    * 
@@ -163,14 +163,14 @@ public class StdWidget extends Button
     }
   }
   
-  public MouseAdapter getMouseHook(){
+  public IMouseListener getMouseHook(){
    return mhook;
   }
-  public KeyAdapter getKeyHook(){
+  public IKeyListener getKeyHook(){
    return khook;
   }
   
-  public void setHooks(MouseAdapter mhook, KeyAdapter khook){
+  public void setHooks(IMouseListener mhook, IKeyListener khook){
    this.mhook = mhook;
    this.khook = khook;
   }

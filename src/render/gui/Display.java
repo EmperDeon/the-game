@@ -1,6 +1,7 @@
 package render.gui;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.media.opengl.awt.GLCanvas;
 import main.Main;
 import org.fenggui.IWidget;
@@ -15,7 +16,7 @@ import utils.vec.Vec2;
 public class Display extends org.fenggui.Display{
  private final Vec2<Integer>    t             = new Vec2<>();
  private final WidgetsContainer always ;
- private Pixmap          background;
+ private final ArrayList<Pixmap>          background = new ArrayList<>(10);
  private Integer                curr          = 0;
 
  
@@ -26,8 +27,18 @@ public class Display extends org.fenggui.Display{
  
  public void changeGui(Integer id){
   this.curr = id;
+  notifyList.stream().forEach(w -> {w.setVisible(false);});
+  notifyList.get(curr).setVisible(true);
+  
+ }
+
+ public Display () {
+  this.always = null;
  }
  public synchronized void addWidget(Integer id, IWidget w){
+  if(!Objects.equals(this.curr , id))
+   w.setVisible(false);
+  
   notifyList.add(notifyList.size(), w);
   w.setParent(this);
   if (getDisplay() != null)
@@ -37,8 +48,8 @@ public class Display extends org.fenggui.Display{
   updateMinSize();
   widgetAdded(new WidgetListChangedEvent(this, w));
  }
- public void setBack(String b){try {
-  this.background = new Pixmap(Binding.getInstance().getTexture(Main.mdir+b));
+ public void setBack(Integer id, String b){try {
+  this.background.add(id, new Pixmap(Binding.getInstance().getTexture(Main.mdir+b)));
   } catch ( IOException ex ) {
    Main.ERR_LOG.addE("Display.setBackground()", ex);
   }
@@ -85,7 +96,7 @@ public class Display extends org.fenggui.Display{
     g.forceColor(true);
 
     paintB(); 
-    paintW(notifyList.get(curr));
+    this.notifyList.stream().forEach(w -> {paintW(w);});
     paintW(always); 
 
     g.resetClipSpace();
@@ -146,11 +157,7 @@ public class Display extends org.fenggui.Display{
   
   gl.pushMatrix();
 
-  g.translate(-50, -50);
-
-  g.drawImage(background, getWidth() / 2, getHeight() / 2);
-
-  g.translate(50, 50);
+  g.drawScaledImage(background.get(curr),0 ,0 , getWidth() , getHeight() );
 
   g.removeLastClipSpace();
   gl.popMatrix();

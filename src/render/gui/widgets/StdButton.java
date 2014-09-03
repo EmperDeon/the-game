@@ -7,7 +7,8 @@ import java.io.IOException;
 import main.Main;
 import org.fenggui.appearance.TextAppearance;
 import org.fenggui.binding.render.text.ITextRenderer;
-import org.fenggui.event.IButtonPressedListener;
+import org.fenggui.event.key.IKeyListener;
+import org.fenggui.event.mouse.IMouseListener;
 import org.fenggui.text.content.factory.simple.TextStyle;
 import org.fenggui.util.Alphabet;
 import org.fenggui.util.Color;
@@ -15,13 +16,14 @@ import org.fenggui.util.fonttoolkit.FontFactory;
 
 public class StdButton extends StdWidget{
 
- public StdButton(String text,IButtonPressedListener l){
+ public StdButton(String text, IMouseListener l, IKeyListener k){
   super("res/stdbe.png","res/stdbf.png","res/stdbd");
   setText(text);
   this.setEnabled(false);
-  addButtonPressedListener(l);
+  this.setHooks(l , k);
   setFont();
  }
+ 
  @Override
  public void resize(int w, int h){
 //   setXY((w - 200)/2,(h - 40)/2);

@@ -5,7 +5,7 @@ public class Vec3 <T> {
  private T z;
  
  public Vec3(){x = null; y = null; z = null;}
- public Vec3(T x, T y, T z){}
+ public Vec3(T x, T y, T z){this.x=x; this.y=y; this.z=z;}
  
  public void sX(T x){ this.x = x; }
  public void sY(T y){ this.y = y; }

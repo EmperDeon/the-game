@@ -6,16 +6,17 @@ import java.util.TreeMap;
 import org.fenggui.Display;
 import org.fenggui.IBasicContainer;
 import org.fenggui.IWidget;
-import org.fenggui.binding.render.Graphics;
 import org.fenggui.event.FocusEvent;
 import org.fenggui.event.IPositionChangedListener;
 import org.fenggui.event.ISizeChangedListener;
 import org.fenggui.event.PositionChangedEvent;
 import org.fenggui.event.SizeChangedEvent;
+import org.fenggui.event.key.IKeyListener;
 import org.fenggui.event.key.KeyAdapter;
 import org.fenggui.event.key.KeyPressedEvent;
 import org.fenggui.event.key.KeyReleasedEvent;
 import org.fenggui.event.key.KeyTypedEvent;
+import org.fenggui.event.mouse.IMouseListener;
 import org.fenggui.event.mouse.MouseAdapter;
 import org.fenggui.event.mouse.MouseClickedEvent;
 import org.fenggui.event.mouse.MouseDoubleClickedEvent;
@@ -33,25 +34,28 @@ import org.fenggui.util.Point;
 import utils.vec.Vec2;
 
 public abstract class StdContainer implements IWidget{
- protected final ArrayList<StdWidget>   cont   = new ArrayList<>();
- protected final TreeMap<String,Object> data   = new TreeMap<>();
- protected final Vec2<Integer>          mcoord = new Vec2<>();
- protected final Vec2<Integer>          xy     = new Vec2<>();
- protected final Vec2<Integer>          wh     = new Vec2<>();
+  protected ArrayList<StdWidget>   cont = new ArrayList<>();
+  protected TreeMap<String,Object> data = new TreeMap<>();
+  protected Vec2<Integer>          mcoord = new Vec2<>(0,0);
+  protected Vec2<Integer>          xy = new Vec2<>(0,0);
+  protected Vec2<Integer>          wh = new Vec2<>(0,0);
+  
+  protected String          name;
+  protected Boolean         visible = true;
+  protected Display         display;
+  protected IBasicContainer parent;
+  protected ILayoutData     layoutData = null;
  
- protected String          name;
- protected Boolean         visible = true;
- protected Display         display;
- protected IBasicContainer parent;
- protected ILayoutData     layoutData = null;
+ public StdContainer(ArrayList<StdWidget> con, Display display){
+  this.cont.addAll(con);
+  this.display = display;
+ }
+
+ @Override public void updateMinSize () {}
  
  public StdContainer(){
   
  }
- @Override public abstract void resize ( int w , int h );
- @Override public abstract void updateMinSize ();
- 
- @Override public void paint ( Graphics g ) {this.cont.stream().forEach(( w ) -> {if(visible)w.paint(g);});}
 
  @Override public void mouseEntered ( MouseEnteredEvent e ) {
   getMouseHook().mouseEntered(e);
@@ -126,11 +130,17 @@ public abstract class StdContainer implements IWidget{
   return (IWidget)super.clone();
  }
 
- @Override public int getX () {return xy.gX();}
- @Override public int getY () {return xy.gY();}
+ @Override public int getX () {
+  return xy.gX();
+ }
+ @Override public int getY () {
+  return xy.gY();
+ }
  @Override public Point getPosition () {return new Point(xy.gX(),xy.gY());}
  @Override public IBasicContainer getParent () {return this.parent;}
- @Override public Dimension getSize () {return new Dimension(wh.gX(),wh.gY());}
+ @Override public Dimension getSize () {
+   return new Dimension(wh.gX(),wh.gY());
+ }
  @Override public Dimension getMinSize () {return new Dimension(wh.gX(),wh.gY());} 
  @Override public Object getData ( String key ) {return this.data.get(key);}
  @Override public boolean isVisible () {return visible;}
@@ -151,19 +161,19 @@ public abstract class StdContainer implements IWidget{
    y = c.getY();
    w = c.getWidth();
    h = c.getHeight();
-   if(mcoord.gX() > x && mcoord.gX() < (x+w) && mcoord.gY()>y && mcoord.gY()<(y+h) )
-    return c;
+    if(mcoord.gX() > x && mcoord.gX() < (x+w) && mcoord.gY()>y && mcoord.gY()<(y+h) )
+     return c;
   }
   return null;
  }
- private MouseAdapter getMouseHook(){
+ private IMouseListener getMouseHook(){
   StdWidget w = getSWidget();
   if(w != null)
    return w.getMouseHook();
   else
    return new MouseAdapter() {};
  }
- private KeyAdapter getKeyHook(){
+ private IKeyListener getKeyHook(){
   StdWidget w = getSWidget();
   if(w != null)
    return w.getKeyHook();

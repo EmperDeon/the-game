@@ -3,6 +3,7 @@ package render.gui.widgets;
 import java.util.ArrayList;
 import org.fenggui.Display;
 import org.fenggui.binding.render.Graphics;
+import utils.vec.Vec2;
 
 public class WidgetsContainer extends StdContainer{
  protected Boolean always = false;
@@ -10,14 +11,17 @@ public class WidgetsContainer extends StdContainer{
   this.cont.addAll(con);
   this.display = display;
  }
+ 
  public WidgetsContainer(Display display){
+  wh     = new Vec2<>(display.getWidth(), display.getHeight());
   this.display = display;
   this.always = true;
  }
+ 
  public void addW(StdWidget w){
   if(always)
    cont.add(w);
-  else{
+  else{  
    w.setWidth(200);
    w.setHeight(20);
    cont.add(w);
@@ -48,7 +52,8 @@ public class WidgetsContainer extends StdContainer{
   }
  }
  @Override public void paint ( Graphics g ) {
-  this.cont.stream().forEach(( w ) -> {if(visible)w.paint(g);});
+  if(visible)
+   this.cont.stream().forEach(( w ) -> {w.paint(g);});
  }
 
  @Override public void updateMinSize () {}

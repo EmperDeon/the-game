@@ -11,6 +11,20 @@ import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
 import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
+import org.fenggui.event.key.IKeyListener;
+import org.fenggui.event.key.KeyPressedEvent;
+import org.fenggui.event.key.KeyReleasedEvent;
+import org.fenggui.event.key.KeyTypedEvent;
+import org.fenggui.event.mouse.IMouseListener;
+import org.fenggui.event.mouse.MouseClickedEvent;
+import org.fenggui.event.mouse.MouseDoubleClickedEvent;
+import org.fenggui.event.mouse.MouseDraggedEvent;
+import org.fenggui.event.mouse.MouseEnteredEvent;
+import org.fenggui.event.mouse.MouseExitedEvent;
+import org.fenggui.event.mouse.MouseMovedEvent;
+import org.fenggui.event.mouse.MousePressedEvent;
+import org.fenggui.event.mouse.MouseReleasedEvent;
+import org.fenggui.event.mouse.MouseWheelEvent;
 import render.gui.widgets.Loading;
 import render.gui.widgets.StdButton;
 import render.gui.widgets.StdWidget;
@@ -46,16 +60,143 @@ public class Gui extends JFrame{
 
   public void buildGUI(){
    ArrayList<StdWidget> cont = new ArrayList<>();
-  
- // 0 - Loading
-   display.setBack("res/null.png");
-   display.addWidget(new Loading());
+
+   // 0 - Loading
+   display.setBack(0,"res/null.png");
+   display.addWidget(0,new Loading());
    
- // 1 - Main menu
-   display.setBack("res/bg.png");
+   // 1 - Main menu
+   display.setBack(1,"res/bg.png");
       
-   cont.add(new StdButton("Text 1", (e -> { })));
-   cont.add(new StdButton("Test 2", (e -> { })));
+   cont.add(new StdButton("Text 1", new IMouseListener() {
+
+    @Override
+    public void mouseDragged ( MouseDraggedEvent mouseDraggedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered ( MouseEnteredEvent mouseEnteredEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited ( MouseExitedEvent mouseExited ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseMoved ( MouseMovedEvent mouseMovedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed ( MousePressedEvent mousePressedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseClicked ( MouseClickedEvent mouseClickedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseDoubleClicked (
+                                     MouseDoubleClickedEvent mouseDoubleClickedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased ( MouseReleasedEvent mouseReleasedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseWheel ( MouseWheelEvent mouseWheelEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+   }, new IKeyListener(){
+
+    @Override
+    public void keyPressed ( KeyPressedEvent keyPressedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased ( KeyReleasedEvent keyReleasedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyTyped ( KeyTypedEvent keyTypedEvent ) {}
+   
+   }));
+   
+   cont.add(new StdButton("Test 2", new IMouseListener() {
+
+    @Override
+    public void mouseDragged ( MouseDraggedEvent mouseDraggedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered ( MouseEnteredEvent mouseEnteredEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited ( MouseExitedEvent mouseExited ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseMoved ( MouseMovedEvent mouseMovedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed ( MousePressedEvent mousePressedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseClicked ( MouseClickedEvent mouseClickedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseDoubleClicked (
+                                     MouseDoubleClickedEvent mouseDoubleClickedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased ( MouseReleasedEvent mouseReleasedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseWheel ( MouseWheelEvent mouseWheelEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+   }, new IKeyListener(){
+
+    @Override
+    public void keyPressed ( KeyPressedEvent keyPressedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased ( KeyReleasedEvent keyReleasedEvent ) {
+     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyTyped ( KeyTypedEvent keyTypedEvent ) {}
+   
+   }));
 
    display.addWidget(1, new WidgetsContainer(cont, display));
 
