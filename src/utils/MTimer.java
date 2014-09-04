@@ -2,7 +2,7 @@ package utils;
 import java.util.Timer;
 import java.util.TimerTask;
 import level.Level;
-import player.Player;
+import level.player.Player;
 
 public class MTimer {
  private final Timer Tplayer = new Timer();   

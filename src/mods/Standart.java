@@ -1,5 +1,5 @@
 package mods;
-import basemod.BaseMod;
+import mods.basemod.BaseMod;
 import java.util.*;
 import utils.vec.Vec4;
 

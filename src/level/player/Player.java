@@ -1,4 +1,4 @@
-package player;
+package level.player;
 
 import level.Level;
 import utils.vec.Vec2;

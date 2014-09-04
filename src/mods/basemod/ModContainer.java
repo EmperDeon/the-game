@@ -1,4 +1,4 @@
-package basemod;
+package mods.basemod;
 
 import java.util.ArrayList;
 import utils.TId;

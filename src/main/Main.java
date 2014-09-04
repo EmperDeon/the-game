@@ -1,7 +1,7 @@
 package main;
 
-import basemod.CoreModContainer;
-import basemod.ModContainer;
+import mods.basemod.CoreModContainer;
+import mods.basemod.ModContainer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.LogManager;
@@ -11,7 +11,7 @@ import utils.MTimer;
 import utils.Options;
 import utils.exceptions.TermEx;
 
-public class Main implements Runnable{
+public final class Main implements Runnable{
  public final static String mdir = "/usr/games/game/"; 
  
  public final static Logger log  = Logger.getLogger(Main.class.getName()); 
@@ -25,17 +25,13 @@ public class Main implements Runnable{
  
  public boolean running = true;
 
- private MTimer timer;
- private ModContainer mods;
- private CoreModContainer core;
+ private final MTimer timer = new MTimer();
+ private final ModContainer mods = new ModContainer();
+ private final CoreModContainer core = new CoreModContainer();
   
  public void init() throws TermEx, InterruptedException{ 
-
-  this.core   = new CoreModContainer();
-  this.mods   = new ModContainer();
   
-  Thread.sleep(10000);
-  rend.initfinal();
+  //rend.initfinal();
  }
  
  @Override
