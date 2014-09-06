@@ -1,12 +1,10 @@
-package render.gui.widgets;
+package render.gui.widgets.std;
 import java.io.IOException;
 import main.Main;
 import org.fenggui.Button;
 import org.fenggui.binding.render.Binding;
 import org.fenggui.binding.render.Pixmap;
 import org.fenggui.decorator.background.PixmapBackground;
-import org.fenggui.event.key.IKeyListener;
-import org.fenggui.event.mouse.IMouseListener;
 import org.fenggui.util.Dimension;
 
 /**
@@ -18,15 +16,6 @@ import org.fenggui.util.Dimension;
 public class StdWidget extends Button
 {
   Dimension size = new Dimension(5, 5);
-  private IMouseListener mhook;
-  private IKeyListener khook;
-  /**
-   * Constructs a new GameMenuButton. Needs to be called in the OpenGL thread.
-   * 
-   * @param enabled
-   * @param focused
-   * @param disabled
-   */
   public StdWidget(String enabled, String focused, String disabled){
     try{
       Pixmap enabledp  = new Pixmap(Binding.getInstance().getTexture(Main.mdir + enabled));
@@ -161,17 +150,5 @@ public class StdWidget extends Button
       }
 
     }
-  }
-  
-  public IMouseListener getMouseHook(){
-   return mhook;
-  }
-  public IKeyListener getKeyHook(){
-   return khook;
-  }
-  
-  public void setHooks(IMouseListener mhook, IKeyListener khook){
-   this.mhook = mhook;
-   this.khook = khook;
   }
 }

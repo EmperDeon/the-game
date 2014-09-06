@@ -1,14 +1,12 @@
 package render.gui.widgets;
 
+import render.gui.widgets.std.StdWidget;
+
 public class Loading extends StdWidget{
  public Loading(){
   super("res/init.png","res/init.png","res/init.png");
- }
-
- @Override
- public void resize(int w, int h){
-   setXY((w - 155)/2,(h - 40)/2);
-   setWidth(155);
-   setHeight(40);
+  setXY((getDisplay().getWidth() - 155)/2,(getDisplay().getHeight() - 40)/2);
+  setWidth(155);
+  setHeight(40);
  }
 }

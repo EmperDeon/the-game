@@ -1,40 +1,32 @@
-package render.gui.widgets;
+package render.gui.widgets.std;
 import java.io.IOException;
 import java.util.List;
-import org.fenggui.theme.xml.IXMLStreamable;
+import org.fenggui.Container;
+import org.fenggui.IWidget;
+import org.fenggui.layout.LayoutManager;
 import static org.fenggui.theme.xml.IXMLStreamable.GENERATE_NAME;
 import org.fenggui.theme.xml.IXMLStreamableException;
 import org.fenggui.theme.xml.InputOutputStream;
 import org.fenggui.util.Dimension;
 
-public class StdLayout implements IXMLStreamable{
- public void doLayout(StdAppearance app, List<StdWidget> content){
+public class StdLayout extends LayoutManager{
+ @Override public void doLayout(Container app, List<IWidget> content){
   int y = 0;
 
   for (int i = 0; i < content.size(); i++){
-   StdWidget w;
+   IWidget w;
    w = content.get(content.size() - i - 1);
 
    w.setY(y);
    y += w.getSize().getHeight();
-   w.setX(app.getContentWidth() / 2 - w.getSize().getWidth() / 2);
+   w.setX(app.getAppearance().getContentWidth() / 2 - w.getSize().getWidth() / 2);
   }
  }
- public int getValidMinHeight(StdWidget w) {return w.getSize().getHeight();}
- public int getValidMinWidth(StdWidget w) {return w.getSize().getWidth();  }
- protected int getSumOfAllHeights(List<StdWidget> content) {
-    int sum = 0;
-    sum = content.stream().
-          map(( c ) -> getValidMinHeight(c)).
-          reduce(sum ,
-                 Integer::sum);
-    return sum;
-  }
- public Dimension computeMinSize(List<StdWidget> content) {
+ @Override public Dimension computeMinSize(List<IWidget> content) {
     int minW = 0;
     int minH = 0;
 
-    for (StdWidget c : content)
+    for (IWidget c : content)
     {if (minW < getValidMinWidth(c))
           minW = getValidMinWidth(c);
         minH += getValidMinHeight(c);

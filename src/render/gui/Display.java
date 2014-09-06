@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import javax.media.opengl.awt.GLCanvas;
 import main.Main;
+import org.fenggui.Container;
 import org.fenggui.IWidget;
 import org.fenggui.binding.render.Binding;
 import org.fenggui.binding.render.Graphics;
@@ -11,18 +12,17 @@ import org.fenggui.binding.render.IOpenGL;
 import org.fenggui.binding.render.Pixmap;
 import org.fenggui.binding.render.jogl.JOGLBinding;
 import org.fenggui.event.WidgetListChangedEvent;
-import render.gui.widgets.WidgetsContainer;
 import utils.vec.Vec2;
 public class Display extends org.fenggui.Display{
  private final Vec2<Integer>    t             = new Vec2<>();
- private final WidgetsContainer always ;
+ private final Container always ;
  private final ArrayList<Pixmap>          background = new ArrayList<>(10);
  private Integer                curr          = 0;
 
  
  public Display (GLCanvas canvas){
   super(new JOGLBinding(canvas));
-  this.always = new WidgetsContainer(new ArrayList<>(), this);
+  this.always = new Container();
  }
  
  public void changeGui(Integer id){
@@ -43,7 +43,6 @@ public class Display extends org.fenggui.Display{
   w.setParent(this);
   if (getDisplay() != null)
    w.addedToWidgetTree();
-  w.resize(getWidth(), getHeight());
 
   updateMinSize();
   widgetAdded(new WidgetListChangedEvent(this, w));
@@ -54,18 +53,11 @@ public class Display extends org.fenggui.Display{
    Main.ERR_LOG.addE("Display.setBackground()", ex);
   }
 } 
- public synchronized void resize(){
-  notifyList.get(curr).resize(getWidth(), getHeight());
-  t.sX(getWidth());
-  t.sY(getHeight());
- }
- 
+
  @Override public synchronized void display(){
     if (!this.isVisible())
       return;
-    if((t.gX() != getWidth())||(t.gY() != getHeight()))
-     resize();
-    
+
     Binding binding = this.getBinding();
     IOpenGL gl = binding.getOpenGL();
     gl.pushAllAttribs();

@@ -1,7 +1,6 @@
 package render.gui;
 
 import com.jogamp.opengl.util.Animator;
-import java.util.ArrayList;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -11,20 +10,18 @@ import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
 import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
-import render.gui.widgets.StdButton;
-import render.gui.widgets.StdWidget;
-import render.gui.widgets.WidgetsContainer;
+import render.gui.widgets.std.StdButton;
 
 public class Gui extends JFrame{
-  private static final long     serialVersionUID = 1L;
-  private EventBinding          eventbinding ;
-  private GL2                   gl;
-  private GLU                   glu              = new GLU();
-  private GLCanvas              canvas;
-  private Display               display          = null;
-  private GLEventListener       eventListener    = null;
-  private float                 rotwAngle         = 0;
-  private long                  lastFrame        = 0;
+  private static final long serialVersionUID = 1L;
+  private EventBinding      eventbinding ;
+  private GL2               gl;
+  private GLU               glu              = new GLU();
+  private GLCanvas          canvas;
+  private Display           display          = null;
+  private GLEventListener   eventListener    = null;
+  private float             rotwAngle         = 0;
+  private long              lastFrame        = 0;
 
   public Gui(){
    canvas = new GLCanvas();
@@ -44,20 +41,17 @@ public class Gui extends JFrame{
 
 
   public void buildGUI(){
-   ArrayList<StdWidget> cont = new ArrayList<>();
-
 //   // 0 - Loading
 //   display.setBack(0,"res/null.png");
 //   display.addWidget(0,new Loading());
    
    // 1 - Main menu
    display.setBack(0,"res/bg.png");
-      
-   cont.add(new StdButton("Text 1",e -> {System.out.println("Test 1");}));
-   
-   cont.add(new StdButton("Test 2",e -> {System.out.println("Test 2");}));
 
-   display.addWidget(0, new WidgetsContainer(cont, display));
+   display.addWidget(0,new StdButton("Text 1",e -> {System.out.println("Test 1");}));
+   
+   display.addWidget(0,new StdButton("Test 2",e -> {System.out.println("Test 2");}));
+
 
    // display.addWidget(0, 
    //  new StandartFPS(100,200)
@@ -66,15 +60,13 @@ public class Gui extends JFrame{
 
 
   }
-  public void resize(){ this.display.resize(); }
+
   public void changeGui(Integer id){ 
    this.display.changeGui(id);
   }
+  
   @Override public final void setVisible(boolean b){ super.setVisible(b); }
   public GLCanvas getCanvas(){ return canvas; }
-   
-  
-  
   private class Listener implements GLEventListener{
    private ScreenshotActor screenshotActor;
 
@@ -94,8 +86,7 @@ public class Gui extends JFrame{
     glu.gluPerspective(45, (double) width / (double) height, 4, 1000);
     gl.glMatrixMode(GL2.GL_MODELVIEW);
     gl.glLoadIdentity();
-    
-    resize();
+
    }
    
    public void displayChanged(GLAutoDrawable arg0, boolean arg1, boolean arg2){}

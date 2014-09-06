@@ -16,7 +16,7 @@
  * 
  * $Id: PixmapBackground.java 606 2009-03-13 14:56:05Z marcmenghin $
  */
-package render.gui.widgets;
+package render.gui.widgets.std;
 
 import java.io.IOException;
 import main.Main;
