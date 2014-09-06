@@ -1,11 +1,11 @@
 package main;
 
-import mods.basemod.CoreModContainer;
-import mods.basemod.ModContainer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import mods.basemod.CoreModContainer;
+import mods.basemod.ModContainer;
 import utils.Error;
 import utils.MTimer;
 import utils.Options;
@@ -30,7 +30,7 @@ public final class Main implements Runnable{
  private final CoreModContainer core = new CoreModContainer();
   
  public void init() throws TermEx, InterruptedException{ 
-  
+
   //rend.initfinal();
  }
  

@@ -1,7 +1,7 @@
 package utils;
 import java.util.Objects;
 
-public class GuiId implements Id, Comparable{
+public class GuiId implements Id, Comparable<GuiId>{
   private final Integer id;
   
   public GuiId(Integer id){
@@ -28,8 +28,7 @@ public class GuiId implements Id, Comparable{
   }
 
  @Override
- public int compareTo ( Object o ) {
-  GuiId i = (GuiId) o;
-  return this.id.compareTo(i.id);
+ public int compareTo ( GuiId o ) {
+  return this.id.compareTo(o.id);
  }
  }
