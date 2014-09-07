@@ -1,4 +1,4 @@
-package render.gui.widgets.std;
+package render.gui.widgets;
 
 public class StdFPS extends StdWidget{
  public StdFPS(int x, int y){

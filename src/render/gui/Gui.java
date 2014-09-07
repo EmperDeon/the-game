@@ -1,6 +1,8 @@
 package render.gui;
 
 import com.jogamp.opengl.util.Animator;
+import java.awt.AWTException;
+import java.awt.Robot;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -10,7 +12,7 @@ import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
 import org.fenggui.actor.ScreenshotActor;
 import org.fenggui.binding.render.jogl.EventBinding;
-import render.gui.widgets.std.StdButton;
+import render.gui.widgets.StdButton;
 
 public class Gui extends JFrame {
 
@@ -23,7 +25,7 @@ public class Gui extends JFrame {
  private GLEventListener eventListener = null;
  private float rotwAngle = 0;
  private long lastFrame = 0;
-
+ private Robot robot;
  public Gui () {
   canvas = new GLCanvas();
   eventListener = new Listener();
@@ -38,6 +40,9 @@ public class Gui extends JFrame {
   animator.start();
 
   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  try {
+   robot=new Robot();
+  } catch (AWTException ex) { }
  }
 
  public void buildGUI () {
@@ -48,17 +53,19 @@ public class Gui extends JFrame {
   // 1 - Main menu
   display.setBack(0 , "res/bg.png");
 
-  display.addWidget(0 , new StdButton("Text 1" , e -> {
+  display.addWidget(0 , new StdButton("                   Text 2" , e -> {
+   System.out.println("Test 2");
+  }));
+  
+  display.addWidget(0 , new StdButton("                   Text 1" , e -> {
    System.out.println("Test 1");
   }));
 
-  display.addWidget(0 , new StdButton("Test 2" , e -> {
-   System.out.println("Test 2");
-  }));
 
    // display.addWidget(0, 
   //  new StandartFPS(100,200)
   //  );
+  display.doLayout();
  }
 
  public void changeGui ( Integer id ) {

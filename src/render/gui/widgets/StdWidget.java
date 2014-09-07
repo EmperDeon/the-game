@@ -1,4 +1,4 @@
-package render.gui.widgets.std;
+package render.gui.widgets;
 import java.io.IOException;
 import main.Main;
 import org.fenggui.Button;

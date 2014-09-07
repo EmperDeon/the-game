@@ -18,7 +18,7 @@ public final class Main implements Runnable{
  public final static Options OPTIONS = new Options(mdir + "options.db"); 
  public final static Error ERR_LOG   = new Error();
  
- public final static render.Renderer rend = new render.Renderer();
+ public final static render.Render rend = new render.Render();
  public final static Main main = new Main();
  public final static Thread Tm = new Thread( main );
  public final static Thread Tr = new Thread( rend );

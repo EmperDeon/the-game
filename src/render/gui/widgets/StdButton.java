@@ -1,4 +1,4 @@
-package render.gui.widgets.std;
+package render.gui.widgets;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -16,19 +16,22 @@ import org.fenggui.util.fonttoolkit.FontFactory;
 public class StdButton extends StdWidget{
  
  public StdButton(String text,  IButtonPressedListener a){
-  super("res/stdbe.png","res/stdbf.png","res/stdbd");
+  super("res/mbut.png","res/mbutf.png","res/mbutn.png");
   setText(text);
   this.setEnabled(false);
   setFont();
   addButtonPressedListener(a);
+  this.addKeyReleasedListener(e -> {getAppearance().setEnabled(STATE_PRESSED, false);});
+  setEnabled(true);
  }
  
  public StdButton(String text){
-  super("res/stdbe.png","res/stdbf.png","res/stdbd");
+  super("res/mbut.png","res/mbutf.png","res/mbutn.png");
   setText(text);
   this.setEnabled(false);
 
   setFont();
+  setEnabled(true);
  }
 
  private void setFont(){
@@ -40,7 +43,7 @@ public class StdButton extends StdWidget{
   ITextRenderer renderer = appearance.getRenderer(ITextRenderer.DEFAULTTEXTRENDERERKEY).copy();
   Font cust = null;
   try {
-   cust = Font.createFont(Font.TRUETYPE_FONT,new File(Main.mdir+"res/font.ttf")).deriveFont(16f);
+   cust = Font.createFont(Font.TRUETYPE_FONT,new File(Main.mdir+"res/font.ttf")).deriveFont(14f);
   } catch ( FontFormatException | IOException ex ) {
    Main.ERR_LOG.addE("StandartButton.getFont()", ex);
   }

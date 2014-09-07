@@ -1,7 +1,5 @@
 package render.gui.widgets;
 
-import render.gui.widgets.std.StdWidget;
-
 public class Loading extends StdWidget{
  public Loading(){
   super("res/init.png","res/init.png","res/init.png");

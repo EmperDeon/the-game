@@ -1,4 +1,4 @@
-package render.gui.widgets.std;
+package render.gui.widgets;
 
 public class StdImage extends StdWidget{
 

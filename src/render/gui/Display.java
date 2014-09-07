@@ -1,6 +1,6 @@
 package render.gui;
-
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.media.opengl.awt.GLCanvas;
 import main.Main;
 import org.fenggui.IWidget;
@@ -11,25 +11,20 @@ import org.fenggui.binding.render.Pixmap;
 import org.fenggui.binding.render.jogl.JOGLBinding;
 import org.fenggui.event.WidgetListChangedEvent;
 import utils.GuiId;
-
+import utils.vec.Vec2;
 public class Display extends org.fenggui.Display {
-
- private final Layout layout = new Layout();
-
+ private final Layout layout = new Layout(this);
+ private final Vec2<Integer> t = new Vec2<>(0,0);
  public Display ( GLCanvas canvas ) {
   super(new JOGLBinding(canvas));
  }
-
- public void changeGui (Integer id ) {
-  layout.changeGui(new GuiId(id) , notifyList);
- }
-
+ public void changeGui (Integer id ) {layout.changeGui(new GuiId(id));}
+ public void doLayout(){layout.doLayout();}
  public synchronized void addWidget ( Integer id , IWidget w ) {
   notifyList.add(notifyList.size() , w);
   w.setParent(this);
 
-  layout.add(new GuiId(id) , notifyList.size() , w);
-  layout.doLayout(notifyList , getWidth() , getHeight());
+  layout.add(new GuiId(id) , w);
 
   if ( getDisplay() != null ) {
    w.addedToWidgetTree();
@@ -38,7 +33,6 @@ public class Display extends org.fenggui.Display {
   updateMinSize();
   widgetAdded(new WidgetListChangedEvent(this , w));
  }
-
  public void setBack ( Integer id , String b ) {
   try {
    layout.addBack(new GuiId(id) , new Pixmap(Binding.getInstance().
@@ -47,10 +41,11 @@ public class Display extends org.fenggui.Display {
    Main.ERR_LOG.addE("Display.setBackground()" , ex);
   }
  }
-
- @Override
- public synchronized void display () {
-
+ @Override public synchronized void display () {
+   if((t.gX() != getWidth())||(t.gY() != getHeight()))
+     doLayout();
+    
+  
   if ( !this.isVisible() ) {
    return;
   }
@@ -96,7 +91,6 @@ public class Display extends org.fenggui.Display {
   gl.popMatrix();
   gl.popAllAttribs();
  }
-
  private boolean clipWidget ( Graphics g , IWidget c ) {
   int startX = c.getX() < 0 ? 0 : c.getX();
   int startY = c.getY() < 0 ? 0 : c.getY();
@@ -121,7 +115,6 @@ public class Display extends org.fenggui.Display {
   }
   return false;
  }
-
  private void paintW ( IWidget w ) {
   Binding binding = this.getBinding();
   IOpenGL gl = binding.getOpenGL();
@@ -140,7 +133,6 @@ public class Display extends org.fenggui.Display {
   g.removeLastClipSpace();
   gl.popMatrix();
  }
-
  private void paintB () {
   Binding binding = this.getBinding();
   IOpenGL gl = binding.getOpenGL();
@@ -152,5 +144,8 @@ public class Display extends org.fenggui.Display {
 
   g.removeLastClipSpace();
   gl.popMatrix();
+ }
+ public ArrayList<IWidget> getList(){
+  return notifyList;
  }
 }
