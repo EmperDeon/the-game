@@ -10,10 +10,17 @@ import com.jogamp.common.util.IOUtil;
  import java.nio.Buffer;
  import java.nio.ByteBuffer;
  import javax.media.nativewindow.NativeWindowFactory;
- import javax.media.opengl.*;
- import javax.media.opengl.glu.GLU;
- import main.Main;
+ import javax.media.opengl.GL;
+ import javax.media.opengl.GL2;
+ import javax.media.opengl.GL2ES1;
+import javax.media.opengl.GL2GL3;
+import javax.media.opengl.GLES2;
+import javax.media.opengl.GLException;
+import javax.media.opengl.GLProfile;
+import javax.media.opengl.glu.GLU;
+import main.Main;
 public class Tex{
+ private final GL2 gl;
  private File file;
  private int target;
  private int texID;
@@ -24,43 +31,44 @@ public class Tex{
  private boolean mustFlipVertically;
  public TextureCoords coords;
  
- public Tex(GL gl, String s) {
+ public Tex(String s) {
+  gl = main.Main.rend.gl;
   file = new File (s);
   GLProfile glp;
   try {
    glp = gl.getGLProfile();
    TextureData data = TextureIO.newTextureData(glp, file, true, IOUtil.getFileSuffix(file));
-   update(gl, data);
+   update( data);
    data.flush();
   } catch (  IOException | GLException ex ) {
    Main.ERR_LOG.addE("Tex . init()", ex);
   }
  }
 
- public void bind(GL gl) {
+ public void bind() {
   try{
    if( !gl.isGLcore() && GLES2.GL_TEXTURE_EXTERNAL_OES != target) {
     gl.glEnable(target);
    }
-   validateTexID(gl);
+   validateTexID();
    gl.glBindTexture(target, texID);
    } catch ( NullPointerException | GLException ex ) {
     Main.ERR_LOG.addE("Tex . bind()", ex);
    }
   }
- public void free(GL gl) {
+ public void free() {
   if(0!=texID) {
    gl.glDeleteTextures(1, new int[] {texID}, 0);
    texID = 0;
   }
  }
- public void unbind(GL gl) {
+ public void unbind() {
   if( !gl.isGLcore() && GLES2.GL_TEXTURE_EXTERNAL_OES != target ) {
    gl.glDisable(target);
   }     
  }
  
- private boolean validateTexID(GL gl) {
+ private boolean validateTexID() {
   if( 0 == texID ) {
    if( null != gl ) {
     int[] tmp = new int[1];
@@ -71,10 +79,10 @@ public class Tex{
     }
     return 0 != texID;
    }
- private static boolean isPowerOfTwo(int val) {
+ private boolean isPowerOfTwo(int val) {
   return ((val & (val - 1)) == 0);
  }
- private static boolean haveNPOT(GL gl) {
+ private boolean haveNPOT() {
   return gl.isNPOTTextureAvailable();// !disableNPOT &&
  }
  private static int nextPowerOfTwo(int val) {
@@ -84,7 +92,7 @@ public class Tex{
   }
   return ret; 
  }
- private static boolean preferTexRect(GL gl) {
+ private boolean preferTexRect() {
   if (NativeWindowFactory.TYPE_MACOSX.equals(NativeWindowFactory.getNativeWindowType(false))) {
    String vendor = gl.glGetString(GL.GL_VENDOR);
    if (vendor != null && vendor.startsWith("ATI")) {
@@ -93,7 +101,7 @@ public class Tex{
   } 
   return false;
  }
- private static boolean haveTexRect(GL gl) {
+ private boolean haveTexRect() {
   return (TextureIO.isTexRectEnabled() && // !disableTexRect &&
    gl.isExtensionAvailable(GLExtensions.ARB_texture_rectangle));
  }
@@ -122,7 +130,7 @@ public class Tex{
     }
    }
   }
- private void checkCompressedTextureExtensions(GL gl, TextureData data) {
+ private void checkCompressedTextureExtensions(TextureData data) {
    if (data.isDataCompressed()) {
     switch (data.getInternalFormat()) {
      case GL.GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
@@ -138,8 +146,8 @@ public class Tex{
     }
    }
   }
- private void update(GL gl, TextureData data){
-  validateTexID(gl);
+ private void update(TextureData data){
+  validateTexID();
   
   imgWidth = data.getWidth();
   imgHeight = data.getHeight();
@@ -158,7 +166,7 @@ public class Tex{
 
   boolean isPOT = isPowerOfTwo(imgWidth) && isPowerOfTwo(imgHeight);
 
-  if (!isPOT && !haveNPOT(gl)) {
+  if (!isPOT && !haveNPOT()) {
    haveAutoMipmapGeneration = false;
   }
 
@@ -173,8 +181,8 @@ public class Tex{
    done = true;
   }
 
-  if (!done && preferTexRect(gl) && !isPOT && 
-   haveTexRect(gl) && !data.isDataCompressed() && !gl.isGL3() && !gl.isGLES()) {
+  if (!done && preferTexRect() && !isPOT && 
+   haveTexRect() && !data.isDataCompressed() && !gl.isGL3() && !gl.isGLES()) {
 
    texWidth = imgWidth;
    texHeight = imgHeight;
@@ -182,14 +190,14 @@ public class Tex{
    done = true;
   }
 
-  if (!done && (isPOT || haveNPOT(gl))) {
+  if (!done && (isPOT || haveNPOT())) {
    texWidth = imgWidth;
    texHeight = imgHeight;
    texTarget = GL.GL_TEXTURE_2D;
    done = true;
   }
 
-  if (!done && haveTexRect(gl) && !data.isDataCompressed() && !gl.isGL3() && !gl.isGLES()) {
+  if (!done && haveTexRect() && !data.isDataCompressed() && !gl.isGL3() && !gl.isGLES()) {
    texWidth = imgWidth;
    texHeight = imgHeight;
    texTarget = GL2.GL_TEXTURE_RECTANGLE_ARB;
@@ -237,7 +245,7 @@ public class Tex{
        gl.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, align[0]); // restore alignment
    }
   } else {
-   checkCompressedTextureExtensions(gl, data);
+   checkCompressedTextureExtensions(data);
    Buffer[] mipmapData = data.getMipmapData();
    if (mipmapData != null) {
        int width = texWidth;
@@ -254,7 +262,7 @@ public class Tex{
                gl.glTexImage2D(texTarget, i, data.getInternalFormat(),
                                width, height, data.getBorder(),
                                data.getPixelFormat(), data.getPixelType(), null);
-               updateSubImageImpl(gl, texTarget, i, data);
+               updateSubImageImpl(texTarget, i, data);
            }
 
            width = Math.max(width / 2, 1);
@@ -273,7 +281,7 @@ public class Tex{
       gl.glCompressedTexImage2D(texTarget, 0, data.getInternalFormat(),
                                 texWidth, texHeight, data.getBorder(),
                                 buf.capacity(), buf);
-      updateSubImageImpl(gl, texTarget, 0, data);
+      updateSubImageImpl(texTarget, 0, data);
      }
     } else {
      if (data.getMipmap() && haveAutoMipmapGeneration && gl.isGL2ES1()) {
@@ -284,7 +292,7 @@ public class Tex{
      gl.glTexImage2D(texTarget, 0, data.getInternalFormat(),
                      texWidth, texHeight, data.getBorder(),
                      data.getPixelFormat(), data.getPixelType(), null);
-     updateSubImageImpl(gl, texTarget, 0, data);
+     updateSubImageImpl(texTarget, 0, data);
     }
    }
   }
@@ -311,7 +319,7 @@ public class Tex{
 
   //estimatedMemorySize = data.getEstimatedMemorySize();
  }
- private void updateSubImageImpl(GL gl, int newTarget, int mipmapLevel, TextureData data) throws GLException {
+ private void updateSubImageImpl(int newTarget, int mipmapLevel, TextureData data) throws GLException {
 
   data.setHaveEXTABGR(gl.isExtensionAvailable(GLExtensions.EXT_abgr));
   data.setHaveGL12(gl.isExtensionAvailable(GLExtensions.VERSION_1_2));
@@ -348,7 +356,7 @@ public class Tex{
    imgHeight = texHeight;
   }
 
-  checkCompressedTextureExtensions(gl, data);
+  checkCompressedTextureExtensions(data);
 
   if (data.isDataCompressed()) {
    gl.glCompressedTexSubImage2D(newTarget, mipmapLevel,

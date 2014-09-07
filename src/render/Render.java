@@ -1,5 +1,6 @@
 package render;
 
+import javax.media.opengl.GL2;
 import org.fenggui.binding.render.Graphics;
 import org.fenggui.event.FocusEvent;
 import org.fenggui.event.key.KeyAdapter;
@@ -23,6 +24,7 @@ public class Render implements Runnable{
  public static boolean running = true;
  private final Vec2<Integer> mcoord = new Vec2<>();
  private final Hooks hook = new Hooks();
+ public GL2 gl;
 //
 // private MTimer timer;
 // private Player player;
@@ -33,6 +35,7 @@ public class Render implements Runnable{
   this.gui = new Gui();
   gui.setTitle("The Game");
   gui.setVisible(true);
+  gl = gui.getGl();
  }
 
  public static void destroy(){

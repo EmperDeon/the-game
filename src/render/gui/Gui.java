@@ -80,7 +80,7 @@ public class Gui extends JFrame {
  public GLCanvas getCanvas () {
   return canvas;
  }
-
+ public GL2 getGl(){return gl;}
  private class Listener implements GLEventListener {
 
   private ScreenshotActor screenshotActor;

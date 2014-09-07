@@ -21,7 +21,6 @@ public class StdButton extends StdWidget{
   this.setEnabled(false);
   setFont();
   addButtonPressedListener(a);
-  this.addKeyReleasedListener(e -> {getAppearance().setEnabled(STATE_PRESSED, false);});
   setEnabled(true);
  }
  
