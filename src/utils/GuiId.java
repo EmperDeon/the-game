@@ -1,7 +1,7 @@
 package utils;
 import java.util.Objects;
 
-public class GuiId implements Id, Comparable<GuiId>{
+public class GuiId implements Comparable<GuiId>{
   private final Integer id;
   
   public GuiId(Integer id){

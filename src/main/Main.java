@@ -9,7 +9,7 @@ import mods.basemod.ModContainer;
 import utils.Error;
 import utils.MTimer;
 import utils.Options;
-import utils.exceptions.TermEx;
+import utils.exceptions.TermEx; 
 
 public final class Main implements Runnable{
  public final static String mdir = "/usr/games/game/"; 

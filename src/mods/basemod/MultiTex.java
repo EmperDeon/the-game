@@ -1,0 +1,18 @@
+package mods.basemod;
+
+import java.util.ArrayList;
+import render.Tex;
+
+public class MultiTex {
+ private final ArrayList<Tex> arr = new ArrayList<>();
+ private boolean eqtex = true;// if all textures of block is eqal
+ 
+ public MultiTex(Tex tex){
+  this.arr.add(tex);
+  
+ }
+ 
+ public Tex get(){
+  return arr.get(0);
+ }
+}

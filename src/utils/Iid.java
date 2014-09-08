@@ -1,5 +1,5 @@
 package utils;
-public class Iid implements Id{
+public class Iid{
  private String val; 
  
  public Iid(String val){
