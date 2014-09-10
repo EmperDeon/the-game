@@ -8,39 +8,43 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import render.Tex;
-import utils.TId;
 
 public class ModContainer {
 
- private final ArrayList<BaseMod> cont;
+ private final TreeMap<Mid, BaseMod> cont;
+ private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
  public ModContainer () {
-  this.cont = new ArrayList<>();
+  this.cont = new TreeMap<>();
  }
 
- public void add ( BaseMod b ) {
-  cont.add(b);
+ public void add ( Mid id, BaseMod b ) {
+   cont.put(id, b);
  }
 
- public Tex getTex ( TId id ) {
-  return cont.get(id.getMid()).getITex(new Mid(0 , 0 , 0));
+ public Tex getTex ( Mid id ) {
+  return cont.get(id).getITex(new Mid(0 , 0 , 0));
  }
 
  public void test () {
-  
+  for(BaseMod m : cont.values())
+   System.out.println(main.Main.IdMap.getMid(m.id));
  }
 
  public void init () {
-
+  test();
+  cont.values().stream().forEach(( m ) -> {m.init();});
   postinit();
  }
 
  public void postinit () {
-
+  init.clear();
+  cont.values().stream().forEach(( m ) -> {m.postinit();});
   loaded = true;
  }
 
@@ -73,7 +77,8 @@ public class ModContainer {
     }
 
     URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
-    cont.add(( BaseMod ) classLoader.loadClass(pluginClassName).newInstance());
+    BaseMod b = ( BaseMod ) classLoader.loadClass(pluginClassName).newInstance();
+    cont.put(b.id, b);
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
    }
@@ -109,4 +114,6 @@ public class ModContainer {
  public boolean isLoaded () {
   return loaded;
  }
+ public synchronized void initF(Mid id){this.init.add(id); if(init.size() == cont.size()) postinit();}
+ public synchronized void postinitF(Mid id){this.init.add(id); if(init.size() == cont.size()) loaded = true;}
 }

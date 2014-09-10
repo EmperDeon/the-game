@@ -9,12 +9,18 @@ public class BaseMod {
  protected ArrayList<Entity> blocks;
  protected ArrayList<Entity> items;
  protected Boolean needparam = false;
- protected int id = -1;
-
+ public Mid id;
+ 
  public void init () {
-
+  id = new Mid(-1,0,0);
+  main.Main.IdMap.add(id , "BaseMod" ,"" ,"");
+  main.Main.mods.initF(id);
  }
-
+ 
+ public void postinit(){
+  main.Main.mods.postinitF(id);
+ }
+ 
  public void action ( int id , int id2 , int act , Vec4<Integer> coord ) {
 
  }
@@ -25,4 +31,5 @@ public class BaseMod {
  public Tex getITex ( Mid id ) {
   return items.get(id.getIid()).getTex();
  }
+ 
 }

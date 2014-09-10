@@ -6,13 +6,15 @@ import render.Tex;
 public class MultiTex {
  private final ArrayList<Tex> arr = new ArrayList<>();
  private boolean eqtex = true;// if all textures of block is eqal
- 
+ private int curr = 0;
  public MultiTex(Tex tex){
   this.arr.add(tex);
   
  }
  
  public Tex get(){
-  return arr.get(0);
+  if(eqtex)
+   return arr.get(0);
+  return arr.get(curr);
  }
 }

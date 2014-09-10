@@ -17,20 +17,22 @@ public final class Main implements Runnable{
  public final static Logger log  = Logger.getLogger(Main.class.getName()); 
  public final static Options OPTIONS = new Options(mdir + "options.db"); 
  public final static Error ERR_LOG   = new Error();
- 
+ public final static IdMap IdMap = new IdMap();
+ public final static MTimer timer = new MTimer();
+ public final static ModContainer mods = new ModContainer();
+ public final static CoreModContainer core = new CoreModContainer();
  public final static render.Render rend = new render.Render();
  public final static Main main = new Main();
  public final static Thread Tm = new Thread( main );
  public final static Thread Tr = new Thread( rend );
  
+ 
  public boolean running = true;
 
- private final MTimer timer = new MTimer();
- private final ModContainer mods = new ModContainer();
- private final CoreModContainer core = new CoreModContainer();
+ 
   
  public void init() throws TermEx, InterruptedException{ 
-
+  mods.loadDir();
   //rend.initfinal();
  }
  
