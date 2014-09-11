@@ -28,12 +28,14 @@ public class ModContainer {
  }
 
  public Tex getTex ( Mid id ) {
-  return cont.get(id).getITex(new Mid(0 , 0 , 0));
+  return cont.get(id.getMid()).getITex(new Mid(0 , 0 , 0));
  }
 
  public void test () {
-  for(BaseMod m : cont.values())
-   System.out.println(main.Main.IdMap.getMid(m.id));
+  cont.values().stream().
+          forEach(( m ) -> {
+           System.out.println(main.Main.IdMap.getMid(m.id));
+  });
  }
 
  public void init () {
