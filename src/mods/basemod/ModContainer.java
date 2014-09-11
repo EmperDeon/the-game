@@ -15,7 +15,7 @@ import render.Tex;
 
 public class ModContainer {
 
- private final TreeMap<Mid, BaseMod> cont;
+ private final TreeMap<Integer, BaseMod> cont;
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
@@ -24,7 +24,7 @@ public class ModContainer {
  }
 
  public void add ( Mid id, BaseMod b ) {
-   cont.put(id, b);
+   cont.put(id.getMid(), b);
  }
 
  public Tex getTex ( Mid id ) {
@@ -78,7 +78,7 @@ public class ModContainer {
 
     URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
     BaseMod b = ( BaseMod ) classLoader.loadClass(pluginClassName).newInstance();
-    cont.put(b.id, b);
+    cont.put(b.id.getMid(), b);
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
    }
@@ -117,3 +117,4 @@ public class ModContainer {
  public synchronized void initF(Mid id){this.init.add(id); if(init.size() == cont.size()) postinit();}
  public synchronized void postinitF(Mid id){this.init.add(id); if(init.size() == cont.size()) loaded = true;}
 }
+
