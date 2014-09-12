@@ -2,20 +2,20 @@ package mods.basemod;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Properties;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import render.Tex;
+import utils.Options;
 
 public class ModContainer {
 
- private final TreeMap<Integer, BaseMod> cont;
+ private final TreeMap<Mid, BaseMod> cont;
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
@@ -24,23 +24,21 @@ public class ModContainer {
  }
 
  public void add ( Mid id, BaseMod b ) {
-   cont.put(id.getMid(), b);
+   cont.put(id, b);
  }
 
  public Tex getTex ( Mid id ) {
-  return cont.get(id.getMid()).getITex(new Mid(0 , 0 , 0));
+  return cont.get(id).getITex(new Mid(0 , 0 , 0));
  }
 
  public void test () {
-  cont.values().stream().
-          forEach(( m ) -> {
-           System.out.println(main.Main.IdMap.getMid(m.id));
-  });
+  for(BaseMod m : cont.values())
+   System.out.println(main.Main.IdMap.getMid(m.id));
  }
 
  public void init () {
-  test();
-  cont.values().stream().forEach(( m ) -> {m.init();});
+
+  cont.values().stream().forEach(( m ) -> {m.init();});  test();
   postinit();
  }
 
@@ -55,7 +53,7 @@ public class ModContainer {
  }
 
  public void loadDir () {
-  File[] s = new File(main.Main.mdir + "mods/").listFiles(( File pathname ) -> {
+  File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname  -> {
    try {
     if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".jar") != -1 ) {
      return true;
@@ -68,19 +66,11 @@ public class ModContainer {
 
   for ( File f : s ) {
    try {
-    Properties props = getPluginProps(f);
-    if ( props == null ) {
-     main.Main.ERR_LOG.addE("ModContainer.loadDir().no file" , new Exception());
-    }
-
-    String pluginClassName = props.getProperty("main.class");
-    if ( pluginClassName == null || pluginClassName.length() == 0 ) {
-     main.Main.ERR_LOG.addE("ModContainer.loadDir().no class" , new Exception());
-    }
-
+    Options opt = getPluginProps(f);
+    
     URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
-    BaseMod b = ( BaseMod ) classLoader.loadClass(pluginClassName).newInstance();
-    cont.put(b.id.getMid(), b);
+    BaseMod b = ( BaseMod ) classLoader.loadClass(opt.get("main.class")).newInstance();
+    cont.put(b.id, b);
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
    }
@@ -97,20 +87,18 @@ public class ModContainer {
 
  }
 
- private static Properties getPluginProps ( File file ) throws IOException {
-  Properties result = null;
+ private Options getPluginProps ( File file ) throws IOException, ClassNotFoundException {
   JarFile jar = new JarFile(file);
   Enumeration entries = jar.entries();
   while ( entries.hasMoreElements() ) {
    JarEntry entry = ( JarEntry ) entries.nextElement();
-   if ( entry.getName().equals("plugin.properties") ) {
-    try ( InputStream is = jar.getInputStream(entry) ) {
-     result = new Properties();
-     result.load(is);
+   if ( entry.getName().equals("props.opt") ) 
+    try ( ObjectInputStream is = new ObjectInputStream(jar.getInputStream(entry)) ) {
+     Options opt =(Options) is.readObject();
+     return opt;
     }
-   }
   }
-  return result;
+  return null;
  }
 
  public boolean isLoaded () {
