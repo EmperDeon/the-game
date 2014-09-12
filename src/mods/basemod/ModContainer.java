@@ -15,7 +15,7 @@ import utils.Options;
 
 public class ModContainer {
 
- private final TreeMap<Mid, BaseMod> cont;
+ private final TreeMap<Mid , BaseMod> cont;
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
@@ -23,8 +23,8 @@ public class ModContainer {
   this.cont = new TreeMap<>();
  }
 
- public void add ( Mid id, BaseMod b ) {
-   cont.put(id, b);
+ public void add ( Mid id , BaseMod b ) {
+  cont.put(id , b);
  }
 
  public Tex getTex ( Mid id ) {
@@ -32,19 +32,25 @@ public class ModContainer {
  }
 
  public void test () {
-  for(BaseMod m : cont.values())
+  for ( BaseMod m : cont.values() ) {
    System.out.println(main.Main.IdMap.getMid(m.id));
+  }
  }
 
  public void init () {
 
-  cont.values().stream().forEach(( m ) -> {m.init();});  test();
+  cont.values().stream().forEach(( m ) -> {
+   m.init();
+  });
+  test();
   postinit();
  }
 
  public void postinit () {
   init.clear();
-  cont.values().stream().forEach(( m ) -> {m.postinit();});
+  cont.values().stream().forEach(( m ) -> {
+   m.postinit();
+  });
   loaded = true;
  }
 
@@ -53,7 +59,7 @@ public class ModContainer {
  }
 
  public void loadDir () {
-  File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname  -> {
+  File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
    try {
     if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".jar") != -1 ) {
      return true;
@@ -67,12 +73,14 @@ public class ModContainer {
   for ( File f : s ) {
    try {
     Options opt = getPluginProps(f);
-    
+
     URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
-    BaseMod b = ( BaseMod ) classLoader.loadClass(opt.get("main.class")).newInstance();
-    cont.put(b.id, b);
+    BaseMod b = ( BaseMod ) classLoader.loadClass(opt.get("main.class")).
+            newInstance();
+    cont.put(b.id , b);
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
+    System.out.println(e.toString());
    }
   }
   init();
@@ -87,16 +95,18 @@ public class ModContainer {
 
  }
 
- private Options getPluginProps ( File file ) throws IOException, ClassNotFoundException {
+ private Options getPluginProps ( File file ) throws IOException ,
+                                                     ClassNotFoundException {
   JarFile jar = new JarFile(file);
   Enumeration entries = jar.entries();
   while ( entries.hasMoreElements() ) {
    JarEntry entry = ( JarEntry ) entries.nextElement();
-   if ( entry.getName().equals("props.opt") ) 
+   if ( entry.getName().equals("props.opt") ) {
     try ( ObjectInputStream is = new ObjectInputStream(jar.getInputStream(entry)) ) {
-     Options opt =(Options) is.readObject();
+     Options opt = ( Options ) is.readObject();
      return opt;
     }
+   }
   }
   return null;
  }
@@ -104,7 +114,18 @@ public class ModContainer {
  public boolean isLoaded () {
   return loaded;
  }
- public synchronized void initF(Mid id){this.init.add(id); if(init.size() == cont.size()) postinit();}
- public synchronized void postinitF(Mid id){this.init.add(id); if(init.size() == cont.size()) loaded = true;}
-}
 
+ public synchronized void initF ( Mid id ) {
+  this.init.add(id);
+  if ( init.size() == cont.size() ) {
+   postinit();
+  }
+ }
+
+ public synchronized void postinitF ( Mid id ) {
+  this.init.add(id);
+  if ( init.size() == cont.size() ) {
+   loaded = true;
+  }
+ }
+}
