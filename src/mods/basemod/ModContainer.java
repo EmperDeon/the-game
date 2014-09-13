@@ -32,9 +32,10 @@ public class ModContainer {
  }
 
  public void test () {
-  for ( BaseMod m : cont.values() ) {
-   System.out.println(main.Main.IdMap.getMid(m.id));
-  }
+  cont.values().stream().
+          forEach(( m ) -> {
+           System.out.println(main.Main.IdMap.getMid(m.id));
+  });
  }
 
  public void init () {
@@ -97,6 +98,7 @@ public class ModContainer {
 
  private Options getPluginProps ( File file ) throws IOException ,
                                                      ClassNotFoundException {
+  
   JarFile jar = new JarFile(file);
   Enumeration entries = jar.entries();
   while ( entries.hasMoreElements() ) {
