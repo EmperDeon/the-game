@@ -47,7 +47,7 @@ public class Render implements Runnable{
   try {
    init();
    
-   destroy();
+  // destroy();
   } catch ( TermEx ex ) {
    Thread.currentThread().interrupt();
   }
