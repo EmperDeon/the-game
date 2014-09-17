@@ -25,7 +25,7 @@ public class StdWidget extends Button
       initButton(enabledp, focusedp, focusedp, focusedp, disabledp);
     }
     catch (IOException e){
-     Main.ERR_LOG.addE("StdWidget.init()", e);
+     Main.LOG.addE("StdWidget.init()", e);
     }
   }
 

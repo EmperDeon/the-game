@@ -28,9 +28,9 @@ public String getparam(String key){
    if(param.containsKey(key))   
     return param.get(key);
   }catch(Exception e){
-   Main.ERR_LOG.addE("LevBlock", e);
+   Main.LOG.addE("LevBlock", e);
   }
-  Main.ERR_LOG.addE("LevBlock", new Exception("Error with getting value with key "+key));
+  Main.LOG.addE("LevBlock", new Exception("Error with getting value with key "+key));
   return "Err";
  }
 

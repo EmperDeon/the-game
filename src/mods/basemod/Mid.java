@@ -52,7 +52,7 @@ public class Mid implements Comparable{
   else if(x > y) return 1;
   else if(x < y) return -1;
   
-  main.Main.ERR_LOG.addE("Mid.comp()", new Exception());
+  main.Main.LOG.addE("Mid.comp()", new Exception());
   return 0;
  }
 }

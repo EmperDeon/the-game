@@ -66,7 +66,7 @@ public class ModContainer {
      return true;
     }
    } catch ( IOException ex ) {
-    main.Main.ERR_LOG.addE("ModContainer.loadDir().filter" , ex);
+    main.Main.LOG.addE("ModContainer.loadDir().filter" , ex);
    }
    return false;
   });

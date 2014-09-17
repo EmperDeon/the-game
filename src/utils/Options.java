@@ -25,7 +25,7 @@ public final class Options implements Serializable{
   if(this.opt.containsKey(key))
    return this.opt.get(key);
   else{
-   main.Main.ERR_LOG.addE("Options.get()",new Exception("Error with getting value with key "+key));
+   main.Main.LOG.addE("Options.get()",new Exception("Error with getting value with key "+key));
    return null;
   }
  }
@@ -46,7 +46,7 @@ public final class Options implements Serializable{
   try (ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(file))) {
    serial.writeObject(this);
   } catch (IOException ex) {
-   main.Main.ERR_LOG.addE("Options.load()", ex);
+   main.Main.LOG.addE("Options.load()", ex);
   }
 
 }
@@ -57,7 +57,7 @@ public final class Options implements Serializable{
   if(file.lastIndexOf("\\")!=-1){   
    return file.substring(0, file.lastIndexOf("\\")+1);
   }else{
-   main.Main.ERR_LOG.addE("Options.getDir()",new Exception());
+   main.Main.LOG.addE("Options.getDir()",new Exception());
    return null;
    }
   }
@@ -79,7 +79,7 @@ public final class Options implements Serializable{
    this.file = tmp.file;
    this.opt = tmp.opt;
   } catch (IOException | ClassNotFoundException ex) {
-   main.Main.ERR_LOG.addE("Options.export()",ex);
+   main.Main.LOG.addE("Options.export()",ex);
   }
  }
 }

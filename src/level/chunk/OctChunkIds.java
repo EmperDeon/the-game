@@ -25,7 +25,7 @@ public void load() throws TermEx{
     ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.file)));
     this.chids = ((ArrayList<OctChunkId>)serial.readObject());
    }catch(IOException | ClassNotFoundException ex){
-    main.Main.ERR_LOG.addE("ChunkContainer . OctChunkIds . load()", ex);
+    main.Main.LOG.addE("ChunkContainer . OctChunkIds . load()", ex);
     throw new TermEx("ChunkContainer . OctChunkIds . load() - error read OctChunk");
    }
   }else{   
@@ -57,7 +57,7 @@ public void save(){
   serial.flush();
   System.out.println("Saved");
  }catch (IOException ex) {
-  Main.ERR_LOG.addE("OctChunkIds . Save()", ex);
+  Main.LOG.addE("OctChunkIds . Save()", ex);
  }
 } 
  

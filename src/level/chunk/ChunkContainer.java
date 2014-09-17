@@ -51,7 +51,7 @@ public final class ChunkContainer {
     serial.writeObject(oc);
     serial.flush();
    }catch (IOException ex) {
-    Main.ERR_LOG.addE("OctChunkIds . Save()", ex);
+    Main.LOG.addE("OctChunkIds . Save()", ex);
     System.err.println(oc.getD());
    }
   }
@@ -94,7 +94,7 @@ public final class ChunkContainer {
    ObjectInputStream serial = new ObjectInputStream(new FileInputStream(this.dir+"rg/"+file));
    addAll((OctChunk)serial.readObject());
   }catch(IOException | ClassNotFoundException ex){
-  Main.ERR_LOG.addE("OctChunkIds.loadOct()", ex);
+  Main.LOG.addE("OctChunkIds.loadOct()", ex);
   }
   System.out.println("Loaded: " + file + " : " +chs.size() );
  }
@@ -133,7 +133,7 @@ public final class ChunkContainer {
       serial.flush();
       System.out.println("Saved:" + file);
      }catch (IOException ex) {
-      Main.ERR_LOG.addE("ChunkContainer . Save()", ex);
+      Main.LOG.addE("ChunkContainer . Save()", ex);
      }
     }
    }

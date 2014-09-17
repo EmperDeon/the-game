@@ -2,7 +2,6 @@ package main;
 
 import mods.basemod.CoreModContainer;
 import mods.basemod.ModContainer;
-import utils.Error;
 import utils.MTimer;
 import utils.Options;
 import utils.exceptions.TermEx;
@@ -13,7 +12,6 @@ public final class Main implements Runnable {
 
  public final static Logger LOG = new Logger();
  public final static Options OPTIONS = new Options(mdir + "options.db");
- public final static Error ERR_LOG = new Error();
  public final static IdMap IdMap = new IdMap();
  public final static MTimer timer = new MTimer();
  public final static ModContainer mods = new ModContainer();
@@ -29,7 +27,7 @@ public final class Main implements Runnable {
 
  public void init () throws TermEx , InterruptedException {
   mods.loadDir();
-  LOG.addW("Test", "Test2");
+  LOG.addE("Main", new Exception());
   LOG.save();
   //rend.initfinal();
  }
@@ -52,7 +50,6 @@ public final class Main implements Runnable {
  }
 
  public void destroy () {
-  ERR_LOG.check();
 
   //level.save();
  }

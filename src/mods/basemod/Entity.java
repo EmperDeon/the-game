@@ -28,7 +28,7 @@ public class Entity {
    v = param.get(k);
   } catch ( Exception e ) {
    v = "";
-   main.Main.ERR_LOG.addE("Block.getparam()" , e);
+   main.Main.LOG.addE("Block.getparam()" , e);
   }
   return ( v );
  }

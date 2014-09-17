@@ -44,7 +44,7 @@ public class StdButton extends StdWidget{
   try {
    cust = Font.createFont(Font.TRUETYPE_FONT,new File(Main.mdir+"res/font.ttf")).deriveFont(14f);
   } catch ( FontFormatException | IOException ex ) {
-   Main.ERR_LOG.addE("StandartButton.getFont()", ex);
+   Main.LOG.addE("StandartButton.getFont()", ex);
   }
   
   renderer.setFont(FontFactory.renderStandardFont(cust , true, Alphabet.getDefaultAlphabet()));
