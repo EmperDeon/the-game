@@ -1,7 +1,7 @@
 package main;
 
 import java.util.TreeMap;
-import mods.basemod.Mid;
+import mods.basemod.containers.Mid;
 
 public class IdMap {
  private final TreeMap<Integer, String> sid = new TreeMap<>();

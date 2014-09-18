@@ -1,7 +1,7 @@
 package main;
 
-import mods.basemod.CoreModContainer;
-import mods.basemod.ModContainer;
+import mods.basemod.containers.CoreModContainer;
+import mods.basemod.containers.ModContainer;
 import utils.MTimer;
 import utils.Options;
 import utils.exceptions.TermEx;

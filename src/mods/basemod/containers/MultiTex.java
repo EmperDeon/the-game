@@ -1,4 +1,4 @@
-package mods.basemod;
+package mods.basemod.containers;
 
 import java.util.ArrayList;
 import render.Tex;

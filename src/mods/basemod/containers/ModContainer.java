@@ -1,4 +1,4 @@
-package mods.basemod;
+package mods.basemod.containers;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,12 +10,17 @@ import java.util.Enumeration;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import mods.basemod.BaseMod;
 import render.Tex;
 import utils.Options;
 
 public class ModContainer {
 
  private final TreeMap<Mid , BaseMod> cont;
+ 
+ private final BlocksContainer bcont = new BlocksContainer();
+ private final ItemsContainer icont = new ItemsContainer();
+ 
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
@@ -28,7 +33,8 @@ public class ModContainer {
  }
 
  public Tex getTex ( Mid id ) {
-  return cont.get(id).getITex(new Mid(0 , 0 , 0));
+  //return cont.get(id).getITex(new Mid(0 , 0 , 0));
+  return null;
  }
 
  public void test () {
@@ -39,7 +45,6 @@ public class ModContainer {
  }
 
  public void init () {
-
   cont.values().stream().forEach(( m ) -> {
    m.init();
   });

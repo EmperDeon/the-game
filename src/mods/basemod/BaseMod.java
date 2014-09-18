@@ -1,13 +1,13 @@
 package mods.basemod;
 
-import java.util.ArrayList;
-import render.Tex;
+import mods.basemod.containers.Mid;
+import java.util.TreeMap;
 import utils.vec.Vec4;
 
 public class BaseMod {
 
- protected ArrayList<Entity> blocks;
- protected ArrayList<Entity> items;
+ protected TreeMap<Mid,Block> blocks;
+ protected TreeMap<Mid,Item> items;
  protected Boolean needparam = false;
  public Mid id;
  
@@ -24,12 +24,12 @@ public class BaseMod {
  public void action ( int id , int id2 , int act , Vec4<Integer> coord ) {
 
  }
-
- public Tex getBTex ( Mid id ) {
-  return blocks.get(id.getIid()).getTex();
- }
- public Tex getITex ( Mid id ) {
-  return items.get(id.getIid()).getTex();
- }
+//
+// public Tex getBTex ( Mid id ) {
+//  return blocks.get(id.getIid()).getTex();
+// }
+// public Tex getITex ( Mid id ) {
+//  return items.get(id.getIid()).getTex();
+// }
  
 }

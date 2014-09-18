@@ -1,22 +1,24 @@
 package mods.basemod;
 
+import mods.basemod.containers.Mid;
+import mods.basemod.containers.MultiTex;
 import java.util.TreeMap;
 import render.Tex;
 import utils.vec.Vec3;
 
-public class Entity {
+public class Block {
 
  private final MultiTex tex;
  private final Mid id;
  private final TreeMap<String , String> param;
 
- public Entity ( Tex tex , Vec3<Integer> id ) {
+ public Block ( Tex tex , Vec3<Integer> id ) {
   this.param = new TreeMap<>();
   this.tex = new MultiTex(tex);
   this.id = new Mid(id);
  }
 
- public Entity ( Tex tex , Integer mid , Integer iid , Integer sid ) {
+ public Block ( Tex tex , Integer mid , Integer iid , Integer sid ) {
   this.param = new TreeMap<>();
   this.tex = new MultiTex(tex);
   this.id = new Mid(mid , iid , sid);
@@ -41,3 +43,4 @@ public class Entity {
   return id;
  }
 }
+

@@ -1,4 +1,4 @@
-package mods.basemod;
+package mods.basemod.containers;
 
 import java.util.Objects;
 import utils.vec.Vec3;

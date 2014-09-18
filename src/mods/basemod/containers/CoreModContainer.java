@@ -1,6 +1,7 @@
-package mods.basemod;
+package mods.basemod.containers;
 
 import java.util.ArrayList;
+import mods.basemod.CoreMod;
 
 public class CoreModContainer {
  private final ArrayList<CoreMod> cont;
