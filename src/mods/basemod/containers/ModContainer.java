@@ -17,10 +17,10 @@ import utils.Options;
 public class ModContainer {
 
  private final TreeMap<Mid , BaseMod> cont;
- 
+
  private final BlocksContainer bcont = new BlocksContainer();
  private final ItemsContainer icont = new ItemsContainer();
- 
+
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
@@ -32,16 +32,19 @@ public class ModContainer {
   cont.put(id , b);
  }
 
- public Tex getTex ( Mid id ) {
-  //return cont.get(id).getITex(new Mid(0 , 0 , 0));
-  return null;
+ public Tex getITex ( Mid id ) {
+  return icont.getTex(id);
+ }
+
+ public Tex getBTex ( Mid id ) {
+  return bcont.getTex(id);
  }
 
  public void test () {
   cont.values().stream().
           forEach(( m ) -> {
            System.out.println(main.Main.IdMap.getMid(m.id));
-  });
+          });
  }
 
  public void init () {
@@ -94,7 +97,7 @@ public class ModContainer {
 
 //Fast Save, Load
  public void load () {
-
+  
  }
 
  public void save () {
@@ -103,7 +106,7 @@ public class ModContainer {
 
  private Options getPluginProps ( File file ) throws IOException ,
                                                      ClassNotFoundException {
-  
+
   JarFile jar = new JarFile(file);
   Enumeration entries = jar.entries();
   while ( entries.hasMoreElements() ) {
