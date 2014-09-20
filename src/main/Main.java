@@ -16,9 +16,7 @@ public final class Main implements Runnable {
  public final static MTimer timer = new MTimer();
  public final static ModContainer mods = new ModContainer();
  public final static CoreModContainer core = new CoreModContainer();
- public final static render.Render rend = /*
-          * new render.Render()
-          */ null;
+ public final static render.Render rend = null;
  public final static Main main = new Main();
  public final static Thread Tm = new Thread(main);
  //public final static Thread Tr = new Thread( rend );
@@ -27,7 +25,7 @@ public final class Main implements Runnable {
 
  public void init () throws TermEx , InterruptedException {
   mods.loadDir();
-  LOG.addE("Main", new Exception());
+  LOG.addE("Main" , new Exception());
   LOG.save();
   //rend.initfinal();
  }
