@@ -22,4 +22,8 @@ public class BlocksContainer {
  public Tex getTex ( Mid k ) {
   return cont.get(k).getTex();
  }
+ 
+ public void addAll(BlocksContainer t){
+  cont.putAll(t.cont);
+ }
 }

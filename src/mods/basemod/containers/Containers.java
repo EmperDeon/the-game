@@ -1,6 +1,7 @@
 package mods.basemod.containers;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
@@ -10,26 +11,37 @@ import java.util.Enumeration;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import main.IdMap;
 import mods.basemod.BaseMod;
+import mods.basemod.CoreMod;
 import render.Tex;
 import utils.Options;
 
-public class ModContainer {
+public final class Containers {
 
- private final TreeMap<Mid , BaseMod> cont;
-
- private final BlocksContainer bcont = new BlocksContainer();
- private final ItemsContainer icont = new ItemsContainer();
+ private final TreeMap<Mid , CoreMod> cmods;
+ private final TreeMap<Mid , BaseMod> mods;
+ private final BlocksContainer bcont;
+ private final ItemsContainer icont;
+ private final Crafting ccont;
+ private final IdMap idmap;
 
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
- public ModContainer () {
-  this.cont = new TreeMap<>();
+ public Containers () {
+  cmods = new TreeMap<>();
+  mods = new TreeMap<>();
+  bcont = new BlocksContainer();
+  icont = new ItemsContainer();
+  ccont = new Crafting();
+  idmap = new IdMap();
+  if(new File(main.Main.mdir+"mods/container.mod").exists())
+   load();
  }
 
  public void add ( Mid id , BaseMod b ) {
-  cont.put(id , b);
+  mods.put(id , b);
  }
 
  public Tex getITex ( Mid id ) {
@@ -41,15 +53,15 @@ public class ModContainer {
  }
 
  public void test () {
-  cont.values().stream().
+  mods.values().stream().
           forEach(( m ) -> {
            System.out.println(main.Main.IdMap.getMid(m.id));
           });
  }
 
  public void init () {
-  cont.values().stream().forEach(( m ) -> {
-   m.init();
+  mods.values().stream().forEach(( m ) -> {
+   m.init(this);
   });
   test();
   postinit();
@@ -57,8 +69,8 @@ public class ModContainer {
 
  public void postinit () {
   init.clear();
-  cont.values().stream().forEach(( m ) -> {
-   m.postinit();
+  mods.values().stream().forEach(( m ) -> {
+   m.postinit(this);
   });
   loaded = true;
  }
@@ -81,15 +93,26 @@ public class ModContainer {
 
   for ( File f : s ) {
    try {
-    Options opt = getPluginProps(f);
+    Options opt = null;
+    JarFile jar = new JarFile(f);
+    Enumeration entries = jar.entries();
+    while ( entries.hasMoreElements() ) {
+     JarEntry entry = ( JarEntry ) entries.nextElement();
+     if ( entry.getName().equals("props.opt") ) {
+      try ( ObjectInputStream is = new ObjectInputStream(jar.getInputStream(
+              entry)) ) {
+       opt = ( Options ) is.readObject();
+      }
+     }
+    }
 
     URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
     BaseMod b = ( BaseMod ) classLoader.loadClass(opt.get("main.class")).
             newInstance();
-    cont.put(b.id , b);
+    mods.put(b.id , b);
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
-    System.out.println(e.toString());
+    main.Main.LOG.addE("Containers.loadDir()", e);
    }
   }
   init();
@@ -97,28 +120,21 @@ public class ModContainer {
 
 //Fast Save, Load
  public void load () {
-
+  try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(main.Main.mdir+"mods/container.mod"))){
+   Containers t = (Containers) o.readObject();
+   this.bcont.addAll(t.bcont);
+   this.ccont.addAll(t.ccont);
+   this.icont.addAll(t.icont);
+   this.idmap.addAll(t.idmap);
+   this.cmods.putAll(t.cmods);
+   this.mods.putAll(t.mods);
+  }catch(Exception e){
+   main.Main.LOG.addE("Containers.load()", e);
+  }
  }
 
  public void save () {
-
- }
-
- private Options getPluginProps ( File file ) throws IOException ,
-                                                     ClassNotFoundException {
-
-  JarFile jar = new JarFile(file);
-  Enumeration entries = jar.entries();
-  while ( entries.hasMoreElements() ) {
-   JarEntry entry = ( JarEntry ) entries.nextElement();
-   if ( entry.getName().equals("props.opt") ) {
-    try ( ObjectInputStream is = new ObjectInputStream(jar.getInputStream(entry)) ) {
-     Options opt = ( Options ) is.readObject();
-     return opt;
-    }
-   }
-  }
-  return null;
+  
  }
 
  public boolean isLoaded () {
@@ -127,15 +143,32 @@ public class ModContainer {
 
  public synchronized void initF ( Mid id ) {
   this.init.add(id);
-  if ( init.size() == cont.size() ) {
+  if ( init.size() == mods.size() ) {
    postinit();
   }
  }
 
  public synchronized void postinitF ( Mid id ) {
   this.init.add(id);
-  if ( init.size() == cont.size() ) {
+  if ( init.size() == mods.size() ) {
    loaded = true;
   }
  }
+
+ public BlocksContainer getBcont () {
+  return bcont;
+ }
+
+ public ItemsContainer getIcont () {
+  return icont;
+ }
+
+ public Crafting getCcont () {
+  return ccont;
+ }
+
+ public IdMap getIdmap () {
+  return idmap;
+ }
+
 }

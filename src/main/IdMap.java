@@ -24,4 +24,10 @@ public class IdMap {
  public String getSid(Mid id){
   return this.sid.get(id.getSid());
  }
+ 
+ public void addAll(IdMap t){
+  this.mid.putAll(t.mid);
+  this.iid.putAll(t.iid);
+  this.sid.putAll(t.sid);
+ }
 }
