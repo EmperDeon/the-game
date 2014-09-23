@@ -22,7 +22,7 @@ import mods.basemod.interfaces.CoreMod;
 import render.Tex;
 import utils.Options;
 
-public final class ModsContainer implements Serializable{
+public final class ModsContainer implements Serializable {
 
  private final TreeMap<Mid , CoreMod> cmods;
  private final TreeMap<Mid , BaseMod> mods;
@@ -81,12 +81,14 @@ public final class ModsContainer implements Serializable{
  public void destroy () {
 
  }
-public void load(){
-  if(new File(main.Main.mdir+"mods/modscontainer.mod").exists())
+
+ public void load () {
+  if ( new File(main.Main.mdir + "mods/modscontainer.mod").exists() ) {
    fload();
-  else 
+  } else {
    loadDir();
-}
+  }
+ }
 
  public void loadDir () {
   File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
@@ -121,7 +123,7 @@ public void load(){
     mods.put(b.getId() , b);
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
-    main.Main.LOG.addE("Containers.loadDir()", e);
+    main.Main.LOG.addE("Containers.loadDir()" , e);
    }
   }
   init();
@@ -129,26 +131,30 @@ public void load(){
 
 //Fast Save, Load
  public void fload () {
-  try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(main.Main.mdir+"mods/modscontainer.mod"))){
-   ModsContainer t = (ModsContainer) o.readObject();
+  try ( ObjectInputStream o = new ObjectInputStream(new FileInputStream(
+          main.Main.mdir + "mods/modscontainer.mod")) ) {
+   ModsContainer t = ( ModsContainer ) o.readObject();
    this.bcont.addAll(t.bcont);
    this.ccont.addAll(t.ccont);
    this.icont.addAll(t.icont);
    this.idmap.addAll(t.idmap);
    this.cmods.putAll(t.cmods);
    this.mods.putAll(t.mods);
-  }catch(Exception e){
-   main.Main.LOG.addE("Containers.load()", e);
+  } catch ( Exception e ) {
+   main.Main.LOG.addE("Containers.load()" , e);
   }
-  System.out.println("Loaded "+mods.size()+" mods");
+  System.out.println("Loaded " + mods.size() + " mods");
  }
 
  public void fsave () {
-  try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(main.Main.mdir+"mods/modscontainer.mod"))){
+  try ( ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(
+          main.Main.mdir + "mods/modscontainer.mod")) ) {
    o.writeObject(this);
    o.flush();
-  }catch(Exception e){main.Main.LOG.addE("ModsContainer.fsave()", e);}
-  System.out.println("Saved "+mods.size()+" mods");
+  } catch ( Exception e ) {
+   main.Main.LOG.addE("ModsContainer.fsave()" , e);
+  }
+  System.out.println("Saved " + mods.size() + " mods");
  }
 
  public boolean isLoaded () {
@@ -169,18 +175,18 @@ public void load(){
   }
  }
 
- public void addId(Mid k, String v){
+ public void addId ( Mid k , String v ) {
   idmap.add(k , v , v , v);
  }
- 
- public void addBlock(MultiTex tex, Mid id){
-  bcont.addBlock(new Block(tex, id));
+
+ public void addBlock ( MultiTex tex , Mid id ) {
+  bcont.addBlock(new Block(tex , id));
  }
- 
- public void addItem(MultiTex tex, Mid id){
-  icont.addItem(new Item(tex, id));
+
+ public void addItem ( MultiTex tex , Mid id ) {
+  icont.addItem(new Item(tex , id));
  }
- 
+
  public BlocksContainer getBcont () {
   return bcont;
  }

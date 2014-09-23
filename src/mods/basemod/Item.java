@@ -12,12 +12,12 @@ public class Item {
  private final Mid id;
  private final TreeMap<String , String> param;
 
- public Item ( MultiTex tex , Mid id){
+ public Item ( MultiTex tex , Mid id ) {
   this.param = new TreeMap<>();
   this.tex = tex;
   this.id = id;
  }
- 
+
  public Item ( MultiTex tex , Vec3<Integer> id ) {
   this.param = new TreeMap<>();
   this.tex = tex;
@@ -49,4 +49,3 @@ public class Item {
   return id;
  }
 }
-

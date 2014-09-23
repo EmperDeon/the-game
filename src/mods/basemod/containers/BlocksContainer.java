@@ -5,7 +5,7 @@ import java.util.TreeMap;
 import mods.basemod.Block;
 import render.Tex;
 
-public class BlocksContainer implements Serializable{
+public class BlocksContainer implements Serializable {
 
  private final TreeMap<Mid , Block> cont = new TreeMap<>();
 
@@ -23,8 +23,8 @@ public class BlocksContainer implements Serializable{
  public Tex getTex ( Mid k ) {
   return cont.get(k).getTex();
  }
- 
- public void addAll(BlocksContainer t){
+
+ public void addAll ( BlocksContainer t ) {
   cont.putAll(t.cont);
  }
 }
