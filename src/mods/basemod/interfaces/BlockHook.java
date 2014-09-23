@@ -1,4 +1,4 @@
-package mods.basemod.hooks;
+package mods.basemod.interfaces;
 
 import mods.basemod.containers.Mid;
 

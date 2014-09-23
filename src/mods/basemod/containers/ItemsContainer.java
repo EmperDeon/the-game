@@ -11,8 +11,8 @@ public class ItemsContainer {
  public ItemsContainer () {
  }
 
- public void addItem ( Mid k , Item v ) {
-  cont.put(k , v);
+ public void addItem ( Item v ) {
+  cont.put(v.getId() , v);
  }
 
  public Item getItem ( Mid k ) {

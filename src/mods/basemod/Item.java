@@ -1,8 +1,8 @@
 package mods.basemod;
 
+import java.util.TreeMap;
 import mods.basemod.containers.Mid;
 import mods.basemod.containers.MultiTex;
-import java.util.TreeMap;
 import render.Tex;
 import utils.vec.Vec3;
 
@@ -12,9 +12,15 @@ public class Item {
  private final Mid id;
  private final TreeMap<String , String> param;
 
- public Item ( Tex tex , Vec3<Integer> id ) {
+ public Item ( MultiTex tex , Mid id){
   this.param = new TreeMap<>();
-  this.tex = new MultiTex(tex);
+  this.tex = tex;
+  this.id = id;
+ }
+ 
+ public Item ( MultiTex tex , Vec3<Integer> id ) {
+  this.param = new TreeMap<>();
+  this.tex = tex;
   this.id = new Mid(id);
  }
 

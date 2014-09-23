@@ -1,6 +1,6 @@
 package main;
 
-import mods.basemod.containers.Containers;
+import mods.basemod.containers.ModsContainer;
 import utils.MTimer;
 import utils.Options;
 import utils.exceptions.TermEx;
@@ -13,7 +13,7 @@ public final class Main implements Runnable {
  public final static Options OPTIONS = new Options(mdir + "options.db");
  public final static IdMap IdMap = new IdMap();
  public final static MTimer timer = new MTimer();
- public final static Containers mods = new Containers();
+ public final static ModsContainer mods = new ModsContainer();
  public final static render.Render rend = null;
  public final static Main main = new Main();
  public final static Thread Tm = new Thread(main);
@@ -22,9 +22,10 @@ public final class Main implements Runnable {
  public boolean running = true;
 
  public void init () throws TermEx , InterruptedException {
-  mods.loadDir();
+  mods.load();
   LOG.addE("Main" , new Exception());
   LOG.save();
+  mods.fsave();
   //rend.initfinal();
  }
 

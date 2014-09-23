@@ -11,8 +11,8 @@ public class BlocksContainer {
  public BlocksContainer () {
  }
 
- public void addBlock ( Mid k , Block v ) {
-  cont.put(k , v);
+ public void addBlock ( Block v ) {
+  cont.put(v.getId() , v);
  }
 
  public Block getBlock ( Mid k ) {

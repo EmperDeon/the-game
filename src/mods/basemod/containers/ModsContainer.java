@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -12,12 +13,14 @@ import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import main.IdMap;
-import mods.basemod.BaseMod;
-import mods.basemod.CoreMod;
+import mods.basemod.Block;
+import mods.basemod.Item;
+import mods.basemod.interfaces.BaseMod;
+import mods.basemod.interfaces.CoreMod;
 import render.Tex;
 import utils.Options;
 
-public final class Containers {
+public final class ModsContainer implements Serializable{
 
  private final TreeMap<Mid , CoreMod> cmods;
  private final TreeMap<Mid , BaseMod> mods;
@@ -29,15 +32,13 @@ public final class Containers {
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
- public Containers () {
+ public ModsContainer () {
   cmods = new TreeMap<>();
   mods = new TreeMap<>();
   bcont = new BlocksContainer();
   icont = new ItemsContainer();
   ccont = new Crafting();
   idmap = new IdMap();
-  if(new File(main.Main.mdir+"mods/container.mod").exists())
-   load();
  }
 
  public void add ( Mid id , BaseMod b ) {
@@ -55,7 +56,7 @@ public final class Containers {
  public void test () {
   mods.values().stream().
           forEach(( m ) -> {
-           System.out.println(main.Main.IdMap.getMid(m.id));
+           System.out.println(main.Main.IdMap.getMid(m.getId()));
           });
  }
 
@@ -78,6 +79,12 @@ public final class Containers {
  public void destroy () {
 
  }
+public void load(){
+   if(new File(main.Main.mdir+"mods/container.mod").exists())
+   fload();
+  else 
+   loadDir();
+}
 
  public void loadDir () {
   File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
@@ -109,7 +116,7 @@ public final class Containers {
     URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
     BaseMod b = ( BaseMod ) classLoader.loadClass(opt.get("main.class")).
             newInstance();
-    mods.put(b.id , b);
+    mods.put(b.getId() , b);
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
     main.Main.LOG.addE("Containers.loadDir()", e);
@@ -119,9 +126,9 @@ public final class Containers {
  }
 
 //Fast Save, Load
- public void load () {
+ public void fload () {
   try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(main.Main.mdir+"mods/container.mod"))){
-   Containers t = (Containers) o.readObject();
+   ModsContainer t = (ModsContainer) o.readObject();
    this.bcont.addAll(t.bcont);
    this.ccont.addAll(t.ccont);
    this.icont.addAll(t.icont);
@@ -133,7 +140,7 @@ public final class Containers {
   }
  }
 
- public void save () {
+ public void fsave () {
   
  }
 
@@ -155,6 +162,18 @@ public final class Containers {
   }
  }
 
+ public void addId(Mid k, String v){
+  idmap.add(k , v , v , v);
+ }
+ 
+ public void addBlock(MultiTex tex, Mid id){
+  bcont.addBlock(new Block(tex, id));
+ }
+ 
+ public void addItem(MultiTex tex, Mid id){
+  icont.addItem(new Item(tex, id));
+ }
+ 
  public BlocksContainer getBcont () {
   return bcont;
  }
