@@ -1,9 +1,10 @@
 package mods.basemod.containers;
 
+import java.io.Serializable;
 import java.util.Objects;
 import utils.vec.Vec3;
 
-public class Mid implements Comparable {
+public class Mid implements Comparable , Serializable{
 
  private final Vec3<Integer> id;
 

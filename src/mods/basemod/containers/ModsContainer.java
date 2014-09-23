@@ -33,7 +33,8 @@ public final class ModsContainer implements Serializable {
 
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
-
+ 
+ private final File file = new File(main.Main.mdir + "mods/modscontainer.mod");
  public ModsContainer () {
   cmods = new TreeMap<>();
   mods = new TreeMap<>();
@@ -83,7 +84,7 @@ public final class ModsContainer implements Serializable {
  }
 
  public void load () {
-  if ( new File(main.Main.mdir + "mods/modscontainer.mod").exists() ) {
+  if ( file.exists() ) {
    fload();
   } else {
    loadDir();
@@ -131,28 +132,28 @@ public final class ModsContainer implements Serializable {
 
 //Fast Save, Load
  public void fload () {
-  try ( ObjectInputStream o = new ObjectInputStream(new FileInputStream(
-          main.Main.mdir + "mods/modscontainer.mod")) ) {
+  try ( ObjectInputStream o = new ObjectInputStream(new FileInputStream(file)) ) {
    ModsContainer t = ( ModsContainer ) o.readObject();
-   this.bcont.addAll(t.bcont);
-   this.ccont.addAll(t.ccont);
-   this.icont.addAll(t.icont);
-   this.idmap.addAll(t.idmap);
-   this.cmods.putAll(t.cmods);
-   this.mods.putAll(t.mods);
+   this.bcont.addAll(t.getBcont());
+   this.ccont.addAll(t.getCcont());
+   this.icont.addAll(t.getIcont());
+   this.idmap.addAll(t.getIdmap());
+   this.cmods.putAll(t.getCmods());
+   this.mods.putAll(t.getMods());
   } catch ( Exception e ) {
    main.Main.LOG.addE("Containers.load()" , e);
+   System.out.println(e.toString());
   }
   System.out.println("Loaded " + mods.size() + " mods");
  }
 
  public void fsave () {
-  try ( ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(
-          main.Main.mdir + "mods/modscontainer.mod")) ) {
+  try ( ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(file)) ) {
    o.writeObject(this);
    o.flush();
   } catch ( Exception e ) {
    main.Main.LOG.addE("ModsContainer.fsave()" , e);
+   System.out.println(e.toString());
   }
   System.out.println("Saved " + mods.size() + " mods");
  }
@@ -201,6 +202,22 @@ public final class ModsContainer implements Serializable {
 
  public IdMap getIdmap () {
   return idmap;
+ }
+
+ public TreeMap<Mid , CoreMod> getCmods () {
+  return cmods;
+ }
+
+ public TreeMap<Mid , BaseMod> getMods () {
+  return mods;
+ }
+
+ public ArrayList<Mid> getInit () {
+  return init;
+ }
+
+ public File getFile () {
+  return file;
  }
 
 }

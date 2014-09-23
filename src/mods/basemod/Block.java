@@ -1,12 +1,13 @@
 package mods.basemod;
 
+import java.io.Serializable;
 import java.util.TreeMap;
 import mods.basemod.containers.Mid;
 import mods.basemod.containers.MultiTex;
 import render.Tex;
 import utils.vec.Vec3;
 
-public class Block {
+public class Block implements Serializable{
 
  private final MultiTex tex;
  private final Mid id;

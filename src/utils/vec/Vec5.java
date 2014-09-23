@@ -1,5 +1,8 @@
 package utils.vec;
-public class Vec5 <T>{
+
+import java.io.Serializable;
+
+public class Vec5 <T> implements Serializable{
  private T x;
  private T y;
  private T z;
