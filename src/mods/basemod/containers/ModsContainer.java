@@ -82,7 +82,7 @@ public final class ModsContainer implements Serializable{
 
  }
 public void load(){
-   if(new File(main.Main.mdir+"mods/container.mod").exists())
+  if(new File(main.Main.mdir+"mods/modscontainer.mod").exists())
    fload();
   else 
    loadDir();
@@ -140,6 +140,7 @@ public void load(){
   }catch(Exception e){
    main.Main.LOG.addE("Containers.load()", e);
   }
+  System.out.println("Loaded "+mods.size()+" mods");
  }
 
  public void fsave () {
@@ -147,6 +148,7 @@ public void load(){
    o.writeObject(this);
    o.flush();
   }catch(Exception e){main.Main.LOG.addE("ModsContainer.fsave()", e);}
+  System.out.println("Saved "+mods.size()+" mods");
  }
 
  public boolean isLoaded () {

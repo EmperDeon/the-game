@@ -1,9 +1,10 @@
 package main;
 
+import java.io.Serializable;
 import java.util.TreeMap;
 import mods.basemod.containers.Mid;
 
-public class IdMap {
+public class IdMap implements Serializable{
  private final TreeMap<Integer, String> sid = new TreeMap<>();
  private final TreeMap<Integer, String> iid = new TreeMap<>();
  private final TreeMap<Integer, String> mid = new TreeMap<>();

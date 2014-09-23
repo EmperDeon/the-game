@@ -1,10 +1,11 @@
 package mods.basemod.containers;
 
+import java.io.Serializable;
 import java.util.TreeMap;
 import mods.basemod.Block;
 import render.Tex;
 
-public class BlocksContainer {
+public class BlocksContainer implements Serializable{
 
  private final TreeMap<Mid , Block> cont = new TreeMap<>();
 

@@ -35,7 +35,6 @@ public class Mid implements Comparable{
 
  @Override
  public int compareTo ( Object m ) {
-   System.out.println(m.hashCode());
   Mid o = (Mid) m; Integer x,y,z;
   x = comp(id.gX() , o.getMid());
   y = comp(id.gY() , o.getIid());

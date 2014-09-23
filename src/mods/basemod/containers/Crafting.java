@@ -1,5 +1,8 @@
 package mods.basemod.containers;
-public class Crafting {
+
+import java.io.Serializable;
+
+public class Crafting implements Serializable{
 
  public void addAll(Crafting c){}
 }
