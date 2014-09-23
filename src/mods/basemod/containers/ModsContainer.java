@@ -2,8 +2,10 @@ package mods.basemod.containers;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -56,7 +58,7 @@ public final class ModsContainer implements Serializable{
  public void test () {
   mods.values().stream().
           forEach(( m ) -> {
-           System.out.println(main.Main.IdMap.getMid(m.getId()));
+           System.out.println(idmap.getMid(m.getId()));
           });
  }
 
@@ -127,7 +129,7 @@ public void load(){
 
 //Fast Save, Load
  public void fload () {
-  try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(main.Main.mdir+"mods/container.mod"))){
+  try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(main.Main.mdir+"mods/modscontainer.mod"))){
    ModsContainer t = (ModsContainer) o.readObject();
    this.bcont.addAll(t.bcont);
    this.ccont.addAll(t.ccont);
@@ -141,7 +143,10 @@ public void load(){
  }
 
  public void fsave () {
-  
+  try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(main.Main.mdir+"mods/modscontainer.mod"))){
+   o.writeObject(this);
+   o.flush();
+  }catch(Exception e){main.Main.LOG.addE("ModsContainer.fsave()", e);}
  }
 
  public boolean isLoaded () {

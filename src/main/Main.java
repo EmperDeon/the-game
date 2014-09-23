@@ -11,7 +11,6 @@ public final class Main implements Runnable {
 
  public final static Logger LOG = new Logger();
  public final static Options OPTIONS = new Options(mdir + "options.db");
- public final static IdMap IdMap = new IdMap();
  public final static MTimer timer = new MTimer();
  public final static ModsContainer mods = new ModsContainer();
  public final static render.Render rend = null;
@@ -23,7 +22,6 @@ public final class Main implements Runnable {
 
  public void init () throws TermEx , InterruptedException {
   mods.load();
-  LOG.addE("Main" , new Exception());
   LOG.save();
   mods.fsave();
   //rend.initfinal();
