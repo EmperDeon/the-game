@@ -12,4 +12,6 @@ public interface BaseMod {
  public Mid getId ();
 
  public boolean isProps ();
+
+ public void reinit ( ModsContainer aThis );
 }

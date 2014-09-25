@@ -22,8 +22,8 @@ public void load() throws TermEx{
   File f = new File(this.file);   
   if(f.canRead()){ 
    try{
-    ObjectInputStream serial = new ObjectInputStream(new FileInputStream(new File(this.file)));
-    this.chids = ((ArrayList<OctChunkId>)serial.readObject());
+    ObjectInputStream o = new ObjectInputStream(new FileInputStream(new File(this.file)));
+    this.chids = ((ArrayList<OctChunkId>)o.readObject());
    }catch(IOException | ClassNotFoundException ex){
     main.Main.LOG.addE("ChunkContainer . OctChunkIds . load()", ex);
     throw new TermEx("ChunkContainer . OctChunkIds . load() - error read OctChunk");
