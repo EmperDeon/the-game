@@ -2,21 +2,21 @@ package mods.basemod.containers;
 
 import java.io.Serializable;
 import java.util.TreeMap;
-import mods.basemod.Block;
+import mods.basemod.LevBlock;
 import render.Tex;
 
 public class BlocksContainer implements Serializable {
 
- private final TreeMap<Mid , Block> cont = new TreeMap<>();
+ private final TreeMap<Mid , LevBlock> cont = new TreeMap<>();
 
  public BlocksContainer () {
  }
 
- public void addBlock ( Block v ) {
+ public void addBlock ( LevBlock v ) {
   cont.put(v.getId() , v);
  }
 
- public Block getBlock ( Mid k ) {
+ public LevBlock getBlock ( Mid k ) {
   return cont.get(k);
  }
 

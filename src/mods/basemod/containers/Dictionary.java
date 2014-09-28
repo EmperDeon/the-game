@@ -14,6 +14,7 @@ public class Dictionary {
   if(dict.containsKey(k))
    dict.get(k).add(v);
   else
-   dict.put(k, new ArrayList)
+   dict.put(k, new ArrayList<>());
+   dict.get(k).add(v);
  }
 }

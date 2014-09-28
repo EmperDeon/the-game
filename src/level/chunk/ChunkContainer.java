@@ -9,8 +9,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import level.LevBlock;
 import main.Main;
+import mods.basemod.LevBlock;
 import utils.exceptions.TermEx;
 import utils.vec.Vec3;
 

@@ -15,8 +15,8 @@ import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import main.IdMap;
-import mods.basemod.Block;
-import mods.basemod.Item;
+import mods.basemod.LevBlock;
+import mods.basemod.IItem;
 import mods.basemod.interfaces.BaseMod;
 import mods.basemod.interfaces.CoreMod;
 import render.Tex;
@@ -27,7 +27,7 @@ public final class ModsContainer implements Serializable {
  transient final TreeMap<Mid , CoreMod> cmods;
  transient final TreeMap<Mid , BaseMod> mods;  
  private final BlocksContainer bcont;
- private final ItemsContainer icont;
+ private final IItemsContainer icont;
  private final Crafting ccont;
  private final IdMap idmap;
 
@@ -39,7 +39,7 @@ public final class ModsContainer implements Serializable {
   cmods = new TreeMap<>();
   mods  = new TreeMap<>();
   bcont = new BlocksContainer();
-  icont = new ItemsContainer();
+  icont = new IItemsContainer();
   ccont = new Crafting();
   idmap = new IdMap();
  }
@@ -196,18 +196,18 @@ public final class ModsContainer implements Serializable {
  }
 
  public void addBlock ( MultiTex tex , Mid id ) {
-  bcont.addBlock(new Block(tex , id));
+  bcont.addBlock(new LevBlock(tex , id));
  }
 
  public void addItem ( MultiTex tex , Mid id ) {
-  icont.addItem(new Item(tex , id));
+  icont.addItem(new IItem(tex , id));
  }
 
  public BlocksContainer getBcont () {
   return bcont;
  }
 
- public ItemsContainer getIcont () {
+ public IItemsContainer getIcont () {
   return icont;
  }
 
