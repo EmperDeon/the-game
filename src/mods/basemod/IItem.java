@@ -10,9 +10,9 @@ import utils.vec.Vec3;
 
 public class IItem implements Serializable, InvItem{
 
- private final MultiTex tex;
- private final Mid id;
- private final TreeMap<String , String> param;
+ protected final MultiTex tex;
+ protected final Mid id;
+ protected final TreeMap<String , String> param;
 
  public IItem ( MultiTex tex , Mid id ) {
   this.param = new TreeMap<>();
@@ -26,9 +26,9 @@ public class IItem implements Serializable, InvItem{
   this.id = new Mid(id);
  }
 
- public IItem ( Tex tex , Integer mid , Integer iid , Integer sid ) {
+ public IItem ( MultiTex tex , Integer mid , Integer iid , Integer sid ) {
   this.param = new TreeMap<>();
-  this.tex = new MultiTex(tex);
+  this.tex = tex;
   this.id = new Mid(mid , iid , sid);
  }
 
