@@ -7,19 +7,21 @@ import java.util.TreeMap;
 
 public class Crafting implements Serializable {
 
- private final TreeMap<Mid , CraftingE> c11 = new TreeMap<>();
- private final TreeMap<Mid , CraftingE> c12 = new TreeMap<>();
- private final TreeMap<Mid , CraftingE> c22 = new TreeMap<>();
- private final TreeMap<Mid , CraftingE> c33 = new TreeMap<>();
- private final TreeMap<Mid , CraftingE> cNd = new TreeMap<>();
- private final TreeMap<Mid , MultiC> mul = new TreeMap<>();
+ public static Integer CRAFT1_1 = 1;
+ public static Integer CRAFT1_2 = 2;
+ public static Integer CRAFT2_2 = 3;
+ public static Integer CRAFT3_3 = 4;
+ public static Integer CRAFTCUS = -1;
+ 
+ private final TreeMap<Mid , CraftingE> ccont = new TreeMap<>();
+ private final TreeMap<Mid , MultiC> mcont = new TreeMap<>();
 
  public void addAll ( Crafting c ) {
-  
+
  }
 
  public void addC11 ( Mid id ) {
-  
+
  }
 
  public class CraftingE {
