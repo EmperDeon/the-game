@@ -40,6 +40,7 @@ public class Gui extends JFrame {
   animator.start();
 
   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  
   try {
    robot=new Robot();
   } catch (AWTException ex) { }

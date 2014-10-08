@@ -18,7 +18,7 @@ import javax.media.opengl.GLES2;
 import javax.media.opengl.GLException;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.glu.GLU;
-import main.Main;
+import main.Main1;
 public class Tex{
  private final GL2 gl;
  private File file;
@@ -32,7 +32,7 @@ public class Tex{
  public TextureCoords coords;
  
  public Tex(String s) {
-  gl = main.Main.rend.gl;
+  gl = main.Main1.rend.gl;
   file = new File (s);
   GLProfile glp;
   try {
@@ -41,7 +41,7 @@ public class Tex{
    update( data);
    data.flush();
   } catch (  IOException | GLException ex ) {
-   Main.LOG.addE("Tex . init()", ex);
+   Main1.LOG.addE("Tex . init()", ex);
   }
  }
 
@@ -53,7 +53,7 @@ public class Tex{
    validateTexID();
    gl.glBindTexture(target, texID);
    } catch ( NullPointerException | GLException ex ) {
-    Main.LOG.addE("Tex . bind()", ex);
+    Main1.LOG.addE("Tex . bind()", ex);
    }
   }
  public void free() {
@@ -75,7 +75,7 @@ public class Tex{
     gl.glGenTextures(1, tmp, 0);
     texID = tmp[0];
     } else 
-     Main.LOG.addE("Tex . bind()", new GLException("No GL context given, can't create texture ID"));      
+     Main1.LOG.addE("Tex . bind()", new GLException("No GL context given, can't create texture ID"));      
     }
     return 0 != texID;
    }
@@ -139,7 +139,7 @@ public class Tex{
      case GL.GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
      if (!gl.isExtensionAvailable(GLExtensions.EXT_texture_compression_s3tc) &&
       !gl.isExtensionAvailable(GLExtensions.NV_texture_compression_vtc)) {
-      Main.LOG.addE("Tex . checkCompressedTextureExtensions()", 
+      Main1.LOG.addE("Tex . checkCompressedTextureExtensions()", 
                    new GLException("DXTn compressed textures not supported by this graphics card"));
      }break;
      default:break;
@@ -207,14 +207,14 @@ public class Tex{
   if (!done) {
    if (data.isDataCompressed()) {
      if (data.getMipmapData() != null) {
-      Main.LOG.addE("Tex . update() ",new GLException("Mipmapped non-power-of-two compressed textures only supported on OpenGL 2.0 hard(GL_ARB_texture_non_power_of_two)"));
+      Main1.LOG.addE("Tex . update() ",new GLException("Mipmapped non-power-of-two compressed textures only supported on OpenGL 2.0 hard(GL_ARB_texture_non_power_of_two)"));
     }
 
     expandingCompressedTexture = true;
    }
 
    if (data.getBorder() != 0) {
-    Main.LOG.addE("Tex . update() ", new RuntimeException("Scaling up a non-power-of-two texture which has a border won't work"));
+    Main1.LOG.addE("Tex . update() ", new RuntimeException("Scaling up a non-power-of-two texture which has a border won't work"));
    }
    texWidth = nextPowerOfTwo(imgWidth);
    texHeight = nextPowerOfTwo(imgHeight);
@@ -232,7 +232,7 @@ public class Tex{
    gl.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, data.getAlignment());
 
    if (data.isDataCompressed()) {
-    Main.LOG.addE("Tex . update() ", new GLException("May not request mipmap generation for compressed textures"));
+    Main1.LOG.addE("Tex . update() ", new GLException("May not request mipmap generation for compressed textures"));
    }
 
    try {

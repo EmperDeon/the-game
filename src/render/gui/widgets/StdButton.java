@@ -4,7 +4,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
-import main.Main;
+import main.Main1;
 import org.fenggui.appearance.TextAppearance;
 import org.fenggui.binding.render.text.ITextRenderer;
 import org.fenggui.event.IButtonPressedListener;
@@ -42,9 +42,9 @@ public class StdButton extends StdWidget{
   ITextRenderer renderer = appearance.getRenderer(ITextRenderer.DEFAULTTEXTRENDERERKEY).copy();
   Font cust = null;
   try {
-   cust = Font.createFont(Font.TRUETYPE_FONT,new File(Main.mdir+"res/font.ttf")).deriveFont(14f);
+   cust = Font.createFont(Font.TRUETYPE_FONT,new File(Main1.mdir+"res/font.ttf")).deriveFont(14f);
   } catch ( FontFormatException | IOException ex ) {
-   Main.LOG.addE("StandartButton.getFont()", ex);
+   Main1.LOG.addE("StandartButton.getFont()", ex);
   }
   
   renderer.setFont(FontFactory.renderStandardFont(cust , true, Alphabet.getDefaultAlphabet()));
