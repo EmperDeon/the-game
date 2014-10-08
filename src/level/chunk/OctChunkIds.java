@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import main.Main1;
+import main.Main;
 import utils.exceptions.TermEx;
 
 public final class OctChunkIds implements Serializable {
@@ -25,7 +25,7 @@ public void load() throws TermEx{
     ObjectInputStream o = new ObjectInputStream(new FileInputStream(new File(this.file)));
     this.chids = ((ArrayList<OctChunkId>)o.readObject());
    }catch(IOException | ClassNotFoundException ex){
-    main.Main1.LOG.addE("ChunkContainer . OctChunkIds . load()", ex);
+    main.Main.LOG.addE("ChunkContainer . OctChunkIds . load()", ex);
     throw new TermEx("ChunkContainer . OctChunkIds . load() - error read OctChunk");
    }
   }else{   
@@ -57,7 +57,7 @@ public void save(){
   serial.flush();
   System.out.println("Saved");
  }catch (IOException ex) {
-  Main1.LOG.addE("OctChunkIds . Save()", ex);
+  Main.LOG.addE("OctChunkIds . Save()", ex);
  }
 } 
  

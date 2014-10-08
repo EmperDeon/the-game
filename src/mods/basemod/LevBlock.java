@@ -37,7 +37,7 @@ public class LevBlock implements Serializable{
    v = param.get(k);
   } catch ( Exception e ) {
    v = "";
-   main.Main1.LOG.addE("Block.getparam()" , e);
+   main.Main.LOG.addE("Block.getparam()" , e);
   }
   return ( v );
  }

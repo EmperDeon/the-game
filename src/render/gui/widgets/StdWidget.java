@@ -1,6 +1,6 @@
 package render.gui.widgets;
 import java.io.IOException;
-import main.Main1;
+import main.Main;
 import org.fenggui.Button;
 import org.fenggui.binding.render.Binding;
 import org.fenggui.binding.render.Pixmap;
@@ -18,14 +18,14 @@ public class StdWidget extends Button
   Dimension size = new Dimension(5, 5);
   public StdWidget(String enabled, String focused, String disabled){
     try{
-      Pixmap enabledp  = new Pixmap(Binding.getInstance().getTexture(Main1.mdir + enabled));
-      Pixmap focusedp  = new Pixmap(Binding.getInstance().getTexture(Main1.mdir + focused));
-      Pixmap disabledp = new Pixmap(Binding.getInstance().getTexture(Main1.mdir + disabled));
+      Pixmap enabledp  = new Pixmap(Binding.getInstance().getTexture(Main.mdir + enabled));
+      Pixmap focusedp  = new Pixmap(Binding.getInstance().getTexture(Main.mdir + focused));
+      Pixmap disabledp = new Pixmap(Binding.getInstance().getTexture(Main.mdir + disabled));
 
       initButton(enabledp, focusedp, focusedp, focusedp, disabledp);
     }
     catch (IOException e){
-     Main1.LOG.addE("StdWidget.init()", e);
+     Main.LOG.addE("StdWidget.init()", e);
     }
   }
 

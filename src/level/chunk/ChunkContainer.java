@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import main.Main1;
+import main.Main;
 import mods.basemod.LevBlock;
 import utils.exceptions.TermEx;
 import utils.vec.Vec3;
@@ -24,7 +24,7 @@ public final class ChunkContainer {
  public ChunkContainer(String dir) throws TermEx{
   this.dir = dir; 
   
-  if(!new File(main.Main1.mdir+"saves/World1/rg").canRead())
+  if(!new File(main.Main.mdir+"saves/World1/rg").canRead())
    gen("World1",8);
   
   oids = new OctChunkIds(dir);
@@ -40,7 +40,7 @@ public final class ChunkContainer {
     oct.add(new OctChunk(name,x,y)); 
    }
   
-  File f = new File(main.Main1.mdir+"saves/"+name+"/rg/");
+  File f = new File(main.Main.mdir+"saves/"+name+"/rg/");
   f.mkdirs();
   
   for(OctChunk oc : oct){
@@ -51,7 +51,7 @@ public final class ChunkContainer {
     serial.writeObject(oc);
     serial.flush();
    }catch (IOException ex) {
-    Main1.LOG.addE("OctChunkIds . Save()", ex);
+    Main.LOG.addE("OctChunkIds . Save()", ex);
     System.err.println(oc.getD());
    }
   }
@@ -94,7 +94,7 @@ public final class ChunkContainer {
    ObjectInputStream serial = new ObjectInputStream(new FileInputStream(this.dir+"rg/"+file));
    addAll((OctChunk)serial.readObject());
   }catch(IOException | ClassNotFoundException ex){
-  Main1.LOG.addE("OctChunkIds.loadOct()", ex);
+  Main.LOG.addE("OctChunkIds.loadOct()", ex);
   }
   System.out.println("Loaded: " + file + " : " +chs.size() );
  }
@@ -133,7 +133,7 @@ public final class ChunkContainer {
       serial.flush();
       System.out.println("Saved:" + file);
      }catch (IOException ex) {
-      Main1.LOG.addE("ChunkContainer . Save()", ex);
+      Main.LOG.addE("ChunkContainer . Save()", ex);
      }
     }
    }

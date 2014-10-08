@@ -16,21 +16,21 @@ public Boolean loaded = false;
 public ChunkId pos = new ChunkId(0,0);
 
 public Level(String name) throws TermEx{  
- File f = new File(main.Main1.mdir + "saves/"+name+"/rg");
+ File f = new File(main.Main.mdir + "saves/"+name+"/rg");
  if(f.canRead()&&f.listFiles()!=null){ // Created ?   
   this.name = name;
-  this.rch = new ChunkContainer(main.Main1.mdir + "saves/"+name+"/");
-  load(main.Main1.mdir + "saves/"+name+"/");
+  this.rch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/");
+  load(main.Main.mdir + "saves/"+name+"/");
  }else{   
   this.name=name;
   
-  options = new Options(main.Main1.mdir + "saves/"+name+"/level.db");
+  options = new Options(main.Main.mdir + "saves/"+name+"/level.db");
   options.add("name",name);
   options.add("lchunks",null);
   options.add("pos_x","0");
   options.add("pos_y","0");
   
-  this.rch = new ChunkContainer(main.Main1.mdir + "saves/"+name+"/rg/");
+  this.rch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/rg/");
   //this.lch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/");
   
 

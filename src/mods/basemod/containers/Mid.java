@@ -63,7 +63,7 @@ public class Mid implements Comparable , Serializable{
    return -1;
   }
 
-  main.Main1.LOG.addE("Mid.comp()" , new Exception());
+  main.Main.LOG.addE("Mid.comp()" , new Exception());
   return 0;
  }
 }

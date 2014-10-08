@@ -10,7 +10,7 @@ public class OctChunk  implements Serializable{
  private final int y;
  
 public OctChunk(String nm,int x,int y){
- this.dir=main.Main1.mdir + "saves/"+nm+"/rg/";
+ this.dir=main.Main.mdir + "saves/"+nm+"/rg/";
  fl="region"+x+""+y+".rg";
  
  this.x=x;
@@ -24,7 +24,7 @@ public OctChunk(String nm,int x,int y){
 }
 
 public OctChunk(String nm,int x,int y,Chunk[][] ch){
- this.dir=main.Main1.mdir + "saves/"+nm+"/rg/";
+ this.dir=main.Main.mdir + "saves/"+nm+"/rg/";
  fl="region"+x+""+y+".rg";
  
  this.x=x;

@@ -2,7 +2,7 @@ package render.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.media.opengl.awt.GLCanvas;
-import main.Main1;
+import main.Main;
 import org.fenggui.IWidget;
 import org.fenggui.binding.render.Binding;
 import org.fenggui.binding.render.Graphics;
@@ -36,9 +36,9 @@ public class Display extends org.fenggui.Display {
  public void setBack ( Integer id , String b ) {
   try {
    layout.addBack(new GuiId(id) , new Pixmap(Binding.getInstance().
-                  getTexture(Main1.mdir + b)));
+                  getTexture(Main.mdir + b)));
   } catch ( IOException ex ) {
-   Main1.LOG.addE("Display.setBackground()" , ex);
+   Main.LOG.addE("Display.setBackground()" , ex);
   }
  }
  @Override public synchronized void display () {

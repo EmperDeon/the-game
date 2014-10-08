@@ -33,7 +33,7 @@ import render.Render.Hooks;
 public class GameRender implements IWidget {
 
  private Display parent;
- private final Render rend = main.Main1.rend;
+ private final Render rend = main.Main.rend;
  private final Hooks hook;
  private boolean visible = false;
  private final TreeMap<String , Object> map = new TreeMap<>();

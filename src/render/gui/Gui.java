@@ -3,6 +3,8 @@ package render.gui;
 import com.jogamp.opengl.util.Animator;
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -26,6 +28,7 @@ public class Gui extends JFrame {
  private float rotwAngle = 0;
  private long lastFrame = 0;
  private Robot robot;
+
  public Gui () {
   canvas = new GLCanvas();
   eventListener = new Listener();
@@ -38,12 +41,19 @@ public class Gui extends JFrame {
   animator.setRunAsFastAsPossible(true);
   animator.setPrintExceptions(true);
   animator.start();
-
-  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   
+  addWindowListener(new WindowAdapter() {
+   @Override
+   public void windowClosing ( WindowEvent e ) {
+    main.Main.main.destroy();
+    main.Main.Tr.interrupt();
+   }
+  });
+
   try {
-   robot=new Robot();
-  } catch (AWTException ex) { }
+   robot = new Robot();
+  } catch ( AWTException ex ) {
+  }
  }
 
  public void buildGUI () {
@@ -57,13 +67,12 @@ public class Gui extends JFrame {
   display.addWidget(0 , new StdButton("                   Text 2" , e -> {
    System.out.println("Test 2");
   }));
-  
+
   display.addWidget(0 , new StdButton("                   Text 1" , e -> {
    System.out.println("Test 1");
   }));
 
-
-   // display.addWidget(0, 
+  // display.addWidget(0, 
   //  new StandartFPS(100,200)
   //  );
   display.doLayout();
@@ -81,7 +90,11 @@ public class Gui extends JFrame {
  public GLCanvas getCanvas () {
   return canvas;
  }
- public GL2 getGl(){return gl;}
+
+ public GL2 getGl () {
+  return gl;
+ }
+
  private class Listener implements GLEventListener {
 
   private ScreenshotActor screenshotActor;

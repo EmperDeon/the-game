@@ -2,6 +2,8 @@ package main;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultComboBoxModel;
@@ -25,10 +27,6 @@ import render.Render;
 import utils.MTimer;
 import utils.Options;
 
-/**
- *
- * @author ilya
- */
 public class Main extends JFrame implements Runnable {
 
  public final static render.Render rend = new Render();
@@ -45,20 +43,20 @@ public class Main extends JFrame implements Runnable {
 
  public boolean running = true;
 
- private JList coreMods;
- private JComboBox jComboBox1;
- private JLabel jLabel1;
- private JLabel jLabel2;
- private JPasswordField jPasswordField1;
- private JScrollPane jScrollPane1;
- private JScrollPane jScrollPane2;
- private JTextField jTextField1;
- private JList modsList;
- private JButton start;
- private Pop cpop;
- private Pop mpop;
- private Model cmod;
- private Model mmod;
+ private final JList coreMods = new JList();
+ private final JComboBox jComboBox1 = new JComboBox();
+ private final JLabel jLabel1 = new JLabel();
+ private final JLabel jLabel2 = new JLabel();
+ private final JPasswordField jPasswordField1 = new JPasswordField();
+ private final JScrollPane jScrollPane1 = new JScrollPane();
+ private final JScrollPane jScrollPane2 = new JScrollPane();
+ private final JTextField jTextField1 = new JTextField();
+ private final JList modsList = new JList();
+ private final JButton start = new JButton();
+ private final Pop cpop = new Pop(coreMods);
+ private final Pop mpop = new Pop(modsList);
+ public final Model cmod = new Model();
+ public final Model mmod = new Model();
 
  public Main () {
   initComponents();
@@ -79,42 +77,33 @@ public class Main extends JFrame implements Runnable {
   main.setVisible(true);
 
   mods.load();
-  LOG.save();
-  mods.fsave();
+
   //rend.initfinal();
+ }
+
+ public void destroy () {
+  setVisible(true);
 
  }
 
  private void initComponents () {
+  setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+  addWindowListener(new WindowAdapter() {
+   @Override
+   public void windowClosing ( WindowEvent e ) {
+    LOG.save();
+    mods.fsave();
+   }
+  });
+
   setTitle("Launcher");
   this.setLocation(600 , 300);
-  jScrollPane1 = new JScrollPane();
-  modsList = new JList();
-  jScrollPane2 = new JScrollPane();
-  coreMods = new JList();
-  jComboBox1 = new JComboBox();
-  start = new JButton();
-  jLabel1 = new JLabel();
-  jTextField1 = new JTextField();
-  jLabel2 = new JLabel();
-  jPasswordField1 = new JPasswordField();
-
-  setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-  mpop = new Pop(modsList);
-  cpop = new Pop(coreMods);
-
-  mmod = new Model();
-  cmod = new Model();
 
   modsList.setModel(mmod);
-  mmod.add("Mod 1");
-  mmod.add("Mod 2");
   jScrollPane1.setViewportView(modsList);
   modsList.getAccessibleContext().setAccessibleName("");
 
   coreMods.setModel(cmod);
-  cmod.add("CoreMod 1");
   jScrollPane2.setViewportView(coreMods);
 
   jComboBox1.setModel(
@@ -239,6 +228,7 @@ public class Main extends JFrame implements Runnable {
 
  private void startMouseClicked ( java.awt.event.MouseEvent evt ) {
   Tr.start();
+  setVisible(false);
  }
 
  public static void main ( String args[] ) {
@@ -300,7 +290,7 @@ public class Main extends JFrame implements Runnable {
   }
  }
 
- private class Model extends AbstractListModel {
+ public class Model extends AbstractListModel {
 
   private final ArrayList<Object> cont = new ArrayList<>();
 
