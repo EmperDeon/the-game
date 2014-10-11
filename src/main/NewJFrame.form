@@ -23,13 +23,175 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane3" min="-2" pref="150" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jScrollPane4" min="-2" pref="150" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="loginField" min="-2" pref="102" max="-2" attributes="0"/>
+                          <Component id="loginLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="passLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="passField" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="start" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="options" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="log" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="mods" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="levelEdit" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="modelEdit" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane3" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                      <Component id="jScrollPane4" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="start" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="options" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="log" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="mods" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="levelEdit" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="modelEdit" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="passLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="loginLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="loginField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="passField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JList" name="modsList">
+          <Properties>
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JList" name="coreList">
+          <Properties>
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="start">
+      <Properties>
+        <Property name="label" type="java.lang.String" value="Start Game"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="startMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="options">
+      <Properties>
+        <Property name="actionCommand" type="java.lang.String" value="Options"/>
+        <Property name="autoscrolls" type="boolean" value="true"/>
+        <Property name="label" type="java.lang.String" value="Options"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="modelEdit">
+      <Properties>
+        <Property name="label" type="java.lang.String" value="Model Editor"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="mods">
+      <Properties>
+        <Property name="label" type="java.lang.String" value="Mods Editor"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="log">
+      <Properties>
+        <Property name="label" type="java.lang.String" value="Log manager"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="levelEdit">
+      <Properties>
+        <Property name="label" type="java.lang.String" value="Level Editor"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="loginLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41b;&#x43e;&#x433;&#x438;&#x43d;:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="passLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41f;&#x430;&#x440;&#x43e;&#x43b;&#x44c;:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="passField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="test"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="loginField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="test"/>
+      </Properties>
+    </Component>
+  </SubComponents>
 </Form>

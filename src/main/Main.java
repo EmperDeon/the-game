@@ -6,10 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -18,7 +15,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
@@ -27,7 +23,7 @@ import render.Render;
 import utils.MTimer;
 import utils.Options;
 
-public class Main extends JFrame implements Runnable {
+public final class Main extends JFrame implements Runnable {
 
  public final static render.Render rend = new Render();
  public final static Main main = new Main();
@@ -43,27 +39,12 @@ public class Main extends JFrame implements Runnable {
 
  public boolean running = true;
 
- private final JList coreMods = new JList();
- private final JComboBox jComboBox1 = new JComboBox();
- private final JLabel jLabel1 = new JLabel();
- private final JLabel jLabel2 = new JLabel();
- private final JPasswordField jPasswordField1 = new JPasswordField();
- private final JScrollPane jScrollPane1 = new JScrollPane();
- private final JScrollPane jScrollPane2 = new JScrollPane();
- private final JTextField jTextField1 = new JTextField();
- private final JList modsList = new JList();
- private final JButton start = new JButton();
- private final Pop cpop = new Pop(coreMods);
- private final Pop mpop = new Pop(modsList);
- public final Model cmod = new Model();
- public final Model mmod = new Model();
-
  public Main () {
   initComponents();
 
  }
 
- public void init () throws InterruptedException {
+ public void init () {
   try {
    for ( UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels() ) {
     if ( "Nimbus".equals(info.getName()) ) {
@@ -83,10 +64,61 @@ public class Main extends JFrame implements Runnable {
 
  public void destroy () {
   setVisible(true);
-
  }
 
- private void initComponents () {
+// private void initComponents () {
+//  setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//  addWindowListener(new WindowAdapter() {
+//   @Override
+//   public void windowClosing ( WindowEvent e ) {
+//    LOG.save();
+//    mods.fsave();
+//   }
+//  });
+//
+//  setTitle("Launcher");
+//  this.setLocation(600 , 300);
+//
+//  modsList.setModel(mmod);
+//  jScrollPane1.setViewportView(modsList);
+//  modsList.getAccessibleContext().setAccessibleName("");
+//
+//  coreMods.setModel(cmod);
+//  jScrollPane2.setViewportView(coreMods);
+//
+//  jComboBox1.setModel(
+//          new DefaultComboBoxModel(new String[]{"0.0.1"}));
+//
+//  start.setText("Запуск ");
+//  start.addMouseListener(new java.awt.event.MouseAdapter() {
+//   public void mouseClicked ( java.awt.event.MouseEvent evt ) {
+//    startMouseClicked(evt);
+//   }
+//  });
+//
+// 
+// }
+ public static void main ( String args[] ) {
+  try {
+   for ( UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels() ) {
+    if ( "Nimbus".equals(info.getName()) ) {
+     UIManager.setLookAndFeel(info.getClassName());
+     break;
+    }
+   }
+  } catch ( ClassNotFoundException | InstantiationException |
+            IllegalAccessException | UnsupportedLookAndFeelException ex ) {
+  }
+
+  Tm.start();
+ }
+
+ @Override
+ public void run () {
+  init();
+ }
+
+ public void initComponents () {
   setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   addWindowListener(new WindowAdapter() {
    @Override
@@ -103,108 +135,110 @@ public class Main extends JFrame implements Runnable {
   jScrollPane1.setViewportView(modsList);
   modsList.getAccessibleContext().setAccessibleName("");
 
-  coreMods.setModel(cmod);
-  jScrollPane2.setViewportView(coreMods);
+  coreList.setModel(cmod);
+  jScrollPane2.setViewportView(coreList);
 
-  jComboBox1.setModel(
-          new DefaultComboBoxModel(new String[]{"0.0.1"}));
+  setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-  start.setText("Запуск ");
+  jScrollPane1.setViewportView(modsList);
+
+  jScrollPane2.setViewportView(coreList);
+
+  start.setText("Start");
+  start.addMouseListener(new java.awt.event.MouseAdapter() {
+  });
+
+  options.setActionCommand("Options");
+  options.setAutoscrolls(true);
+  options.setText("Options");
+
+  modelEdit.setText("Models");
+
+  modsEdit.setText("Mods");
+
+  logEdit.setText("Logs");
+
+  levelEdit.setText("Level");
+
   start.addMouseListener(new java.awt.event.MouseAdapter() {
    public void mouseClicked ( java.awt.event.MouseEvent evt ) {
-    startMouseClicked(evt);
+    Tr.start();
+    setVisible(false);
    }
   });
 
-  jLabel1.setText("Логин:");
+  loginLabel.setText("Логин:");
 
-  jTextField1.setText("test");
+  loginField.setText("test");
 
-  jLabel2.setText("Пароль:");
+  passField.setText("test");
 
-  jPasswordField1.setText("test");
+  passLabel.setText("Пароль:");
 
-  GroupLayout layout = new GroupLayout(getContentPane());
+  javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
   getContentPane().setLayout(layout);
   layout.setHorizontalGroup(
-          layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-                  .addContainerGap()
-                  .addComponent(jScrollPane1 ,
-                                GroupLayout.PREFERRED_SIZE , 150 ,
-                                GroupLayout.PREFERRED_SIZE)
-                  .addGap(12 , 12 , 12)
-                  .addComponent(jScrollPane2 ,
-                                GroupLayout.PREFERRED_SIZE , 150 ,
-                                GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(
-                          LayoutStyle.ComponentPlacement.RELATED)
-                  .addGroup(layout.createParallelGroup(
-                                  GroupLayout.Alignment.LEADING)
-                          .addGroup(layout.createSequentialGroup()
-                                  .addGroup(layout.createParallelGroup(
-                                                  GroupLayout.Alignment.LEADING).
-                                          addComponent(jLabel1)
-                                          .addComponent(jLabel2))
-                                  .addGap(0 , 0 , Short.MAX_VALUE))
-                          .addGroup(layout.createSequentialGroup()
-                                  .addGap(12 , 12 , 12)
-                                  .addGroup(layout.createParallelGroup(
-                                                  GroupLayout.Alignment.LEADING).
-                                          addComponent(jTextField1)
-                                          .addComponent(jPasswordField1)))
-                          .addComponent(jComboBox1 , 0 , 117 , Short.MAX_VALUE)
-                          .addComponent(start ,
-                                        GroupLayout.DEFAULT_SIZE ,
-                                        GroupLayout.DEFAULT_SIZE ,
-                                        Short.MAX_VALUE))
-                  .addContainerGap())
+   layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+   .addGroup(layout.createSequentialGroup()
+    .addContainerGap()
+    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+       .addComponent(loginField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+       .addComponent(loginLabel))
+      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+       .addGroup(layout.createSequentialGroup()
+        .addComponent(passLabel)
+        .addGap(0, 0, Short.MAX_VALUE))
+       .addComponent(passField)))
+     .addGroup(layout.createSequentialGroup()
+      .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+      .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+     .addGroup(layout.createSequentialGroup()
+      .addComponent(logEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+      .addComponent(modsEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+     .addGroup(layout.createSequentialGroup()
+      .addComponent(levelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+      .addComponent(modelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+    .addContainerGap())
   );
   layout.setVerticalGroup(
-          layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-                  .addContainerGap()
-                  .addGroup(layout.createParallelGroup(
-                                  GroupLayout.Alignment.LEADING ,
-                                  false)
-                          .addComponent(jScrollPane2 ,
-                                        GroupLayout.PREFERRED_SIZE ,
-                                        200 ,
-                                        GroupLayout.PREFERRED_SIZE)
-                          .addComponent(jScrollPane1 ,
-                                        GroupLayout.PREFERRED_SIZE ,
-                                        200 ,
-                                        GroupLayout.PREFERRED_SIZE)
-                          .addGroup(GroupLayout.Alignment.TRAILING ,
-                                    layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(
-                                            LayoutStyle.ComponentPlacement.RELATED).
-                                    addComponent(jTextField1 ,
-                                                 GroupLayout.PREFERRED_SIZE ,
-                                                 GroupLayout.DEFAULT_SIZE ,
-                                                 GroupLayout.PREFERRED_SIZE).
-                                    addGap(18 , 18 , 18)
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(
-                                            LayoutStyle.ComponentPlacement.UNRELATED).
-                                    addComponent(jPasswordField1 ,
-                                                 GroupLayout.PREFERRED_SIZE ,
-                                                 GroupLayout.DEFAULT_SIZE ,
-                                                 GroupLayout.PREFERRED_SIZE).
-                                    addPreferredGap(
-                                            LayoutStyle.ComponentPlacement.RELATED ,
-                                            GroupLayout.DEFAULT_SIZE ,
-                                            Short.MAX_VALUE)
-                                    .addComponent(jComboBox1 ,
-                                                  GroupLayout.PREFERRED_SIZE ,
-                                                  GroupLayout.DEFAULT_SIZE ,
-                                                  GroupLayout.PREFERRED_SIZE).
-                                    addPreferredGap(
-                                            LayoutStyle.ComponentPlacement.RELATED).
-                                    addComponent(start)))
-                  .addContainerGap(GroupLayout.DEFAULT_SIZE ,
-                                   Short.MAX_VALUE))
+   layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+   .addGroup(layout.createSequentialGroup()
+    .addContainerGap()
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+      .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addGroup(layout.createSequentialGroup()
+       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addComponent(start)
+        .addComponent(options))
+       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addComponent(logEdit)
+        .addComponent(modsEdit))
+       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addComponent(levelEdit)
+        .addComponent(modelEdit))
+       .addGap(47, 47, 47)
+       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addComponent(passLabel)
+        .addComponent(loginLabel))
+       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addComponent(loginField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
   );
 
   pack();
@@ -216,7 +250,7 @@ public class Main extends JFrame implements Runnable {
     }
    }
   });
-  this.coreMods.addMouseListener(new MouseAdapter() {
+  this.coreList.addMouseListener(new MouseAdapter() {
    @Override
    public void mouseClicked ( MouseEvent e ) {
     if ( e.getButton() == MouseEvent.BUTTON3 ) {
@@ -225,41 +259,24 @@ public class Main extends JFrame implements Runnable {
    }
   });
  }
-
- private void startMouseClicked ( java.awt.event.MouseEvent evt ) {
-  Tr.start();
-  setVisible(false);
- }
-
- public static void main ( String args[] ) {
-  try {
-   for ( UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels() ) {
-    if ( "Nimbus".equals(info.getName()) ) {
-     UIManager.setLookAndFeel(info.getClassName());
-     break;
-    }
-   }
-  } catch ( ClassNotFoundException | InstantiationException |
-            IllegalAccessException | UnsupportedLookAndFeelException ex ) {
-  }
-
-  java.awt.EventQueue.invokeLater(() -> {
-
-  });
-
-  Tm.start();
-
- }
-
- @Override
- public void run () {
-  try {
-   init();
-
-  } catch ( InterruptedException ex ) {
-
-  }
- }
+ private final javax.swing.JList coreList = new javax.swing.JList();
+ private final JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+ private final JScrollPane jScrollPane2 = new javax.swing.JScrollPane();
+ private final JButton levelEdit = new javax.swing.JButton();
+ private final JButton logEdit = new javax.swing.JButton();
+ private final JTextField loginField = new javax.swing.JTextField();
+ private final JLabel loginLabel = new javax.swing.JLabel();
+ private final JButton modsEdit = new javax.swing.JButton();
+ private final JButton modelEdit = new javax.swing.JButton();
+ private final JList modsList = new javax.swing.JList();
+ private final JButton options = new javax.swing.JButton();
+ private final JPasswordField passField = new javax.swing.JPasswordField();
+ private final JLabel passLabel = new javax.swing.JLabel();
+ private final JButton start = new javax.swing.JButton();
+ private final Pop cpop = new Pop(coreList);
+ private final Pop mpop = new Pop(modsList);
+ public final Model cmod = new Model();
+ public final Model mmod = new Model();
 
  private class Pop extends JPopupMenu {
 

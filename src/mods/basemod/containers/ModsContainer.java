@@ -25,7 +25,7 @@ import utils.Options;
 public final class ModsContainer implements Serializable {
 
  transient final TreeMap<Mid , CoreMod> cmods;
- transient final TreeMap<Mid , BaseMod> mods;  
+ transient final TreeMap<Mid , BaseMod> mods;
  private final BlocksContainer bcont;
  private final IItemsContainer icont;
  private final Crafting ccont;
@@ -33,11 +33,12 @@ public final class ModsContainer implements Serializable {
 
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
- 
+
  private final File file = new File(main.Main.mdir + "mods/modscontainer.mod");
+
  public ModsContainer () {
   cmods = new TreeMap<>();
-  mods  = new TreeMap<>();
+  mods = new TreeMap<>();
   bcont = new BlocksContainer();
   icont = new IItemsContainer();
   ccont = new Crafting();
@@ -60,37 +61,38 @@ public final class ModsContainer implements Serializable {
   mods.values().stream().
           forEach(( m ) -> {
            main.Main.main.mmod.add(idmap.getMid(m.getId()));
+           System.out.println("add " + idmap.getMid(m.getId()));
           });
  }
 
  public void init () {
-  main.Main.LOG.addI("ModsContainer", "Init Started");
+  main.Main.LOG.addI("ModsContainer" , "Init Started");
   mods.values().stream().forEach(( m ) -> {
    m.init(this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("ModsContainer", "Init Ended");
+  main.Main.LOG.addI("ModsContainer" , "Init Ended");
   test();
  }
 
- public void reinit () { 
-  main.Main.LOG.addI("ModsContainer", "Reinit Started");
-  mods.values().stream().forEach(m->{
+ public void reinit () {
+  main.Main.LOG.addI("ModsContainer" , "Reinit Started");
+  mods.values().stream().forEach(m -> {
    m.reinit(this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("ModsContainer", "Reinit Ended");
+  main.Main.LOG.addI("ModsContainer" , "Reinit Ended");
   test();
  }
- 
+
  public void postinit () {
-  main.Main.LOG.addI("ModsContainer", "Postinit Started");
+  main.Main.LOG.addI("ModsContainer" , "Postinit Started");
   init.clear();
   mods.values().stream().forEach(( m ) -> {
    m.postinit(this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("ModsContainer", "Postinit Ended");
+  main.Main.LOG.addI("ModsContainer" , "Postinit Ended");
  }
 
  public void destroy () {
@@ -105,7 +107,7 @@ public final class ModsContainer implements Serializable {
   }
  }
 
- public void loadDir (boolean isI) {
+ public void loadDir ( boolean isI ) {
   File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
    try {
     if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".jar") != -1 ) {
@@ -141,7 +143,9 @@ public final class ModsContainer implements Serializable {
     main.Main.LOG.addE("Containers.loadDir()" , e);
    }
   }
-  if(isI) init();
+  if ( isI ) {
+   init();
+  }
  }
 
 //Fast Save, Load
@@ -153,8 +157,6 @@ public final class ModsContainer implements Serializable {
    this.ccont.addAll(t.getCcont());
    this.icont.addAll(t.getIcont());
    this.idmap.addAll(t.getIdmap());
-  //this.cmods.putAll(t.getCmods());
-  // this.mods.putAll(t.getMods());
   } catch ( Exception e ) {
    main.Main.LOG.addE("Containers.load()" , e);
    System.out.println(e.toString());
@@ -235,7 +237,5 @@ public final class ModsContainer implements Serializable {
  public File getFile () {
   return file;
  }
-
-
 
 }
