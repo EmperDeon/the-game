@@ -20,7 +20,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
-import utils.MTimer;
 import utils.Options;
 
 public final class Main extends JFrame implements Runnable {
@@ -34,7 +33,7 @@ public final class Main extends JFrame implements Runnable {
 
  public final static Logger LOG = new Logger();
  public final static Options OPTIONS = new Options(mdir + "options.db");
- public final static MTimer timer = new MTimer();
+ public final static MActionListener TIMER = new MActionListener();
  public final static ModsContainer mods = new ModsContainer();
 
  public boolean running = true;
