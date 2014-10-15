@@ -14,7 +14,7 @@ import java.util.Enumeration;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import main.IdMap;
+import utils.IdMap;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.interfaces.BaseMod;

@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package main;
-import java.io.*;
+import utils.Logger;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import javax.swing.JFileChooser;
 
 /**
@@ -16,6 +19,7 @@ public class LogManager extends javax.swing.JFrame {
  /** Creates new form LogExplorer */
  public LogManager() {
   setTitle("LogManager");
+  setLocation(600,600);
   initComponents();
  }
 

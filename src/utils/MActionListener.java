@@ -1,4 +1,4 @@
-package main;
+package utils;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;

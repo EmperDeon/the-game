@@ -1,5 +1,7 @@
 package main;
 
+import utils.MActionListener;
+import utils.Logger;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -44,7 +46,7 @@ public final class Main extends JFrame {
    setVisible(true);
    init();
   });
-  
+
   initComponents();
 
   Tm = Thread.currentThread();
@@ -75,7 +77,7 @@ public final class Main extends JFrame {
   }
   main = new Main();
  }
- 
+
  public void initComponents () {
   setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   addWindowListener(new WindowAdapter() {
@@ -104,24 +106,50 @@ public final class Main extends JFrame {
 
   start.setText("Start");
   start.addMouseListener(new java.awt.event.MouseAdapter() {
-  });
-
-  options.setActionCommand("Options");
-  options.setAutoscrolls(true);
-  options.setText("Options");
-
-  modelEdit.setText("Models");
-
-  modsEdit.setText("Mods");
-
-  logEdit.setText("Logs");
-
-  levelEdit.setText("Level");
-
-  start.addMouseListener(new java.awt.event.MouseAdapter() {
    public void mouseClicked ( java.awt.event.MouseEvent evt ) {
     Tr.start();
     setVisible(false);
+   }
+  });
+
+  options.setActionCommand("Options");
+  options.setText("Options");
+  options.addMouseListener(new java.awt.event.MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+
+   }
+  });
+
+  modelEdit.setText("Models");
+  modelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+
+   }
+  });
+
+  modsEdit.setText("Mods");
+  modsEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+
+   }
+  });
+
+  logEdit.setText("Logs");
+  logEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+    new LogManager().setVisible(true);
+   }
+  });
+
+  levelEdit.setText("Level");
+  levelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+
    }
   });
 
