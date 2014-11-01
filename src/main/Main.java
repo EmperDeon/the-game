@@ -22,7 +22,7 @@ import mods.basemod.containers.ModsContainer;
 import render.Render;
 import utils.Logger;
 import utils.MActionListener;
-import utils.Options;
+import utils.json.JSONObject;
 
 public final class Main extends JFrame {
 
@@ -34,14 +34,14 @@ public final class Main extends JFrame {
  public final static String mdir = "/usr/games/game/";
 
  public final static Logger LOG = new Logger();
- public final static Options OPTIONS = new Options(mdir + "options.db");
+ public final static JSONObject OPTIONS = new JSONObject(mdir + "options.db");
  public final static MActionListener TIMER = new MActionListener();
  public final static ModsContainer mods = new ModsContainer();
 
  public boolean running = true;
 
  public Main () {
-  main = this;
+  // main = this;
   java.awt.EventQueue.invokeLater(() -> {
    setVisible(true);
    init();
@@ -106,6 +106,7 @@ public final class Main extends JFrame {
 
   start.setText("Start");
   start.addMouseListener(new java.awt.event.MouseAdapter() {
+   @Override
    public void mouseClicked ( java.awt.event.MouseEvent evt ) {
     Tr.start();
     setVisible(false);

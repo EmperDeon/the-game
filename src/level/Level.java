@@ -4,12 +4,11 @@ import java.io.File;
 import level.chunk.Chunk;
 import level.chunk.ChunkContainer;
 import level.chunk.ChunkId;
-import utils.Options;
 import utils.exceptions.TermEx;
 
 public class Level {
 
- public Options options;
+ //public Options options;
  private final int chpr = 8;
 //private final ChunkContainer lch;
  private final ChunkContainer rch;
@@ -26,11 +25,11 @@ public class Level {
   } else {
    this.name = name;
 
-   options = new Options(main.Main.mdir + "saves/" + name + "/level.db");
-   options.add("name" , name);
-   options.add("lchunks" , null);
-   options.add("pos_x" , "0");
-   options.add("pos_y" , "0");
+//   options = new Options(main.Main.mdir + "saves/" + name + "/level.db");
+//   options.add("name" , name);
+//   options.add("lchunks" , null);
+//   options.add("pos_x" , "0");
+//   options.add("pos_y" , "0");
 
    this.rch = new ChunkContainer(main.Main.mdir + "saves/" + name + "/rg/");
   //this.lch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/");
@@ -47,13 +46,13 @@ public class Level {
  public final void load ( String dir ) {
   File f = new File(dir + "level.db");
   if ( f.canRead() ) {
-   options = new Options(dir + "level.db");
-
-   pos.x = options.getI("pos_x");
-   pos.y = options.getI("pos_y");
-  } else {
-   options = new Options(dir + "level.db");
-   options.add("name" , name);
+//   options = new Options(dir + "level.db");
+//
+//   pos.x = options.getI("pos_x");
+//   pos.y = options.getI("pos_y");
+//  } else {
+//   options = new Options(dir + "level.db");
+//   options.add("name" , name);
   }
 
   //this.rch.load(new ChunkId(0,0),8);
@@ -61,7 +60,7 @@ public class Level {
  }
 
  public void save () {
-  options.save();
+//  options.save();
 
   rch.save();
 

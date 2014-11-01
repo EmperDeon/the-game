@@ -21,7 +21,7 @@ import mods.basemod.interfaces.ActionU;
 import mods.basemod.interfaces.BaseMod;
 import mods.basemod.interfaces.CoreMod;
 import render.Tex;
-import utils.Options;
+import utils.json.JSONObject;
 
 public final class ModsContainer implements Serializable {
 
@@ -131,21 +131,21 @@ public final class ModsContainer implements Serializable {
 
   for ( File f : s ) {
    try {
-    Options opt = null;
+    JSONObject opt = null;
     JarFile jar = new JarFile(f);
     Enumeration entries = jar.entries();
     while ( entries.hasMoreElements() ) {
      JarEntry entry = ( JarEntry ) entries.nextElement();
-     if ( entry.getName().equals("props.opt") ) {
+     if ( entry.getName().equals("props.json") ) {
       try ( ObjectInputStream is = new ObjectInputStream(jar.getInputStream(
               entry)) ) {
-       opt = ( Options ) is.readObject();
+       opt = new JSONObject(is.readObject().toString());
       }
      }
     }
 
     URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
-    BaseMod b = ( BaseMod ) classLoader.loadClass(opt.get("main.class")).
+    BaseMod b = ( BaseMod ) classLoader.loadClass(opt.getString("main.class")).
             newInstance();
     mods.put(b.getId() , b);
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
@@ -167,6 +167,7 @@ public final class ModsContainer implements Serializable {
    this.ccont.addAll(t.getCcont());
    this.icont.addAll(t.getIcont());
    this.idmap.addAll(t.getIdmap());
+   this.actmap.addAll(t.getActmap());
   } catch ( Exception e ) {
    main.Main.LOG.addE("Containers.load()" , e);
    System.out.println(e.toString());
