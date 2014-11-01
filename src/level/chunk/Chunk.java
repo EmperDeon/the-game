@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import mods.basemod.LevBlock;
 import mods.basemod.containers.Mid;
 import render.RendTexCoord;
-import utils.TId;
+import render.TId;
 import utils.vec.Vec3;
 
 public class Chunk implements Serializable {

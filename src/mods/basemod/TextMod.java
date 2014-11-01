@@ -13,6 +13,7 @@ public class TextMod implements BaseMod{
  public TextMod (String file) {
   this.file = file;
   this.json.put("", "");
+  
   id =  new Mid(9,0,0);
  }
  

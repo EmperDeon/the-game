@@ -1,7 +1,5 @@
 package main;
 
-import utils.MActionListener;
-import utils.Logger;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -22,6 +20,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
+import utils.Logger;
+import utils.MActionListener;
 import utils.Options;
 
 public final class Main extends JFrame {
@@ -39,7 +39,7 @@ public final class Main extends JFrame {
  public final static ModsContainer mods = new ModsContainer();
 
  public boolean running = true;
-
+ 
  public Main () {
   main = this;
   java.awt.EventQueue.invokeLater(() -> {
@@ -310,6 +310,7 @@ public final class Main extends JFrame {
  private final JScrollPane jScrollPane2 = new javax.swing.JScrollPane();
  private final JButton levelEdit = new javax.swing.JButton();
  private final JButton logEdit = new javax.swing.JButton();
+
  private final JTextField loginField = new javax.swing.JTextField();
  private final JLabel loginLabel = new javax.swing.JLabel();
  private final JButton modsEdit = new javax.swing.JButton();

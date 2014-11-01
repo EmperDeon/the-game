@@ -8,6 +8,10 @@ public class Mid implements Comparable , Serializable{
 
  private final Vec3<Integer> id;
 
+ public Mid (Mid tid){
+  this.id = tid.getI();
+ }
+ 
  public Mid ( Vec3<Integer> id ) {
   this.id = id;
  }
@@ -35,6 +39,10 @@ public class Mid implements Comparable , Serializable{
   return id.gZ();
  }
 
+ public Vec3<Integer> getI(){
+  return id;
+ }
+ 
  @Override
  public int compareTo ( Object m ) {
   Mid o = ( Mid ) m;

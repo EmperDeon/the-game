@@ -12,11 +12,11 @@ import java.util.HashMap;
 public final class Options implements Serializable{
  private HashMap<String, String> opt = new HashMap<>();   
  private String file;
- private String dir;
+ //private String dir;
   
  public Options(String file){    
   this.file=file;
-  this.dir=getDir(file);
+  //this.dir=getDir(file);
   load();
  }
 
@@ -75,7 +75,7 @@ public final class Options implements Serializable{
   try {
    ObjectInputStream serial = new ObjectInputStream(new FileInputStream(file));
    Options tmp = ( Options ) serial.readObject();
-   this.dir = tmp.dir;
+   //this.dir = tmp.dir;
    this.file = tmp.file;
    this.opt = tmp.opt;
   } catch (IOException | ClassNotFoundException ex) {

@@ -1,4 +1,4 @@
-package utils;
+package mods.basemod.containers;
 
 import java.io.Serializable;
 import java.util.TreeMap;

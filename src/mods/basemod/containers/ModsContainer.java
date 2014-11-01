@@ -14,7 +14,6 @@ import java.util.Enumeration;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import utils.IdMap;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.interfaces.BaseMod;
@@ -30,7 +29,7 @@ public final class ModsContainer implements Serializable {
  private final IItemsContainer icont;
  private final Crafting ccont;
  private final IdMap idmap;
-
+ private final ActMap actmap;
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
@@ -43,6 +42,7 @@ public final class ModsContainer implements Serializable {
   icont = new IItemsContainer();
   ccont = new Crafting();
   idmap = new IdMap();
+  actmap = new ActMap();
  }
 
  public void add ( Mid id , BaseMod b ) {
@@ -236,6 +236,10 @@ public final class ModsContainer implements Serializable {
 
  public File getFile () {
   return file;
+ }
+
+ public ActMap getActmap () {
+  return actmap;
  }
 
 }
