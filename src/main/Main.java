@@ -39,7 +39,7 @@ public final class Main extends JFrame {
  public final static ModsContainer mods = new ModsContainer();
 
  public boolean running = true;
- 
+
  public Main () {
   main = this;
   java.awt.EventQueue.invokeLater(() -> {

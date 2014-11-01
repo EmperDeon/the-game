@@ -8,7 +8,7 @@ import mods.basemod.interfaces.InvItem;
 import render.Tex;
 import utils.vec.Vec3;
 
-public class IItem implements Serializable, InvItem{
+public class IItem implements Serializable , InvItem {
 
  private final MultiTex tex;
  private final Mid id;

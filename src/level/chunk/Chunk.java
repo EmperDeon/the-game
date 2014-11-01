@@ -89,7 +89,7 @@ public class Chunk implements Serializable {
    for ( int y = 0 ; y < 16 ; y++ ) {
     for ( int z = 0 ; z < 255 ; z++ ) {
      if ( z < 100 ) {
-      blocks[x][y][z] = new LevBlock(null, new Mid(0,0,0));
+      blocks[x][y][z] = new LevBlock(null , new Mid(0 , 0 , 0));
      } else {
       blocks[x][y][z] = null;
      }

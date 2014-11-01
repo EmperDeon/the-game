@@ -16,6 +16,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
+import mods.basemod.interfaces.Action;
+import mods.basemod.interfaces.ActionU;
 import mods.basemod.interfaces.BaseMod;
 import mods.basemod.interfaces.CoreMod;
 import render.Tex;
@@ -47,6 +49,14 @@ public final class ModsContainer implements Serializable {
 
  public void add ( Mid id , BaseMod b ) {
   mods.put(id , b);
+ }
+
+ public void addAction ( Mid id , String s , Action act ) {
+  actmap.add(id , s , act);
+ }
+
+ public void addActionU ( Mid id , String s , ActionU act ) {
+  actmap.add(id , s , act);
  }
 
  public Tex getITex ( Mid id ) {

@@ -5,19 +5,20 @@ import utils.vec.Vec2;
 import utils.vec.Vec3;
 
 public class Player {
-private final String name = "";    
-public Vec3<Double> coord ;
-public Vec2<Double> cam = new Vec2<>();
-private final Level level;
 
-private Health health;
+ private final String name = "";
+ public Vec3<Double> coord;
+ public Vec2<Double> cam = new Vec2<>();
+ private final Level level;
 
-public Player (Vec3<Double> coord,Level level){
- this.level=level;
- this.coord=coord;
-}
+ private Health health;
 
-public void tick(){
- 
-}
+ public Player ( Vec3<Double> coord , Level level ) {
+  this.level = level;
+  this.coord = coord;
+ }
+
+ public void tick () {
+
+ }
 }

@@ -9,7 +9,7 @@ public class ActMap {
  private final TreeMap<Aid , Action> map = new TreeMap<>();
 
  public ActMap () {
-  
+
  }
 
  public void add ( Mid id , String a , Action act ) {
@@ -19,5 +19,5 @@ public class ActMap {
  public void add ( Mid id , String a , ActionU act ) {
   this.map.put(new Aid(id , a) , act);
  }
- 
+
 }

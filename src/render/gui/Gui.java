@@ -41,7 +41,7 @@ public class Gui extends JFrame {
   animator.setRunAsFastAsPossible(true);
   animator.setPrintExceptions(true);
   animator.start();
-  
+
   addWindowListener(new WindowAdapter() {
    @Override
    public void windowClosing ( WindowEvent e ) {
