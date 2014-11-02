@@ -10,13 +10,18 @@ public class TextMod implements BaseMod {
  private final Mid id;
  private Boolean props = false;
  private final String file;
- private final JSONObject json = new JSONObject();
+ private final JSONObject json;
 
  public TextMod ( String file ) {
+  if(file != null){
   this.file = file;
-  this.json.put("" , "");
-
-  id = new Mid(9 , 0 , 0);
+  this.json = new JSONObject(file);
+  this.id = new Mid(json.getString(file),"","");
+  }else{
+   this.file = null;
+   this.json = null;
+   this.id
+  }
  }
 
  @Override

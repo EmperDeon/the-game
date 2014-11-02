@@ -12,6 +12,11 @@ public class Mid implements Comparable , Serializable {
   this.id = tid.getI();
  }
 
+ public Mid(String m, String i, String s){
+  
+ }
+ 
+ 
  public Mid ( Vec3<Integer> id ) {
   this.id = id;
  }
