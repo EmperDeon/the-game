@@ -13,11 +13,11 @@ public class TextMod implements BaseMod {
  private final JSONObject json;
 
  public TextMod ( String file ) {
-  if(file != null){
-  this.file = file;
-  this.json = new JSONObject(file);
-  this.id = new Mid(json.getString(file),"","");
-  }else{
+  if ( file != null ) {
+   this.file = file;
+   this.json = new JSONObject(file);
+   this.id = new Mid(json.getString(file) , "" , "");
+  } else {
    this.file = null;
    this.json = null;
    this.id

@@ -5,7 +5,7 @@ import java.util.TreeMap;
 import mods.basemod.interfaces.Action;
 import mods.basemod.interfaces.ActionU;
 
-public class ActMap implements Serializable{
+public class ActMap implements Serializable {
 
  private final TreeMap<Aid , Action> map = new TreeMap<>();
 
@@ -21,8 +21,8 @@ public class ActMap implements Serializable{
   this.map.put(new Aid(id , a) , act);
  }
 
- public void addAll( ActMap t){
+ public void addAll ( ActMap t ) {
   this.map.putAll(t.map);
  }
- 
+
 }

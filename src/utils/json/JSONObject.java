@@ -104,7 +104,7 @@ public final class JSONObject {
  public JSONObject () {
  }
 
- public JSONObject ( String file ){
+ public JSONObject ( String file ) {
   load(file);
  }
 

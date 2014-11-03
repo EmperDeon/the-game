@@ -30,7 +30,6 @@ public class Level {
 //   options.add("lchunks" , null);
 //   options.add("pos_x" , "0");
 //   options.add("pos_y" , "0");
-
    this.rch = new ChunkContainer(main.Main.mdir + "saves/" + name + "/rg/");
   //this.lch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/");
 

@@ -67,6 +67,7 @@ public class JSONTokener {
 
  /**
   * Construct a JSONTokener from an InputStream.
+  *
   * @param inputStream
   */
  public JSONTokener ( InputStream inputStream ) throws JSONException {
