@@ -2,7 +2,6 @@ package mods.basemod.containers;
 
 import java.io.Serializable;
 import java.util.TreeMap;
-import mods.basemod.containers.Mid;
 
 public class IdMap implements Serializable {
 
@@ -11,8 +10,9 @@ public class IdMap implements Serializable {
  private final TreeMap<Integer , String> mid = new TreeMap<>();
 
  public IdMap () {
+  
  }
-
+ 
  public void add ( Mid id , String mid , String iid , String sid ) {
   this.mid.put(id.getMid() , mid);
   this.iid.put(id.getIid() , iid);
