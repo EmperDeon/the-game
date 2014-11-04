@@ -34,12 +34,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * A JSONObject is an unordered collection of name/value pairs. Its external
@@ -141,12 +141,10 @@ public final class JSONObject {
   * @param value
   *              An object to be accumulated under the key.
   *
-  * @return this.
-  *
   * @throws JSONException
   *                       If the value is an invalid number or if the key is null.
   */
- public JSONObject accumulate ( String key , Object value ) throws JSONException {
+ public void accumulate ( String key , Object value ) throws JSONException {
   testValidity(value);
   Object object = this.get(key);
   if ( object == null ) {
@@ -158,7 +156,6 @@ public final class JSONObject {
   } else {
    this.put(key , new JSONArray().put(object).put(value));
   }
-  return this;
  }
 
  /**
@@ -172,13 +169,11 @@ public final class JSONObject {
   * @param value
   *              An object to be accumulated under the key.
   *
-  * @return this.
-  *
   * @throws JSONException
   *                       If the key is null or if the current value associated with
   *                       the key is not a JSONArray.
   */
- public JSONObject append ( String key , Object value ) throws JSONException {
+ public void append ( String key , Object value ) throws JSONException {
   testValidity(value);
   Object object = this.get(key);
   if ( object == null ) {
@@ -190,7 +185,6 @@ public final class JSONObject {
                       "JSONObject[" + key
                       + "] is not a JSONArray."));
   }
-  return this;
  }
 
  /**
@@ -404,14 +398,11 @@ public final class JSONObject {
   if ( length == 0 ) {
    return null;
   }
-  Iterator iterator = jo.keys();
-  String[] names = new String[length];
-  int i = 0;
-  while ( iterator.hasNext() ) {
-   names[i] = ( String ) iterator.next();
-   i += 1;
-  }
-  return names;
+  final ArrayList<String> k = new ArrayList<>();
+  jo.map.keySet().stream().forEach(( String key ) -> {
+   k.add(key);
+  });
+  return k.toArray(new String[0]);
  }
 
  /**
@@ -479,13 +470,11 @@ public final class JSONObject {
   * @param key
   *            A key string.
   *
-  * @return this.
-  *
   * @throws JSONException
   *                       If there is already a property with this name that is not an
   *                       Integer, Long, Double, or Float.
   */
- public JSONObject increment ( String key ) throws JSONException {
+ public void increment ( String key ) throws JSONException {
   Object value = this.get(key);
   if ( value == null ) {
    this.put(key , 1);
@@ -501,7 +490,6 @@ public final class JSONObject {
    main.Main.LOG.addE("JSONObject.load()" , new JSONException(
                       "Unable to increment [" + quote(key) + "]."));
   }
-  return this;
  }
 
  /**
@@ -516,24 +504,6 @@ public final class JSONObject {
   */
  public boolean isNull ( String key ) {
   return this.map.containsKey(key);
- }
-
- /**
-  * Get an enumeration of the keys of the JSONObject.
-  *
-  * @return An iterator of the keys.
-  */
- public Iterator keys () {
-  return this.keySet().iterator();
- }
-
- /**
-  * Get a set of keys of the JSONObject.
-  *
-  * @return A keySet.
-  */
- public Set keySet () {
-  return this.map.keySet();
  }
 
  /**
@@ -609,10 +579,9 @@ public final class JSONObject {
   */
  public JSONArray names () {
   JSONArray ja = new JSONArray();
-  Iterator keys = this.keys();
-  while ( keys.hasNext() ) {
-   ja.put(keys.next());
-  }
+  this.map.keySet().stream().forEach(( String key ) -> {
+   ja.put(key);
+  });
   return ja.length() == 0 ? null : ja;
  }
 
@@ -1400,9 +1369,8 @@ public final class JSONObject {
   * <p>
   * Warning: This method assumes that the data structure is acyclical.
   *
-  * @param indent
   *
-  * @return The writer.
+  * @return The string.
   *
   * @throws JSONException
   */
@@ -1411,7 +1379,6 @@ public final class JSONObject {
   try {
    Writer writer = new StringWriter();// Writer writer ,
    final int length = this.length();
-   Iterator keys = this.keys();
    writer.write('{');
 
    if ( length == 1 ) {
