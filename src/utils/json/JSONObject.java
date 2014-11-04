@@ -186,8 +186,9 @@ public final class JSONObject {
   } else if ( object instanceof JSONArray ) {
    this.put(key , ( ( JSONArray ) object ).put(value));
   } else {
-   throw new JSONException("JSONObject[" + key
-                           + "] is not a JSONArray.");
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                      "JSONObject[" + key
+                      + "] is not a JSONArray."));
   }
   return this;
  }
@@ -233,11 +234,12 @@ public final class JSONObject {
   */
  public Object get ( String key ) throws JSONException {
   if ( key == null ) {
-   throw new JSONException("Null key.");
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException("Null key."));
   }
   Object object = this.opt(key);
   if ( object == null ) {
-   throw new JSONException("JSONObject[" + quote(key) + "] not found.");
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                      "JSONObject[" + quote(key) + "] not found."));
   }
   return object;
  }
@@ -265,8 +267,10 @@ public final class JSONObject {
           .equalsIgnoreCase("true") ) ) {
    return true;
   }
-  throw new JSONException("JSONObject[" + quote(key)
-                          + "] is not a Boolean.");
+  main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                     "JSONObject[" + quote(key)
+                     + "] is not a Boolean."));
+  return true;
  }
 
  /**
@@ -287,9 +291,11 @@ public final class JSONObject {
    return object instanceof Number ? ( ( Number ) object ).doubleValue()
            : Double.parseDouble(( String ) object);
   } catch ( Exception e ) {
-   throw new JSONException("JSONObject[" + quote(key)
-                           + "] is not a number.");
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                      "JSONObject[" + quote(key)
+                      + "] is not a number."));
   }
+  return 0;
  }
 
  /**
@@ -310,8 +316,10 @@ public final class JSONObject {
    return object instanceof Number ? ( ( Number ) object ).intValue()
            : Integer.parseInt(( String ) object);
   } catch ( Exception e ) {
-   throw new JSONException("JSONObject[" + quote(key)
-                           + "] is not an int.");
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                      "JSONObject[" + quote(key)
+                      + "] is not an int."));
+   return 0;
   }
  }
 
@@ -331,8 +339,10 @@ public final class JSONObject {
   if ( object instanceof JSONArray ) {
    return ( JSONArray ) object;
   }
-  throw new JSONException("JSONObject[" + quote(key)
-                          + "] is not a JSONArray.");
+  main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                     "JSONObject[" + quote(key)
+                     + "] is not a JSONArray."));
+  return null;
  }
 
  /**
@@ -351,8 +361,10 @@ public final class JSONObject {
   if ( object instanceof JSONObject ) {
    return ( JSONObject ) object;
   }
-  throw new JSONException("JSONObject[" + quote(key)
-                          + "] is not a JSONObject.");
+  main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                     "JSONObject[" + quote(key)
+                     + "] is not a JSONObject."));
+  return null;
  }
 
  /**
@@ -373,9 +385,11 @@ public final class JSONObject {
    return object instanceof Number ? ( ( Number ) object ).longValue()
            : Long.parseLong(( String ) object);
   } catch ( Exception e ) {
-   throw new JSONException("JSONObject[" + quote(key)
-                           + "] is not a long.");
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                      "JSONObject[" + quote(key)
+                      + "] is not a long."));
   }
+  return 0;
  }
 
  /**
@@ -440,7 +454,9 @@ public final class JSONObject {
   if ( object instanceof String ) {
    return ( String ) object;
   }
-  throw new JSONException("JSONObject[" + quote(key) + "] not a string.");
+  main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                     "JSONObject[" + quote(key) + "] not a string."));
+  return null;
  }
 
  /**
@@ -482,7 +498,8 @@ public final class JSONObject {
   } else if ( value instanceof Float ) {
    this.put(key , ( ( Float ) value ) + 1);
   } else {
-   throw new JSONException("Unable to increment [" + quote(key) + "].");
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                      "Unable to increment [" + quote(key) + "]."));
   }
   return this;
  }
@@ -540,13 +557,15 @@ public final class JSONObject {
   String key;
 
   if ( x.nextClean() != '{' ) {
-   throw x.syntaxError("A JSONObject text must begin with '{'");
+   main.Main.LOG.addE("JSONObject.load()" , new Exception(
+                      "A JSONObject text must begin with '{'"));
   }
   for ( ;; ) {
    c = x.nextClean();
    switch ( c ) {
     case 0:
-     throw x.syntaxError("A JSONObject text must end with '}'");
+     main.Main.LOG.addE("JSONObject.load()" , new Exception(
+                        "A JSONObject text must end with '}'"));
     case '}':
      return;
     default:
@@ -557,7 +576,8 @@ public final class JSONObject {
 // The key is followed by ':'.
    c = x.nextClean();
    if ( c != ':' ) {
-    throw x.syntaxError("Expected a ':' after a key");
+    main.Main.LOG.addE("JSONObject.load()" , new Exception(
+                       "Expected a ':' after a key"));
    }
    this.putOnce(key , x.nextValue());
 
@@ -574,7 +594,8 @@ public final class JSONObject {
     case '}':
      return;
     default:
-     throw x.syntaxError("Expected a ',' or '}'");
+     main.Main.LOG.addE("JSONObject.load()" , new Exception(
+                        "Expected a ',' or '}'"));
    }
   }
  }
@@ -608,7 +629,7 @@ public final class JSONObject {
   */
  public static String numberToString ( Number number ) throws JSONException {
   if ( number == null ) {
-   throw new JSONException("Null pointer");
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException("Null pointer"));
   }
   testValidity(number);
 
@@ -980,7 +1001,8 @@ public final class JSONObject {
   */
  public void put ( String key , Object value ) throws JSONException {
   if ( key == null ) {
-   throw new NullPointerException("Null key.");
+   main.Main.LOG.addE("JSONObject.load()" ,
+                      new NullPointerException("Null key."));
   }
   if ( value != null ) {
    testValidity(value);
@@ -1005,7 +1027,8 @@ public final class JSONObject {
  public void putOnce ( String key , Object value ) throws JSONException {
   if ( key != null && value != null ) {
    if ( this.get(key) != null ) {
-    throw new JSONException("Duplicate key \"" + key + "\"");
+    main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                       "Duplicate key \"" + key + "\""));
    }
    this.put(key , value);
   }
@@ -1136,7 +1159,7 @@ public final class JSONObject {
   */
  public void save ( String file ) {
   try ( FileWriter t = new FileWriter(main.Main.mdir + file) ) {
-   t.write(write(new StringWriter() , 0 , 0).toString());
+   t.write(write());
    t.flush();
   } catch ( IOException ex ) {
    main.Main.LOG.addE("JSONObject.save()" , ex);
@@ -1209,13 +1232,13 @@ public final class JSONObject {
   if ( o != null ) {
    if ( o instanceof Double ) {
     if ( ( ( Double ) o ).isInfinite() || ( ( Double ) o ).isNaN() ) {
-     throw new JSONException(
-             "JSON does not allow non-finite numbers.");
+     main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                        "JSON does not allow non-finite numbers."));
     }
    } else if ( o instanceof Float ) {
     if ( ( ( Float ) o ).isInfinite() || ( ( Float ) o ).isNaN() ) {
-     throw new JSONException(
-             "JSON does not allow non-finite numbers.");
+     main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                        "JSON does not allow non-finite numbers."));
     }
    }
   }
@@ -1256,12 +1279,15 @@ public final class JSONObject {
    try {
     object = ( ( JSONString ) value ).toJSONString();
    } catch ( Exception e ) {
-    throw new JSONException(e);
+    main.Main.LOG.addE("JSONObject.load()" , new JSONException(e));
+    return null;
    }
    if ( object instanceof String ) {
     return ( String ) object;
    }
-   throw new JSONException("Bad value from toJSONString: " + object);
+   main.Main.LOG.addE("JSONObject.load()" , new JSONException(
+                      "Bad value from toJSONString: " + object));
+   return null;
   }
   if ( value instanceof Number ) {
    return numberToString(( Number ) value);
@@ -1333,43 +1359,38 @@ public final class JSONObject {
   }
  }
 
- static final Writer writeValue ( Writer writer , Object value ,
-                                  int indentFactor , int indent ) throws
+ static final void writeValue ( Writer writer , Object value )
+         throws
          JSONException , IOException {
   if ( value == null ) {
    writer.write("null");
   } else if ( value instanceof JSONObject ) {
-   ( ( JSONObject ) value ).write(writer , indentFactor , indent);
+   ( ( JSONObject ) value ).write();
   } else if ( value instanceof JSONArray ) {
-   ( ( JSONArray ) value ).write(writer , indentFactor , indent);
+   ( ( JSONArray ) value ).write();
   } else if ( value instanceof Map ) {
-   new JSONObject(( Map ) value).write(writer , indentFactor , indent);
+   new JSONObject(( Map ) value).write();
   } else if ( value instanceof Collection ) {
-   new JSONArray(( Collection ) value).write(writer , indentFactor ,
-                                             indent);
+   new JSONArray(( Collection ) value).write();
   } else if ( value.getClass().isArray() ) {
-   new JSONArray(value).write(writer , indentFactor , indent);
+   new JSONArray(value).write();
   } else if ( value instanceof Number ) {
    writer.write(numberToString(( Number ) value));
   } else if ( value instanceof Boolean ) {
    writer.write(value.toString());
   } else if ( value instanceof JSONString ) {
+
    Object o;
    try {
     o = ( ( JSONString ) value ).toJSONString();
    } catch ( Exception e ) {
-    throw new JSONException(e);
+    main.Main.LOG.addE("JSONObject.load()" , new JSONException(e));
+    return;
    }
    writer.write(o != null ? o.toString() : quote(value.toString()));
+
   } else {
    quote(value.toString() , writer);
-  }
-  return writer;
- }
-
- static final void indent ( Writer writer , int indent ) throws IOException {
-  for ( int i = 0 ; i < indent ; i += 1 ) {
-   writer.write(' ');
   }
  }
 
@@ -1379,55 +1400,47 @@ public final class JSONObject {
   * <p>
   * Warning: This method assumes that the data structure is acyclical.
   *
+  * @param indent
+  *
   * @return The writer.
   *
   * @throws JSONException
   */
- Writer write ( Writer writer , int indentFactor , int indent )
+ public String write ()
          throws JSONException {
   try {
-   boolean commanate = false;
+   Writer writer = new StringWriter();// Writer writer ,
    final int length = this.length();
    Iterator keys = this.keys();
    writer.write('{');
 
    if ( length == 1 ) {
-    Object key = keys.next();
-    writer.write(quote(key.toString()));
-    writer.write(':');
-    if ( indentFactor > 0 ) {
-     writer.write(' ');
-    }
-    writeValue(writer , this.map.get(key) , indentFactor , indent);
+    this.map.keySet().stream().forEach(( String key ) -> {
+     try {
+      writer.write(quote(key));
+      writer.write(':');
+      writeValue(writer , this.map.get(key));
+     } catch ( IOException ex ) {
+      main.Main.LOG.addE("JSONObject.write()" , ex);
+     }
+    });
    } else if ( length != 0 ) {
-    final int newindent = indent + indentFactor;
-    while ( keys.hasNext() ) {
-     Object key = keys.next();
-     if ( commanate ) {
+    this.map.keySet().stream().forEach(( String key ) -> {
+     try {
+      writer.write(quote(key));
+      writer.write(':');
+      writeValue(writer , this.map.get(key));
       writer.write(',');
+     } catch ( IOException ex ) {
+      main.Main.LOG.addE("JSONObject.write()" , ex);
      }
-     if ( indentFactor > 0 ) {
-      writer.write('\n');
-     }
-     indent(writer , newindent);
-     writer.write(quote(key.toString()));
-     writer.write(':');
-     if ( indentFactor > 0 ) {
-      writer.write(' ');
-     }
-     writeValue(writer , this.map.get(key) , indentFactor ,
-                newindent);
-     commanate = true;
-    }
-    if ( indentFactor > 0 ) {
-     writer.write('\n');
-    }
-    indent(writer , indent);
+    });
    }
    writer.write('}');
-   return writer;
-  } catch ( IOException exception ) {
-   throw new JSONException(exception);
+   return writer.toString();
+  } catch ( IOException ex ) {
+   main.Main.LOG.addE("JSONObject.load()" , ex);
+   return null;
   }
  }
 }

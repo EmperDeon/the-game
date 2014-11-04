@@ -25,7 +25,6 @@ package utils.json;
  */
 import java.io.IOException;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -919,27 +918,8 @@ public final class JSONArray {
   *
   * @throws JSONException
   */
- public String toString ( int indentFactor ) throws JSONException {
-  StringWriter sw = new StringWriter();
-  synchronized ( sw.getBuffer() ) {
-   return this.write(sw , indentFactor , 0).toString();
-  }
- }
-
- /**
-  * Write the contents of the JSONArray as JSON text to a writer. For
-  * compactness, no whitespace is added.
-  * <p>
-  * Warning: This method assumes that the data structure is acyclical.
-  *
-  * @param writer
-  *
-  * @return The writer.
-  *
-  * @throws JSONException
-  */
- public Writer write ( Writer writer ) throws JSONException {
-  return this.write(writer , 0 , 0);
+ public synchronized String toString ( int indentFactor ) throws JSONException {
+  return this.write();
  }
 
  /**
@@ -957,38 +937,27 @@ public final class JSONArray {
   *
   * @throws JSONException
   */
- Writer write ( Writer writer , int indentFactor , int indent )
+ String write ()
          throws JSONException {
+  StringWriter writer = new StringWriter();
   try {
    boolean commanate = false;
    int length = this.length();
    writer.write('[');
 
    if ( length == 1 ) {
-    JSONObject.writeValue(writer , this.cont.get(0) ,
-                          indentFactor , indent);
+    JSONObject.writeValue(writer , this.cont.get(0));
    } else if ( length != 0 ) {
-    final int newindent = indent + indentFactor;
-
     for ( int i = 0 ; i < length ; i += 1 ) {
      if ( commanate ) {
       writer.write(',');
      }
-     if ( indentFactor > 0 ) {
-      writer.write('\n');
-     }
-     JSONObject.indent(writer , newindent);
-     JSONObject.writeValue(writer , this.cont.get(i) ,
-                           indentFactor , newindent);
+     JSONObject.writeValue(writer , this.cont.get(i));
      commanate = true;
     }
-    if ( indentFactor > 0 ) {
-     writer.write('\n');
-    }
-    JSONObject.indent(writer , indent);
    }
    writer.write(']');
-   return writer;
+   return writer.toString();
   } catch ( IOException e ) {
    throw new JSONException(e);
   }
