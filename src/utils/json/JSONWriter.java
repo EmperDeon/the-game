@@ -95,8 +95,6 @@ public class JSONWriter {
 
  /**
   * Make a fresh JSONWriter. It can be used to build one JSON text.
-  *
-  * @param w
   */
  public JSONWriter ( Writer w ) {
   this.comma = false;
@@ -292,7 +290,7 @@ public class JSONWriter {
  /**
   * Push an array or object scope.
   *
-  * @param c The scope to open.
+  * @param jo The scope to open.
   *
   * @throws JSONException If nesting is too deep.
   */

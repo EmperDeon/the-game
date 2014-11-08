@@ -9,7 +9,7 @@ public class Aid extends Mid {
   this.action = a;
  }
 
- public Aid ( Integer m , Integer b , Integer s , String a ) {
+ public Aid ( String m , String b , String s , String a ) {
   super(m , b , s);
   this.action = a;
  }

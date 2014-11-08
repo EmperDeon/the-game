@@ -1,36 +1,21 @@
 package mods.basemod;
 
 import java.io.Serializable;
-import java.util.TreeMap;
 import mods.basemod.containers.Mid;
 import mods.basemod.containers.MultiTex;
 import render.Tex;
-import utils.vec.Vec3;
 
-public class LevBlock implements Serializable {
-
- private final MultiTex tex;
- private final Mid id;
- private final TreeMap<String , String> param;
+public class LevBlock extends IItem implements Serializable {
 
  public LevBlock ( MultiTex tex , Mid id ) {
-  this.param = new TreeMap<>();
-  this.tex = tex;
-  this.id = id;
+  super(tex , id);
  }
 
- public LevBlock ( Tex tex , Vec3<Integer> id ) {
-  this.param = new TreeMap<>();
-  this.tex = new MultiTex(tex);
-  this.id = new Mid(id);
+ public LevBlock ( Tex tex , String mid , String iid , String sid ) {
+  super(tex , mid , iid , sid);
  }
 
- public LevBlock ( Tex tex , Integer mid , Integer iid , Integer sid ) {
-  this.param = new TreeMap<>();
-  this.tex = new MultiTex(tex);
-  this.id = new Mid(mid , iid , sid);
- }
-
+ @Override
  public String getparam ( String k ) {
   String v;
   try {
@@ -40,13 +25,5 @@ public class LevBlock implements Serializable {
    main.Main.LOG.addE("Block.getparam()" , e);
   }
   return ( v );
- }
-
- public Tex getTex () {
-  return tex.get();
- }
-
- public Mid getId () {
-  return id;
  }
 }

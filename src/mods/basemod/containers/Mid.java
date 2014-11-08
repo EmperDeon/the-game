@@ -1,59 +1,73 @@
 package mods.basemod.containers;
 
 import java.io.Serializable;
-import java.util.Objects;
 import utils.vec.Vec3;
 
 public class Mid implements Comparable , Serializable {
 
- private final Vec3<Integer> id;
+ private final String m;
+ private final String i;
+ private final String s;
 
  public Mid ( Mid tid ) {
-  this.id = tid.getI();
+  this.m = tid.m;
+  this.s = tid.s;
+  this.i = tid.i;
+ }
+
+ public Mid ( String m ) {
+  this.m = m;
+  this.i = "";
+  this.s = "";
+ }
+
+ public Mid ( String m , String i ) {
+  this.m = m;
+  this.i = i;
+  this.s = "";
  }
 
  public Mid ( String m , String i , String s ) {
-
+  this.m = m;
+  this.s = s;
+  this.i = i;
  }
 
- public Mid ( Vec3<Integer> id ) {
-  this.id = id;
+ public Vec3<String> getIds () {
+  return new Vec3<>(m , s , i);
  }
 
- public Mid ( Integer mid , Integer iid , Integer sid ) {
-  this.id = new Vec3<>();
-  this.id.sX(mid);
-  this.id.sY(iid);
-  this.id.sZ(sid);
+ public String getMid () {
+  return m;
  }
 
- public Vec3<Integer> getIds () {
-  return id;
+ public String getIid () {
+  return i;
  }
 
- public Integer getMid () {
-  return id.gX();
+ public String getSid () {
+  return s;
  }
 
- public Integer getIid () {
-  return id.gY();
+ public boolean isM () {
+  return ( i.equals("") ) && ( s.equals("") );
  }
 
- public Integer getSid () {
-  return id.gZ();
+ public boolean isI () {
+  return ( s.equals("") );
  }
 
- public Vec3<Integer> getI () {
-  return id;
+ public boolean isS () {
+  return !s.equals("");
  }
 
  @Override
  public int compareTo ( Object m ) {
   Mid o = ( Mid ) m;
   Integer x, y, z;
-  x = comp(id.gX() , o.getMid());
-  y = comp(id.gY() , o.getIid());
-  z = comp(id.gZ() , o.getSid());
+  x = this.m.compareTo(o.getMid());
+  y = this.i.compareTo(o.getIid());
+  z = this.s.compareTo(o.getSid());
 
   if ( x != 0 ) {
    return x;
@@ -64,18 +78,5 @@ public class Mid implements Comparable , Serializable {
   } else {
    return 0;
   }
- }
-
- private Integer comp ( Integer x , Integer y ) {
-  if ( Objects.equals(x , y) ) {
-   return 0;
-  } else if ( x > y ) {
-   return 1;
-  } else if ( x < y ) {
-   return -1;
-  }
-
-  main.Main.LOG.addE("Mid.comp()" , new Exception());
-  return 0;
  }
 }

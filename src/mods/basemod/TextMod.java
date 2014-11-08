@@ -8,7 +8,7 @@ import utils.json.JSONObject;
 public class TextMod implements BaseMod {
 
  private final Mid id;
- private Boolean props = false;
+ private final Boolean props = false;
  private final String file;
  private final JSONObject json;
 
@@ -16,11 +16,11 @@ public class TextMod implements BaseMod {
   if ( file != null ) {
    this.file = file;
    this.json = new JSONObject(file);
-   this.id = new Mid(json.getString(file) , "" , "");
+   this.id = new Mid(json.getString("Mod.id"));
   } else {
    this.file = null;
    this.json = null;
-   this.id
+   this.id = new Mid("");
   }
  }
 
@@ -47,5 +47,4 @@ public class TextMod implements BaseMod {
  public void reinit ( ModsContainer c ) {
 
  }
-
 }

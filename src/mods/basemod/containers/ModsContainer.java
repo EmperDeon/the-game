@@ -18,19 +18,19 @@ import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.interfaces.Action;
 import mods.basemod.interfaces.ActionU;
+import mods.basemod.interfaces.Base;
 import mods.basemod.interfaces.BaseMod;
 import mods.basemod.interfaces.CoreMod;
-import render.Tex;
 import utils.json.JSONObject;
+import utils.vec.Vec3;
 
 public final class ModsContainer implements Serializable {
 
  transient final TreeMap<Mid , CoreMod> cmods;
  transient final TreeMap<Mid , BaseMod> mods;
- private final BlocksContainer bcont;
- private final IItemsContainer icont;
+ private final TreeMap<Mid , LevBlock> bcont;
+ private final TreeMap<Mid , IItem> icont;
  private final Crafting ccont;
- private final IdMap idmap;
  private final ActMap actmap;
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
@@ -40,10 +40,9 @@ public final class ModsContainer implements Serializable {
  public ModsContainer () {
   cmods = new TreeMap<>();
   mods = new TreeMap<>();
-  bcont = new BlocksContainer();
-  icont = new IItemsContainer();
+  bcont = new TreeMap<>();
+  icont = new TreeMap<>();
   ccont = new Crafting();
-  idmap = new IdMap();
   actmap = new ActMap();
  }
 
@@ -58,20 +57,34 @@ public final class ModsContainer implements Serializable {
  public void addActionU ( Mid id , String s , ActionU act ) {
   actmap.add(id , s , act);
  }
+//
+// public Tex getITex ( Mid id ) {
+//  return icont.getTex(id);
+// }
+//
+// public Tex getBTex ( Mid id ) {
+//  return bcont.getTex(id);
+// }
 
- public Tex getITex ( Mid id ) {
-  return icont.getTex(id);
+ public void put ( Vec3<String> k , Base v ) {
+  if ( v instanceof BaseMod ) {
+   mods.put(v.getId() , ( BaseMod ) v);
+  } else if ( v instanceof CoreMod ) {
+   cmods.put(v.getId() , ( CoreMod ) v);
+  } else if ( v instanceof IItem ) {
+   bcont.put(v.getId() , ( LevBlock ) v);
+  } else if ( v instanceof LevBlock ) {
+   icont.put(v.getId() , ( IItem ) v);
+  } else {
+   main.Main.LOG.addE("ModsContainer.put()" , new Exception("v is not a Base"));
+  }
  }
 
- public Tex getBTex ( Mid id ) {
-  return bcont.getTex(id);
- }
-
+ // -----------------------
  public void test () {
-  mods.values().stream().
+  mods.keySet().stream().
           forEach(( m ) -> {
-           main.Main.main.mmod.add(idmap.getMid(m.getId()));
-           System.out.println("add " + idmap.getMid(m.getId()));
+           main.Main.main.mmod.add(m.getMid());
           });
  }
 
@@ -163,10 +176,9 @@ public final class ModsContainer implements Serializable {
   loadDir(false);
   try ( ObjectInputStream o = new ObjectInputStream(new FileInputStream(file)) ) {
    ModsContainer t = ( ModsContainer ) o.readObject();
-   this.bcont.addAll(t.getBcont());
-   this.ccont.addAll(t.getCcont());
-   this.icont.addAll(t.getIcont());
-   this.idmap.addAll(t.getIdmap());
+   this.bcont.putAll(t.bcont);
+   this.ccont.addAll(t.ccont);
+   this.icont.putAll(t.icont);
    this.actmap.addAll(t.getActmap());
   } catch ( Exception e ) {
    main.Main.LOG.addE("Containers.load()" , e);
@@ -187,10 +199,6 @@ public final class ModsContainer implements Serializable {
   System.out.println("Saved " + mods.size() + " mods");
  }
 
- public boolean isLoaded () {
-  return loaded;
- }
-
  public synchronized void initF ( Mid id ) {
   this.init.add(id);
   if ( init.size() == mods.size() ) {
@@ -205,32 +213,12 @@ public final class ModsContainer implements Serializable {
   }
  }
 
- public void addId ( Mid k , String v ) {
-  idmap.add(k , v , v , v);
- }
-
- public void addBlock ( MultiTex tex , Mid id ) {
-  bcont.addBlock(new LevBlock(tex , id));
- }
-
- public void addItem ( MultiTex tex , Mid id ) {
-  icont.addItem(new IItem(tex , id));
- }
-
- public BlocksContainer getBcont () {
-  return bcont;
- }
-
- public IItemsContainer getIcont () {
-  return icont;
+ public boolean isLoaded () {
+  return loaded;
  }
 
  public Crafting getCcont () {
   return ccont;
- }
-
- public IdMap getIdmap () {
-  return idmap;
  }
 
  public TreeMap<Mid , CoreMod> getCmods () {
@@ -251,6 +239,14 @@ public final class ModsContainer implements Serializable {
 
  public ActMap getActmap () {
   return actmap;
+ }
+
+ public TreeMap<Mid , LevBlock> getBcont () {
+  return bcont;
+ }
+
+ public TreeMap<Mid , IItem> getIcont () {
+  return icont;
  }
 
 }
