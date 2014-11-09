@@ -134,7 +134,7 @@ public final class Main extends JFrame {
   modsEdit.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
    public void mouseClicked ( MouseEvent evt ) {
-
+    new ModEditor().setVisible(true);
    }
   });
 
