@@ -12,17 +12,31 @@ public class IItem implements Serializable , InvItem {
  protected final MultiTex tex;
  protected final Mid id;
  protected final TreeMap<String , String> param;
+ protected final Integer durability;
+ protected final Model model;
+ protected final Integer type;
+ protected final Speeds speed;
 
- public IItem ( MultiTex tex , Mid id ) {
+ public IItem ( MultiTex tex , Mid id ,
+                Integer durability , Model model , Integer type , Speeds speed ) {
   this.param = new TreeMap<>();
   this.tex = tex;
   this.id = id;
+  this.durability = durability;
+  this.model = model;
+  this.type = type;
+  this.speed = speed;
  }
 
- public IItem ( Tex tex , String mid , String iid , String sid ) {
+ public IItem ( Tex tex , String mid , String iid , String sid ,
+                Integer durability , Model model , Integer type , Speeds speed ) {
   this.param = new TreeMap<>();
   this.tex = new MultiTex(tex);
   this.id = new Mid(mid , iid , sid);
+    this.durability = durability;
+  this.model = model;
+  this.type = type;
+  this.speed = speed;
  }
 
  @Override
@@ -45,5 +59,25 @@ public class IItem implements Serializable , InvItem {
  @Override
  public Mid getId () {
   return id;
+ }
+ 
+ public Integer getDurab(){
+   return durability;
+ }
+
+ public Integer getDurability () {
+  return durability;
+ }
+
+ public Model getModel () {
+  return model;
+ }
+
+ public Integer getType () {
+  return type;
+ }
+
+ public Speeds getSpeed () {
+  return speed;
  }
 }

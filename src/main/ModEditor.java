@@ -5,6 +5,13 @@
  */
 package main;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import mods.basemod.IItem;
+
 /**
  *
  * @author ilya
@@ -28,6 +35,7 @@ public class ModEditor extends javax.swing.JFrame {
  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
  private void initComponents() {
 
+  jCheckBox1 = new javax.swing.JCheckBox();
   jLabel1 = new javax.swing.JLabel();
   jTextField1 = new javax.swing.JTextField();
   jButton1 = new javax.swing.JButton();
@@ -38,6 +46,8 @@ public class ModEditor extends javax.swing.JFrame {
   jScrollPane3 = new javax.swing.JScrollPane();
   jTable3 = new javax.swing.JTable();
   jButton2 = new javax.swing.JButton();
+
+  jCheckBox1.setText("jCheckBox1");
 
   setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +71,7 @@ public class ModEditor extends javax.swing.JFrame {
     return types [columnIndex];
    }
   });
+  items.setName(""); // NOI18N
   items.getTableHeader().setReorderingAllowed(false);
   jScrollPane1.setViewportView(items);
 
@@ -94,22 +105,22 @@ public class ModEditor extends javax.swing.JFrame {
    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
    .addGroup(layout.createSequentialGroup()
     .addContainerGap()
-    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
      .addGroup(layout.createSequentialGroup()
       .addComponent(jLabel1)
       .addGap(39, 39, 39)
       .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addGap(100, 100, 100)
       .addComponent(jButton2)
       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-      .addComponent(jButton1))
-     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-    .addContainerGap())
+      .addComponent(jButton1)
+      .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+     .addGroup(layout.createSequentialGroup()
+      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+       .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+       .addComponent(jScrollPane2)
+       .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
+      .addGap(0, 0, Short.MAX_VALUE))))
   );
   layout.setVerticalGroup(
    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,11 +133,11 @@ public class ModEditor extends javax.swing.JFrame {
      .addComponent(jButton2))
     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+    .addGap(12, 12, 12)
     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    .addContainerGap())
   );
 
   pack();
@@ -177,10 +188,75 @@ public class ModEditor extends javax.swing.JFrame {
   });
  }
 
+ public class MyTableModel implements TableModel {
+ 
+        private Set<TableModelListener> listeners = new HashSet<>();
+ 
+        private ArrayList<IItem> beans;
+ 
+        public MyTableModel(ArrayList<IItem> beans) {
+            this.beans = beans;
+        }
+ 
+        public void addTableModelListener(TableModelListener listener) {
+            listeners.add(listener);
+        }
+ 
+        public Class<?> getColumnClass(int columnIndex) {
+            return String.class;
+        }
+ 
+        public int getColumnCount() {
+            return 3;
+        }
+ 
+        public String getColumnName(int columnIndex) {
+            switch (columnIndex) {
+            case 0:
+                return "Имя";
+            case 1:
+                return "Размер";
+            case 2:
+                return "Описание";
+            }
+            return "";
+        }
+ 
+        public int getRowCount() {
+            return beans.size();
+        }
+ 
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+            case 0:
+                return beans.get(rowIndex).getId().getIid();
+            case 1:
+                return beans.get(rowIndex).getId().getSid();
+            case 2:
+                return beans.get(rowIndex).getId().getIid();
+            }
+            return "";
+        }
+ 
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+ 
+        public void removeTableModelListener(TableModelListener listener) {
+            listeners.remove(listener);
+        }
+ 
+        public void setValueAt(Object value, int rowIndex, int columnIndex) {
+ 
+        }
+ 
+    }
+ 
  // Variables declaration - do not modify//GEN-BEGIN:variables
  private javax.swing.JTable items;
  private javax.swing.JButton jButton1;
  private javax.swing.JButton jButton2;
+ private javax.swing.JCheckBox jCheckBox1;
  private javax.swing.JLabel jLabel1;
  private javax.swing.JScrollPane jScrollPane1;
  private javax.swing.JScrollPane jScrollPane2;

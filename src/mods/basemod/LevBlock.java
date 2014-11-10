@@ -6,9 +6,15 @@ import mods.basemod.containers.MultiTex;
 import render.Tex;
 
 public class LevBlock extends IItem implements Serializable {
+ protected final String dictionary;
 
- public LevBlock ( MultiTex tex , Mid id ) {
-  super(tex , id);
+ public LevBlock ( String dictionary , MultiTex tex , Mid id,  Integer durability , Model model , Integer type , Speeds speed ) {
+  super(tex , id, durability, model,type,speed);
+  this.dictionary = dictionary;
+ }
+
+ public LevBlock ( MultiTex tex , Mid id , Mid id,  Integer durability , Model model , Integer type , Speeds speed) {
+  super(tex , id, durability, model,type,speed);
  }
 
  public LevBlock ( Tex tex , String mid , String iid , String sid ) {
