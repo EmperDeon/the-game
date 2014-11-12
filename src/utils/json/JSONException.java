@@ -2,7 +2,7 @@ package utils.json;
 
 /**
  * The JSONException is thrown by the JSON.org classes when things are amiss.
- *
+ * <p>
  * @author JSON.org
  * @version 2014-05-03
  */
@@ -13,9 +13,8 @@ public class JSONException extends RuntimeException {
 
  /**
   * Constructs a JSONException with an explanatory message.
-  *
-  * @param message
-  *                Detail about the reason for the exception.
+  * <p>
+  * @param message Detail about the reason for the exception.
   */
  public JSONException ( String message ) {
   super(message);
@@ -23,7 +22,7 @@ public class JSONException extends RuntimeException {
 
  /**
   * Constructs a new JSONException with the specified cause.
-  *
+  * <p>
   * @param cause The cause.
   */
  public JSONException ( Throwable cause ) {
@@ -32,11 +31,11 @@ public class JSONException extends RuntimeException {
  }
 
  /**
-  * Returns the cause of this exception or null if the cause is nonexistent
-  * or unknown.
-  *
-  * @return the cause of this exception or null if the cause is nonexistent
-  *         or unknown.
+  * Returns the cause of this exception or null if the cause is nonexistent or
+  * unknown.
+  * <p>
+  * @return the cause of this exception or null if the cause is nonexistent or
+  *         unknown.
   */
  @Override
  public Throwable getCause () {

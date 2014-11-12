@@ -49,9 +49,9 @@ public class IItem implements Serializable , InvItem {
  public Mid getId () {
   return id;
  }
- 
- public Integer getDurab(){
-   return durability;
+
+ public Integer getDurab () {
+  return durability;
  }
 
  public Integer getDurability () {
