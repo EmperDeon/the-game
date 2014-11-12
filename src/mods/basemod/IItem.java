@@ -28,17 +28,6 @@ public class IItem implements Serializable , InvItem {
   this.speed = speed;
  }
 
- public IItem ( Tex tex , String mid , String iid , String sid ,
-                Integer durability , Model model , Integer type , Speeds speed ) {
-  this.param = new TreeMap<>();
-  this.tex = new MultiTex(tex);
-  this.id = new Mid(mid , iid , sid);
-    this.durability = durability;
-  this.model = model;
-  this.type = type;
-  this.speed = speed;
- }
-
  @Override
  public String getparam ( String k ) {
   String v;
