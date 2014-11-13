@@ -330,9 +330,7 @@ public class ModEditor extends javax.swing.JFrame {
  }// </editor-fold>//GEN-END:initComponents
 
  private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-  
-  
-  
+
  }//GEN-LAST:event_jButton2MouseClicked
 
  public class MyTableModel implements TableModel {
@@ -354,7 +352,6 @@ public class ModEditor extends javax.swing.JFrame {
   public Class<?> getColumnClass ( int columnIndex ) {
    return String.class;
   }
-
 
   @Override
   public int getColumnCount () {
@@ -409,7 +406,6 @@ public class ModEditor extends javax.swing.JFrame {
 
  }
 
- 
  private class ItemsPop extends JPopupMenu {
 
   private final JMenuItem enab;
@@ -420,17 +416,17 @@ public class ModEditor extends javax.swing.JFrame {
 
    enab = new JMenuItem("Добавить предмет");
    enab.addActionListener(e -> {
-    
+
    });
 
    disb = new JMenuItem("Редактировать выбранный предмет");
    disb.addActionListener(e -> {
-    
+
    });
 
    delt = new JMenuItem("Удалить выбранный предмет");
    delt.addActionListener(e -> {
-    
+
    });
 
    add(enab);
@@ -439,7 +435,6 @@ public class ModEditor extends javax.swing.JFrame {
   }
  }
 
- 
  // Variables declaration - do not modify//GEN-BEGIN:variables
  private javax.swing.JTable items;
  private javax.swing.JButton jButton1;
