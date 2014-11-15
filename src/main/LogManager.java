@@ -35,7 +35,6 @@ public class LogManager extends javax.swing.JFrame {
  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
  private void initComponents() {
 
-  jFileChooser1 = new javax.swing.JFileChooser();
   jTabbedPane2 = new javax.swing.JTabbedPane();
   jPanel1 = new javax.swing.JPanel();
   jScrollPane2 = new javax.swing.JScrollPane();
@@ -183,7 +182,6 @@ public class LogManager extends javax.swing.JFrame {
  private Logger log = new Logger();
  // Variables declaration - do not modify//GEN-BEGIN:variables
  private javax.swing.JButton jButton1;
- private javax.swing.JFileChooser jFileChooser1;
  private javax.swing.JPanel jPanel1;
  private javax.swing.JPanel jPanel2;
  private javax.swing.JPanel jPanel3;
