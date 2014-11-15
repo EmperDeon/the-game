@@ -1,5 +1,5 @@
 package mods.basemod;
 
-class Speeds {
+public class Speeds {
 
 }

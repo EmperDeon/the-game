@@ -22,7 +22,6 @@ import mods.basemod.containers.ModsContainer;
 import render.Render;
 import utils.Logger;
 import utils.MActionListener;
-import utils.json.JSONObject;
 
 public final class Main extends JFrame {
 
@@ -34,7 +33,7 @@ public final class Main extends JFrame {
  public final static String mdir = "/usr/games/game/";
 
  public final static Logger LOG = new Logger();
- public final static JSONObject OPTIONS = new JSONObject(mdir + "options.db");
+ //public final static JSONObject OPTIONS = new JSONObject(mdir + "options.db");
  public final static MActionListener TIMER = new MActionListener();
  public final static ModsContainer mods = new ModsContainer();
 
@@ -306,6 +305,7 @@ public final class Main extends JFrame {
    }
   });
  }
+
  private final javax.swing.JList coreList = new javax.swing.JList();
  private final JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
  private final JScrollPane jScrollPane2 = new javax.swing.JScrollPane();

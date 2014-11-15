@@ -1,5 +1,5 @@
 package mods.basemod;
 
-class Model {
+public class Model {
 
 }
