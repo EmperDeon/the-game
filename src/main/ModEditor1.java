@@ -496,7 +496,7 @@ public class ModEditor1 extends javax.swing.JFrame {
      return items.get(rowIndex).getType().toString();
     case 5:
      return items.get(rowIndex).getSpeed().toString();
-   
+
    }
    return "";
   }
@@ -513,14 +513,15 @@ public class ModEditor1 extends javax.swing.JFrame {
 
   @Override
   public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
-   
+
   }
 
-  public void add(IItem item){
+  public void add ( IItem item ) {
    this.items.add(item);
   }
-  
+
  }
+
  public class BlocksTable implements TableModel {
 
   private final Set<TableModelListener> listeners = new HashSet<>();
@@ -585,7 +586,7 @@ public class ModEditor1 extends javax.swing.JFrame {
      return items.get(rowIndex).getType().toString();
     case 5:
      return items.get(rowIndex).getSpeed().toString();
-   
+
    }
    return "";
   }
@@ -602,14 +603,15 @@ public class ModEditor1 extends javax.swing.JFrame {
 
   @Override
   public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
-   
+
   }
 
-  public void add(IItem item){
+  public void add ( IItem item ) {
    this.items.add(item);
   }
-  
+
  }
+
  public class CraftsTable implements TableModel {
 
   private final Set<TableModelListener> listeners = new HashSet<>();
@@ -668,7 +670,7 @@ public class ModEditor1 extends javax.swing.JFrame {
      return items.get(rowIndex).getType().toString();
     case 5:
      return items.get(rowIndex).getSpeed().toString();
-   
+
    }
    return "";
   }
@@ -685,13 +687,13 @@ public class ModEditor1 extends javax.swing.JFrame {
 
   @Override
   public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
-   
+
   }
 
-  public void add(IItem item){
+  public void add ( IItem item ) {
    this.items.add(item);
   }
-  
+
  }
 
  private class ItemsPop extends JPopupMenu {

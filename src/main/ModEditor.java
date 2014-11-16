@@ -267,7 +267,7 @@ public class ModEditor extends javax.swing.JFrame {
   jTabbedPane1.addTab("Blocks" , jPanel8);
 
   ctable.setModel(cm);
-  
+
   ctable.getTableHeader().setReorderingAllowed(false);
   jScrollPane3.setViewportView(ctable);
 
@@ -377,7 +377,7 @@ public class ModEditor extends javax.swing.JFrame {
   idel.setToolTipText("");
 
   itable.setModel(im);
-  
+
   itable.setName(""); // NOI18N
   itable.getTableHeader().setReorderingAllowed(false);
   jScrollPane1.setViewportView(itable);
@@ -678,7 +678,6 @@ public class ModEditor extends javax.swing.JFrame {
 
   private final ArrayList<LevBlock> items = new ArrayList<>();
 
-
   @Override
   public void addTableModelListener ( TableModelListener listener ) {
    listeners.add(listener);
@@ -871,7 +870,7 @@ public class ModEditor extends javax.swing.JFrame {
  private final BlocksTable bm = new BlocksTable();
  private final CraftsTable cm = new CraftsTable();
  private final ItemsTable im = new ItemsTable();
- 
+
  // Variables declaration - do not modify                     
  private javax.swing.JButton badd;
  private javax.swing.JTextField bbname;
