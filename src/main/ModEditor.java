@@ -15,6 +15,9 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
+import mods.basemod.Model;
+import mods.basemod.Speeds;
+import mods.basemod.containers.Mid;
 
 /**
  *
@@ -124,7 +127,7 @@ public class ModEditor extends javax.swing.JFrame {
   jLabel22.setText("Sub name");
 
   badd.setText("Add");
-
+   
   bdel.setText("Delete");
 
   jLabel23.setText("Durability");
@@ -372,6 +375,12 @@ public class ModEditor extends javax.swing.JFrame {
   jLabel5.setToolTipText("");
 
   iadd.setText("Add");
+  iadd.addMouseListener(new java.awt.event.MouseAdapter() {
+   @Override
+   public void mouseClicked ( java.awt.event.MouseEvent evt ) {
+    im.add();
+   }
+  });
 
   idel.setText("Delete");
   idel.setToolTipText("");
@@ -666,8 +675,9 @@ public class ModEditor extends javax.swing.JFrame {
 
   }
 
-  public void add ( IItem item ) {
-   this.items.add(item);
+  public void add () {
+   IItem t = new IItem(new Mid(modname.getText() , iiname.getText(), isname.getText()),Integer.parseInt(idurab.getText()), new Model(imodel.getText()), Integer.parseInt(itype.getText()), new Speeds(ispeed.getText()) );
+   this.items.add(t);
   }
 
  }

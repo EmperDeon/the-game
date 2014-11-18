@@ -3,13 +3,10 @@ package mods.basemod;
 import java.io.Serializable;
 import java.util.TreeMap;
 import mods.basemod.containers.Mid;
-import mods.basemod.containers.MultiTex;
 import mods.basemod.interfaces.InvItem;
 import render.Tex;
 
 public class IItem implements Serializable , InvItem {
-
- protected final MultiTex tex;
  protected final Mid id;
  protected final TreeMap<String , String> param;
  protected final Integer durability;
@@ -17,10 +14,9 @@ public class IItem implements Serializable , InvItem {
  protected final Integer type;
  protected final Speeds speed;
 
- public IItem ( MultiTex tex , Mid id ,
+ public IItem ( Mid id ,
                 Integer durability , Model model , Integer type , Speeds speed ) {
   this.param = new TreeMap<>();
-  this.tex = tex;
   this.id = id;
   this.durability = durability;
   this.model = model;
@@ -42,7 +38,7 @@ public class IItem implements Serializable , InvItem {
 
  @Override
  public Tex getTex () {
-  return tex.get();
+  return null;// tex.get();
  }
 
  @Override
