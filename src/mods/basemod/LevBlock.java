@@ -25,4 +25,9 @@ public class LevBlock extends IItem implements Serializable {
   }
   return ( v );
  }
+
+ @Override
+ public String toString(){
+  return ":";
+ }
 }

@@ -65,4 +65,10 @@ public class IItem implements Serializable , InvItem {
  public Speeds getSpeed () {
   return speed;
  }
+
+ @Override
+ public String toString(){
+  return "IItem, "+ id.toString() + durability + model + type + speed;
+ }
+
 }

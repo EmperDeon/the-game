@@ -764,6 +764,8 @@ public class ModEditor extends javax.swing.JFrame {
 
   public void add ( LevBlock item ) {
    this.items.add(item);
+   this.listeners.stream().forEach(( a )->{a.tableChanged(null);});
+   System.out.println(item.toString());
   }
 
  }
