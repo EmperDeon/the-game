@@ -117,6 +117,12 @@ public class ModEditor1 extends javax.swing.JFrame {
   btable.getTableHeader().setReorderingAllowed(false);
   jScrollPane2.setViewportView(btable);
 
+  bbname.addActionListener(new java.awt.event.ActionListener() {
+   public void actionPerformed(java.awt.event.ActionEvent evt) {
+    bbnameActionPerformed(evt);
+   }
+  });
+
   jLabel18.setText("Model name");
   jLabel18.setToolTipText("");
 
@@ -431,6 +437,10 @@ public class ModEditor1 extends javax.swing.JFrame {
  private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
 
  }//GEN-LAST:event_saveMouseClicked
+
+ private void bbnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbnameActionPerformed
+  // TODO add your handling code here:
+ }//GEN-LAST:event_bbnameActionPerformed
 
  public class ItemsTable implements TableModel {
 

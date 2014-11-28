@@ -6,11 +6,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -18,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
+import javax.swing.border.EtchedBorder;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
 import utils.Logger;
@@ -40,7 +43,7 @@ public final class Main extends JFrame {
  public boolean running = true;
 
  public Main () {
-  // main = this;
+  main = this;
   java.awt.EventQueue.invokeLater(() -> {
    setVisible(true);
    init();
@@ -52,9 +55,7 @@ public final class Main extends JFrame {
  }
 
  public static void init () {
-  main.setVisible(true);
-
-  mods.load();
+//  mods.load();
 
   //rend.initfinal();
  }
@@ -75,33 +76,46 @@ public final class Main extends JFrame {
             IllegalAccessException | UnsupportedLookAndFeelException ex ) {
   }
   main = new Main();
+
  }
 
  public void initComponents () {
-  setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-  addWindowListener(new WindowAdapter() {
+  main.setTitle("Launcher");
+  main.setBounds(600 , 300 , 569 , 240);
+  main.setResizable(false);
+  main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+  main.addWindowListener(new WindowAdapter() {
    @Override
    public void windowClosing ( WindowEvent e ) {
     LOG.save();
     mods.fsave();
    }
   });
-
-  setTitle("Launcher");
-  this.setLocation(600 , 300);
+  main.setLayout(null);
 
   modsList.setModel(mmod);
   jScrollPane1.setViewportView(modsList);
-  modsList.getAccessibleContext().setAccessibleName("");
+  jScrollPane1.setBounds(10 , 10 , 150 , 200);
+  modsList.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent e ) {
+    if ( e.getButton() == MouseEvent.BUTTON3 ) {
+     mpop.show(( JList ) e.getSource() , e.getX() , e.getY());
+    }
+   }
+  });
 
   coreList.setModel(cmod);
   jScrollPane2.setViewportView(coreList);
-
-  setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-  jScrollPane1.setViewportView(modsList);
-
-  jScrollPane2.setViewportView(coreList);
+  jScrollPane2.setBounds(170 , 10 , 150 , 200);
+  coreList.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent e ) {
+    if ( e.getButton() == MouseEvent.BUTTON3 ) {
+     cpop.show(( JList ) e.getSource() , e.getX() , e.getY());
+    }
+   }
+  });
 
   start.setText("Start");
   start.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -111,8 +125,8 @@ public final class Main extends JFrame {
     setVisible(false);
    }
   });
+  start.setBounds(325 , 10 , 100 , 30);
 
-  options.setActionCommand("Options");
   options.setText("Options");
   options.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
@@ -120,6 +134,11 @@ public final class Main extends JFrame {
 
    }
   });
+  options.setBounds(459 , 10 , 100 , 30);
+
+  panel.setBounds(325 , 45 , 235 , 90);
+  panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+  panel.setLayout(null);
 
   modelEdit.setText("Models");
   modelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -128,14 +147,17 @@ public final class Main extends JFrame {
 
    }
   });
+  modelEdit.setBounds(5 , 5 , 100 , 30);
 
   modsEdit.setText("Mods");
   modsEdit.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
    public void mouseClicked ( MouseEvent evt ) {
-    new ModEditor().setVisible(true);
+    ModEditor m = new ModEditor();
+    main.setVisible(false);
    }
   });
+  modsEdit.setBounds(130 , 5 , 100 , 30);
 
   logEdit.setText("Logs");
   logEdit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -144,6 +166,7 @@ public final class Main extends JFrame {
     new LogManager().setVisible(true);
    }
   });
+  logEdit.setBounds(5 , 48 , 100 , 30);
 
   levelEdit.setText("Level");
   levelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -152,158 +175,40 @@ public final class Main extends JFrame {
 
    }
   });
+  levelEdit.setBounds(130 , 48 , 100 , 30);
+
+  logpanel.setBounds(325 , 143 , 235 , 65);
+  logpanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+  logpanel.setLayout(null);
 
   loginLabel.setText("Логин:");
+  loginLabel.setBounds(5 , 10 , 80 , 15);
 
   loginField.setText("test");
+  loginField.setBounds(5 , 30 , 110 , 30);
 
   passField.setText("test");
+  passField.setBounds(120 , 30 , 110 , 30);
 
   passLabel.setText("Пароль:");
+  passLabel.setBounds(120 , 10 , 80 , 15);
 
-  javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-  getContentPane().setLayout(layout);
-  layout.setHorizontalGroup(
-          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-                  .addContainerGap()
-                  .addComponent(jScrollPane1 ,
-                                javax.swing.GroupLayout.PREFERRED_SIZE , 150 ,
-                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(
-                          javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                  .addComponent(jScrollPane2 ,
-                                javax.swing.GroupLayout.PREFERRED_SIZE , 150 ,
-                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(
-                          javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addGroup(layout.createParallelGroup(
-                                  javax.swing.GroupLayout.Alignment.LEADING)
-                          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING ,
-                                    layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(
-                                                    javax.swing.GroupLayout.Alignment.LEADING).
-                                            addComponent(loginField ,
-                                                         javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                                         102 ,
-                                                         javax.swing.GroupLayout.PREFERRED_SIZE).
-                                            addComponent(loginLabel))
-                                    .addPreferredGap(
-                                            javax.swing.LayoutStyle.ComponentPlacement.RELATED).
-                                    addGroup(layout.createParallelGroup(
-                                                    javax.swing.GroupLayout.Alignment.LEADING).
-                                            addGroup(layout.
-                                                    createSequentialGroup()
-                                                    .addComponent(passLabel)
-                                                    .addGap(0 , 0 ,
-                                                            Short.MAX_VALUE))
-                                            .addComponent(passField)))
-                          .addGroup(layout.createSequentialGroup()
-                                  .addComponent(start ,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                                100 ,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE).
-                                  addPreferredGap(
-                                          javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).
-                                  addComponent(options ,
-                                               javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                               100 ,
-                                               javax.swing.GroupLayout.PREFERRED_SIZE)).
-                          addGroup(layout.createSequentialGroup()
-                                  .addComponent(logEdit ,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                                100 ,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE).
-                                  addPreferredGap(
-                                          javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).
-                                  addComponent(modsEdit ,
-                                               javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                               100 ,
-                                               javax.swing.GroupLayout.PREFERRED_SIZE)).
-                          addGroup(layout.createSequentialGroup()
-                                  .addComponent(levelEdit ,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                                100 ,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE).
-                                  addPreferredGap(
-                                          javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).
-                                  addComponent(modelEdit ,
-                                               javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                               100 ,
-                                               javax.swing.GroupLayout.PREFERRED_SIZE))).
-                  addContainerGap())
-  );
-  layout.setVerticalGroup(
-          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-                  .addContainerGap()
-                  .addGroup(layout.createParallelGroup(
-                                  javax.swing.GroupLayout.Alignment.LEADING)
-                          .addComponent(jScrollPane1 ,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                        200 ,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                          .addGroup(layout.createParallelGroup(
-                                          javax.swing.GroupLayout.Alignment.TRAILING).
-                                  addComponent(jScrollPane2 ,
-                                               javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                               200 ,
-                                               javax.swing.GroupLayout.PREFERRED_SIZE).
-                                  addGroup(layout.createSequentialGroup()
-                                          .addGroup(layout.createParallelGroup(
-                                                          javax.swing.GroupLayout.Alignment.BASELINE).
-                                                  addComponent(start)
-                                                  .addComponent(options))
-                                          .addPreferredGap(
-                                                  javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).
-                                          addGroup(layout.createParallelGroup(
-                                                          javax.swing.GroupLayout.Alignment.BASELINE).
-                                                  addComponent(logEdit)
-                                                  .addComponent(modsEdit))
-                                          .addPreferredGap(
-                                                  javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).
-                                          addGroup(layout.createParallelGroup(
-                                                          javax.swing.GroupLayout.Alignment.BASELINE).
-                                                  addComponent(levelEdit)
-                                                  .addComponent(modelEdit))
-                                          .addGap(47 , 47 , 47)
-                                          .addGroup(layout.createParallelGroup(
-                                                          javax.swing.GroupLayout.Alignment.BASELINE).
-                                                  addComponent(passLabel)
-                                                  .addComponent(loginLabel))
-                                          .addPreferredGap(
-                                                  javax.swing.LayoutStyle.ComponentPlacement.RELATED).
-                                          addGroup(layout.createParallelGroup(
-                                                          javax.swing.GroupLayout.Alignment.BASELINE).
-                                                  addComponent(loginField ,
-                                                               javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                                               javax.swing.GroupLayout.DEFAULT_SIZE ,
-                                                               javax.swing.GroupLayout.PREFERRED_SIZE).
-                                                  addComponent(passField ,
-                                                               javax.swing.GroupLayout.PREFERRED_SIZE ,
-                                                               javax.swing.GroupLayout.DEFAULT_SIZE ,
-                                                               javax.swing.GroupLayout.PREFERRED_SIZE))))).
-                  addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE ,
-                                  Short.MAX_VALUE))
-  );
+  main.add(jScrollPane1);
+  main.add(jScrollPane2);
+  main.add(start);
+  main.add(options);
+  panel.add(modelEdit);
+  panel.add(modsEdit);
+  panel.add(logEdit);
+  panel.add(levelEdit);
+  main.add(panel);
+  logpanel.add(loginLabel);
+  logpanel.add(loginField);
+  logpanel.add(passLabel);
+  logpanel.add(passField);
+  main.add(logpanel);
 
-  pack();
-  this.modsList.addMouseListener(new MouseAdapter() {
-   @Override
-   public void mouseClicked ( MouseEvent e ) {
-    if ( e.getButton() == MouseEvent.BUTTON3 ) {
-     mpop.show(( JList ) e.getSource() , e.getX() , e.getY());
-    }
-   }
-  });
-  this.coreList.addMouseListener(new MouseAdapter() {
-   @Override
-   public void mouseClicked ( MouseEvent e ) {
-    if ( e.getButton() == MouseEvent.BUTTON3 ) {
-     cpop.show(( JList ) e.getSource() , e.getX() , e.getY());
-    }
-   }
-  });
+  main.repaint();
  }
 
  private final javax.swing.JList coreList = new javax.swing.JList();
@@ -321,6 +226,9 @@ public final class Main extends JFrame {
  private final JPasswordField passField = new javax.swing.JPasswordField();
  private final JLabel passLabel = new javax.swing.JLabel();
  private final JButton start = new javax.swing.JButton();
+ private final JPanel panel = new JPanel();
+ private final JPanel logpanel = new JPanel();
+
  private final Pop cpop = new Pop(coreList);
  private final Pop mpop = new Pop(modsList);
  public final Model cmod = new Model();
