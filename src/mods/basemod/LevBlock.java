@@ -5,7 +5,7 @@ import mods.basemod.containers.Mid;
 
 public class LevBlock extends IItem implements Serializable {
 
- protected final String dictionary;
+ private final String dictionary;
 
  public LevBlock ( Mid id ,
                    Integer durability , Model model ,
@@ -29,5 +29,9 @@ public class LevBlock extends IItem implements Serializable {
  @Override
  public String toString () {
   return "LevBlock " + id.toString() + "Durability: " + durability + model.toString() + speed.toString() + "Dictionary: " + dictionary;
+ }
+
+ public String getDictionary () {
+  return dictionary;
  }
 }

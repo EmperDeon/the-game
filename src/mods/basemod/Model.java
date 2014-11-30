@@ -2,7 +2,7 @@ package mods.basemod;
 
 public class Model {
 
- protected final String file;
+ private final String file;
 
  public Model ( String file ) {
   this.file = file;
@@ -11,5 +11,9 @@ public class Model {
  @Override
  public String toString () {
   return "Model: " + file;
+ }
+
+ public String getFile () {
+  return file;
  }
 }

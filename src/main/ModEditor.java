@@ -5,17 +5,14 @@
  */
 package main;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -23,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import mods.basemod.CraftE;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.Model;
@@ -102,16 +100,21 @@ public final class ModEditor extends javax.swing.JFrame {
 
   badd.setText("Add");
   badd.setBounds(615 , 5 , 100 , 30);
-  badd.addMouseListener(new java.awt.event.MouseAdapter() {
+  badd.addMouseListener(new MouseAdapter() {
    @Override
-   public void mouseClicked ( java.awt.event.MouseEvent evt ) {
+   public void mouseClicked ( MouseEvent evt ) {
     bm.add();
    }
   });
 
   bdel.setText("Delete");
   bdel.setBounds(615 , 40 , 100 , 30);
-
+  bdel.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+    bm.delete();
+   }
+  });
   jPanel8.setLayout(null);
   ctable.setModel(cm);
   ctable.getTableHeader().setReorderingAllowed(false);
@@ -132,10 +135,22 @@ public final class ModEditor extends javax.swing.JFrame {
 
   cdel.setText("Delete");
   cdel.setBounds(647 , 5 , 70 , 30);
-
+  cdel.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+    cm.delete();
+   }
+  });
+  
   cadd.setText("Add");
   cadd.setBounds(577 , 4 , 70 , 30);
-
+  cadd.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+    cm.add();
+   }
+  });
+  
   jPanel9.setLayout(null);
 
   itable.setModel(im);
@@ -169,9 +184,22 @@ public final class ModEditor extends javax.swing.JFrame {
 
   iadd.setText("Add");
   iadd.setBounds(615 , 5 , 100 , 30);
+  iadd.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+    im.add();
+   }
+  });
+
   idel.setText("Delete");
   idel.setBounds(615 , 40 , 100 , 30);
-
+  idel.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+    im.delete();
+   }
+  });
+  
   jPanel7.add(badd);
   jPanel7.add(bbname);
   jPanel7.add(bdel);
@@ -233,13 +261,13 @@ public final class ModEditor extends javax.swing.JFrame {
 
  public class ItemsTable implements TableModel {
 
-  private final Set<TableModelListener> listeners = new HashSet<>();
+  private TableModelListener listener;
 
   private final ArrayList<IItem> items = new ArrayList<>();
 
   @Override
   public void addTableModelListener ( TableModelListener listener ) {
-   listeners.add(listener);
+   this.listener = listener;
   }
 
   @Override
@@ -284,13 +312,13 @@ public final class ModEditor extends javax.swing.JFrame {
     case 1:
      return items.get(rowIndex).getId().getSid();
     case 2:
-     return items.get(rowIndex).getDurab().toString();
+     return items.get(rowIndex).getDurab();
     case 3:
-     return items.get(rowIndex).getModel().toString();
+     return items.get(rowIndex).getModel().getFile();
     case 4:
-     return items.get(rowIndex).getType().toString();
+     return items.get(rowIndex).getType();
     case 5:
-     return items.get(rowIndex).getSpeed().toString();
+     return items.get(rowIndex).getSpeed().getStr();
 
    }
    return "";
@@ -303,7 +331,7 @@ public final class ModEditor extends javax.swing.JFrame {
 
   @Override
   public void removeTableModelListener ( TableModelListener listener ) {
-   listeners.remove(listener);
+   listener = null;
   }
 
   @Override
@@ -312,24 +340,40 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void add () {
-   IItem t = new IItem(new Mid(modname.getText() , iiname.getText() , isname.
-                               getText()) , Integer.parseInt(idurab.getText()) ,
-                       new Model(imodel.getText()) , Integer.parseInt(itype.
-                               getText()) , new Speeds(ispeed.getText()));
-   this.items.add(t);
+   add(new Mid(modname.getText() , iiname.getText() , isname.
+               getText()) , Integer.parseInt(idurab.getText()) ,
+       new Model(imodel.getText()) , Integer.parseInt(itype.
+               getText()) , new Speeds(ispeed.getText()));
+  }
+
+  public void add ( Mid id , Integer durab , Model model , Integer type ,
+                    Speeds speeds ) {
+   items.add(new IItem(id , durab , model , type , speeds));
+   listener.tableChanged(null);
+  }
+
+  public void delete () {
+   int n = itable.getSelectedRow();
+
+   if ( n != -1 ) {
+    items.remove(n);
+   } else {
+    System.out.println("No selected index");
+   }
+   listener.tableChanged(null);
   }
 
  }
 
  public class BlocksTable implements TableModel {
 
-  private final Set<TableModelListener> listeners = new HashSet<>();
+  private TableModelListener listener;
 
   private final ArrayList<LevBlock> items = new ArrayList<>();
 
   @Override
   public void addTableModelListener ( TableModelListener listener ) {
-   listeners.add(listener);
+   this.listener = listener;
   }
 
   @Override
@@ -374,13 +418,13 @@ public final class ModEditor extends javax.swing.JFrame {
     case 1:
      return items.get(rowIndex).getId().getSid();
     case 2:
-     return items.get(rowIndex).getDurab().toString();
+     return items.get(rowIndex).getDurab();
     case 3:
-     return items.get(rowIndex).getModel().toString();
+     return items.get(rowIndex).getModel().getFile();
     case 4:
-     return items.get(rowIndex).getType().toString();
+     return items.get(rowIndex).getDictionary();
     case 5:
-     return items.get(rowIndex).getSpeed().toString();
+     return items.get(rowIndex).getSpeed().getStr();
 
    }
    return "";
@@ -393,7 +437,7 @@ public final class ModEditor extends javax.swing.JFrame {
 
   @Override
   public void removeTableModelListener ( TableModelListener listener ) {
-   listeners.remove(listener);
+   listener = null;
   }
 
   @Override
@@ -402,30 +446,40 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void add () {
-   LevBlock n = new LevBlock(new Mid(modname.getText() , bbname.getText() ,
-                                     bsname.getText()) , Integer.parseInt(
-                                     bdurab.getText()) , new Model(bmodel.
-                                     getText()) , new Speeds(bspeed.getText()) ,
-                             bdict.getText());
-   this.items.add(n);
-
-   this.listeners.stream().forEach(( a ) -> {
-    a.tableChanged(null);
-   });
-   System.out.println("Added: " + n.toString());
+   add(new Mid(modname.getText() , bbname.getText() ,
+               bsname.getText()) , Integer.parseInt(
+               bdurab.getText()) , new Model(bmodel.
+               getText()) , new Speeds(bspeed.getText()) ,
+       bdict.getText());
   }
 
+  public void add ( Mid id , Integer durab , Model model , Speeds speeds ,
+                    String dict ) {
+   items.add(new LevBlock(id , durab , model , speeds , dict));
+   listener.tableChanged(null);
+  }
+
+  public void delete () {
+   int n = btable.getSelectedRow();
+
+   if ( n != -1 ) {
+    items.remove(n);
+   } else {
+    System.out.println("No selected index");
+   }
+   listener.tableChanged(null);
+  }
  }
 
  public class CraftsTable implements TableModel {
 
-  private final Set<TableModelListener> listeners = new HashSet<>();
+  private TableModelListener listener;
 
-  private final ArrayList<IItem> crafts = new ArrayList<>();
+  private final ArrayList<CraftE> crafts = new ArrayList<>();
 
   @Override
   public void addTableModelListener ( TableModelListener listener ) {
-   listeners.add(listener);
+   this.listener = listener;
   }
 
   @Override
@@ -460,18 +514,11 @@ public final class ModEditor extends javax.swing.JFrame {
   public Object getValueAt ( int rowIndex , int columnIndex ) {
    switch ( columnIndex ) {
     case 0:
-     return crafts.get(rowIndex).getId().getIid();
+     return crafts.get(rowIndex).getType();
     case 1:
-     return crafts.get(rowIndex).getId().getSid();
+     return crafts.get(rowIndex).getGrid();
     case 2:
-     return crafts.get(rowIndex).getDurab().toString();
-    case 3:
-     return crafts.get(rowIndex).getModel().toString();
-    case 4:
-     return crafts.get(rowIndex).getType().toString();
-    case 5:
-     return crafts.get(rowIndex).getSpeed().toString();
-
+     return crafts.get(rowIndex).getElements();
    }
    return "";
   }
@@ -483,7 +530,7 @@ public final class ModEditor extends javax.swing.JFrame {
 
   @Override
   public void removeTableModelListener ( TableModelListener listener ) {
-   listeners.remove(listener);
+   listener = null;
   }
 
   @Override
@@ -491,46 +538,31 @@ public final class ModEditor extends javax.swing.JFrame {
 
   }
 
-  public void add ( IItem item ) {
-   this.crafts.add(item);
+  public void add () {
+   add(Integer.parseInt(ctype.getText()), cgrid.getText(), celem.getText());
+  }
+  
+  public void add(Integer type, String grid, String elements){
+   crafts.add(new CraftE(type, grid, elements));
+   listener.tableChanged(null);
   }
 
- }
+  public void delete () {
+   int n = ctable.getSelectedRow();
 
- private class ItemsPop extends JPopupMenu {
-
-  private final JMenuItem enab;
-  private final JMenuItem disb;
-  private final JMenuItem delt;
-
-  public ItemsPop ( JList l ) {
-
-   enab = new JMenuItem("Добавить предмет");
-   enab.addActionListener(e -> {
-
-   });
-
-   disb = new JMenuItem("Редактировать выбранный предмет");
-   disb.addActionListener(e -> {
-
-   });
-
-   delt = new JMenuItem("Удалить выбранный предмет");
-   delt.addActionListener(e -> {
-
-   });
-
-   add(enab);
-   add(disb);
-   add(delt);
+   if ( n != -1 ) {
+    crafts.remove(n);
+   } else {
+    System.out.println("No selected index");
+   }
+   listener.tableChanged(null);
   }
+  
  }
 
  private final BlocksTable bm = new BlocksTable();
  private final CraftsTable cm = new CraftsTable();
  private final ItemsTable im = new ItemsTable();
-
- // Variables declaration - do not modify                     
  private final JButton badd = new JButton();
  private final JTextField bbname = new JTextField();
  private final JButton bdel = new JButton();

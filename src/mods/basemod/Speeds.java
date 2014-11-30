@@ -2,7 +2,7 @@ package mods.basemod;
 
 public class Speeds {
 
- protected final String str;
+ private final String str;
 
  public Speeds ( String str ) {
   this.str = str;
@@ -11,5 +11,9 @@ public class Speeds {
  @Override
  public String toString () {
   return "Speeds: " + str;
+ }
+
+ public String getStr () {
+  return str;
  }
 }
