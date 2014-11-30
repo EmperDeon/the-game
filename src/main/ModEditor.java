@@ -17,7 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mods.basemod.CraftE;
@@ -45,19 +44,25 @@ public final class ModEditor extends javax.swing.JFrame {
     main.Main.main.destroy();
    }
   });
-  this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
   jLabel1.setText("Name:");
   jLabel1.setBounds(15 , 15 , 50 , 20);
 
   gen.setText("Generate option file for actions");
   gen.setBounds(427 , 10 , 230 , 30);
+  gen.addMouseListener(new MouseAdapter(){
+   @Override
+   public void mouseClicked(MouseEvent evt){
+    gen();
+   }
+  });
+  
 
   save.setText("Save");
   save.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
    public void mouseClicked ( java.awt.event.MouseEvent evt ) {
-    saveMouseClicked(evt);
+    save();
    }
   });
   save.setBounds(660 , 10 , 60 , 30);
@@ -68,7 +73,6 @@ public final class ModEditor extends javax.swing.JFrame {
   jTabbedPane1.setBounds(5 , 40 , 720 , 435);
 
   jPanel7.setLayout(null);
-
   btable.setModel(bm);
   btable.getTableHeader().setReorderingAllowed(false);
   jScrollPane1.setViewportView(btable);
@@ -115,6 +119,7 @@ public final class ModEditor extends javax.swing.JFrame {
     bm.delete();
    }
   });
+  
   jPanel8.setLayout(null);
   ctable.setModel(cm);
   ctable.getTableHeader().setReorderingAllowed(false);
@@ -255,10 +260,14 @@ public final class ModEditor extends javax.swing.JFrame {
   this.repaint();
  }
 
- private void saveMouseClicked ( java.awt.event.MouseEvent evt ) {
+ private void save() {
 
  }
 
+ private void gen(){
+  
+ }
+ 
  public class ItemsTable implements TableModel {
 
   private TableModelListener listener;
@@ -612,6 +621,5 @@ public final class ModEditor extends javax.swing.JFrame {
  private final JScrollPane jScrollPane3 = new JScrollPane();
  private final JTabbedPane jTabbedPane1 = new JTabbedPane();
  private final JTextField modname = new JTextField();
- private final JButton save = new JButton();
- // End of variables declaration                   
+ private final JButton save = new JButton();                  
 }
