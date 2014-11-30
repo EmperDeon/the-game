@@ -7,10 +7,10 @@ public class LevBlock extends IItem implements Serializable {
 
  protected final String dictionary;
 
- public LevBlock ( String dictionary , Mid id ,
-                   Integer durability , Model model , Integer type ,
-                   Speeds speed ) {
-  super(id , durability , model , type , speed);
+ public LevBlock ( Mid id ,
+                   Integer durability , Model model ,
+                   Speeds speed , String dictionary ) {
+  super(id , durability , model , -1 , speed);
   this.dictionary = dictionary;
  }
 
@@ -27,7 +27,7 @@ public class LevBlock extends IItem implements Serializable {
  }
 
  @Override
- public String toString(){
-  return ":";
+ public String toString () {
+  return "LevBlock " + id.toString() + "Durability: " + durability + model.toString() + speed.toString() + "Dictionary: " + dictionary;
  }
 }

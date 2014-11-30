@@ -7,6 +7,7 @@ import mods.basemod.interfaces.InvItem;
 import render.Tex;
 
 public class IItem implements Serializable , InvItem {
+
  protected final Mid id;
  protected final TreeMap<String , String> param;
  protected final Integer durability;
@@ -67,8 +68,8 @@ public class IItem implements Serializable , InvItem {
  }
 
  @Override
- public String toString(){
-  return "IItem, "+ id.toString() + durability + model + type + speed;
+ public String toString () {
+  return "IItem, " + id.toString() + durability + model + type + speed;
  }
 
 }

@@ -79,4 +79,9 @@ public class Mid implements Comparable , Serializable {
    return 0;
   }
  }
+
+ @Override
+ public String toString () {
+  return "ID: " + m + " . " + i + " . " + s;
+ }
 }

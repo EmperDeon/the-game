@@ -50,8 +50,10 @@ public final class ModEditor extends javax.swing.JFrame {
   this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
   jLabel1.setText("Name:");
+  jLabel1.setBounds(15 , 15 , 50 , 20);
 
   gen.setText("Generate option file for actions");
+  gen.setBounds(427 , 10 , 230 , 30);
 
   save.setText("Save");
   save.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -60,128 +62,170 @@ public final class ModEditor extends javax.swing.JFrame {
     saveMouseClicked(evt);
    }
   });
+  save.setBounds(660 , 10 , 60 , 30);
+
+  modname.setBounds(70 , 10 , 130 , 30);
 
   jTabbedPane1.setBorder(null);
+  jTabbedPane1.setBounds(5 , 40 , 720 , 435);
 
-  jPanel8.setBorder(null);
+  jPanel7.setLayout(null);
 
   btable.setModel(bm);
   btable.getTableHeader().setReorderingAllowed(false);
-  jScrollPane2.setViewportView(btable);
-
-  jLabel18.setText("Model name");
-  jLabel18.setToolTipText("");
-
-  jLabel19.setText("Dicitionary");
-
-  jLabel20.setText("Speed modifiers");
+  jScrollPane1.setViewportView(btable);
+  jScrollPane1.setBounds(5 , 105 , 707 , 235);
 
   jLabel21.setText("Block name");
+  jLabel21.setBounds(5 , 10 , 100 , 20);
+  bbname.setBounds(95 , 5 , 125 , 30);
 
   jLabel22.setText("Sub name");
-
-  badd.setText("Add");
-
-  bdel.setText("Delete");
+  jLabel22.setBounds(5 , 45 , 100 , 20);
+  bsname.setBounds(95 , 40 , 125 , 30);
 
   jLabel23.setText("Durability");
+  jLabel23.setBounds(5 , 80 , 100 , 20);
+  bdurab.setBounds(95 , 75 , 125 , 30);
 
-  jTabbedPane1.addTab("Blocks" , jPanel8);
+  jLabel18.setText("Model name");
+  jLabel18.setBounds(280 , 10 , 100 , 20);
+  bmodel.setBounds(385 , 5 , 125 , 30);
 
+  jLabel19.setText("Dicitionary");
+  jLabel19.setBounds(280 , 45 , 100 , 20);
+  bdict.setBounds(385 , 40 , 125 , 30);
+
+  jLabel20.setText("Speed modifiers");
+  jLabel20.setBounds(280 , 80 , 120 , 20);
+  bspeed.setBounds(385 , 75 , 125 , 30);
+
+  badd.setText("Add");
+  badd.setBounds(615 , 5 , 100 , 30);
+  badd.addMouseListener(new java.awt.event.MouseAdapter() {
+   @Override
+   public void mouseClicked ( java.awt.event.MouseEvent evt ) {
+    bm.add();
+   }
+  });
+
+  bdel.setText("Delete");
+  bdel.setBounds(615 , 40 , 100 , 30);
+
+  jPanel8.setLayout(null);
   ctable.setModel(cm);
-
   ctable.getTableHeader().setReorderingAllowed(false);
-  jScrollPane3.setViewportView(ctable);
+  jScrollPane2.setViewportView(ctable);
+  jScrollPane2.setBounds(5 , 40 , 707 , 300);
 
   jLabel14.setText("Type");
+  jLabel14.setBounds(5 , 10 , 40 , 20);
+  ctype.setBounds(40 , 5 , 50 , 30);
 
   jLabel15.setText("Craft Grid");
+  jLabel15.setBounds(110 , 10 , 60 , 20);
+  cgrid.setBounds(175 , 5 , 50 , 30);
 
   jLabel16.setText("Elements");
+  jLabel16.setBounds(235 , 10 , 60 , 20);
+  celem.setBounds(300 , 5 , 270 , 30);
 
   cdel.setText("Delete");
+  cdel.setBounds(647 , 5 , 70 , 30);
 
   cadd.setText("Add");
+  cadd.setBounds(577 , 4 , 70 , 30);
 
-  jTabbedPane1.addTab("Crafting" , jPanel9);
-
-  jLabel2.setText("Item name");
-
-  jLabel3.setText("Sub name");
-
-  jLabel4.setText("Durability");
-
-  jLabel7.setText("Speeds(separate by ;)");
-
-  jLabel6.setText("Type");
-
-  jLabel5.setText("Model");
-  jLabel5.setToolTipText("");
-
-  iadd.setText("Add");
-
-  idel.setText("Delete");
-  idel.setToolTipText("");
+  jPanel9.setLayout(null);
 
   itable.setModel(im);
-
-  itable.setName(""); // NOI18N
   itable.getTableHeader().setReorderingAllowed(false);
-  jScrollPane1.setViewportView(itable);
+  jScrollPane3.setViewportView(itable);
+  jScrollPane3.setBounds(5 , 105 , 707 , 235);
 
-  jTabbedPane1.addTab("Items" , jPanel7);
+  jLabel2.setText("Item name");
+  jLabel2.setBounds(5 , 10 , 100 , 20);
+  iiname.setBounds(95 , 5 , 125 , 30);
 
-  this.add(badd);
-  this.add(bbname);
-  this.add(bdel);
-  this.add(bdict);
-  this.add(bdurab);
-  this.add(bmodel);
-  this.add(bsname);
-  this.add(bspeed);
-  this.add(btable);
-  this.add(cadd);
-  this.add(cdel);
-  this.add(celem);
-  this.add(cgrid);
-  this.add(ctable);
-  this.add(ctype);
+  jLabel3.setText("Sub name");
+  jLabel3.setBounds(5 , 45 , 100 , 20);
+  isname.setBounds(95 , 40 , 125 , 30);
+
+  jLabel4.setText("Durability");
+  jLabel4.setBounds(5 , 80 , 100 , 20);
+  idurab.setBounds(95 , 75 , 125 , 30);
+
+  jLabel5.setText("Model");
+  jLabel5.setBounds(280 , 10 , 100 , 20);
+  imodel.setBounds(385 , 5 , 125 , 30);
+
+  jLabel6.setText("Type");
+  jLabel6.setBounds(280 , 45 , 100 , 20);
+  itype.setBounds(385 , 40 , 125 , 30);
+
+  jLabel7.setText("Speed modifiers");
+  jLabel7.setBounds(280 , 80 , 120 , 20);
+  ispeed.setBounds(385 , 75 , 125 , 30);
+
+  iadd.setText("Add");
+  iadd.setBounds(615 , 5 , 100 , 30);
+  idel.setText("Delete");
+  idel.setBounds(615 , 40 , 100 , 30);
+
+  jPanel7.add(badd);
+  jPanel7.add(bbname);
+  jPanel7.add(bdel);
+  jPanel7.add(bdict);
+  jPanel7.add(bdurab);
+  jPanel7.add(bmodel);
+  jPanel7.add(bsname);
+  jPanel7.add(bspeed);
+  jPanel7.add(jScrollPane1);
+  jPanel7.add(jLabel18);
+  jPanel7.add(jLabel19);
+  jPanel7.add(jLabel20);
+  jPanel7.add(jLabel21);
+  jPanel7.add(jLabel22);
+  jPanel7.add(jLabel23);
+
+  jPanel8.add(cadd);
+  jPanel8.add(cdel);
+  jPanel8.add(celem);
+  jPanel8.add(cgrid);
+  jPanel8.add(jScrollPane2);
+  jPanel8.add(ctype);
+  jPanel8.add(jLabel14);
+  jPanel8.add(jLabel15);
+  jPanel8.add(jLabel16);
+
+  jPanel9.add(iadd);
+  jPanel9.add(idel);
+  jPanel9.add(idurab);
+  jPanel9.add(iiname);
+  jPanel9.add(imodel);
+  jPanel9.add(isname);
+  jPanel9.add(ispeed);
+  jPanel9.add(jScrollPane3);
+  jPanel9.add(itype);
+  jPanel9.add(jLabel3);
+  jPanel9.add(jLabel4);
+  jPanel9.add(jLabel5);
+  jPanel9.add(jLabel6);
+  jPanel9.add(jLabel7);
+  jPanel9.add(jLabel2);
+
+  jTabbedPane1.addTab("Blocks" , jPanel7);
+  jTabbedPane1.addTab("Crafts" , jPanel8);
+  jTabbedPane1.addTab("Items" , jPanel9);
+
   this.add(gen);
-  this.add(iadd);
-  this.add(idel);
-  this.add(idurab);
-  this.add(iiname);
-  this.add(imodel);
-  this.add(isname);
-  this.add(ispeed);
-  this.add(itable);
-  this.add(itype);
   this.add(jLabel1);
-  this.add(jLabel14);
-  this.add(jLabel15);
-  this.add(jLabel16);
-  this.add(jLabel18);
-  this.add(jLabel19);
-  this.add(jLabel2);
-  this.add(jLabel20);
-  this.add(jLabel21);
-  this.add(jLabel22);
-  this.add(jLabel23);
-  this.add(jLabel3);
-  this.add(jLabel4);
-  this.add(jLabel5);
-  this.add(jLabel6);
-  this.add(jLabel7);
-  this.add(jPanel7);
-  this.add(jPanel8);
-  this.add(jPanel9);
-  this.add(jScrollPane1);
-  this.add(jScrollPane2);
-  this.add(jScrollPane3);
   this.add(jTabbedPane1);
   this.add(modname);
   this.add(save);
- }// </editor-fold>                        
+
+  this.repaint();
+ }
 
  private void saveMouseClicked ( java.awt.event.MouseEvent evt ) {
 
@@ -357,12 +401,18 @@ public final class ModEditor extends javax.swing.JFrame {
 
   }
 
-  public void add ( LevBlock item ) {
-   this.items.add(item);
+  public void add () {
+   LevBlock n = new LevBlock(new Mid(modname.getText() , bbname.getText() ,
+                                     bsname.getText()) , Integer.parseInt(
+                                     bdurab.getText()) , new Model(bmodel.
+                                     getText()) , new Speeds(bspeed.getText()) ,
+                             bdict.getText());
+   this.items.add(n);
+
    this.listeners.stream().forEach(( a ) -> {
     a.tableChanged(null);
    });
-   System.out.println(item.toString());
+   System.out.println("Added: " + n.toString());
   }
 
  }
