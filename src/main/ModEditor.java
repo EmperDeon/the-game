@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,6 +26,7 @@ import mods.basemod.LevBlock;
 import mods.basemod.Model;
 import mods.basemod.Speeds;
 import mods.basemod.containers.Mid;
+import utils.json.JSONObject;
 
 public final class ModEditor extends javax.swing.JFrame {
 
@@ -48,15 +50,14 @@ public final class ModEditor extends javax.swing.JFrame {
   jLabel1.setText("Name:");
   jLabel1.setBounds(15 , 15 , 50 , 20);
 
-  gen.setText("Generate option file for actions");
-  gen.setBounds(427 , 10 , 230 , 30);
-  gen.addMouseListener(new MouseAdapter(){
-   @Override
-   public void mouseClicked(MouseEvent evt){
-    gen();
-   }
-  });
-  
+//  gen.setText("Generate option file for actions");
+//  gen.setBounds(427 , 10 , 230 , 30);
+//  gen.addMouseListener(new MouseAdapter() {
+//   @Override
+//   public void mouseClicked ( MouseEvent evt ) {
+//    gen();
+//   }
+//  });
 
   save.setText("Save");
   save.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -119,7 +120,7 @@ public final class ModEditor extends javax.swing.JFrame {
     bm.delete();
    }
   });
-  
+
   jPanel8.setLayout(null);
   ctable.setModel(cm);
   ctable.getTableHeader().setReorderingAllowed(false);
@@ -146,7 +147,7 @@ public final class ModEditor extends javax.swing.JFrame {
     cm.delete();
    }
   });
-  
+
   cadd.setText("Add");
   cadd.setBounds(577 , 4 , 70 , 30);
   cadd.addMouseListener(new MouseAdapter() {
@@ -155,7 +156,7 @@ public final class ModEditor extends javax.swing.JFrame {
     cm.add();
    }
   });
-  
+
   jPanel9.setLayout(null);
 
   itable.setModel(im);
@@ -204,7 +205,7 @@ public final class ModEditor extends javax.swing.JFrame {
     im.delete();
    }
   });
-  
+
   jPanel7.add(badd);
   jPanel7.add(bbname);
   jPanel7.add(bdel);
@@ -260,14 +261,24 @@ public final class ModEditor extends javax.swing.JFrame {
   this.repaint();
  }
 
- private void save() {
-
- }
-
- private void gen(){
+ private void save () {
+  JSONObject s = new JSONObject();
+  String t = null;
+  s.put("test", "Test1");
+  bm.save(s);
+  cm.save(s);
+  im.save(s);
+  JFileChooser f = new JFileChooser(Main.mdir);
+  if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) 
+   t = f.getSelectedFile().getAbsolutePath();
   
+  s.save(t.substring(t.lastIndexOf("mods/")));
  }
- 
+
+// private void gen () {
+//  
+// }
+
  public class ItemsTable implements TableModel {
 
   private TableModelListener listener;
@@ -372,6 +383,9 @@ public final class ModEditor extends javax.swing.JFrame {
    listener.tableChanged(null);
   }
 
+  public void save ( JSONObject obj ) {
+
+  }
  }
 
  public class BlocksTable implements TableModel {
@@ -478,6 +492,10 @@ public final class ModEditor extends javax.swing.JFrame {
    }
    listener.tableChanged(null);
   }
+
+  public void save ( JSONObject obj ) {
+
+  }
  }
 
  public class CraftsTable implements TableModel {
@@ -548,11 +566,11 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void add () {
-   add(Integer.parseInt(ctype.getText()), cgrid.getText(), celem.getText());
+   add(Integer.parseInt(ctype.getText()) , cgrid.getText() , celem.getText());
   }
-  
-  public void add(Integer type, String grid, String elements){
-   crafts.add(new CraftE(type, grid, elements));
+
+  public void add ( Integer type , String grid , String elements ) {
+   crafts.add(new CraftE(type , grid , elements));
    listener.tableChanged(null);
   }
 
@@ -566,7 +584,10 @@ public final class ModEditor extends javax.swing.JFrame {
    }
    listener.tableChanged(null);
   }
-  
+
+  public void save ( JSONObject obj ) {
+
+  }
  }
 
  private final BlocksTable bm = new BlocksTable();
@@ -621,5 +642,5 @@ public final class ModEditor extends javax.swing.JFrame {
  private final JScrollPane jScrollPane3 = new JScrollPane();
  private final JTabbedPane jTabbedPane1 = new JTabbedPane();
  private final JTextField modname = new JTextField();
- private final JButton save = new JButton();                  
+ private final JButton save = new JButton();
 }

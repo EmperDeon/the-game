@@ -3,7 +3,6 @@ package level.chunk;
 import java.io.Serializable;
 import java.util.ArrayList;
 import mods.basemod.LevBlock;
-import mods.basemod.containers.Mid;
 import render.RendTexCoord;
 import render.TId;
 import utils.vec.Vec3;
@@ -26,15 +25,15 @@ public class Chunk implements Serializable {
  }
 
  public void heightmap () {
-  int mid;
-  int tid;
-  int sid;
+  int mid = 0;
+  int tid = 0;
+  int sid = 0;
   for ( int ix = 0 ; ix < 15 ; ix++ ) {
    for ( int iy = 0 ; iy < 15 ; iy++ ) {
     for ( int iz = 0 ; iz < 127 ; iz++ ) {
      if ( blocks[ix][iy][iz] != null ) {
-      mid = blocks[ix][iy][iz].getId().getMid();
-      tid = blocks[ix][iy][iz].getId().getIid();
+//      mid = blocks[ix][iy][iz].getId().getMid();
+//      tid = blocks[ix][iy][iz].getId().getIid();
 
       if ( blocks[ix][iy - 1][iz] == null ) {// 0
        Texrend.add(new RendTexCoord(new Vec3<>(ix , iy , iz) , 0 , new TId(mid ,
@@ -89,7 +88,7 @@ public class Chunk implements Serializable {
    for ( int y = 0 ; y < 16 ; y++ ) {
     for ( int z = 0 ; z < 255 ; z++ ) {
      if ( z < 100 ) {
-      blocks[x][y][z] = new LevBlock(null , new Mid(0 , 0 , 0));
+     // blocks[x][y][z] = new LevBlock(null , new Mid(0 , 0 , 0));
      } else {
       blocks[x][y][z] = null;
      }
