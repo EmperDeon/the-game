@@ -58,7 +58,7 @@ public final class ModEditor extends javax.swing.JFrame {
 //    gen();
 //   }
 //  });
-
+  
   save.setText("Save");
   save.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
@@ -264,21 +264,26 @@ public final class ModEditor extends javax.swing.JFrame {
  private void save () {
   JSONObject s = new JSONObject();
   String t = null;
-  s.put("test", "Test1");
+  s.put("test" , "Test1");
   bm.save(s);
   cm.save(s);
   im.save(s);
   JFileChooser f = new JFileChooser(Main.mdir);
-  if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) 
+  if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
    t = f.getSelectedFile().getAbsolutePath();
-  
+  }
+
   s.save(t.substring(t.lastIndexOf("mods/")));
  }
 
 // private void gen () {
-//  
+//  for(int i = 0 ; i<1000000 ; i++){
+//   bm.add(new Mid("0","Block"+i,"0"), 1, new Model("file1"), new Speeds("1,1"), "block"+i);
+//   cm.add(i,"1x1","1=1");
+//   im.add(new Mid("0","Item"+i,"0"), 1, new Model("file1"), 1, new Speeds("1,1"));
+//  }
+//  save();
 // }
-
  public class ItemsTable implements TableModel {
 
   private TableModelListener listener;
@@ -384,7 +389,19 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void save ( JSONObject obj ) {
-
+   obj.put("Items" , items.size());
+   JSONObject t = new JSONObject();
+   IItem e;
+   for ( int i = 0 ; i < items.size() ; i++ ) {
+    e = items.get(i);
+    t.put("Iid" , e.getId().getIid());
+    t.put("Sid" , e.getId().getSid());
+    t.put("Durab" , e.getDurab());
+    t.put("Model" , e.getModel().getFile());
+    t.put("Type" , e.getType());
+    t.put("Speed" , e.getSpeed().getStr());
+    obj.put("Item" + i , t);
+   }
   }
  }
 
@@ -494,7 +511,19 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void save ( JSONObject obj ) {
-
+   obj.put("Blocks" , items.size());
+   JSONObject t = new JSONObject();
+   LevBlock e;
+   for ( int i = 0 ; i < items.size() ; i++ ) {
+    e = items.get(i);
+    t.put("Iid" , e.getId().getIid());
+    t.put("Sid" , e.getId().getSid());
+    t.put("Durab" , e.getDurab());
+    t.put("Model" , e.getModel().getFile());
+    t.put("Dict" , e.getDictionary());
+    t.put("Speed" , e.getSpeed().getStr());
+    obj.put("Block" + i , t);
+   }
   }
  }
 
@@ -586,7 +615,16 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void save ( JSONObject obj ) {
-
+   obj.put("Crafts", crafts.size());
+   JSONObject t = new JSONObject();
+   CraftE e;
+   for ( int i = 0 ; i < crafts.size() ; i++ ) {
+    e = crafts.get(i);
+    t.put("Type" , e.getType());
+    t.put("Grid" , e.getGrid());
+    t.put("Elements" , e.getElements());
+    obj.put("Craft" + i , t);
+   }
   }
  }
 
