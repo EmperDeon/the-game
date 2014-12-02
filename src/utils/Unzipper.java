@@ -12,14 +12,14 @@ import java.util.zip.ZipFile;
 
 public class Unzipper {
 
- public static void unzip ( String file) {
+ public static void unzip ( String file ) {
   Enumeration entries;
-  String dirName = main.Main.mdir + "tmp/" + file+"/";
+  String dirName = main.Main.mdir + "tmp/" + file + "/";
   if ( !dirName.isEmpty() ) {
    new File(dirName).mkdirs();
   }
 
-  try (ZipFile zip = new ZipFile(file+".zip")){
+  try ( ZipFile zip = new ZipFile(file + ".zip") ) {
    entries = zip.entries();
 
    while ( entries.hasMoreElements() ) {
@@ -28,7 +28,7 @@ public class Unzipper {
     write(dirName , zip_path , zip.getInputStream(entry));
    }
   } catch ( IOException e ) {
-   main.Main.LOG.addE("utils.Unzipper", e);
+   main.Main.LOG.addE("utils.Unzipper" , e);
   }
  }
 
@@ -44,8 +44,8 @@ public class Unzipper {
     Integer resName = m_FilePath.indexOf(File.separatorChar);
     String m_DirName = m_FilePath.substring(0 , resName);
     m_FilePath = m_FilePath.substring(resName + 1);
-    new File(m_NewFilePath  + m_DirName).mkdir();
-    m_NewFilePath = m_NewFilePath  + m_DirName;
+    new File(m_NewFilePath + m_DirName).mkdir();
+    m_NewFilePath = m_NewFilePath + m_DirName;
    }
   }
   if ( !new File(dirName + "/" + FilePath).isDirectory() ) {

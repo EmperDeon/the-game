@@ -10,5 +10,5 @@ package mods.basemod.interfaces;
  * @author ilya
  */
 public interface Craft {
- 
+
 }

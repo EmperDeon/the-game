@@ -1,5 +1,7 @@
 package mods.basemod;
+
 public class CraftE {
+
  private final Integer type;
  private final String grid;
  private final String elements;
@@ -21,6 +23,5 @@ public class CraftE {
  public String getElements () {
   return elements;
  }
- 
- 
+
 }

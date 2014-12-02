@@ -58,7 +58,6 @@ public final class ModEditor extends javax.swing.JFrame {
 //    gen();
 //   }
 //  });
-  
   save.setText("Save");
   save.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
@@ -272,7 +271,7 @@ public final class ModEditor extends javax.swing.JFrame {
   if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
    t = f.getSelectedFile().getAbsolutePath();
   }
-
+  
   s.save(t.substring(t.lastIndexOf("mods/")));
  }
 
@@ -615,7 +614,7 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void save ( JSONObject obj ) {
-   obj.put("Crafts", crafts.size());
+   obj.put("Crafts" , crafts.size());
    JSONObject t = new JSONObject();
    CraftE e;
    for ( int i = 0 ; i < crafts.size() ; i++ ) {

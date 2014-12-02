@@ -14,9 +14,9 @@ import render.Tex;
  */
 public interface InvItem {
 
- public String getparam ( String k );
+ public String getparam(String k);
 
- public Tex getTex ();
+ public Tex getTex();
 
- public Mid getId ();
+ public Mid getId();
 }

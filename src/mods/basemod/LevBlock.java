@@ -28,7 +28,8 @@ public class LevBlock extends IItem implements Serializable {
 
  @Override
  public String toString () {
-  return "LevBlock " + id.toString() + "Durability: " + durability + model.toString() + speed.toString() + "Dictionary: " + dictionary;
+  return "LevBlock " + id.toString() + "Durability: " + durability + model.
+          toString() + speed.toString() + "Dictionary: " + dictionary;
  }
 
  public String getDictionary () {
