@@ -263,7 +263,7 @@ public final class ModEditor extends javax.swing.JFrame {
  private void save () {
   JSONObject s = new JSONObject();
   String t = null;
-  s.put("test" , "Test1");
+  s.put("name", modname.getText());
   bm.save(s);
   cm.save(s);
   im.save(s);
@@ -272,7 +272,7 @@ public final class ModEditor extends javax.swing.JFrame {
    t = f.getSelectedFile().getAbsolutePath();
   }
   
-  s.save(t.substring(t.lastIndexOf("mods/")));
+   s.save(t.substring(t.lastIndexOf("mods/")));
  }
 
 // private void gen () {
