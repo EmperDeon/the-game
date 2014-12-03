@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -26,6 +27,8 @@ import mods.basemod.LevBlock;
 import mods.basemod.Model;
 import mods.basemod.Speeds;
 import mods.basemod.containers.Mid;
+import utils.Unzipper;
+import utils.Zipper;
 import utils.json.JSONObject;
 
 public final class ModEditor extends javax.swing.JFrame {
@@ -272,7 +275,10 @@ public final class ModEditor extends javax.swing.JFrame {
    t = f.getSelectedFile().getAbsolutePath();
   }
   
-   s.save(t.substring(t.lastIndexOf("mods/")));
+  Unzipper.unzip(t);
+  s.save(main.Main.mdir+"tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/"+modname.getText()+"properties.mod");
+  new File(t).delete();
+  Zipper.zip(main.Main.mdir+"tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/", t);
  }
 
 // private void gen () {

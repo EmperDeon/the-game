@@ -11,6 +11,7 @@ public class Zipper {
 
  public static void zip ( String dirName , String zipName ) {
   try {
+   System.out.println("Zipping "+dirName+" to "+zipName);
    try ( ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipName)) ) {
     zos.setLevel(Deflater.BEST_COMPRESSION);
     zipDir(dirName , zos , dirName);

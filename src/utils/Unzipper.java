@@ -14,7 +14,9 @@ public class Unzipper {
 
  public static void unzip ( String file ) {
   Enumeration entries;
-  String dirName = main.Main.mdir + "tmp/" + file + "/";
+  String dirName = main.Main.mdir + "tmp/" + file.substring(file.lastIndexOf("/")+1,file.lastIndexOf(".zip")) + "/";
+  System.out.println("Unzipping "+ file + " to "+ main.Main.mdir + "tmp/" + file.substring(file.lastIndexOf(
+          "/")+1,file.lastIndexOf(".zip")) + "/");
   if ( !dirName.isEmpty() ) {
    new File(dirName).mkdirs();
   }
