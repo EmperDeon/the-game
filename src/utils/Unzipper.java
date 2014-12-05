@@ -14,9 +14,7 @@ public class Unzipper {
 
  public static void unzip ( String file ) {
   Enumeration entries;
-  String dirName = main.Main.mdir + "tmp/" + file.substring(file.lastIndexOf("/")+1,file.lastIndexOf(".zip")) + "/";
-  System.out.println("Unzipping "+ file + " to "+ main.Main.mdir + "tmp/" + file.substring(file.lastIndexOf(
-          "/")+1,file.lastIndexOf(".zip")) + "/");
+  String dirName = main.Main.mdir + "tmp/" + file + "/";
   if ( !dirName.isEmpty() ) {
    new File(dirName).mkdirs();
   }
@@ -34,6 +32,27 @@ public class Unzipper {
   }
  }
 
+ public static void unzipmod ( String file ) {
+  Enumeration entries;
+  String dirName = main.Main.mdir + "tmp/" + file + "/";
+  System.out.println("Unzipping "+ main.Main.mdir+"mods/"+file + ".zip" + " to "+ dirName);
+  if ( !dirName.isEmpty() ) {
+   new File(dirName).mkdirs();
+  }
+
+  try ( ZipFile zip = new ZipFile(main.Main.mdir+"mods/"+file + ".zip") ) {
+   entries = zip.entries();
+
+   while ( entries.hasMoreElements() ) {
+    ZipEntry entry = ( ZipEntry ) entries.nextElement();
+    String zip_path = entry.getName();
+    write(dirName , zip_path , zip.getInputStream(entry));
+   }
+  } catch ( IOException e ) {
+   main.Main.LOG.addE("utils.Unzipper" , e);
+  }
+ }
+ 
  private static void write ( String dirName , String FilePath , InputStream in )
          throws IOException {
   String m_FilePath = FilePath;

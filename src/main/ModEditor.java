@@ -270,15 +270,15 @@ public final class ModEditor extends javax.swing.JFrame {
   bm.save(s);
   cm.save(s);
   im.save(s);
-  JFileChooser f = new JFileChooser(Main.mdir);
+  JFileChooser f = new JFileChooser(Main.mdir+"mods/");
   if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
    t = f.getSelectedFile().getAbsolutePath();
   }
   
-  Unzipper.unzip(t);
-  s.save(main.Main.mdir+"tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/"+modname.getText()+"properties.mod");
+  Unzipper.unzipmod(t.substring(t.lastIndexOf("/")+1, t.lastIndexOf(".zip")));
+  s.save("tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/"+modname.getText()+"properties.mod");
   new File(t).delete();
-  Zipper.zip(main.Main.mdir+"tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/", t);
+  Zipper.zip("tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/", t);
  }
 
 // private void gen () {

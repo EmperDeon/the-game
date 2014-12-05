@@ -21,6 +21,18 @@ public class Zipper {
   }
  }
 
+ public static void zipmod ( String dirName , String zipName ) {
+  try {
+   System.out.println("Zipping "+main.Main.mdir+dirName+" to "+zipName);
+   try ( ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipName)) ) {
+    zos.setLevel(Deflater.BEST_COMPRESSION);
+    zipDir(dirName , zos , dirName);
+   }
+  } catch ( Exception e ) {
+   main.Main.LOG.addE("utils.Zipper" , e);
+  }
+ }
+ 
  private static void zipDir ( String dir2zip , ZipOutputStream zos ,
                               String True_path ) {
   try {
