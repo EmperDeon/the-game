@@ -9,11 +9,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -27,8 +26,6 @@ import mods.basemod.LevBlock;
 import mods.basemod.Model;
 import mods.basemod.Speeds;
 import mods.basemod.containers.Mid;
-import utils.Unzipper;
-import utils.Zipper;
 import utils.json.JSONObject;
 
 public final class ModEditor extends javax.swing.JFrame {
@@ -270,15 +267,22 @@ public final class ModEditor extends javax.swing.JFrame {
   bm.save(s);
   cm.save(s);
   im.save(s);
-  JFileChooser f = new JFileChooser(Main.mdir+"mods/");
-  if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
-   t = f.getSelectedFile().getAbsolutePath();
-  }
+//  JFileChooser f = new JFileChooser(Main.mdir+"mods/");
+//  if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
+//   t = f.getSelectedFile().getAbsolutePath();
+//  }
   
-  Unzipper.unzipmod(t.substring(t.lastIndexOf("/")+1, t.lastIndexOf(".zip")));
-  s.save("tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/"+modname.getText()+"properties.mod");
-  new File(t).delete();
-  Zipper.zip("tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/", t);
+  JOptionPane opt = new JOptionPane();
+  int x = JOptionPane.showConfirmDialog(null, "Are you have a mod archive or mod folder ?", "Mod archive", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+  switch(x){
+   case 0: break;
+   case 1: break;
+   default: break; 
+  }
+//  Unzipper.unzipmod(t.substring(t.lastIndexOf("/")+1, t.lastIndexOf(".zip")));
+//  s.save("tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/"+modname.getText()+"properties.mod");
+//  new File(t).delete();
+//  Zipper.zip("tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/", t);
  }
 
 // private void gen () {
