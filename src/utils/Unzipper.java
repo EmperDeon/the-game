@@ -34,13 +34,12 @@ public class Unzipper {
 
  public static void unzipmod ( String file ) {
   Enumeration entries;
-  String dirName = main.Main.mdir + "tmp/" + file + "/";
-  System.out.println("Unzipping "+ main.Main.mdir+"mods/"+file + ".zip" + " to "+ dirName);
+  String dirName = file.substring(0, file.lastIndexOf(".zip")) + "/";
   if ( !dirName.isEmpty() ) {
    new File(dirName).mkdirs();
   }
 
-  try ( ZipFile zip = new ZipFile(main.Main.mdir+"mods/"+file + ".zip") ) {
+  try ( ZipFile zip = new ZipFile(file) ) {
    entries = zip.entries();
 
    while ( entries.hasMoreElements() ) {

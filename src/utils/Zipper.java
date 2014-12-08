@@ -21,12 +21,11 @@ public class Zipper {
   }
  }
 
- public static void zipmod ( String dirName , String zipName ) {
+ public static void zipmod (String zipFile ) {
   try {
-   System.out.println("Zipping "+main.Main.mdir+dirName+" to "+zipName);
-   try ( ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipName)) ) {
+   try ( ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile)) ) {
     zos.setLevel(Deflater.BEST_COMPRESSION);
-    zipDir(dirName , zos , dirName);
+    zipDir("tmp" + zipFile.substring(zipFile.lastIndexOf("/") , zipFile.lastIndexOf(".zip")) , zos ,"tmp" + zipFile.substring(zipFile.lastIndexOf("/") , zipFile.lastIndexOf(".zip")));
    }
   } catch ( Exception e ) {
    main.Main.LOG.addE("utils.Zipper" , e);
