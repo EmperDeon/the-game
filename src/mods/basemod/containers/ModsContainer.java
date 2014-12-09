@@ -7,13 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.TreeMap;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.interfaces.Action;
@@ -21,6 +16,7 @@ import mods.basemod.interfaces.ActionU;
 import mods.basemod.interfaces.Base;
 import mods.basemod.interfaces.BaseMod;
 import mods.basemod.interfaces.CoreMod;
+import utils.Unzipper;
 import utils.json.JSONObject;
 import utils.vec.Vec3;
 
@@ -131,9 +127,11 @@ public final class ModsContainer implements Serializable {
  }
 
  public void loadDir ( boolean isI ) {
+  String t;
+  JSONObject opt = null;
   File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
    try {
-    if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".jar") != -1 ) {
+    if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".zip") != -1 ) {
      return true;
     }
    } catch ( IOException ex ) {
@@ -143,29 +141,37 @@ public final class ModsContainer implements Serializable {
   });
 
   for ( File f : s ) {
-   try {
-    JSONObject opt = null;
-    JarFile jar = new JarFile(f);
-    Enumeration entries = jar.entries();
-    while ( entries.hasMoreElements() ) {
-     JarEntry entry = ( JarEntry ) entries.nextElement();
-     if ( entry.getName().equals("props.json") ) {
-      try ( ObjectInputStream is = new ObjectInputStream(jar.getInputStream(
-              entry)) ) {
-       opt = new JSONObject(is.readObject().toString());
-      }
-     }
-    }
-
-    URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
-    BaseMod b = ( BaseMod ) classLoader.loadClass(opt.getString("main.class")).
-            newInstance();
-    mods.put(b.getId() , b);
-   } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
-             InstantiationException | IllegalAccessException e ) {
-    main.Main.LOG.addE("Containers.loadDir()" , e);
-   }
+   t = f.getAbsolutePath();
+   t = main.Main.mdir+"tmp/"+t.substring(t.lastIndexOf("/")+1,t.lastIndexOf(".zip"));
+   Unzipper.unzipmod(f.getAbsolutePath());
+   opt = new JSONObject(t);
+   
   }
+
+//  for ( File f : s ) {
+//   try {
+//    JSONObject opt = null;
+//    JarFile jar = new JarFile(f);
+//    Enumeration entries = jar.entries();
+//    while ( entries.hasMoreElements() ) {
+//     JarEntry entry = ( JarEntry ) entries.nextElement();
+//     if ( entry.getName().equals("props.json") ) {
+//      try ( ObjectInputStream is = new ObjectInputStream(jar.getInputStream(
+//              entry)) ) {
+//       opt = new JSONObject(is.readObject().toString());
+//      }
+//     }
+//    }
+//
+//    URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
+//    BaseMod b = ( BaseMod ) classLoader.loadClass(opt.getString("main.class")).
+//            newInstance();
+//    mods.put(b.getId() , b);
+//   } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
+//             InstantiationException | IllegalAccessException e ) {
+//    main.Main.LOG.addE("Containers.loadDir()" , e);
+//   }
+//  }
   if ( isI ) {
    init();
   }

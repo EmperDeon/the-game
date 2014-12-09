@@ -34,7 +34,7 @@ public class Unzipper {
 
  public static void unzipmod ( String file ) {
   Enumeration entries;
-  String dirName = file.substring(0, file.lastIndexOf(".zip")) + "/";
+   String dirName = file.substring(0, file.lastIndexOf(".zip")) + "/";
   if ( !dirName.isEmpty() ) {
    new File(dirName).mkdirs();
   }
