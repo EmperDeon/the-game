@@ -55,7 +55,7 @@ public final class Main extends JFrame {
  }
 
  public static void init () {
-//  mods.load();
+  mods.load();
 
   //rend.initfinal();
  }

@@ -144,6 +144,7 @@ public final class ModsContainer implements Serializable {
   for ( File f : s ) {
    dir = f.getAbsolutePath();
    dir = main.Main.mdir+"tmp/"+dir.substring(dir.lastIndexOf("/")+1,dir.lastIndexOf(".zip"))+"/";
+   System.out.println(dir);
    Unzipper.unzipmod(f.getAbsolutePath());
    opt = new JSONObject(dir+"properties.mod");
 
@@ -156,6 +157,7 @@ public final class ModsContainer implements Serializable {
             new Speeds(t.getString("Speeds")), 
             t.getString("Dict") 
     ));
+    main.Main.LOG.addI("mods.containers.ModsContainer.loadDir", "Loaded block");
    } 
    
    for(int i = 0; i < opt.getInt("Items") ; i++){
@@ -167,6 +169,7 @@ public final class ModsContainer implements Serializable {
             t.getInt("Type"),
             new Speeds(t.getString("Speeds"))     
     ));
+     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir", "Loaded item");
    } 
    
    for(int i = 0; i < opt.getInt("Crafts") ; i++){
@@ -175,7 +178,9 @@ public final class ModsContainer implements Serializable {
               t.getString("Grid"),
               t.getString("Elements") 
     );
+     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir", "Loaded craft");
    }
+    main.Main.LOG.addI("mods.containers.ModsContainer.loadDir", "Loaded:"+bcont.size()+" "+icont.size()+" ");
   }
 
 //  for ( File f : s ) {
