@@ -298,10 +298,6 @@ public final class ModEditor extends javax.swing.JFrame {
     break;
    
   }
-//  Unzipper.unzipmod(t.substring(t.lastIndexOf("/")+1, t.lastIndexOf(".zip")));
-//  s.save("tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/"+modname.getText()+"properties.mod");
-//  new File(t).delete();
-//  Zipper.zip("tmp"+t.substring(t.lastIndexOf("/"), t.lastIndexOf(".zip"))+"/", t);
  }
 
 // private void gen () {

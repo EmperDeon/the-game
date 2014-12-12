@@ -330,7 +330,8 @@ public final class JSONObject {
   *                          duplicated key.
   */
  public JSONObject ( String source ) throws JSONException {
-  this(new JSONTokener(source));
+  this();
+  load(source);
  }
 
  /**

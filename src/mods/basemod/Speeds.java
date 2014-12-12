@@ -1,6 +1,8 @@
 package mods.basemod;
 
-public class Speeds {
+import java.io.Serializable;
+
+public class Speeds implements Serializable {
 
  private final String str;
 

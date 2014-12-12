@@ -120,11 +120,11 @@ public final class ModsContainer implements Serializable {
  }
 
  public void load () {
-  if ( file.exists() ) {
-   fload();
-  } else {
+//  if ( file.exists() ) {
+//   fload();
+//  } else {
    loadDir(true);
-  }
+//  }
  }
 
  public void loadDir ( boolean isI ) {
@@ -144,17 +144,17 @@ public final class ModsContainer implements Serializable {
   for ( File f : s ) {
    dir = f.getAbsolutePath();
    dir = main.Main.mdir+"tmp/"+dir.substring(dir.lastIndexOf("/")+1,dir.lastIndexOf(".zip"))+"/";
-   System.out.println(dir);
    Unzipper.unzipmod(f.getAbsolutePath());
    opt = new JSONObject(dir+"properties.mod");
 
    for(int i = 0; i < opt.getInt("Blocks") ; i++){
     t = opt.getJSONObject("Block"+i);
-    put(new LevBlock(
+    bcont.put(new Mid(opt.getString("name"), t.getString("Iid"), t.getString("Sid")),
+        new LevBlock(
             new Mid(opt.getString("name"), t.getString("Iid"), t.getString("Sid")), 
             t.getInt("Durab"), 
             new Model(t.getString("Model") ), 
-            new Speeds(t.getString("Speeds")), 
+            new Speeds(t.getString("Speed")), 
             t.getString("Dict") 
     ));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir", "Loaded block");
@@ -162,12 +162,12 @@ public final class ModsContainer implements Serializable {
    
    for(int i = 0; i < opt.getInt("Items") ; i++){
     t = opt.getJSONObject("Item"+i);
-    put(new IItem(
+    icont.put(new Mid(opt.getString("name"), t.getString("Iid"), t.getString("Sid")),new IItem(
             new Mid(opt.getString("name"), t.getString("Iid"), t.getString("Sid")), 
             t.getInt("Durab"), 
             new Model(t.getString("Model") ),
             t.getInt("Type"),
-            new Speeds(t.getString("Speeds"))     
+            new Speeds(t.getString("Speed"))     
     ));
      main.Main.LOG.addI("mods.containers.ModsContainer.loadDir", "Loaded item");
    } 
@@ -237,7 +237,7 @@ public final class ModsContainer implements Serializable {
    main.Main.LOG.addE("ModsContainer.fsave()" , e);
    System.out.println(e.toString());
   }
-  System.out.println("Saved " + mods.size() + " mods");
+  System.out.println("Saved " + bcont.size() + " blocks " + icont.size() + " items" /*+ mods.size() + " mods"*/);
  }
 
  public synchronized void initF ( Mid id ) {
