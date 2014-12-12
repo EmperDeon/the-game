@@ -54,14 +54,14 @@ public final class ModEditor extends javax.swing.JFrame {
   jLabel1.setText("Name:");
   jLabel1.setBounds(15 , 15 , 50 , 20);
 
-//  gen.setText("Generate option file for actions");
-//  gen.setBounds(427 , 10 , 230 , 30);
-//  gen.addMouseListener(new MouseAdapter() {
-//   @Override
-//   public void mouseClicked ( MouseEvent evt ) {
-//    gen();
-//   }
-//  });
+  gen.setText("Generate option file for actions");
+  gen.setBounds(427 , 10 , 230 , 30);
+  gen.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mouseClicked ( MouseEvent evt ) {
+    gen();
+   }
+  });
   save.setText("Save");
   save.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
@@ -300,14 +300,14 @@ public final class ModEditor extends javax.swing.JFrame {
   }
  }
 
-// private void gen () {
-//  for(int i = 0 ; i<1000000 ; i++){
-//   bm.add(new Mid("0","Block"+i,"0"), 1, new Model("file1"), new Speeds("1,1"), "block"+i);
-//   cm.add(i,"1x1","1=1");
-//   im.add(new Mid("0","Item"+i,"0"), 1, new Model("file1"), 1, new Speeds("1,1"));
-//  }
-//  save();
-// }
+ private void gen () {
+  for(int i = 0 ; i<10000 ; i++){
+   bm.add(new Mid("0","Block"+i,"0"), 1, new Model("file1"), new Speeds("1,1"), "block"+i);
+   cm.add(i,"1x1","1=1");
+   im.add(new Mid("0","Item"+i,"0"), 1, new Model("file1"), 1, new Speeds("1,1"));
+  }
+  save();
+ }
  public class ItemsTable implements TableModel {
 
   private TableModelListener listener;
