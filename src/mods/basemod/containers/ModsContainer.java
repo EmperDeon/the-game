@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
+import mods.basemod.Model;
+import mods.basemod.Speeds;
 import mods.basemod.interfaces.Action;
 import mods.basemod.interfaces.ActionU;
 import mods.basemod.interfaces.Base;
@@ -18,7 +20,6 @@ import mods.basemod.interfaces.BaseMod;
 import mods.basemod.interfaces.CoreMod;
 import utils.Unzipper;
 import utils.json.JSONObject;
-import utils.vec.Vec3;
 
 public final class ModsContainer implements Serializable {
 
@@ -62,7 +63,7 @@ public final class ModsContainer implements Serializable {
 //  return bcont.getTex(id);
 // }
 
- public void put ( Vec3<String> k , Base v ) {
+ public void put ( Base v ) {
   if ( v instanceof BaseMod ) {
    mods.put(v.getId() , ( BaseMod ) v);
   } else if ( v instanceof CoreMod ) {
@@ -127,8 +128,8 @@ public final class ModsContainer implements Serializable {
  }
 
  public void loadDir ( boolean isI ) {
-  String t;
-  JSONObject opt = null;
+  String dir;
+  JSONObject opt,t;
   File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
    try {
     if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".zip") != -1 ) {
@@ -141,11 +142,40 @@ public final class ModsContainer implements Serializable {
   });
 
   for ( File f : s ) {
-   t = f.getAbsolutePath();
-   t = main.Main.mdir+"tmp/"+t.substring(t.lastIndexOf("/")+1,t.lastIndexOf(".zip"));
+   dir = f.getAbsolutePath();
+   dir = main.Main.mdir+"tmp/"+dir.substring(dir.lastIndexOf("/")+1,dir.lastIndexOf(".zip"))+"/";
    Unzipper.unzipmod(f.getAbsolutePath());
-   opt = new JSONObject(t);
+   opt = new JSONObject(dir+"properties.mod");
+
+   for(int i = 0; i < opt.getInt("Blocks") ; i++){
+    t = opt.getJSONObject("Block"+i);
+    put(new LevBlock(
+            new Mid(opt.getString("name"), t.getString("Iid"), t.getString("Sid")), 
+            t.getInt("Durab"), 
+            new Model(t.getString("Model") ), 
+            new Speeds(t.getString("Speeds")), 
+            t.getString("Dict") 
+    ));
+   } 
    
+   for(int i = 0; i < opt.getInt("Items") ; i++){
+    t = opt.getJSONObject("Item"+i);
+    put(new IItem(
+            new Mid(opt.getString("name"), t.getString("Iid"), t.getString("Sid")), 
+            t.getInt("Durab"), 
+            new Model(t.getString("Model") ),
+            t.getInt("Type"),
+            new Speeds(t.getString("Speeds"))     
+    ));
+   } 
+   
+   for(int i = 0; i < opt.getInt("Crafts") ; i++){
+    t = opt.getJSONObject("Craft"+i);
+    ccont.add(t.getInt("Type"),
+              t.getString("Grid"),
+              t.getString("Elements") 
+    );
+   }
   }
 
 //  for ( File f : s ) {

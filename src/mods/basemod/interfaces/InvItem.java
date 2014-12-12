@@ -12,7 +12,7 @@ import render.Tex;
  *
  * @author ilya
  */
-public interface InvItem {
+public interface InvItem extends Base{
 
  public String getparam(String k);
 

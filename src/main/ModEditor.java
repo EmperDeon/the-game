@@ -271,10 +271,6 @@ public final class ModEditor extends javax.swing.JFrame {
   bm.save(s);
   cm.save(s);
   im.save(s);
-//  JFileChooser f = new JFileChooser(Main.mdir+"mods/");
-//  if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
-//   t = f.getSelectedFile().getAbsolutePath();
-//  }
 
   int x = JOptionPane.showConfirmDialog(null ,
                                         "Are you have a mod archive or mod folder ?" ,
