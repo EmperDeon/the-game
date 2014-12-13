@@ -35,8 +35,8 @@ public class Unzipper {
 
  public static void unzipmod ( String file ) {
   Enumeration entries;
-   String dirName =main.Main.mdir + "tmp/" + file.substring(file.lastIndexOf(
-           "/")+1, file.lastIndexOf(".zip")) + "/";
+  String dirName = main.Main.mdir + "tmp/" + file.substring(file.lastIndexOf(
+          "/") + 1 , file.lastIndexOf(".zip")) + "/";
   if ( !dirName.isEmpty() ) {
    new File(dirName).mkdirs();
   }
@@ -53,7 +53,6 @@ public class Unzipper {
    main.Main.LOG.addE("utils.Unzipper" , e);
   }
  }
-
 
  private static void write ( String dirName , String FilePath , InputStream in )
          throws IOException {

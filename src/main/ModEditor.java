@@ -289,25 +289,28 @@ public final class ModEditor extends javax.swing.JFrame {
     Zipper.zipmod(t);
     break;
    case 1:
-    t = main.Main.mdir+"mods/"+modname.getText()+".zip";
-    new File(main.Main.mdir+"tmp/"+modname.getText()+"/").mkdirs();
+    t = main.Main.mdir + "mods/" + modname.getText() + ".zip";
+    new File(main.Main.mdir + "tmp/" + modname.getText() + "/").mkdirs();
     s.savemod(t);
     Zipper.zipmod(t);
     break;
    default:
     break;
-   
+
   }
  }
 
  private void gen () {
-  for(int i = 0 ; i<10000 ; i++){
-   bm.add(new Mid("0","Block"+i,"0"), 1, new Model("file1"), new Speeds("1,1"), "block"+i);
-   cm.add(i,"1x1","1=1");
-   im.add(new Mid("0","Item"+i,"0"), 1, new Model("file1"), 1, new Speeds("1,1"));
+  for ( int i = 0 ; i < 10000 ; i++ ) {
+   bm.add(new Mid("0" , "Block" + i , "0") , 1 , new Model("file1") ,
+          new Speeds("1,1") , "block" + i);
+   cm.add(i , "1x1" , "1=1");
+   im.add(new Mid("0" , "Item" + i , "0") , 1 , new Model("file1") , 1 ,
+          new Speeds("1,1"));
   }
   save();
  }
+
  public class ItemsTable implements TableModel {
 
   private TableModelListener listener;

@@ -440,9 +440,10 @@ public final class JSONObject {
    main.Main.LOG.addE("JSONObject.save()" , ex);
   }
  }
- 
+
  public void savemod ( String file ) {
-  try ( FileWriter t = new FileWriter(main.Main.mdir + "tmp" + file.substring(file.lastIndexOf("/") , file.lastIndexOf(".zip")) + "/" +"properties.mod") ) {
+  try ( FileWriter t = new FileWriter(main.Main.mdir + "tmp" + file.substring(
+          file.lastIndexOf("/") , file.lastIndexOf(".zip")) + "/" + "properties.mod") ) {
    t.write(this.write(new StringWriter()).toString());
    t.flush();
   } catch ( IOException ex ) {

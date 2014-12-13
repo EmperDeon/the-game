@@ -12,11 +12,11 @@ import render.Tex;
  *
  * @author ilya
  */
-public interface InvItem extends Base{
+public interface InvItem extends Base {
 
- public String getparam(String k);
+ public String getparam ( String k );
 
- public Tex getTex();
+ public Tex getTex ();
 
- public Mid getId();
+ public Mid getId ();
 }

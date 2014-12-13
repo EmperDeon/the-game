@@ -11,7 +11,7 @@ public class Zipper {
 
  public static void zip ( String dirName , String zipName ) {
   try {
-   System.out.println("Zipping "+dirName+" to "+zipName);
+   System.out.println("Zipping " + dirName + " to " + zipName);
    try ( ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipName)) ) {
     zos.setLevel(Deflater.BEST_COMPRESSION);
     zipDir(dirName , zos , dirName);
@@ -21,17 +21,20 @@ public class Zipper {
   }
  }
 
- public static void zipmod (String zipFile ) {
+ public static void zipmod ( String zipFile ) {
   try {
    try ( ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile)) ) {
     zos.setLevel(Deflater.BEST_COMPRESSION);
-    zipDir("tmp" + zipFile.substring(zipFile.lastIndexOf("/") , zipFile.lastIndexOf(".zip")) , zos ,"tmp" + zipFile.substring(zipFile.lastIndexOf("/") , zipFile.lastIndexOf(".zip")));
+    zipDir("tmp" + zipFile.substring(zipFile.lastIndexOf("/") , zipFile.
+                                     lastIndexOf(".zip")) , zos ,
+           "tmp" + zipFile.substring(zipFile.lastIndexOf("/") , zipFile.
+                                     lastIndexOf(".zip")));
    }
   } catch ( Exception e ) {
    main.Main.LOG.addE("utils.Zipper" , e);
   }
  }
- 
+
  private static void zipDir ( String dir2zip , ZipOutputStream zos ,
                               String True_path ) {
   try {

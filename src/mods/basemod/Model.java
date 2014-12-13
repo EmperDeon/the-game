@@ -2,7 +2,7 @@ package mods.basemod;
 
 import java.io.Serializable;
 
-public class Model implements Serializable{
+public class Model implements Serializable {
 
  private final String file;
 

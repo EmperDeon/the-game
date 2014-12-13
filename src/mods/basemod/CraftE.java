@@ -1,6 +1,6 @@
 package mods.basemod;
 
-public class CraftE{
+public class CraftE {
 
  private final Integer type;
  private final String grid;

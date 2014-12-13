@@ -7,5 +7,7 @@ public class Crafting implements Serializable {
  public void addAll ( Crafting c ) {
 
  }
- public void add(int type, String grid, String elements){}
+
+ public void add ( int type , String grid , String elements ) {
+ }
 }
