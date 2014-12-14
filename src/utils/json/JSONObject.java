@@ -443,7 +443,7 @@ public final class JSONObject {
 
  public void savemod ( String file ) {
   try ( FileWriter t = new FileWriter(main.Main.mdir + "tmp" + file.substring(
-          file.lastIndexOf("/") , file.lastIndexOf(".zip")) + "/" + "properties.mod") ) {
+          file.lastIndexOf("/") , file.lastIndexOf(".mod")) + "/" + "properties.mod") ) {
    t.write(this.write(new StringWriter()).toString());
    t.flush();
   } catch ( IOException ex ) {

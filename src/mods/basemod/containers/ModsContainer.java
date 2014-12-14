@@ -34,7 +34,7 @@ public final class ModsContainer implements Serializable {
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
- private final File file = new File(main.Main.mdir + "mods/modscontainer.mod");
+ private final File file = new File(main.Main.mdir + "mods/container.all");
 
  public ModsContainer () {
   cmods = new TreeMap<>();
@@ -70,9 +70,9 @@ public final class ModsContainer implements Serializable {
    mods.put(v.getId() , ( BaseMod ) v);
   } else if ( v instanceof CoreMod ) {
    cmods.put(v.getId() , ( CoreMod ) v);
-  } else if ( v instanceof IItem ) {
-   bcont.put(v.getId() , ( LevBlock ) v);
   } else if ( v instanceof LevBlock ) {
+   bcont.put(v.getId() , ( LevBlock ) v);
+  } else if ( v instanceof IItem ) {
    icont.put(v.getId() , ( IItem ) v);
   } else {
    main.Main.LOG.addE("ModsContainer.put()" , new Exception("v is not a Base"));
@@ -134,7 +134,7 @@ public final class ModsContainer implements Serializable {
   JSONObject opt, t;
   File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
    try {
-    if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".zip") != -1 ) {
+    if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".mod") != -1 ) {
      return true;
     }
    } catch ( IOException ex ) {
@@ -146,36 +146,33 @@ public final class ModsContainer implements Serializable {
   for ( File f : s ) {
    dir = f.getAbsolutePath();
    dir = main.Main.mdir + "tmp/" + dir.substring(dir.lastIndexOf("/") + 1 , dir.
-                                                 lastIndexOf(".zip")) + "/";
+                                                 lastIndexOf(".mod")) + "/";
    Unzipper.unzipmod(f.getAbsolutePath());
    opt = new JSONObject(dir + "properties.mod");
 
    for ( int i = 0 ; i < opt.getInt("Blocks") ; i++ ) {
     t = opt.getJSONObject("Block" + i);
-    bcont.put(new Mid(opt.getString("name") , t.getString("Iid") + i , t.
-                      getString("Sid")) ,
-              new LevBlock(
-                      new Mid(opt.getString("name") , t.getString("Iid") , t.
-                              getString("Sid")) ,
-                      t.getInt("Durab") ,
-                      new Model(t.getString("Model")) ,
-                      new Speeds(t.getString("Speed")) ,
-                      t.getString("Dict")
-              ));
+    put(new LevBlock(
+            new Mid(opt.getString("name") , t.getString("Iid") , t.
+                    getString("Sid")) ,
+            t.getInt("Durab") ,
+            new Model(t.getString("Model")) ,
+            new Speeds(t.getString("Speed")) ,
+            t.getString("Dict")
+    ));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded block");
    }
 
    for ( int i = 0 ; i < opt.getInt("Items") ; i++ ) {
     t = opt.getJSONObject("Item" + i);
-    icont.put(new Mid(opt.getString("name") , t.getString("Iid") + i , t.
-                      getString("Sid")) , new IItem(
-                      new Mid(opt.getString("name") , t.getString("Iid") , t.
-                              getString("Sid")) ,
-                      t.getInt("Durab") ,
-                      new Model(t.getString("Model")) ,
-                      t.getInt("Type") ,
-                      new Speeds(t.getString("Speed"))
-              ));
+    put(new IItem(
+            new Mid(opt.getString("name") , t.getString("Iid") , t.
+                    getString("Sid")) ,
+            t.getInt("Durab") ,
+            new Model(t.getString("Model")) ,
+            t.getInt("Type") ,
+            new Speeds(t.getString("Speed"))
+    ));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded item");
    }
 
@@ -211,7 +208,7 @@ public final class ModsContainer implements Serializable {
    System.out.println(e.toString());
   }
   reinit();
-  System.out.println("Loaded " + mods.size() + " mods");
+  System.out.println("Loaded " + bcont.size() + " blocks");
  }
 
  public void fsave () {

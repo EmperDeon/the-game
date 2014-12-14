@@ -26,9 +26,9 @@ public class Zipper {
    try ( ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile)) ) {
     zos.setLevel(Deflater.BEST_COMPRESSION);
     zipDir("tmp" + zipFile.substring(zipFile.lastIndexOf("/") , zipFile.
-                                     lastIndexOf(".zip")) , zos ,
+                                     lastIndexOf(".mod")) , zos ,
            "tmp" + zipFile.substring(zipFile.lastIndexOf("/") , zipFile.
-                                     lastIndexOf(".zip")));
+                                     lastIndexOf(".mod")));
    }
   } catch ( Exception e ) {
    main.Main.LOG.addE("utils.Zipper" , e);

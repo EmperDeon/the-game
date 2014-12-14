@@ -289,7 +289,7 @@ public final class ModEditor extends javax.swing.JFrame {
     Zipper.zipmod(t);
     break;
    case 1:
-    t = main.Main.mdir + "mods/" + modname.getText() + ".zip";
+    t = main.Main.mdir + "mods/" + modname.getText() + ".mod";
     new File(main.Main.mdir + "tmp/" + modname.getText() + "/").mkdirs();
     s.savemod(t);
     Zipper.zipmod(t);
