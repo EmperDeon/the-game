@@ -266,11 +266,12 @@ public final class ModEditor extends javax.swing.JFrame {
 
  private void save () {
   JSONObject s = new JSONObject();
+  JSONObject o = new JSONObject();
   String t = null;
   s.put("name" , modname.getText());
-  bm.save(s);
-  cm.save(s);
-  im.save(s);
+  bm.save(o);
+  cm.save(o);
+  im.save(o);
 
   int x = JOptionPane.showConfirmDialog(null ,
                                         "Are you have a mod archive or mod folder ?" ,
