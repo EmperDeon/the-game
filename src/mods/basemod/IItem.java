@@ -9,6 +9,10 @@ public class IItem implements Serializable , InvItem {
 
  protected final Mid id;
  protected final TreeMap<String , String> param;
+
+ public TreeMap<String , String> getParam () {
+  return param;
+ }
  protected final Model model;
 
  public IItem ( Mid id , Model model , String... param ) {

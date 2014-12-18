@@ -341,13 +341,7 @@ public final class ModEditor extends javax.swing.JFrame {
     case 1:
      return "S name";
     case 2:
-     return "Durability";
-    case 3:
      return "Model";
-    case 4:
-     return "Type";
-    case 5:
-     return "Speeds";
    }
    return "";
   }
@@ -365,14 +359,7 @@ public final class ModEditor extends javax.swing.JFrame {
     case 1:
      return items.get(rowIndex).getId().getSid();
     case 2:
-     return items.get(rowIndex).getDurab();
-    case 3:
      return items.get(rowIndex).getModel().getFile();
-    case 4:
-     return items.get(rowIndex).getType();
-    case 5:
-     return items.get(rowIndex).getSpeed().getStr();
-
    }
    return "";
   }
@@ -393,15 +380,16 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void add () {
-   add(new Mid(modname.getText() , iiname.getText() , isname.
-               getText()) , Integer.parseInt(idurab.getText()) ,
-       new Model(imodel.getText()) , Integer.parseInt(itype.
-               getText()) , new Speeds(ispeed.getText()));
+   add(new Mid(modname.getText() , iiname.getText() , isname.getText()) ,
+       new Model(imodel.getText()) ,
+       "Durability:"+idurab.getText() , 
+       "Type:"+itype.getText() , 
+       "Speed:"+ispeed.getText());
   }
 
-  public void add ( Mid id , Integer durab , Model model , Integer type ,
-                    Speeds speeds ) {
-   items.add(new IItem(id , durab , model , type , speeds));
+  public void add ( Mid id , Model model , String durab , String type ,
+                    String speeds ) {
+   items.add(new IItem(id , model , durab , type , speeds));
    listener.tableChanged(null);
   }
 
@@ -424,10 +412,11 @@ public final class ModEditor extends javax.swing.JFrame {
     e = items.get(i);
     t.put("Iid" , e.getId().getIid());
     t.put("Sid" , e.getId().getSid());
-    t.put("Durab" , e.getDurab());
     t.put("Model" , e.getModel().getFile());
-    t.put("Type" , e.getType());
-    t.put("Speed" , e.getSpeed().getStr());
+    
+    for(String s : e.getParam().keySet())
+     t.put(s, e.getParam().get(s));
+    
     obj.put("Item" + i , t);
    }
   }
