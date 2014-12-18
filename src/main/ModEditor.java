@@ -475,14 +475,7 @@ public final class ModEditor extends javax.swing.JFrame {
     case 1:
      return items.get(rowIndex).getId().getSid();
     case 2:
-     return items.get(rowIndex).getDurab();
-    case 3:
      return items.get(rowIndex).getModel().getFile();
-    case 4:
-     return items.get(rowIndex).getDictionary();
-    case 5:
-     return items.get(rowIndex).getSpeed().getStr();
-
    }
    return "";
   }
