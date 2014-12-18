@@ -4,42 +4,52 @@ import java.io.Serializable;
 import java.util.TreeMap;
 import mods.basemod.containers.Mid;
 import mods.basemod.interfaces.InvItem;
-import render.Tex;
 
 public class IItem implements Serializable , InvItem {
 
  protected final Mid id;
  protected final TreeMap<String , String> param;
- protected final Integer durability;
  protected final Model model;
- protected final Integer type;
- protected final Speeds speed;
 
- public IItem ( Mid id ,
-                Integer durability , Model model , Integer type , Speeds speed ) {
+ public IItem ( Mid id , Model model , String... param ) {
   this.param = new TreeMap<>();
   this.id = id;
-  this.durability = durability;
+
   this.model = model;
-  this.type = type;
-  this.speed = speed;
  }
 
  @Override
- public String getparam ( String k ) {
-  String v;
+ public String getParam ( String k ) {
+  String t = "";
   try {
-   v = param.get(k);
+   t = param.get(k);
   } catch ( Exception e ) {
-   v = "";
    main.Main.LOG.addE("Item.getparam()" , e);
   }
-  return ( v );
+  return t;
  }
 
  @Override
- public Tex getTex () {
-  return null;// tex.get();
+ public String getAllP () {
+  String t = "";
+  t = param.keySet().stream().
+          map(( s ) -> s + "=" + param.get(s)).
+          reduce(t , String::concat);
+  return t;
+ }
+
+ @Override
+ public void addParam ( String k , String v ) {
+  this.param.put(k , v);
+ }
+
+ @Override
+ public void addAllP ( String[] p ) {
+  String[] t;
+  for ( String s : p ) {
+   t = s.split(":");
+   this.param.put(t[0] , t[1]);
+  }
  }
 
  @Override
@@ -47,29 +57,13 @@ public class IItem implements Serializable , InvItem {
   return id;
  }
 
- public Integer getDurab () {
-  return durability;
- }
-
- public Integer getDurability () {
-  return durability;
- }
-
  public Model getModel () {
   return model;
  }
 
- public Integer getType () {
-  return type;
- }
-
- public Speeds getSpeed () {
-  return speed;
- }
-
  @Override
  public String toString () {
-  return "IItem, " + id.toString() + durability + model + type + speed;
+  return "IItem, " + id.toString() + " " + getAllP();
  }
 
 }

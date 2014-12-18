@@ -6,7 +6,6 @@
 package mods.basemod.interfaces;
 
 import mods.basemod.containers.Mid;
-import render.Tex;
 
 /**
  *
@@ -14,9 +13,16 @@ import render.Tex;
  */
 public interface InvItem extends Base {
 
- public String getparam ( String k );
+ public String getParam ( String k );
 
- public Tex getTex ();
-
+ public String getAllP();
+ 
+ public void addParam(String k, String v);
+ 
+ public void addAllP(String[] p);
+ 
+ @Override
  public Mid getId ();
+ 
+ 
 }
