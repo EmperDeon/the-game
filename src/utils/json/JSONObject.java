@@ -451,10 +451,10 @@ public final class JSONObject {
   }
  }
 
- public void clear(){
+ public void clear () {
   this.map.clear();
  }
- 
+
  /**
   * Accumulate values under a key. It is similar to the put method except
   * that if there is already an object stored under the key then a JSONArray
@@ -752,6 +752,15 @@ public final class JSONObject {
    names[i] = fields[i].getName();
   }
   return names;
+ }
+
+ public Map<String , String> getMap () {
+  Map<String , String> m = new HashMap<>();
+  map.keySet().stream().
+          forEach(( s ) -> {
+           m.put(s , ( String ) map.get(s));
+          });
+  return m;
  }
 
  /**
