@@ -6,6 +6,7 @@
 package mods.basemod.interfaces;
 
 import mods.basemod.containers.Mid;
+import utils.json.JSONObject;
 
 /**
  *
@@ -20,6 +21,8 @@ public interface InvItem extends Base {
  public void addParam(String k, String v);
  
  public void addAllP(String[] p);
+ 
+ public void toJSON(JSONObject o);
  
  @Override
  public Mid getId ();

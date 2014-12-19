@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.TreeMap;
 import mods.basemod.containers.Mid;
 import mods.basemod.interfaces.InvItem;
+import utils.json.JSONObject;
 
 public class IItem implements Serializable , InvItem {
 
@@ -68,6 +69,11 @@ public class IItem implements Serializable , InvItem {
  @Override
  public String toString () {
   return "IItem, " + id.toString() + " " + getAllP();
+ }
+ 
+ @Override 
+ public void toJSON(JSONObject o){
+  
  }
 
 }

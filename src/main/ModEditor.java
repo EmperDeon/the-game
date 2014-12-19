@@ -382,9 +382,15 @@ public final class ModEditor extends javax.swing.JFrame {
   public void add () {
    add(new Mid(modname.getText() , iiname.getText() , isname.getText()) ,
        new Model(imodel.getText()) ,
-       "Durability:"+idurab.getText() , 
-       "Type:"+itype.getText() , 
-       "Speed:"+ispeed.getText());
+       "Durability:" + idurab.getText() ,
+       "Type:" + itype.getText() ,
+       "Speed:" + ispeed.getText());
+   iiname.setText("");
+   isname.setText("");
+   imodel.setText("");
+   idurab.setText("");
+   itype.setText("");
+   ispeed.setText("");
   }
 
   public void add ( Mid id , Model model , String durab , String type ,
@@ -410,14 +416,9 @@ public final class ModEditor extends javax.swing.JFrame {
    IItem e;
    for ( int i = 0 ; i < items.size() ; i++ ) {
     e = items.get(i);
-    t.put("Iid" , e.getId().getIid());
-    t.put("Sid" , e.getId().getSid());
-    t.put("Model" , e.getModel().getFile());
-    
-    for(String s : e.getParam().keySet())
-     t.put(s, e.getParam().get(s));
-    
+    e.toJSON(t);
     obj.put("Item" + i , t);
+    t.clear();
    }
   }
  }
@@ -496,16 +497,16 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void add () {
-   add(new Mid(modname.getText() , bbname.getText() ,
-               bsname.getText()) , Integer.parseInt(
-               bdurab.getText()) , new Model(bmodel.
-               getText()) , new Speeds(bspeed.getText()) ,
+   add(new Mid(modname.getText() , bbname.getText() , bsname.getText()) ,
+       new Model(bmodel.getText()) ,
+       bdurab.getText() ,
+       bspeed.getText() ,
        bdict.getText());
   }
 
-  public void add ( Mid id , Integer durab , Model model , Speeds speeds ,
+  public void add ( Mid id , Model model , String durab , String speeds ,
                     String dict ) {
-   items.add(new LevBlock(id , durab , model , speeds , dict));
+   items.add(new LevBlock(id , model , durab , speeds , dict));
    listener.tableChanged(null);
   }
 
@@ -523,16 +524,11 @@ public final class ModEditor extends javax.swing.JFrame {
   public void save ( JSONObject obj ) {
    obj.put("Blocks" , items.size());
    JSONObject t = new JSONObject();
-   LevBlock e;
-   for ( int i = 0 ; i < items.size() ; i++ ) {
-    e = items.get(i);
-    t.put("Iid" , e.getId().getIid());
-    t.put("Sid" , e.getId().getSid());
-    t.put("Durab" , e.getDurab());
-    t.put("Model" , e.getModel().getFile());
-    t.put("Dict" , e.getDictionary());
-    t.put("Speed" , e.getSpeed().getStr());
-    obj.put("Block" + i , t);
+   int i = 0;
+   for ( LevBlock e : items ) {
+    e.toJSON(t);
+    obj.put("Block" + i++ , t);
+    t.clear();
    }
   }
  }

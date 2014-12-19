@@ -451,6 +451,10 @@ public final class JSONObject {
   }
  }
 
+ public void clear(){
+  this.map.clear();
+ }
+ 
  /**
   * Accumulate values under a key. It is similar to the put method except
   * that if there is already an object stored under the key then a JSONArray
