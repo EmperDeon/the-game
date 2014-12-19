@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
 
 import java.awt.event.MouseAdapter;
@@ -38,11 +33,7 @@ import utils.vec.Vec2;
 public final class ModEditor extends javax.swing.JFrame {
 
  public ModEditor () {
-  initComponents();
- }
-
- private void initComponents () {
-  this.setVisible(true);
+   this.setVisible(true);
   this.setTitle("Mod Editor");
   this.setLayout(null);
   this.setBounds(300 , 300 , 727 , 440);
@@ -333,7 +324,7 @@ public final class ModEditor extends javax.swing.JFrame {
 
   @Override
   public int getColumnCount () {
-   return 6;
+   return 3;
   }
 
   @Override
@@ -389,9 +380,6 @@ public final class ModEditor extends javax.swing.JFrame {
    iiname.setText("");
    isname.setText("");
    imodel.setText("");
-   idurab.setText("");
-   itype.setText("");
-   ispeed.setText("");
   }
 
   public void add ( Mid id , Model model, Map<String, String> map ) {
@@ -441,7 +429,7 @@ public final class ModEditor extends javax.swing.JFrame {
 
   @Override
   public int getColumnCount () {
-   return 6;
+   return 3;
   }
 
   @Override
@@ -452,13 +440,7 @@ public final class ModEditor extends javax.swing.JFrame {
     case 1:
      return "S name";
     case 2:
-     return "Durability";
-    case 3:
      return "Model";
-    case 4:
-     return "Dictionary";
-    case 5:
-     return "Speed modifier";
    }
    return "";
   }
@@ -501,7 +483,7 @@ public final class ModEditor extends javax.swing.JFrame {
        new Model(bmodel.getText()), bp.getMap()); 
   }
 
-  public void add ( Mid id , Model model , HashMap<String , String> map ) {
+  public void add ( Mid id , Model model , Map<String , String> map ) {
    items.add(new LevBlock(id , model , map));
    listener.tableChanged(null);
   }
@@ -632,8 +614,6 @@ public final class ModEditor extends javax.swing.JFrame {
  }
 
  private final class ParamF extends JFrame {
-
-  private final HashMap<String , String> map;
   private final JLabel pl1 = new JLabel();
   private final JLabel pl2 = new JLabel();
   private final JTextField pk = new JTextField();
@@ -644,12 +624,11 @@ public final class ModEditor extends javax.swing.JFrame {
   private final ParamTable pmod = new ParamTable();
   private final JScrollPane pscr = new JScrollPane();
   
-  public ParamF () {
-   map = new HashMap<>();
+  public ParamF (String str) {
    this.setVisible(true);
-   this.setTitle("Params editor");
+   this.setTitle(str+" params editor");
    this.setLayout(null);
-   this.setBounds(300 , 300 , 500 , 345);
+   this.setBounds(300 , 300 , 500 , 350);
    this.setResizable(false);
    this.addWindowListener(new WindowAdapter() {
     @Override
@@ -659,25 +638,39 @@ public final class ModEditor extends javax.swing.JFrame {
    });
 
    pl1.setText("Key:");
-   pl1.setBounds(15 , 15 , 50 , 20);
+   pl1.setBounds(5 , 10 , 50 , 20);
    
-   pk.setBounds(70, 15, 100, 30);
+   pk.setBounds(35, 5, 100, 30);
    
    pl2.setText("Value:");
-   pl2.setBounds(190, 15, 50, 20);
+   pl2.setBounds(160, 10, 50, 20);
    
-   pv.setBounds(205, 15, 100, 30);
+   pv.setBounds(205, 5, 100, 30);
    
    padd.setText("Add");
-   padd.setBounds(320, 15, 80, 30);
+   padd.setBounds(320, 5, 80, 30);
+   padd.addMouseListener(new MouseAdapter(){
+    @Override
+    public void mouseClicked (MouseEvent evt){
+     pmod.add();
+     pk.setText("");
+     pv.setText("");
+    }
+   });
    
    pdel.setText("Delete");
-   pdel.setBounds(405, 15, 80, 30);
+   pdel.setBounds(405, 5, 80, 30);
+   pdel.addMouseListener(new MouseAdapter(){
+    @Override
+    public void mouseClicked (MouseEvent evt){
+     pmod.delete(ptab);
+    }
+   });
    
    ptab.setModel(pmod);
    ptab.getTableHeader().setReorderingAllowed(false);
    pscr.setViewportView(ptab);
-   pscr.setBounds(5 , 40 , 490 , 300);
+   pscr.setBounds(5 , 35 , 490 , 300);
    
    add(pl1);
    add(pl2);
@@ -688,16 +681,14 @@ public final class ModEditor extends javax.swing.JFrame {
    add(pscr);
   }
 
-  public HashMap<String , String> getMap () {
-   return map;
+  public Map<String , String> getMap () {
+   return pmod.get();
   }
 
   public void clear () {
-   map.clear();
+   pmod.clear();
   }
- }
-
- private final class ParamTable implements TableModel {
+  private final class ParamTable implements TableModel {
 
   private TableModelListener listener;
 
@@ -761,11 +752,12 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void add () {
-   
+   map.add(new Vec2<>(pk.getText(), pv.getText()));
+   listener.tableChanged(null);
   }
 
-  public void delete () {
-   int n = ctable.getSelectedRow();
+  public void delete (JTable tab) {
+   int n = tab.getSelectedRow();
 
    if ( n != -1 ) {
     map.remove(n);
@@ -782,11 +774,19 @@ public final class ModEditor extends javax.swing.JFrame {
    });
    return m;
   }
+  
+  public void clear(){
+   map.clear();
+   listener.tableChanged(null);
+  }
  }
 
- private final ParamF bp = new ParamF();
- private final ParamF ip = new ParamF();
- private final ParamF cp = new ParamF();
+ }
+
+ 
+ private final ParamF bp = new ParamF("Block");
+ private final ParamF ip = new ParamF("Item");
+// private final ParamF cp = new ParamF();
 
  private final BlocksTable bm = new BlocksTable();
  private final CraftsTable cm = new CraftsTable();
