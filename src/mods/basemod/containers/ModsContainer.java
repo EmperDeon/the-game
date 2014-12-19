@@ -150,13 +150,13 @@ public final class ModsContainer implements Serializable {
 
    for ( int i = 0 ; i < opt.getInt("Blocks") ; i++ ) {
     t = opt.getJSONObject("Block" + i);
-    put(new LevBlock(t));
+    put(new LevBlock(opt.getString("name") , t));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded block");
    }
 
    for ( int i = 0 ; i < opt.getInt("Items") ; i++ ) {
     t = opt.getJSONObject("Item" + i);
-    put(new IItem(t));
+    put(new IItem(opt.getString("name") , t));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded item");
    }
 

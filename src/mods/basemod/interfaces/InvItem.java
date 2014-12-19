@@ -25,8 +25,6 @@ public interface InvItem extends Base {
  
  public void toJSON(JSONObject o);
  
- public void fromJSON(JSONObject o);
- 
  @Override
  public Mid getId ();
  

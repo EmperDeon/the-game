@@ -17,18 +17,18 @@ public class IItem implements Serializable , InvItem {
  }
  protected final Model model;
 
- public IItem ( Mid id , Model model , Map<String, String> map ) {
+ public IItem ( Mid id , Model model , Map<String , String> map ) {
   this.param = new TreeMap<>(map);
   this.id = id;
   this.model = model;
  }
 
- public IItem(JSONObject o){
-  this.id = new Mid("","","");
-  this.model = new Model("");
-  this.param = new TreeMap<>();
+ public IItem ( String m , JSONObject o ) {
+  this.id = new Mid(m , o.getString("Iid") , o.getString("Sid"));
+  this.model = new Model(o.getString("Model"));
+  this.param =;
  }
- 
+
  @Override
  public String getParam ( String k ) {
   String t = "";
@@ -55,7 +55,7 @@ public class IItem implements Serializable , InvItem {
  }
 
  @Override
- public void addAllP ( Map<String, String> p ) {
+ public void addAllP ( Map<String , String> p ) {
   this.param.putAll(p);
  }
 
@@ -72,15 +72,9 @@ public class IItem implements Serializable , InvItem {
  public String toString () {
   return "IItem, " + id.toString() + " " + getAllP();
  }
- 
- @Override 
- public void toJSON(JSONObject o){
-  
- }
 
- @Override 
- public void fromJSON(JSONObject o){
- 
+ @Override
+ public void toJSON ( JSONObject o ) {
+
  }
- 
 }

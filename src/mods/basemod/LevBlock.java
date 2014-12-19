@@ -11,8 +11,8 @@ public class LevBlock extends IItem implements Serializable {
   super(id , model , map);
  }
  
- public LevBlock (JSONObject o){
-  super(o);
+ public LevBlock (String m, JSONObject o){
+  super(m, o);
  }
 
  @Override

@@ -33,7 +33,7 @@ import utils.vec.Vec2;
 public final class ModEditor extends javax.swing.JFrame {
 
  public ModEditor () {
-   this.setVisible(true);
+  this.setVisible(true);
   this.setTitle("Mod Editor");
   this.setLayout(null);
   this.setBounds(300 , 300 , 727 , 440);
@@ -382,7 +382,7 @@ public final class ModEditor extends javax.swing.JFrame {
    imodel.setText("");
   }
 
-  public void add ( Mid id , Model model, Map<String, String> map ) {
+  public void add ( Mid id , Model model , Map<String , String> map ) {
    items.add(new IItem(id , model , map));
    listener.tableChanged(null);
   }
@@ -480,7 +480,7 @@ public final class ModEditor extends javax.swing.JFrame {
 
   public void add () {
    add(new Mid(modname.getText() , bbname.getText() , bsname.getText()) ,
-       new Model(bmodel.getText()), bp.getMap()); 
+       new Model(bmodel.getText()) , bp.getMap());
   }
 
   public void add ( Mid id , Model model , Map<String , String> map ) {
@@ -614,6 +614,7 @@ public final class ModEditor extends javax.swing.JFrame {
  }
 
  private final class ParamF extends JFrame {
+
   private final JLabel pl1 = new JLabel();
   private final JLabel pl2 = new JLabel();
   private final JTextField pk = new JTextField();
@@ -623,10 +624,10 @@ public final class ModEditor extends javax.swing.JFrame {
   private final JTable ptab = new JTable();
   private final ParamTable pmod = new ParamTable();
   private final JScrollPane pscr = new JScrollPane();
-  
-  public ParamF (String str) {
+
+  public ParamF ( String str ) {
    this.setVisible(true);
-   this.setTitle(str+" params editor");
+   this.setTitle(str + " params editor");
    this.setLayout(null);
    this.setBounds(300 , 300 , 500 , 350);
    this.setResizable(false);
@@ -639,39 +640,39 @@ public final class ModEditor extends javax.swing.JFrame {
 
    pl1.setText("Key:");
    pl1.setBounds(5 , 10 , 50 , 20);
-   
-   pk.setBounds(35, 5, 100, 30);
-   
+
+   pk.setBounds(35 , 5 , 100 , 30);
+
    pl2.setText("Value:");
-   pl2.setBounds(160, 10, 50, 20);
-   
-   pv.setBounds(205, 5, 100, 30);
-   
+   pl2.setBounds(160 , 10 , 50 , 20);
+
+   pv.setBounds(205 , 5 , 100 , 30);
+
    padd.setText("Add");
-   padd.setBounds(320, 5, 80, 30);
-   padd.addMouseListener(new MouseAdapter(){
+   padd.setBounds(320 , 5 , 80 , 30);
+   padd.addMouseListener(new MouseAdapter() {
     @Override
-    public void mouseClicked (MouseEvent evt){
+    public void mouseClicked ( MouseEvent evt ) {
      pmod.add();
      pk.setText("");
      pv.setText("");
     }
    });
-   
+
    pdel.setText("Delete");
-   pdel.setBounds(405, 5, 80, 30);
-   pdel.addMouseListener(new MouseAdapter(){
+   pdel.setBounds(405 , 5 , 80 , 30);
+   pdel.addMouseListener(new MouseAdapter() {
     @Override
-    public void mouseClicked (MouseEvent evt){
+    public void mouseClicked ( MouseEvent evt ) {
      pmod.delete(ptab);
     }
    });
-   
+
    ptab.setModel(pmod);
    ptab.getTableHeader().setReorderingAllowed(false);
    pscr.setViewportView(ptab);
    pscr.setBounds(5 , 35 , 490 , 300);
-   
+
    add(pl1);
    add(pl2);
    add(padd);
@@ -688,102 +689,102 @@ public final class ModEditor extends javax.swing.JFrame {
   public void clear () {
    pmod.clear();
   }
+
   private final class ParamTable implements TableModel {
 
-  private TableModelListener listener;
+   private TableModelListener listener;
 
-  private final ArrayList<Vec2<String>> map = new ArrayList<>();
+   private final ArrayList<Vec2<String>> map = new ArrayList<>();
 
-  @Override
-  public void addTableModelListener ( TableModelListener listener ) {
-   this.listener = listener;
-  }
-
-  @Override
-  public Class<?> getColumnClass ( int columnIndex ) {
-   return String.class;
-  }
-
-  @Override
-  public int getColumnCount () {
-   return 2;
-  }
-
-  @Override
-  public String getColumnName ( int columnIndex ) {
-   switch ( columnIndex ) {
-    case 0:
-     return "Key";
-    case 1:
-     return "Value";
+   @Override
+   public void addTableModelListener ( TableModelListener listener ) {
+    this.listener = listener;
    }
-   return "";
-  }
 
-  @Override
-  public int getRowCount () {
-   return map.size();
-  }
-
-  @Override
-  public Object getValueAt ( int rowIndex , int columnIndex ) {
-   switch ( columnIndex ) {
-    case 0:
-     return map.get(rowIndex).gX();
-    case 1:
-     return map.get(rowIndex).gY();
+   @Override
+   public Class<?> getColumnClass ( int columnIndex ) {
+    return String.class;
    }
-   return "";
-  }
 
-  @Override
-  public boolean isCellEditable ( int rowIndex , int columnIndex ) {
-   return false;
-  }
-
-  @Override
-  public void removeTableModelListener ( TableModelListener listener ) {
-   listener = null;
-  }
-
-  @Override
-  public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
-
-  }
-
-  public void add () {
-   map.add(new Vec2<>(pk.getText(), pv.getText()));
-   listener.tableChanged(null);
-  }
-
-  public void delete (JTable tab) {
-   int n = tab.getSelectedRow();
-
-   if ( n != -1 ) {
-    map.remove(n);
-   } else {
-    System.out.println("No selected index");
+   @Override
+   public int getColumnCount () {
+    return 2;
    }
-   listener.tableChanged(null);
+
+   @Override
+   public String getColumnName ( int columnIndex ) {
+    switch ( columnIndex ) {
+     case 0:
+      return "Key";
+     case 1:
+      return "Value";
+    }
+    return "";
+   }
+
+   @Override
+   public int getRowCount () {
+    return map.size();
+   }
+
+   @Override
+   public Object getValueAt ( int rowIndex , int columnIndex ) {
+    switch ( columnIndex ) {
+     case 0:
+      return map.get(rowIndex).gX();
+     case 1:
+      return map.get(rowIndex).gY();
+    }
+    return "";
+   }
+
+   @Override
+   public boolean isCellEditable ( int rowIndex , int columnIndex ) {
+    return false;
+   }
+
+   @Override
+   public void removeTableModelListener ( TableModelListener listener ) {
+    listener = null;
+   }
+
+   @Override
+   public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
+
+   }
+
+   public void add () {
+    map.add(new Vec2<>(pk.getText() , pv.getText()));
+    listener.tableChanged(null);
+   }
+
+   public void delete ( JTable tab ) {
+    int n = tab.getSelectedRow();
+
+    if ( n != -1 ) {
+     map.remove(n);
+    } else {
+     System.out.println("No selected index");
+    }
+    listener.tableChanged(null);
+   }
+
+   public Map<String , String> get () {
+    HashMap<String , String> m = new HashMap<>();
+    map.stream().forEach(( e ) -> {
+     m.put(e.gX() , e.gY());
+    });
+    return m;
+   }
+
+   public void clear () {
+    map.clear();
+    listener.tableChanged(null);
+   }
   }
 
-  public Map<String , String> get () {
-   HashMap<String , String> m = new HashMap<>();
-   map.stream().forEach(( e ) -> {
-    m.put(e.gX() , e.gY());
-   });
-   return m;
-  }
-  
-  public void clear(){
-   map.clear();
-   listener.tableChanged(null);
-  }
  }
 
- }
-
- 
  private final ParamF bp = new ParamF("Block");
  private final ParamF ip = new ParamF("Item");
 // private final ParamF cp = new ParamF();
