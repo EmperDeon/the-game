@@ -1,6 +1,7 @@
 package mods.basemod;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.TreeMap;
 import mods.basemod.containers.Mid;
 import mods.basemod.interfaces.InvItem;
@@ -16,13 +17,18 @@ public class IItem implements Serializable , InvItem {
  }
  protected final Model model;
 
- public IItem ( Mid id , Model model , String... param ) {
-  this.param = new TreeMap<>();
+ public IItem ( Mid id , Model model , Map<String, String> map ) {
+  this.param = new TreeMap<>(map);
   this.id = id;
-
   this.model = model;
  }
 
+ public IItem(JSONObject o){
+  this.id = new Mid("","","");
+  this.model = new Model("");
+  this.param = new TreeMap<>();
+ }
+ 
  @Override
  public String getParam ( String k ) {
   String t = "";
@@ -49,12 +55,8 @@ public class IItem implements Serializable , InvItem {
  }
 
  @Override
- public void addAllP ( String[] p ) {
-  String[] t;
-  for ( String s : p ) {
-   t = s.split(":");
-   this.param.put(t[0] , t[1]);
-  }
+ public void addAllP ( Map<String, String> p ) {
+  this.param.putAll(p);
  }
 
  @Override
@@ -76,4 +78,9 @@ public class IItem implements Serializable , InvItem {
   
  }
 
+ @Override 
+ public void fromJSON(JSONObject o){
+ 
+ }
+ 
 }

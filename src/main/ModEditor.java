@@ -11,8 +11,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,11 +29,11 @@ import mods.basemod.CraftE;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.Model;
-import mods.basemod.Speeds;
 import mods.basemod.containers.Mid;
 import utils.Unzipper;
 import utils.Zipper;
 import utils.json.JSONObject;
+import utils.vec.Vec2;
 
 public final class ModEditor extends javax.swing.JFrame {
 
@@ -302,17 +305,17 @@ public final class ModEditor extends javax.swing.JFrame {
  }
 
  private void gen () {
-  for ( int i = 0 ; i < 10000 ; i++ ) {
-   bm.add(new Mid("0" , "Block" + i , "0") , 1 , new Model("file1") ,
-          new Speeds("1,1") , "block" + i);
-   cm.add(i , "1x1" , "1=1");
-   im.add(new Mid("0" , "Item" + i , "0") , 1 , new Model("file1") , 1 ,
-          new Speeds("1,1"));
-  }
-  save();
+//  for ( int i = 0 ; i < 10000 ; i++ ) {
+//   bm.add(new Mid("0" , "Block" + i , "0") , 1 , new Model("file1") ,
+//          new Speeds("1,1") , "block" + i);
+//   cm.add(i , "1x1" , "1=1");
+//   im.add(new Mid("0" , "Item" + i , "0") , 1 , new Model("file1") , 1 ,
+//          new Speeds("1,1"));
+//  }
+//  save();
  }
 
- public class ItemsTable implements TableModel {
+ private final class ItemsTable implements TableModel {
 
   private TableModelListener listener;
 
@@ -382,9 +385,7 @@ public final class ModEditor extends javax.swing.JFrame {
   public void add () {
    add(new Mid(modname.getText() , iiname.getText() , isname.getText()) ,
        new Model(imodel.getText()) ,
-       "Durability:" + idurab.getText() ,
-       "Type:" + itype.getText() ,
-       "Speed:" + ispeed.getText());
+       ip.getMap());
    iiname.setText("");
    isname.setText("");
    imodel.setText("");
@@ -393,9 +394,8 @@ public final class ModEditor extends javax.swing.JFrame {
    ispeed.setText("");
   }
 
-  public void add ( Mid id , Model model , String durab , String type ,
-                    String speeds ) {
-   items.add(new IItem(id , model , durab , type , speeds));
+  public void add ( Mid id , Model model, Map<String, String> map ) {
+   items.add(new IItem(id , model , map));
    listener.tableChanged(null);
   }
 
@@ -423,7 +423,7 @@ public final class ModEditor extends javax.swing.JFrame {
   }
  }
 
- public class BlocksTable implements TableModel {
+ private final class BlocksTable implements TableModel {
 
   private TableModelListener listener;
 
@@ -498,15 +498,11 @@ public final class ModEditor extends javax.swing.JFrame {
 
   public void add () {
    add(new Mid(modname.getText() , bbname.getText() , bsname.getText()) ,
-       new Model(bmodel.getText()) ,
-       bdurab.getText() ,
-       bspeed.getText() ,
-       bdict.getText());
+       new Model(bmodel.getText()), bp.getMap()); 
   }
 
-  public void add ( Mid id , Model model , String durab , String speeds ,
-                    String dict ) {
-   items.add(new LevBlock(id , model , durab , speeds , dict));
+  public void add ( Mid id , Model model , HashMap<String , String> map ) {
+   items.add(new LevBlock(id , model , map));
    listener.tableChanged(null);
   }
 
@@ -527,13 +523,14 @@ public final class ModEditor extends javax.swing.JFrame {
    int i = 0;
    for ( LevBlock e : items ) {
     e.toJSON(t);
-    obj.put("Block" + i++ , t);
+    obj.put("Block" + i , t);
+    i++;
     t.clear();
    }
   }
  }
 
- public class CraftsTable implements TableModel {
+ private final class CraftsTable implements TableModel {
 
   private TableModelListener listener;
 
@@ -634,9 +631,167 @@ public final class ModEditor extends javax.swing.JFrame {
   }
  }
 
+ private final class ParamF extends JFrame {
+
+  private final HashMap<String , String> map;
+  private final JLabel pl1 = new JLabel();
+  private final JLabel pl2 = new JLabel();
+  private final JTextField pk = new JTextField();
+  private final JTextField pv = new JTextField();
+  private final JButton padd = new JButton();
+  private final JButton pdel = new JButton();
+  private final JTable ptab = new JTable();
+  private final ParamTable pmod = new ParamTable();
+  private final JScrollPane pscr = new JScrollPane();
+  
+  public ParamF () {
+   map = new HashMap<>();
+   this.setVisible(true);
+   this.setTitle("Params editor");
+   this.setLayout(null);
+   this.setBounds(300 , 300 , 500 , 345);
+   this.setResizable(false);
+   this.addWindowListener(new WindowAdapter() {
+    @Override
+    public void windowClosing ( WindowEvent e ) {
+
+    }
+   });
+
+   pl1.setText("Key:");
+   pl1.setBounds(15 , 15 , 50 , 20);
+   
+   pk.setBounds(70, 15, 100, 30);
+   
+   pl2.setText("Value:");
+   pl2.setBounds(190, 15, 50, 20);
+   
+   pv.setBounds(205, 15, 100, 30);
+   
+   padd.setText("Add");
+   padd.setBounds(320, 15, 80, 30);
+   
+   pdel.setText("Delete");
+   pdel.setBounds(405, 15, 80, 30);
+   
+   ptab.setModel(pmod);
+   ptab.getTableHeader().setReorderingAllowed(false);
+   pscr.setViewportView(ptab);
+   pscr.setBounds(5 , 40 , 490 , 300);
+   
+   add(pl1);
+   add(pl2);
+   add(padd);
+   add(pdel);
+   add(pk);
+   add(pv);
+   add(pscr);
+  }
+
+  public HashMap<String , String> getMap () {
+   return map;
+  }
+
+  public void clear () {
+   map.clear();
+  }
+ }
+
+ private final class ParamTable implements TableModel {
+
+  private TableModelListener listener;
+
+  private final ArrayList<Vec2<String>> map = new ArrayList<>();
+
+  @Override
+  public void addTableModelListener ( TableModelListener listener ) {
+   this.listener = listener;
+  }
+
+  @Override
+  public Class<?> getColumnClass ( int columnIndex ) {
+   return String.class;
+  }
+
+  @Override
+  public int getColumnCount () {
+   return 2;
+  }
+
+  @Override
+  public String getColumnName ( int columnIndex ) {
+   switch ( columnIndex ) {
+    case 0:
+     return "Key";
+    case 1:
+     return "Value";
+   }
+   return "";
+  }
+
+  @Override
+  public int getRowCount () {
+   return map.size();
+  }
+
+  @Override
+  public Object getValueAt ( int rowIndex , int columnIndex ) {
+   switch ( columnIndex ) {
+    case 0:
+     return map.get(rowIndex).gX();
+    case 1:
+     return map.get(rowIndex).gY();
+   }
+   return "";
+  }
+
+  @Override
+  public boolean isCellEditable ( int rowIndex , int columnIndex ) {
+   return false;
+  }
+
+  @Override
+  public void removeTableModelListener ( TableModelListener listener ) {
+   listener = null;
+  }
+
+  @Override
+  public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
+
+  }
+
+  public void add () {
+   
+  }
+
+  public void delete () {
+   int n = ctable.getSelectedRow();
+
+   if ( n != -1 ) {
+    map.remove(n);
+   } else {
+    System.out.println("No selected index");
+   }
+   listener.tableChanged(null);
+  }
+
+  public Map<String , String> get () {
+   HashMap<String , String> m = new HashMap<>();
+   map.stream().forEach(( e ) -> {
+    m.put(e.gX() , e.gY());
+   });
+   return m;
+  }
+ }
+
+ private final ParamF bp = new ParamF();
+ private final ParamF ip = new ParamF();
+ private final ParamF cp = new ParamF();
+
  private final BlocksTable bm = new BlocksTable();
  private final CraftsTable cm = new CraftsTable();
  private final ItemsTable im = new ItemsTable();
+
  private final JButton badd = new JButton();
  private final JTextField bbname = new JTextField();
  private final JButton bdel = new JButton();

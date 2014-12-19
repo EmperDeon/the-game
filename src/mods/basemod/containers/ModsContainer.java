@@ -13,8 +13,6 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
-import mods.basemod.Model;
-import mods.basemod.Speeds;
 import mods.basemod.interfaces.Action;
 import mods.basemod.interfaces.ActionU;
 import mods.basemod.interfaces.Base;
@@ -152,27 +150,13 @@ public final class ModsContainer implements Serializable {
 
    for ( int i = 0 ; i < opt.getInt("Blocks") ; i++ ) {
     t = opt.getJSONObject("Block" + i);
-    put(new LevBlock(
-            new Mid(opt.getString("name") , t.getString("Iid") , t.
-                    getString("Sid")) ,
-            t.getInt("Durab") ,
-            new Model(t.getString("Model")) ,
-            new Speeds(t.getString("Speed")) ,
-            t.getString("Dict")
-    ));
+    put(new LevBlock(t));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded block");
    }
 
    for ( int i = 0 ; i < opt.getInt("Items") ; i++ ) {
     t = opt.getJSONObject("Item" + i);
-    put(new IItem(
-            new Mid(opt.getString("name") , t.getString("Iid") , t.
-                    getString("Sid")) ,
-            t.getInt("Durab") ,
-            new Model(t.getString("Model")) ,
-            t.getInt("Type") ,
-            new Speeds(t.getString("Speed"))
-    ));
+    put(new IItem(t));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded item");
    }
 

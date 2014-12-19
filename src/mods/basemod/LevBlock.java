@@ -1,12 +1,18 @@
 package mods.basemod;
 
 import java.io.Serializable;
+import java.util.Map;
 import mods.basemod.containers.Mid;
+import utils.json.JSONObject;
 
 public class LevBlock extends IItem implements Serializable {
 
- public LevBlock ( Mid id , Model model , String... params ) {
-  super(id , model , params);
+ public LevBlock ( Mid id , Model model , Map<String, String> map ) {
+  super(id , model , map);
+ }
+ 
+ public LevBlock (JSONObject o){
+  super(o);
  }
 
  @Override
