@@ -26,7 +26,7 @@ public class IItem implements Serializable , InvItem {
  public IItem ( String m , JSONObject o ) {
   this.id = new Mid(m , o.getString("Iid") , o.getString("Sid"));
   this.model = new Model(o.getString("Model"));
-  this.param ;
+  this.param = new TreeMap<>(o.getJSONObject("params").getMap());
  }
 
  @Override
