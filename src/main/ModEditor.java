@@ -259,14 +259,8 @@ public final class ModEditor extends javax.swing.JFrame {
  }
 
  private void save () {
-  JSONObject s = new JSONObject();
-  JSONObject o = new JSONObject();
   String t = null;
-  s.put("name" , modname.getText());
-  bm.save(o);
-  cm.save(o);
-  im.save(o);
-
+  JSONMod s = new JSONMod();
   int x = JOptionPane.showConfirmDialog(null ,
                                         "Are you have a mod archive or mod folder ?" ,
                                         "Mod archive" ,
@@ -279,14 +273,13 @@ public final class ModEditor extends javax.swing.JFrame {
      t = f.getSelectedFile().getAbsolutePath();
     }
     Unzipper.unzipmod(t);
-    s.savemod(t);
-    new File(t).delete();
+    s.save(t);
     Zipper.zipmod(t);
     break;
    case 1:
     t = main.Main.mdir + "mods/" + modname.getText() + ".mod";
     new File(main.Main.mdir + "tmp/" + modname.getText() + "/").mkdirs();
-    s.savemod(t);
+    s.save(t);
     Zipper.zipmod(t);
     break;
    default:
@@ -304,6 +297,26 @@ public final class ModEditor extends javax.swing.JFrame {
 //          new Speeds("1,1"));
 //  }
 //  save();
+ }
+
+ private final class JSONMod {
+
+  public void save ( String dir ) {
+   JSONObject mod = new JSONObject();
+   JSONObject ibc = new JSONObject();
+
+   mod.put("name" , modname.getText());
+   mod.put("class" , "mod." + modname.getText() + ".main");
+
+   bm.save(ibc);
+   im.save(ibc);
+   cm.save(ibc);
+
+   mod.save(main.Main.mdir + "tmp/" + dir.substring(dir.lastIndexOf("/") + 1 ,
+                                                    dir.lastIndexOf(".mod")) + "/mod.json");
+   ibc.save(main.Main.mdir + "tmp/" + dir.substring(dir.lastIndexOf("/") + 1 ,
+                                                    dir.lastIndexOf(".mod")) + "/ibc.json");
+  }
  }
 
  private final class ItemsTable implements TableModel {

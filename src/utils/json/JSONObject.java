@@ -433,21 +433,12 @@ public final class JSONObject {
  }
 
  public void save ( String file ) {
-  try ( FileWriter t = new FileWriter(main.Main.mdir + file) ) {
+  try ( FileWriter t = new FileWriter(file) ) {
    t.write(this.write(new StringWriter()).toString());
    t.flush();
   } catch ( IOException ex ) {
    main.Main.LOG.addE("JSONObject.save()" , ex);
-  }
- }
-
- public void savemod ( String file ) {
-  try ( FileWriter t = new FileWriter(main.Main.mdir + "tmp" + file.substring(
-          file.lastIndexOf("/") , file.lastIndexOf(".mod")) + "/" + "properties.mod") ) {
-   t.write(this.write(new StringWriter()).toString());
-   t.flush();
-  } catch ( IOException ex ) {
-   main.Main.LOG.addE("JSONObject.save()" , ex);
+   System.out.println(ex);
   }
  }
 
