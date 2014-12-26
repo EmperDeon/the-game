@@ -306,7 +306,16 @@ public final class ModEditor extends javax.swing.JFrame {
    JSONObject ibc = new JSONObject();
 
    mod.put("name" , modname.getText());
-   mod.put("class" , "mod." + modname.getText() + ".main");
+   mod.put("class" , "mods." + modname.getText() + ".main");
+   if ( bm.items.isEmpty() && im.items.isEmpty() && cm.crafts.isEmpty() ) {
+    mod.put("isEmpty" , true);
+   } else {
+    mod.put("isEmpty" , false);
+   }
+
+   mod.put("Blocks" , bm.items.size());
+   mod.put("Items" , im.items.size());
+   mod.put("Crafts" , cm.crafts.size());
 
    bm.save(ibc);
    im.save(ibc);
@@ -316,6 +325,8 @@ public final class ModEditor extends javax.swing.JFrame {
                                                     dir.lastIndexOf(".mod")) + "/mod.json");
    ibc.save(main.Main.mdir + "tmp/" + dir.substring(dir.lastIndexOf("/") + 1 ,
                                                     dir.lastIndexOf(".mod")) + "/ibc.json");
+   // gen
+
   }
  }
 

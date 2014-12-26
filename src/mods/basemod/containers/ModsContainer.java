@@ -13,13 +13,12 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
+import mods.basemod.TextMod;
 import mods.basemod.interfaces.Action;
 import mods.basemod.interfaces.ActionU;
 import mods.basemod.interfaces.Base;
 import mods.basemod.interfaces.BaseMod;
 import mods.basemod.interfaces.CoreMod;
-import utils.Unzipper;
-import utils.json.JSONObject;
 
 public final class ModsContainer implements Serializable {
 
@@ -77,6 +76,10 @@ public final class ModsContainer implements Serializable {
   }
  }
 
+ public void putCraft ( Integer type , String grid , String elements ) {
+  ccont.add(type , grid , elements);
+ }
+
  // -----------------------
  public void test () {
   mods.keySet().stream().
@@ -87,8 +90,8 @@ public final class ModsContainer implements Serializable {
 
  public void init () {
   main.Main.LOG.addI("ModsContainer" , "Init Started");
-  mods.values().stream().forEach(( m ) -> {
-   m.init(this);
+  mods.values().stream().forEach(( BaseMod m ) -> {
+   m.init(ModsContainer.this);
    init.add(m.getId());
   });
   main.Main.LOG.addI("ModsContainer" , "Init Ended");
@@ -128,8 +131,7 @@ public final class ModsContainer implements Serializable {
  }
 
  public void loadDir ( boolean isI ) {
-  String dir;
-  JSONObject opt, t;
+  TextMod t;
   File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
    try {
     if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".mod") != -1 ) {
@@ -142,34 +144,12 @@ public final class ModsContainer implements Serializable {
   });
 
   for ( File f : s ) {
-   dir = f.getAbsolutePath();
-   dir = main.Main.mdir + "tmp/" + dir.substring(dir.lastIndexOf("/") + 1 , dir.
-                                                 lastIndexOf(".mod")) + "/";
-   Unzipper.unzipmod(f.getAbsolutePath());
-   opt = new JSONObject(dir + "properties.mod");
-
-   for ( int i = 0 ; i < opt.getInt("Blocks") ; i++ ) {
-    t = opt.getJSONObject("Block" + i);
-    put(new LevBlock(opt.getString("name") , t));
-    main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded block");
+   t = new TextMod(f.getAbsolutePath());
+   if ( t.isClass() ) {
+    put(t.get(f));
+   } else {
+    put(t);
    }
-
-   for ( int i = 0 ; i < opt.getInt("Items") ; i++ ) {
-    t = opt.getJSONObject("Item" + i);
-    put(new IItem(opt.getString("name") , t));
-    main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded item");
-   }
-
-   for ( int i = 0 ; i < opt.getInt("Crafts") ; i++ ) {
-    t = opt.getJSONObject("Craft" + i);
-    ccont.add(t.getInt("Type") ,
-              t.getString("Grid") ,
-              t.getString("Elements")
-    );
-    main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded craft");
-   }
-   main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" ,
-                      "Loaded:" + bcont.size() + " " + icont.size() + " ");
   }
 
   if ( isI ) {
