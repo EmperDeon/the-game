@@ -304,172 +304,203 @@ public final class ModEditor extends javax.swing.JFrame {
  private final class JSONMod {
 
   public void save ( String dir ) {
-    JSONObject mod = new JSONObject();
-    JSONObject ibc = new JSONObject();
-    
-    mod.put("name" , modname.getText());
-    mod.put("class" , "mods." + modname.getText() + ".main");
-    if ( bm.items.isEmpty() && im.items.isEmpty() && cm.crafts.isEmpty() ) {
-     mod.put("isEmpty" , true);
-    } else {
-     mod.put("isEmpty" , false);
-    }
-    
-    mod.put("Blocks" , bm.items.size());
-    mod.put("Items" , im.items.size());
-    mod.put("Crafts" , cm.crafts.size());
-    
-    bm.save(ibc);
-    im.save(ibc);
-    cm.save(ibc);
-    
-    mod.save(dir + "/mod.json");
-    ibc.save(dir + "/ibc.json");
-    // gen
-    
-    File f = new File(dir + "src/mods/" + modname.getText() + "/main.java");
-    f.mkdirs();
-    
-    try ( FileWriter t = new FileWriter(f) ) {
-     t.write("package mods.basemod;");
-     t.write("");
-     t.write("import java.io.File;");
-     t.write("import java.io.IOException;");
-     t.write("import java.net.URL;");
-     t.write("import java.net.URLClassLoader;");
-     t.write("import mods.basemod.containers.Mid;");
-     t.write("import mods.basemod.containers.ModsContainer;");
-     t.write("import mods.basemod.interfaces.BaseMod;");
-     t.write("import utils.Unzipper;");
-     t.write("import utils.json.JSONObject;");
-     t.write("");
-     t.write("public class TextMod implements BaseMod {");
-     t.write("");
-     t.write(" private final Mid id;");
-     t.write(" private final Boolean props = false;");
-     t.write(" private final JSONObject mod;");
-     t.write(" private final JSONObject ibc;");
-     t.write(" private final String cl;");
-     t.write(" private final boolean isEmpty;");
-     t.write("");
-     t.write(" public TextMod ( String file ) {");
-     t.write("  Unzipper.unzipmod(file);");
-     t.
-             write("  mod = new JSONObject(main.Main.mdir + \"tmp/\" + file.substring(file.");
-     t.
-             write("          lastIndexOf(\"/\") + 1 , file.lastIndexOf(\".mod\")) + \"/mod.json\");");
-     t.write("  ");
-     t.write("  isEmpty = mod.getBoolean(\"isEmpty\");");
-     t.write("  id = new Mid(mod.getString(\"name\"));");
-     t.write(" // cl = mod.getString(\"class\");");
-     t.write("  cl = null;");
-     t.write("  if ( isEmpty ) {");
-     t.write("   ibc = null;");
-     t.write("  } else {");
-     t.
-             write("   ibc = new JSONObject(main.Main.mdir + \"tmp/\" + file.substring(file.");
-     t.
-             write("           lastIndexOf(\"/\") + 1 , file.lastIndexOf(\".mod\")) + \"/ibc.json\");");
-     t.write("  }");
-     t.write("");
-     t.write(" }");
-     t.write("");
-     t.write(" @Override");
-     t.write(" public boolean isClass () {");
-     t.write("  return false;");
-     t.write(" // return !cl.isEmpty();");
-     t.write(" }");
-     t.write("");
-     t.write(" @Override");
-     t.write(" public boolean isEmpty () {");
-     t.write("  return isEmpty;");
-     t.write(" }");
-     t.write("");
-     t.write(" @Override");
-     t.write(" public TextMod get ( File zip ) {");
-     t.write("  if(isClass())");
-     t.write("  try {");
-     t.write("   URLClassLoader classLoader = new URLClassLoader(");
-     t.write("           new URL[]{zip.toURI().toURL()});");
-     t.
-             write("   TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();");
-     t.write("   return b;");
-     t.
-             write("  } catch ( IOException | IllegalArgumentException | ClassNotFoundException |");
-     t.write("            InstantiationException | IllegalAccessException e ) {");
-     t.write("   main.Main.LOG.addE(\"Containers.loadDir()\" , e);");
-     t.write("  }");
-     t.write("  return this;");
-     t.write(" }");
-     t.write("");
-     t.write(" @Override");
-     t.write(" public void init ( ModsContainer c ) {");
-     t.write("  JSONObject t;");
-     t.write("  if ( !isEmpty ) {");
-     t.write("   for ( int i = 0 ; i < mod.getInt(\"Blocks\") ; i++ ) {");
-     t.write("    t = ibc.getJSONObject(\"Block\" + i);");
-     t.write("    c.put(new LevBlock(mod.getString(\"name\") , t));");
-     t.
-             write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded block\");");
-     t.write("   }");
-     t.write("");
-     t.write("   for ( int i = 0 ; i < mod.getInt(\"Items\") ; i++ ) {");
-     t.write("    t = ibc.getJSONObject(\"Item\" + i);");
-     t.write("    c.put(new IItem(mod.getString(\"name\") , t));");
-     t.
-             write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded item\");");
-     t.write("   }");
-     t.write("");
-     t.write("   for ( int i = 0 ; i < mod.getInt(\"Crafts\") ; i++ ) {");
-     t.write("    t = ibc.getJSONObject(\"Craft\" + i);");
-     t.write("    c.putCraft(t.getInt(\"Type\") ,");
-     t.write("               t.getString(\"Grid\") ,");
-     t.write("               t.getString(\"Elements\")");
-     t.write("    );");
-     t.
-             write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded craft\");");
-     t.write("   }");
-     t.write("  }");
-     t.write("");
-     t.write("//put actions");
-     t.
-             write("//Ex. c.addAction(id of Block/Item (Mid) ,id of action(String), () -> { action } (Action));  () -> {  } is a lambda expreesion");
-     t.
-             write("  //Or  c.addAction(Mid , action (String) , ( int act , boolean shift ) -> { action } (Action)); for multiaction with mouse");
-     t.write(" ");
-     t.write("  c.initF(id);");
-     t.write(" }");
-     t.write("");
-     t.write(" @Override");
-     t.write(" public void postinit ( ModsContainer c ) {");
-     t.write("  ");
-     t.write("  c.postinitF(id);");
-     t.write(" }");
-     t.write("");
-     t.write(" @Override");
-     t.write(" public Mid getId () {");
-     t.write("  return this.id;");
-     t.write(" }");
-     t.write("");
-     t.write(" @Override");
-     t.write(" public boolean isProps () {");
-     t.write("  return false;");
-     t.write(" }");
-     t.write("");
-     t.write(" @Override");
-     t.write(" public void reinit ( ModsContainer c ) {");
-     t.write("  ");
-     t.write("  ");
-     t.write(" }");
-     t.write("}");
-     t.flush();
-    } catch ( IOException ex ) {
-     
-    }
-    
+   JSONObject mod = new JSONObject();
+   JSONObject ibc = new JSONObject();
 
+   mod.put("name" , modname.getText());
+   mod.put("class" , "mods." + modname.getText() + ".main");
+   if ( bm.items.isEmpty() && im.items.isEmpty() && cm.crafts.isEmpty() ) {
+    mod.put("isEmpty" , true);
+   } else {
+    mod.put("isEmpty" , false);
+   }
 
-   
+   mod.put("Blocks" , bm.items.size());
+   mod.put("Items" , im.items.size());
+   mod.put("Crafts" , cm.crafts.size());
+
+   bm.save(ibc);
+   im.save(ibc);
+   cm.save(ibc);
+
+   mod.save(dir + "/mod.json");
+   ibc.save(dir + "/ibc.json");
+   // gen
+
+   File d = new File(dir + "src/mods/" + modname.getText() + "/");
+   d.mkdirs();
+
+   try ( FileWriter t = new FileWriter(new File(d , "main.java")) ) {
+    t.write("package mods.basemod;\n");
+    t.write("\n");
+    t.write("import java.io.File;\n");
+    t.write("import java.io.IOException;\n");
+    t.write("import java.net.URL;\n");
+    t.write("import java.net.URLClassLoader;\n");
+    t.write("import mods.basemod.containers.Mid;\n");
+    t.write("import mods.basemod.containers.ModsContainer;\n");
+    t.write("import mods.basemod.interfaces.BaseMod;\n");
+    t.write("import utils.Unzipper;\n");
+    t.write("import utils.json.JSONObject;\n");
+    t.write("\n");
+    t.write("public class TextMod implements BaseMod {\n");
+    t.write("\n");
+    t.write(" private final Mid id;\n");
+    t.write(" private final Boolean props = false;\n");
+    t.write(" private final JSONObject mod;\n");
+    t.write(" private final JSONObject ibc;\n");
+    t.write(" private final String cl;\n");
+    t.write(" private final boolean isEmpty;\n");
+    t.write("\n");
+    t.write(" public TextMod ( String file ) {\n");
+    t.write("  Unzipper.unzipmod(file);\n");
+    t.
+            write("  mod = new JSONObject(main.Main.mdir + \"tmp/\" + file.substring(file.\n");
+    t.
+            write("          lastIndexOf(\"/\") + 1 , file.lastIndexOf(\".mod\")) + \"/mod.json\");\n");
+    t.write("  \n");
+    t.write("  isEmpty = mod.getBoolean(\"isEmpty\");\n");
+    t.write("  id = new Mid(mod.getString(\"name\"));\n");
+    t.write(" // cl = mod.getString(\"class\");\n");
+    t.write("  cl = null;\n");
+    t.write("  if ( isEmpty ) {\n");
+    t.write("   ibc = null;\n");
+    t.write("  } else {\n");
+    t.
+            write("   ibc = new JSONObject(main.Main.mdir + \"tmp/\" + file.substring(file.\n");
+    t.
+            write("           lastIndexOf(\"/\") + 1 , file.lastIndexOf(\".mod\")) + \"/ibc.json\");\n");
+    t.write("  }\n");
+    t.write("\n");
+    t.write(" }\n");
+    t.write("\n");
+    t.write(" @Override\n");
+    t.write(" public boolean isClass () {\n");
+    t.write("  return false;\n");
+    t.write(" // return !cl.isEmpty();\n");
+    t.write(" }\n");
+    t.write("\n");
+    t.write(" @Override\n");
+    t.write(" public boolean isEmpty () {\n");
+    t.write("  return isEmpty;\n");
+    t.write(" }\n");
+    t.write("\n");
+    t.write(" @Override\n");
+    t.write(" public TextMod get ( File zip ) {\n");
+    t.write("  if(isClass())\n");
+    t.write("  try {\n");
+    t.write("   URLClassLoader classLoader = new URLClassLoader(\n");
+    t.write("           new URL[]{zip.toURI().toURL()});\n");
+    t.
+            write("   TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();\n");
+    t.write("   return b;\n");
+    t.
+            write("  } catch ( IOException | IllegalArgumentException | ClassNotFoundException |\n");
+    t.
+            write("            InstantiationException | IllegalAccessException e ) {\n");
+    t.write("   main.Main.LOG.addE(\"Containers.loadDir()\" , e);\n");
+    t.write("  }\n");
+    t.write("  return this;\n");
+    t.write(" }\n");
+    t.write("\n");
+    t.write(" @Override\n");
+    t.write(" public void init ( ModsContainer c ) {\n");
+    t.write("  JSONObject t;\n");
+    t.write("  if ( !isEmpty ) {\n");
+    t.write("   for ( int i = 0 ; i < mod.getInt(\"Blocks\") ; i++ ) {\n");
+    t.write("    t = ibc.getJSONObject(\"Block\" + i);\n");
+    t.write("    c.put(new LevBlock(mod.getString(\"name\") , t));\n");
+    t.
+            write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded block\");\n");
+    t.write("   }\n");
+    t.write("\n");
+    t.write("   for ( int i = 0 ; i < mod.getInt(\"Items\") ; i++ ) {\n");
+    t.write("    t = ibc.getJSONObject(\"Item\" + i);\n");
+    t.write("    c.put(new IItem(mod.getString(\"name\") , t));\n");
+    t.
+            write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded item\");\n");
+    t.write("   }\n");
+    t.write("\n");
+    t.write("   for ( int i = 0 ; i < mod.getInt(\"Crafts\") ; i++ ) {\n");
+    t.write("    t = ibc.getJSONObject(\"Craft\" + i);\n");
+    t.write("    c.putCraft(t.getInt(\"Type\") ,\n");
+    t.write("               t.getString(\"Grid\") ,\n");
+    t.write("               t.getString(\"Elements\")\n");
+    t.write("    );\n");
+    t.
+            write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded craft\");\n");
+    t.write("   }\n");
+    t.write("  }\n");
+    t.write("\n");
+    t.write("  //put actions to modact.java, item.java, block.java \n");
+    t.write("  ModAct.putAll(c);\n");
+    t.write("  ItemAct.putAll(c);\n");
+    t.write("  BlockAct.putAll(c);\n");
+    t.
+            write("  //Ex. c.addAction(id of Block/Item (Mid) , id of action(String) , () -> { action } (Action));  () -> {  } is a lambda expreesion\n");
+    t.
+            write("  //Or  c.addAction(Mid , action (String) , ( int act , boolean shift ) -> { action } (Action)); for multiaction with mouse\n");
+    t.write(" \n");
+    t.write("  c.initF(id);\n");
+    t.write(" }\n");
+    t.write("\n");
+    t.write(" @Override\n");
+    t.write(" public void postinit ( ModsContainer c ) {\n");
+    t.write("  \n");
+    t.write("  c.postinitF(id);\n");
+    t.write(" }\n");
+    t.write("\n");
+    t.write(" @Override\n");
+    t.write(" public Mid getId () {\n");
+    t.write("  return this.id;\n");
+    t.write(" }\n");
+    t.write("\n");
+    t.write(" @Override\n");
+    t.write(" public boolean isProps () {\n");
+    t.write("  return false;\n");
+    t.write(" }\n");
+    t.write("\n");
+    t.write(" @Override\n");
+    t.write(" public void reinit ( ModsContainer c ) {\n");
+    t.write("  \n");
+    t.write("  \n");
+    t.write(" }\n");
+    t.write("}\n");
+    t.flush();
+   } catch ( IOException ex ) {
+
+   }
+
+   try ( FileWriter t = new FileWriter(new File(d , "modact.java")) ) {
+    t.write("package mods." + modname.getText() + ";");
+    t.write("public static class ModAct {");
+    t.write("public static void putAll(ModsContainer c){");
+    t.write("//put actions");
+    t.write("}");
+    t.write("}");
+   } catch ( IOException ex ) {
+
+   }
+   try ( FileWriter t = new FileWriter(new File(d , "itemact.java")) ) {
+    t.write("package mods." + modname.getText() + ";");
+    t.write("public static class ItemAct {");
+    t.write("public static void putAll(ModsContainer c){");
+    t.write("//put actions");
+    t.write("}");
+    t.write("}");
+   } catch ( IOException ex ) {
+
+   }
+   try ( FileWriter t = new FileWriter(new File(d , "blockact.java")) ) {
+    t.write("package mods." + modname.getText() + ";");
+    t.write("public static class BlockAct {");
+    t.write("public static void putAll(ModsContainer c){");
+    t.write("//put actions");
+    t.write("}");
+    t.write("}");
+   } catch ( IOException ex ) {
+
+   }
   }
  }
 
