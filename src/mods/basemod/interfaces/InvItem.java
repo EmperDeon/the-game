@@ -15,7 +15,7 @@ import utils.json.JSONObject;
  */
 public interface InvItem extends Base {
 
- public String getParam ( String k );
+ public Object getParam ( String k );
 
  public String getAllP ();
 

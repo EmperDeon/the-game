@@ -28,7 +28,7 @@ public class TextMod implements BaseMod {
   id = new Mid(mod.getString("name"));
  // cl = mod.getString("class");
   cl = null;
-  if ( !isEmpty ) {
+  if ( isEmpty ) {
    ibc = null;
   } else {
    ibc = new JSONObject(main.Main.mdir + "tmp/" + file.substring(file.
@@ -92,11 +92,14 @@ public class TextMod implements BaseMod {
   //put actions
   //Ex. c.addAction(id of Block/Item (Mid) , id of action(String) , () -> { action } (Action));  () -> {  } is a lambda expreesion
   //Or  c.addAction(Mid , action (String) , ( int act , boolean shift ) -> { action } (Action)); for multiaction with mouse
+ 
+  c.initF(id);
  }
 
  @Override
  public void postinit ( ModsContainer c ) {
-
+  
+  c.postinitF(id);
  }
 
  @Override
@@ -111,6 +114,7 @@ public class TextMod implements BaseMod {
 
  @Override
  public void reinit ( ModsContainer c ) {
-
+  
+  
  }
 }

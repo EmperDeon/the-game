@@ -123,11 +123,11 @@ public final class ModsContainer implements Serializable {
  }
 
  public void load () {
-  if ( file.exists() ) {
-   fload();
-  } else {
+//  if ( file.exists() ) {
+//   fload();
+//  } else {
    loadDir(true);
-  }
+//  }
  }
 
  public void loadDir ( boolean isI ) {

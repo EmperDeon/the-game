@@ -332,7 +332,6 @@ public final class JSONObject {
  public JSONObject ( String source ) throws JSONException {
   this();
   load(source);
-  System.out.println(source);
  }
 
  /**
@@ -746,11 +745,11 @@ public final class JSONObject {
   return names;
  }
 
- public Map<String , String> getMap () {
-  Map<String , String> m = new HashMap<>();
+ public Map<String , Object> getMap () {
+  Map<String , Object> m = new HashMap<>();
   map.keySet().stream().
           forEach(( s ) -> {
-           m.put(s , ( String ) map.get(s));
+           m.put(s , map.get(s));
           });
   return m;
  }

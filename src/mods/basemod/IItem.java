@@ -10,9 +10,9 @@ import utils.json.JSONObject;
 public class IItem implements Serializable , InvItem {
 
  protected final Mid id;
- protected final TreeMap<String , String> param;
+ protected final TreeMap<String , Object> param;
 
- public TreeMap<String , String> getParam () {
+ public TreeMap<String , Object> getParam () {
   return param;
  }
  protected final Model model;
@@ -30,8 +30,8 @@ public class IItem implements Serializable , InvItem {
  }
 
  @Override
- public String getParam ( String k ) {
-  String t = "";
+ public Object getParam ( String k ) {
+  Object t = "";
   try {
    t = param.get(k);
   } catch ( Exception e ) {
