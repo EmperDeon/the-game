@@ -11,11 +11,11 @@ public interface BaseMod extends Base {
 
  public boolean isProps ();
 
- public boolean isClass();
- 
- public boolean isEmpty();
- 
- public BaseMod get(File zip);
+ public boolean isClass ();
+
+ public boolean isEmpty ();
+
+ public BaseMod get ( File zip );
 
  public void reinit ( ModsContainer aThis );
 }

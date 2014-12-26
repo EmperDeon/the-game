@@ -33,7 +33,7 @@ public class LogManager extends javax.swing.JFrame {
   */
  @SuppressWarnings( "unchecked" )
  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
- private void initComponents() {
+ private void initComponents () {
 
   jTabbedPane2 = new javax.swing.JTabbedPane();
   jPanel1 = new javax.swing.JPanel();
@@ -57,64 +57,80 @@ public class LogManager extends javax.swing.JFrame {
   javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
   jPanel1.setLayout(jPanel1Layout);
   jPanel1Layout.setHorizontalGroup(
-   jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+          jPanel1Layout.createParallelGroup(
+                  javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane2 , javax.swing.GroupLayout.DEFAULT_SIZE ,
+                        577 , Short.MAX_VALUE)
   );
   jPanel1Layout.setVerticalGroup(
-   jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+          jPanel1Layout.createParallelGroup(
+                  javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane2 , javax.swing.GroupLayout.DEFAULT_SIZE ,
+                        362 , Short.MAX_VALUE)
   );
 
-  jTabbedPane2.addTab("Exceptions", jPanel1);
+  jTabbedPane2.addTab("Exceptions" , jPanel1);
 
   jScrollPane3.setViewportView(jTextPane2);
 
   javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
   jPanel2.setLayout(jPanel2Layout);
   jPanel2Layout.setHorizontalGroup(
-   jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+          jPanel2Layout.createParallelGroup(
+                  javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane3 , javax.swing.GroupLayout.DEFAULT_SIZE ,
+                        577 , Short.MAX_VALUE)
   );
   jPanel2Layout.setVerticalGroup(
-   jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+          jPanel2Layout.createParallelGroup(
+                  javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane3 , javax.swing.GroupLayout.DEFAULT_SIZE ,
+                        362 , Short.MAX_VALUE)
   );
 
-  jTabbedPane2.addTab("Warnings", jPanel2);
+  jTabbedPane2.addTab("Warnings" , jPanel2);
 
   jScrollPane4.setViewportView(jTextPane3);
 
   javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
   jPanel3.setLayout(jPanel3Layout);
   jPanel3Layout.setHorizontalGroup(
-   jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+          jPanel3Layout.createParallelGroup(
+                  javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane4 , javax.swing.GroupLayout.DEFAULT_SIZE ,
+                        577 , Short.MAX_VALUE)
   );
   jPanel3Layout.setVerticalGroup(
-   jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+          jPanel3Layout.createParallelGroup(
+                  javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane4 , javax.swing.GroupLayout.DEFAULT_SIZE ,
+                        362 , Short.MAX_VALUE)
   );
 
-  jTabbedPane2.addTab("Info", jPanel3);
+  jTabbedPane2.addTab("Info" , jPanel3);
 
   jScrollPane5.setViewportView(jTextPane4);
 
   javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
   jPanel4.setLayout(jPanel4Layout);
   jPanel4Layout.setHorizontalGroup(
-   jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+          jPanel4Layout.createParallelGroup(
+                  javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane5 , javax.swing.GroupLayout.DEFAULT_SIZE ,
+                        577 , Short.MAX_VALUE)
   );
   jPanel4Layout.setVerticalGroup(
-   jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+          jPanel4Layout.createParallelGroup(
+                  javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane5 , javax.swing.GroupLayout.DEFAULT_SIZE ,
+                        362 , Short.MAX_VALUE)
   );
 
-  jTabbedPane2.addTab("Debug", jPanel4);
+  jTabbedPane2.addTab("Debug" , jPanel4);
 
   jButton1.setText("Open File");
   jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-   public void mouseClicked(java.awt.event.MouseEvent evt) {
+   public void mouseClicked ( java.awt.event.MouseEvent evt ) {
     jButton1MouseClicked(evt);
    }
   });
@@ -122,31 +138,40 @@ public class LogManager extends javax.swing.JFrame {
   javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
   getContentPane().setLayout(layout);
   layout.setHorizontalGroup(
-   layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addGroup(layout.createSequentialGroup()
-    .addContainerGap()
-    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-    .addComponent(jButton1)
-    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+                  .addContainerGap()
+                  .addComponent(jTabbedPane2 ,
+                                javax.swing.GroupLayout.PREFERRED_SIZE , 581 ,
+                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(
+                          javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(jButton1)
+                  .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE ,
+                                   Short.MAX_VALUE))
   );
   layout.setVerticalGroup(
-   layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-   .addGroup(layout.createSequentialGroup()
-    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-     .addGroup(layout.createSequentialGroup()
-      .addGap(33, 33, 33)
-      .addComponent(jButton1))
-     .addGroup(layout.createSequentialGroup()
-      .addContainerGap()
-      .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)))
-    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+                  .addGroup(layout.createParallelGroup(
+                                  javax.swing.GroupLayout.Alignment.LEADING)
+                          .addGroup(layout.createSequentialGroup()
+                                  .addGap(33 , 33 , 33)
+                                  .addComponent(jButton1))
+                          .addGroup(layout.createSequentialGroup()
+                                  .addContainerGap()
+                                  .addComponent(jTabbedPane2 ,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE ,
+                                                391 ,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))).
+                  addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE ,
+                                  Short.MAX_VALUE))
   );
 
   pack();
  }// </editor-fold>//GEN-END:initComponents
 
- private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+ private void jButton1MouseClicked ( java.awt.event.MouseEvent evt ) {//GEN-FIRST:event_jButton1MouseClicked
   JFileChooser f = new JFileChooser(Main.mdir);
   if ( f.showDialog(null , "Open File") == JFileChooser.APPROVE_OPTION ) {
    try ( ObjectInputStream t = new ObjectInputStream(new FileInputStream(f.

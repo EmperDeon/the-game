@@ -33,28 +33,28 @@ public class TextMod implements BaseMod {
            lastIndexOf("/") + 1 , file.lastIndexOf(".mod")) + "/ibc.json");
   }
 
-
  }
 
  @Override
- public boolean isClass() {
+ public boolean isClass () {
   return !cl.isEmpty();
  }
- 
+
  @Override
  public boolean isEmpty () {
   return isEmpty;
  }
 
  @Override
- public TextMod get (File zip){
-  try{
-  URLClassLoader classLoader = new URLClassLoader(new URL[]{zip.toURI().toURL()});
-    TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();
-    return b;
-   } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
-             InstantiationException | IllegalAccessException e ) {
-    main.Main.LOG.addE("Containers.loadDir()" , e);
+ public TextMod get ( File zip ) {
+  try {
+   URLClassLoader classLoader = new URLClassLoader(
+           new URL[]{zip.toURI().toURL()});
+   TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();
+   return b;
+  } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
+            InstantiationException | IllegalAccessException e ) {
+   main.Main.LOG.addE("Containers.loadDir()" , e);
   }
   return this;
  }
@@ -92,7 +92,7 @@ public class TextMod implements BaseMod {
 
  @Override
  public void postinit ( ModsContainer c ) {
-  
+
  }
 
  @Override

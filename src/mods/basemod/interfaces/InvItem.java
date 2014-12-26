@@ -17,16 +17,15 @@ public interface InvItem extends Base {
 
  public String getParam ( String k );
 
- public String getAllP();
- 
- public void addParam(String k, String v);
- 
- public void addAllP(Map<String, String> p);
- 
- public void toJSON(JSONObject o);
- 
+ public String getAllP ();
+
+ public void addParam ( String k , String v );
+
+ public void addAllP ( Map<String , String> p );
+
+ public void toJSON ( JSONObject o );
+
  @Override
  public Mid getId ();
- 
- 
+
 }
