@@ -26,7 +26,8 @@ public class TextMod implements BaseMod {
   
   isEmpty = mod.getBoolean("isEmpty");
   id = new Mid(mod.getString("name"));
-  cl = mod.getString("class");
+ // cl = mod.getString("class");
+  cl = null;
   if ( !isEmpty ) {
    ibc = null;
   } else {
@@ -38,7 +39,8 @@ public class TextMod implements BaseMod {
 
  @Override
  public boolean isClass () {
-  return !cl.isEmpty();
+  return false;
+ // return !cl.isEmpty();
  }
 
  @Override
@@ -48,6 +50,7 @@ public class TextMod implements BaseMod {
 
  @Override
  public TextMod get ( File zip ) {
+  if(isClass())
   try {
    URLClassLoader classLoader = new URLClassLoader(
            new URL[]{zip.toURI().toURL()});
