@@ -332,6 +332,7 @@ public final class JSONObject {
  public JSONObject ( String source ) throws JSONException {
   this();
   load(source);
+  System.out.println(source);
  }
 
  /**

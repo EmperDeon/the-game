@@ -23,6 +23,7 @@ public class TextMod implements BaseMod {
   Unzipper.unzipmod(file);
   mod = new JSONObject(main.Main.mdir + "tmp/" + file.substring(file.
           lastIndexOf("/") + 1 , file.lastIndexOf(".mod")) + "/mod.json");
+  
   isEmpty = mod.getBoolean("isEmpty");
   id = new Mid(mod.getString("name"));
   cl = mod.getString("class");
@@ -63,19 +64,19 @@ public class TextMod implements BaseMod {
  public void init ( ModsContainer c ) {
   JSONObject t;
   if ( !isEmpty ) {
-   for ( int i = 0 ; i < ibc.getInt("Blocks") ; i++ ) {
+   for ( int i = 0 ; i < mod.getInt("Blocks") ; i++ ) {
     t = ibc.getJSONObject("Block" + i);
-    c.put(new LevBlock(ibc.getString("name") , t));
+    c.put(new LevBlock(mod.getString("name") , t));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded block");
    }
 
-   for ( int i = 0 ; i < ibc.getInt("Items") ; i++ ) {
+   for ( int i = 0 ; i < mod.getInt("Items") ; i++ ) {
     t = ibc.getJSONObject("Item" + i);
-    c.put(new IItem(ibc.getString("name") , t));
+    c.put(new IItem(mod.getString("name") , t));
     main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded item");
    }
 
-   for ( int i = 0 ; i < ibc.getInt("Crafts") ; i++ ) {
+   for ( int i = 0 ; i < mod.getInt("Crafts") ; i++ ) {
     t = ibc.getJSONObject("Craft" + i);
     c.putCraft(t.getInt("Type") ,
                t.getString("Grid") ,
