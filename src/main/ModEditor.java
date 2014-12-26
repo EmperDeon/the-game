@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -22,6 +23,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import javax.tools.DiagnosticCollector;
+import javax.tools.JavaCompiler;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 import mods.basemod.CraftE;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
@@ -325,9 +330,10 @@ public final class ModEditor extends javax.swing.JFrame {
 
    mod.save(dir + "/mod.json");
    ibc.save(dir + "/ibc.json");
-   // gen
+  }
 
-   File d = new File(dir + "src/mods/" + modname.getText() + "/");
+  public void gen ( String dir ) {
+   File d = new File(main.Main.mdir + "src/mods/" + modname.getText() + "/");
    d.mkdirs();
 
    try ( FileWriter t = new FileWriter(new File(d , "main.java")) ) {
@@ -472,36 +478,62 @@ public final class ModEditor extends javax.swing.JFrame {
    }
 
    try ( FileWriter t = new FileWriter(new File(d , "modact.java")) ) {
-    t.write("package mods." + modname.getText() + ";");
-    t.write("public static class ModAct {");
-    t.write("public static void putAll(ModsContainer c){");
-    t.write("//put actions");
-    t.write("}");
-    t.write("}");
+    t.write("package mods." + modname.getText() + ";\n");
+    t.write("public static class ModAct {\n");
+    t.write("public static void putAll(ModsContainer c){\n");
+    t.write("//put actions\n");
+    t.write("}\n");
+    t.write("}\n");
    } catch ( IOException ex ) {
 
    }
    try ( FileWriter t = new FileWriter(new File(d , "itemact.java")) ) {
-    t.write("package mods." + modname.getText() + ";");
-    t.write("public static class ItemAct {");
-    t.write("public static void putAll(ModsContainer c){");
-    t.write("//put actions");
-    t.write("}");
-    t.write("}");
+    t.write("package mods." + modname.getText() + ";\n");
+    t.write("public static class ItemAct {\n");
+    t.write("public static void putAll(ModsContainer c){\n");
+    t.write("//put actions\n");
+    t.write("}\n");
+    t.write("}\n");
    } catch ( IOException ex ) {
 
    }
    try ( FileWriter t = new FileWriter(new File(d , "blockact.java")) ) {
-    t.write("package mods." + modname.getText() + ";");
-    t.write("public static class BlockAct {");
-    t.write("public static void putAll(ModsContainer c){");
-    t.write("//put actions");
-    t.write("}");
-    t.write("}");
+    t.write("package mods." + modname.getText() + ";\n");
+    t.write("public static class BlockAct {\n");
+    t.write("public static void putAll(ModsContainer c){\n");
+    t.write("//put actions\n");
+    t.write("}\n");
+    t.write("}\n");
    } catch ( IOException ex ) {
 
    }
+
+   ArrayList<String> arg = new ArrayList<>();
+   arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/main.java");
+   arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/modact.java");
+   arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/itemact.java");
+   arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/blockact.java");
+   
+   d = new File(main.Main.mdir + "mods/" + modname.getText() + "/");
+   d.mkdirs();
+
+   JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+
+   StandardJavaFileManager fileManager = compiler.getStandardFileManager(
+           new DiagnosticCollector<>() , null , null);
+
+   JavaCompiler.CompilationTask task = compiler.getTask(null , fileManager ,
+                                                        new DiagnosticCollector<>() ,
+                                                        Arrays.
+                                                        asList("-d" , d.getAbsolutePath()) ,
+                                                        null , fileManager.
+                                                        getJavaFileObjectsFromStrings(arg));
+
+   boolean success = task.call();
+   System.out.println("Success: " + success);
+
   }
+
  }
 
  private final class ItemsTable implements TableModel {
