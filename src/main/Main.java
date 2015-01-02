@@ -31,7 +31,7 @@ public final class Main implements Runnable {
  @Override
  public void run () {
   mods.load();
-  
+
  }
 
  public void destroy () {
@@ -49,7 +49,7 @@ public final class Main implements Runnable {
   } catch ( ClassNotFoundException | InstantiationException |
             IllegalAccessException | UnsupportedLookAndFeelException ex ) {
   }
-  
+
   Tm.start();
  }
 

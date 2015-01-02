@@ -23,7 +23,8 @@ import static main.Main.LOG;
 import static main.Main.Tr;
 import static main.Main.mods;
 
-public class MainForm  extends JFrame {
+public class MainForm extends JFrame {
+
  private final javax.swing.JList coreList = new javax.swing.JList();
  private final JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
  private final JScrollPane jScrollPane2 = new javax.swing.JScrollPane();
@@ -46,8 +47,8 @@ public class MainForm  extends JFrame {
  private final Pop mpop = new Pop(modsList);
  public final Model cmod = new Model();
  public final Model mmod = new Model();
- 
- public MainForm(){
+
+ public MainForm () {
   java.awt.EventQueue.invokeLater(() -> {
    setVisible(true);
   });
@@ -182,7 +183,7 @@ public class MainForm  extends JFrame {
 
   repaint();
  }
- 
+
  private class Pop extends JPopupMenu {
 
   private final JMenuItem enab;

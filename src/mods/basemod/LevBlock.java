@@ -31,7 +31,7 @@ public class LevBlock extends IItem implements Serializable {
  public String toString () {
   return "LevBlock " + id.toString() + " " + getAllP();
  }
- 
+
  @Override
  public void toJSON ( JSONObject o ) {
   o.put("Iid" , id.getIid());

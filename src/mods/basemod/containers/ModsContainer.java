@@ -127,10 +127,9 @@ public final class ModsContainer implements Serializable {
 //  if ( file.exists() ) {
 //   fload();
 //  } else {
-   loadDir(true);
+  loadDir(true);
 //  }
  }
- 
 
  public void loadDir ( boolean isI ) {
   TextMod t;

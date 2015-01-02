@@ -513,7 +513,7 @@ public final class ModEditor extends javax.swing.JFrame {
    arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/modact.java");
    arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/itemact.java");
    arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/blockact.java");
-   
+
    d = new File(main.Main.mdir + "mods/" + modname.getText() + "/");
    d.mkdirs();
 
@@ -525,9 +525,11 @@ public final class ModEditor extends javax.swing.JFrame {
    JavaCompiler.CompilationTask task = compiler.getTask(null , fileManager ,
                                                         new DiagnosticCollector<>() ,
                                                         Arrays.
-                                                        asList("-d" , d.getAbsolutePath()) ,
+                                                        asList("-d" , d.
+                                                               getAbsolutePath()) ,
                                                         null , fileManager.
-                                                        getJavaFileObjectsFromStrings(arg));
+                                                        getJavaFileObjectsFromStrings(
+                                                                arg));
 
    boolean success = task.call();
    System.out.println("Success: " + success);

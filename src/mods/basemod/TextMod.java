@@ -23,10 +23,10 @@ public class TextMod implements BaseMod {
   Unzipper.unzipmod(file);
   mod = new JSONObject(main.Main.mdir + "tmp/" + file.substring(file.
           lastIndexOf("/") + 1 , file.lastIndexOf(".mod")) + "/mod.json");
-  
+
   isEmpty = mod.getBoolean("isEmpty");
   id = new Mid(mod.getString("name"));
- // cl = mod.getString("class");
+  // cl = mod.getString("class");
   cl = null;
   if ( isEmpty ) {
    ibc = null;
@@ -40,7 +40,7 @@ public class TextMod implements BaseMod {
  @Override
  public boolean isClass () {
   return false;
- // return !cl.isEmpty();
+  // return !cl.isEmpty();
  }
 
  @Override
@@ -50,15 +50,16 @@ public class TextMod implements BaseMod {
 
  @Override
  public TextMod get ( File zip ) {
-  if(isClass())
-  try {
-   URLClassLoader classLoader = new URLClassLoader(
-           new URL[]{zip.toURI().toURL()});
-   TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();
-   return b;
-  } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
-            InstantiationException | IllegalAccessException e ) {
-   main.Main.LOG.addE("Containers.loadDir()" , e);
+  if ( isClass() ) {
+   try {
+    URLClassLoader classLoader = new URLClassLoader(
+            new URL[]{zip.toURI().toURL()});
+    TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();
+    return b;
+   } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
+             InstantiationException | IllegalAccessException e ) {
+    main.Main.LOG.addE("Containers.loadDir()" , e);
+   }
   }
   return this;
  }
@@ -92,13 +93,12 @@ public class TextMod implements BaseMod {
   //put actions
   //Ex. c.addAction(id of Block/Item (Mid) , id of action(String) , () -> { action } (Action));  () -> {  } is a lambda expreesion
   //Or  c.addAction(Mid , action (String) , ( int act , boolean shift ) -> { action } (Action)); for multiaction with mouse
- 
   c.initF(id);
  }
 
  @Override
  public void postinit ( ModsContainer c ) {
-  
+
   c.postinitF(id);
  }
 
@@ -114,7 +114,6 @@ public class TextMod implements BaseMod {
 
  @Override
  public void reinit ( ModsContainer c ) {
-  
-  
+
  }
 }
