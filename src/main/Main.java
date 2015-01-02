@@ -4,6 +4,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
+import utils.LibLoader;
 import utils.Logger;
 import utils.MActionListener;
 import utils.json.JSONObject;
@@ -21,7 +22,7 @@ public final class Main implements Runnable {
  public final static JSONObject OPTIONS = new JSONObject(mdir + "options.db");
  public final static MActionListener TIMER = new MActionListener();
  public final static ModsContainer mods = new ModsContainer();
- public final static MainForm mainform = new MainForm();
+ public static MainForm mainform;
  public boolean running = true;
 
  public Main () {
@@ -31,7 +32,7 @@ public final class Main implements Runnable {
  @Override
  public void run () {
   mods.load();
-
+  LibLoader.loadLibs();
  }
 
  public void destroy () {
@@ -49,6 +50,8 @@ public final class Main implements Runnable {
   } catch ( ClassNotFoundException | InstantiationException |
             IllegalAccessException | UnsupportedLookAndFeelException ex ) {
   }
+  
+  mainform = new MainForm();
 
   Tm.start();
  }

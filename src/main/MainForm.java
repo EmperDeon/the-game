@@ -49,10 +49,6 @@ public class MainForm extends JFrame {
  public final Model mmod = new Model();
 
  public MainForm () {
-  java.awt.EventQueue.invokeLater(() -> {
-   setVisible(true);
-  });
-
   setTitle("Launcher");
   setBounds(600 , 300 , 569 , 240);
   setResizable(false);
@@ -180,6 +176,10 @@ public class MainForm extends JFrame {
   logpanel.add(passLabel);
   logpanel.add(passField);
   add(logpanel);
+
+  java.awt.EventQueue.invokeLater(() -> {
+   setVisible(true);
+  });
 
   repaint();
  }
