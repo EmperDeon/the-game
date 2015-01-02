@@ -25,10 +25,6 @@ public final class Main implements Runnable {
  public static MainForm mainform;
  public boolean running = true;
 
- public Main () {
-
- }
-
  @Override
  public void run () {
   mods.load();
