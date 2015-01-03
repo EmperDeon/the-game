@@ -8,8 +8,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -25,6 +25,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import mods.basemod.CraftE;
@@ -333,16 +334,19 @@ public final class ModEditor extends javax.swing.JFrame {
   }
 
   public void gen ( String dir ) {
-   File d = new File(main.Main.mdir + "src/mods/" + modname.getText() + "/");
+   String srcdir = main.Main.mdir + "src/mods/" + modname.getText() + "/";
+   File d = new File(srcdir);
    d.mkdirs();
 
-   try ( FileWriter t = new FileWriter(new File(d , "main.java")) ) {
-    t.write("package mods.basemod;\n");
+   try ( FileWriter t = new FileWriter(new File(d , "TextMod.java")) ) {
+    t.write("package mods." + modname.getText() + ";\n");
     t.write("\n");
     t.write("import java.io.File;\n");
     t.write("import java.io.IOException;\n");
     t.write("import java.net.URL;\n");
     t.write("import java.net.URLClassLoader;\n");
+    t.write("import mods.basemod.IItem;\n");
+    t.write("import mods.basemod.LevBlock;\n");
     t.write("import mods.basemod.containers.Mid;\n");
     t.write("import mods.basemod.containers.ModsContainer;\n");
     t.write("import mods.basemod.interfaces.BaseMod;\n");
@@ -477,9 +481,10 @@ public final class ModEditor extends javax.swing.JFrame {
 
    }
 
-   try ( FileWriter t = new FileWriter(new File(d , "modact.java")) ) {
+   try ( FileWriter t = new FileWriter(new File(d , "ModAct.java")) ) {
     t.write("package mods." + modname.getText() + ";\n");
-    t.write("public static class ModAct {\n");
+    t.write("import mods.basemod.containers.ModsContainer;\n");
+    t.write("public class ModAct {\n");
     t.write("public static void putAll(ModsContainer c){\n");
     t.write("//put actions\n");
     t.write("}\n");
@@ -487,9 +492,10 @@ public final class ModEditor extends javax.swing.JFrame {
    } catch ( IOException ex ) {
 
    }
-   try ( FileWriter t = new FileWriter(new File(d , "itemact.java")) ) {
+   try ( FileWriter t = new FileWriter(new File(d , "ItemAct.java")) ) {
     t.write("package mods." + modname.getText() + ";\n");
-    t.write("public static class ItemAct {\n");
+    t.write("import mods.basemod.containers.ModsContainer;\n");
+    t.write("public class ItemAct {\n");
     t.write("public static void putAll(ModsContainer c){\n");
     t.write("//put actions\n");
     t.write("}\n");
@@ -497,9 +503,10 @@ public final class ModEditor extends javax.swing.JFrame {
    } catch ( IOException ex ) {
 
    }
-   try ( FileWriter t = new FileWriter(new File(d , "blockact.java")) ) {
+   try ( FileWriter t = new FileWriter(new File(d , "BlockAct.java")) ) {
     t.write("package mods." + modname.getText() + ";\n");
-    t.write("public static class BlockAct {\n");
+    t.write("import mods.basemod.containers.ModsContainer;\n");
+    t.write("public class BlockAct {\n");
     t.write("public static void putAll(ModsContainer c){\n");
     t.write("//put actions\n");
     t.write("}\n");
@@ -507,33 +514,43 @@ public final class ModEditor extends javax.swing.JFrame {
    } catch ( IOException ex ) {
 
    }
+
+   ArrayList<String> src = new ArrayList<>();
+   src.add(srcdir + "TextMod.java");
+   src.add(srcdir + "ModAct.java");
+   src.add(srcdir + "ItemAct.java");
+   src.add(srcdir + "BlockAct.java");
 
    ArrayList<String> arg = new ArrayList<>();
-   arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/main.java");
-   arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/modact.java");
-   arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/itemact.java");
-   arg.add(main.Main.mdir + "src/mods/" + modname.getText() + "/blockact.java");
-
-   d = new File(main.Main.mdir + "mods/" + modname.getText() + "/");
-   d.mkdirs();
+   arg.add("-d");
+   arg.add(main.Main.mdir + "tmp/" + modname.getText() + "/");
+   arg.add("-classpath");
+   String t = main.Main.mdir + "game.jar";
+//   for ( File e : new File(main.Main.mdir + "lib/").listFiles() ) {
+//    t += ";" + e.getAbsolutePath();
+//   }
+   arg.add(t);
 
    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+   DiagnosticCollector<JavaFileObject> coll = new DiagnosticCollector<>();
 
    StandardJavaFileManager fileManager = compiler.getStandardFileManager(
-           new DiagnosticCollector<>() , null , null);
+           coll , null , null);
 
    JavaCompiler.CompilationTask task = compiler.getTask(null , fileManager ,
-                                                        new DiagnosticCollector<>() ,
-                                                        Arrays.
-                                                        asList("-d" , d.
-                                                               getAbsolutePath()) ,
+                                                        coll ,
+                                                        arg ,
                                                         null , fileManager.
                                                         getJavaFileObjectsFromStrings(
-                                                                arg));
+                                                                src));
 
    boolean success = task.call();
    System.out.println("Success: " + success);
 
+   coll.getDiagnostics().stream().
+           forEach(( e ) -> {
+            System.out.println(e.getMessage(Locale.ENGLISH));
+           });
   }
 
  }
