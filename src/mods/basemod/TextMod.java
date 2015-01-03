@@ -58,7 +58,7 @@ public class TextMod implements BaseMod {
     return b;
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
-    main.Main.LOG.addE("Containers.loadDir()" , e);
+    main.Main.LOG.addE(e);
    }
   }
   return this;
@@ -71,13 +71,13 @@ public class TextMod implements BaseMod {
    for ( int i = 0 ; i < mod.getInt("Blocks") ; i++ ) {
     t = ibc.getJSONObject("Block" + i);
     c.put(new LevBlock(mod.getString("name") , t));
-    main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded block");
+    main.Main.LOG.addI("Loaded block");
    }
 
    for ( int i = 0 ; i < mod.getInt("Items") ; i++ ) {
     t = ibc.getJSONObject("Item" + i);
     c.put(new IItem(mod.getString("name") , t));
-    main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded item");
+    main.Main.LOG.addI("Loaded item");
    }
 
    for ( int i = 0 ; i < mod.getInt("Crafts") ; i++ ) {
@@ -86,7 +86,7 @@ public class TextMod implements BaseMod {
                t.getString("Grid") ,
                t.getString("Elements")
     );
-    main.Main.LOG.addI("mods.containers.ModsContainer.loadDir" , "Loaded craft");
+    main.Main.LOG.addI("Loaded craft");
    }
   }
 

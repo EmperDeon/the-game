@@ -73,7 +73,7 @@ public final class ModsContainer implements Serializable {
   } else if ( v instanceof IItem ) {
    icont.put(v.getId() , ( IItem ) v);
   } else {
-   main.Main.LOG.addE("ModsContainer.put()" , new Exception("v is not a Base"));
+   main.Main.LOG.addE(new Exception("v is not a Base"));
   }
  }
 
@@ -90,33 +90,33 @@ public final class ModsContainer implements Serializable {
  }
 
  public void init () {
-  main.Main.LOG.addI("ModsContainer" , "Init Started");
+  main.Main.LOG.addI("Init Started");
   mods.values().stream().forEach(( BaseMod m ) -> {
    m.init(ModsContainer.this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("ModsContainer" , "Init Ended");
+  main.Main.LOG.addI("Init Ended");
   test();
  }
 
  public void reinit () {
-  main.Main.LOG.addI("ModsContainer" , "Reinit Started");
+  main.Main.LOG.addI("Reinit Started");
   mods.values().stream().forEach(m -> {
    m.reinit(this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("ModsContainer" , "Reinit Ended");
+  main.Main.LOG.addI("Reinit Ended");
   test();
  }
 
  public void postinit () {
-  main.Main.LOG.addI("ModsContainer" , "Postinit Started");
+  main.Main.LOG.addI("Postinit Started");
   init.clear();
   mods.values().stream().forEach(( m ) -> {
    m.postinit(this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("ModsContainer" , "Postinit Ended");
+  main.Main.LOG.addI("Postinit Ended");
  }
 
  public void destroy () {
@@ -133,23 +133,25 @@ public final class ModsContainer implements Serializable {
 
  public void loadDir ( boolean isI ) {
   TextMod t;
-  File[] s = new File(main.Main.mdir + "mods/").listFiles(pathname -> {
+  File e = new File(main.Main.mdir + "mods/");
+  File[] s = e.listFiles(pathname -> {
    try {
     if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".mod") != -1 ) {
      return true;
     }
    } catch ( IOException ex ) {
-    main.Main.LOG.addE("ModContainer.loadDir().filter" , ex);
+    main.Main.LOG.addE(ex);
    }
    return false;
   });
-
-  for ( File f : s ) {
-   t = new TextMod(f.getAbsolutePath());
-   if ( t.isClass() ) {
-    put(t.get(f));
-   } else {
-    put(t);
+  if ( e.exists() ) {
+   for ( File f : s ) {
+    t = new TextMod(f.getAbsolutePath());
+    if ( t.isClass() ) {
+     put(t.get(f));
+    } else {
+     put(t);
+    }
    }
   }
 
@@ -169,7 +171,7 @@ public final class ModsContainer implements Serializable {
    this.icont.putAll(t.icont);
    this.actmap.addAll(t.getActmap());
   } catch ( Exception e ) {
-   main.Main.LOG.addE("Containers.load()" , e);
+   main.Main.LOG.addE(e);
    System.out.println(e.toString());
   }
   reinit();
@@ -182,7 +184,7 @@ public final class ModsContainer implements Serializable {
    o.writeObject(this);
    o.flush();
   } catch ( Exception e ) {
-   main.Main.LOG.addE("ModsContainer.fsave()" , e);
+   main.Main.LOG.addE(e);
   }
  }
 

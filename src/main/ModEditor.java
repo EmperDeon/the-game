@@ -331,6 +331,8 @@ public final class ModEditor extends javax.swing.JFrame {
 
    mod.save(dir + "/mod.json");
    ibc.save(dir + "/ibc.json");
+   
+   gen(dir);
   }
 
   public void gen ( String dir ) {
@@ -512,24 +514,23 @@ public final class ModEditor extends javax.swing.JFrame {
     t.write("}\n");
     t.write("}\n");
    } catch ( IOException ex ) {
-
+    main.Main.LOG.addE(ex);
    }
+   compile(srcdir);   
+  }
 
+  public void compile(String dir){
    ArrayList<String> src = new ArrayList<>();
-   src.add(srcdir + "TextMod.java");
-   src.add(srcdir + "ModAct.java");
-   src.add(srcdir + "ItemAct.java");
-   src.add(srcdir + "BlockAct.java");
+   src.add(dir + "TextMod.java");
+   src.add(dir + "ModAct.java");
+   src.add(dir + "ItemAct.java");
+   src.add(dir + "BlockAct.java");
 
    ArrayList<String> arg = new ArrayList<>();
    arg.add("-d");
    arg.add(main.Main.mdir + "tmp/" + modname.getText() + "/");
    arg.add("-classpath");
-   String t = main.Main.mdir + "game.jar";
-//   for ( File e : new File(main.Main.mdir + "lib/").listFiles() ) {
-//    t += ";" + e.getAbsolutePath();
-//   }
-   arg.add(t);
+   arg.add(main.Main.mdir + "game.jar");
 
    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
    DiagnosticCollector<JavaFileObject> coll = new DiagnosticCollector<>();
@@ -552,7 +553,6 @@ public final class ModEditor extends javax.swing.JFrame {
             System.out.println(e.getMessage(Locale.ENGLISH));
            });
   }
-
  }
 
  private final class ItemsTable implements TableModel {
@@ -873,7 +873,7 @@ public final class ModEditor extends javax.swing.JFrame {
   private final JScrollPane pscr = new JScrollPane();
 
   public ParamF ( String str ) {
-   this.setVisible(true);
+   this.setVisible(false);
    this.setTitle(str + " params editor");
    this.setLayout(null);
    this.setBounds(300 , 300 , 500 , 350);

@@ -35,7 +35,7 @@ public class IItem implements Serializable , InvItem {
   try {
    t = param.get(k);
   } catch ( Exception e ) {
-   main.Main.LOG.addE("Item.getparam()" , e);
+   main.Main.LOG.addE(e);
   }
   return t;
  }

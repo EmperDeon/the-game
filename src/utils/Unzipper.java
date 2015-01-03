@@ -29,7 +29,7 @@ public class Unzipper {
     write(dirName , zip_path , zip.getInputStream(entry));
    }
   } catch ( IOException e ) {
-   main.Main.LOG.addE("utils.Unzipper" , e);
+   main.Main.LOG.addE(e);
   }
  }
 
@@ -50,7 +50,7 @@ public class Unzipper {
     write(dirName , zip_path , zip.getInputStream(entry));
    }
   } catch ( IOException e ) {
-   main.Main.LOG.addE("utils.Unzipper" , e);
+   main.Main.LOG.addE(e);
   }
  }
 

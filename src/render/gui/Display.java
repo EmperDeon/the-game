@@ -50,7 +50,7 @@ public class Display extends org.fenggui.Display {
    layout.addBack(new GuiId(id) , new Pixmap(Binding.getInstance().
                   getTexture(Main.mdir + b)));
   } catch ( IOException ex ) {
-   Main.LOG.addE("Display.setBackground()" , ex);
+   Main.LOG.addE(ex);
   }
  }
 

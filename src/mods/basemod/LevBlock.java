@@ -22,7 +22,7 @@ public class LevBlock extends IItem implements Serializable {
    v = param.get(k);
   } catch ( Exception e ) {
    v = "";
-   main.Main.LOG.addE("Block.getparam()" , e);
+   main.Main.LOG.addE(e);
   }
   return ( v );
  }

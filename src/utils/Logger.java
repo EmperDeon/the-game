@@ -20,20 +20,22 @@ public class Logger implements Serializable {
 
  }
 
- public void addE ( String clas , Exception ex ) {
-  this.exep.add(new LogEx(clas , ex));
+ public void addE ( Exception ex) {
+  
+  this.exep.add(new LogEx(sun.reflect.Reflection.getCallerClass(2).getName() , ex));
  }
 
- public void addW ( String clas , String info ) {
-  this.warn.add(new LogE(clas , info));
+ public void addW ( String info) {
+  this.warn.add(new LogE(sun.reflect.Reflection.getCallerClass(2).getName() , info));
  }
 
- public void addI ( String clas , String info ) {
-  this.info.add(new LogE(clas , info));
+ public void addI ( String info) {
+  System.out.println(sun.reflect.Reflection.getCallerClass(2).getName());
+  this.info.add(new LogE(sun.reflect.Reflection.getCallerClass(2).getName() , info));
  }
 
- public void addD ( String clas , String info ) {
-  this.debg.add(new LogE(clas , info));
+ public void addD ( String info) {
+  this.debg.add(new LogE(sun.reflect.Reflection.getCallerClass(2).getName() , info));
  }
 
  public String getE () {

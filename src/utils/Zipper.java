@@ -17,7 +17,7 @@ public class Zipper {
     zipDir(dirName , zos , dirName);
    }
   } catch ( Exception e ) {
-   main.Main.LOG.addE("utils.Zipper" , e);
+   main.Main.LOG.addE(e);
   }
  }
 
@@ -31,7 +31,7 @@ public class Zipper {
                                      lastIndexOf(".mod")));
    }
   } catch ( Exception e ) {
-   main.Main.LOG.addE("utils.Zipper" , e);
+   main.Main.LOG.addE(e);
   }
  }
 
@@ -58,7 +58,7 @@ public class Zipper {
     }
    }
   } catch ( Exception e ) {
-   main.Main.LOG.addE("utils.Zipper.zipDir_()" , e);
+   main.Main.LOG.addE(e);
   }
  }
 }

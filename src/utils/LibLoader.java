@@ -20,7 +20,7 @@ public final class LibLoader {
    }
   } catch ( NoSuchMethodException | SecurityException | IllegalAccessException |
             IllegalArgumentException | InvocationTargetException | IOException ex ) {
-   main.Main.LOG.addE("utils.LibLoader.loadLibs()" , ex);
+   main.Main.LOG.addE(ex);
   }
  }
 }

@@ -1,9 +1,14 @@
 package main;
 
+import sun.reflect.CallerSensitive;
+
 public class Test {
-
+ @CallerSensitive
+ public static void test(){
+  System.out.println(sun.reflect.Reflection.getCallerClass(2));
+ }
  public static void main ( String args[] ) {
-
+  test();
   //  String s;
 //  try ( BufferedReader fr = new BufferedReader(new FileReader("1.java")) ) {
 //   try ( BufferedWriter fw = new BufferedWriter(new FileWriter("2.java")) ) {

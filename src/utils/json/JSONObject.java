@@ -389,14 +389,14 @@ public final class JSONObject {
   String key;
 
   if ( x.nextClean() != '{' ) {
-   main.Main.LOG.addE("JSONObject.load()" , new Exception(
+   main.Main.LOG.addE(new Exception(
                       "A JSONObject text must begin with '{'"));
   }
   for ( ;; ) {
    c = x.nextClean();
    switch ( c ) {
     case 0:
-     main.Main.LOG.addE("JSONObject.load()" , new Exception(
+     main.Main.LOG.addE(new Exception(
                         "A JSONObject text must end with '}'"));
     case '}':
      return;
@@ -408,7 +408,7 @@ public final class JSONObject {
 // The key is followed by ':'.
    c = x.nextClean();
    if ( c != ':' ) {
-    main.Main.LOG.addE("JSONObject.load()" , new Exception(
+    main.Main.LOG.addE(new Exception(
                        "Expected a ':' after a key"));
    }
    this.putOnce(key , x.nextValue());
@@ -426,7 +426,7 @@ public final class JSONObject {
     case '}':
      return;
     default:
-     main.Main.LOG.addE("JSONObject.load()" , new Exception(
+     main.Main.LOG.addE(new Exception(
                         "Expected a ',' or '}'"));
    }
   }
@@ -437,7 +437,7 @@ public final class JSONObject {
    t.write(this.write(new StringWriter()).toString());
    t.flush();
   } catch ( IOException ex ) {
-   main.Main.LOG.addE("JSONObject.save()" , ex);
+   main.Main.LOG.addE(ex);
    System.out.println(ex);
   }
  }

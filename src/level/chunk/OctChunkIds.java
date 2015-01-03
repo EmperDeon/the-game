@@ -27,7 +27,7 @@ public final class OctChunkIds implements Serializable {
              this.file)));
      this.chids = ( ( ArrayList<OctChunkId> ) o.readObject() );
     } catch ( IOException | ClassNotFoundException ex ) {
-     main.Main.LOG.addE("ChunkContainer . OctChunkIds . load()" , ex);
+     main.Main.LOG.addE(ex);
      throw new TermEx(
              "ChunkContainer . OctChunkIds . load() - error read OctChunk");
     }
@@ -61,7 +61,7 @@ public final class OctChunkIds implements Serializable {
    serial.flush();
    System.out.println("Saved");
   } catch ( IOException ex ) {
-   Main.LOG.addE("OctChunkIds . Save()" , ex);
+   Main.LOG.addE(ex);
   }
  }
 
