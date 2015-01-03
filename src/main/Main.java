@@ -46,7 +46,7 @@ public final class Main implements Runnable {
   } catch ( ClassNotFoundException | InstantiationException |
             IllegalAccessException | UnsupportedLookAndFeelException ex ) {
   }
-  
+
   mainform = new MainForm();
 
   Tm.start();

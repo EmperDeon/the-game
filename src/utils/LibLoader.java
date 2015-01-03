@@ -8,12 +8,15 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 public final class LibLoader {
+
  public static void loadLibs () {
   try {
    for ( File e : new File(main.Main.mdir + "lib/").listFiles() ) {
-    Method method = URLClassLoader.class.getDeclaredMethod("addURL" ,  new Class[]{URL.class});
+    Method method = URLClassLoader.class.getDeclaredMethod("addURL" ,
+                                                           new Class[]{URL.class});
     method.setAccessible(true);
-    method.invoke(ClassLoader.getSystemClassLoader() , new Object[]{e.toURI().toURL()});
+    method.invoke(ClassLoader.getSystemClassLoader() , new Object[]{e.toURI().
+     toURL()});
    }
   } catch ( NoSuchMethodException | SecurityException | IllegalAccessException |
             IllegalArgumentException | InvocationTargetException | IOException ex ) {
