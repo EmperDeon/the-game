@@ -1,12 +1,13 @@
 package main;
 
 public class Test {
- 
- public static void test(){
+
+ public static void test () {
   StackTraceElement st = Thread.currentThread().getStackTrace()[2];
   System.out.println(st.getClassName());
   System.out.println(st);
  }
+
  public static void main ( String args[] ) {
   test();
   //  String s;

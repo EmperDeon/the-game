@@ -1,4 +1,5 @@
 package main;
-public class OptionsEditor extends javax.swing.JFrame{
- 
+
+public class OptionsEditor extends javax.swing.JFrame {
+
 }

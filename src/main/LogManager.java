@@ -5,15 +5,13 @@
  */
 package main;
 
+import java.awt.event.ComponentAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
-import utils.Logger;
 
 /**
  *
@@ -22,8 +20,7 @@ import utils.Logger;
 public class LogManager extends javax.swing.JFrame {
 
  private int width, height;
- private final Timer timer = new Timer();
- private final TimerTask task;
+
  /**
   * Creates new form LogExplorer
   */
@@ -32,7 +29,7 @@ public class LogManager extends javax.swing.JFrame {
   setTitle("LogManager");
   setBounds(0 , 0 , this.getMaximumSize().width , this.getMaximumSize().height);
   setLayout(null);
-  addComponentListener(new java.awt.event.ComponentAdapter() {
+  addComponentListener(new ComponentAdapter() {
    @Override
    public void componentResized ( java.awt.event.ComponentEvent evt ) {
     resize();
@@ -51,7 +48,7 @@ public class LogManager extends javax.swing.JFrame {
   jScrollPane3.setViewportView(jTextPane3);
   jScrollPane4.setViewportView(jTextPane4);
   jScrollPane5.setViewportView(jTextPane5);
-
+  jScrollPane5.getVerticalScrollBar().setValue(jScrollPane5.getVerticalScrollBar().getMaximum());
   jPanel1.add(jScrollPane1);
   jPanel2.add(jScrollPane2);
   jPanel3.add(jScrollPane3);
@@ -70,35 +67,14 @@ public class LogManager extends javax.swing.JFrame {
   jTabbedPane1.addTab("Debug" , jPanel4);
   jTabbedPane1.addTab("All" , jPanel5);
 
-//  jButton1.setText("Open File");
-//  jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-//   public void mouseClicked ( java.awt.event.MouseEvent evt ) {
-//    jButton1MouseClicked(evt);
-//   }
-//  });
-//
-//  add(jButton1);
   add(jTabbedPane1);
 
   resize();
 
   repaint();
 
-  task = new TimerTask() {
-   @Override
-   public void run () {
-     jTextPane1.setText(main.Main.LOG.getE());
-     jTextPane2.setText(main.Main.LOG.getW());
-     jTextPane3.setText(main.Main.LOG.getI());
-     jTextPane4.setText(main.Main.LOG.getD());
-     jTextPane5.setText(main.Main.LOG.getAll());
-   }
-  };
-  timer.scheduleAtFixedRate(task , 100 , 500);
  }
 
- 
- 
  private void resize () {
   width = getWidth();
   height = getHeight();
@@ -111,29 +87,21 @@ public class LogManager extends javax.swing.JFrame {
   jScrollPane4.setBounds(0 , 0 , width - 2 , height - 52);
   jScrollPane5.setBounds(0 , 0 , width - 2 , height - 52);
 
+  jScrollPane1.getVerticalScrollBar().setValue(jScrollPane1.getVerticalScrollBar().getMaximum());
+  jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
+  jScrollPane3.getVerticalScrollBar().setValue(jScrollPane3.getVerticalScrollBar().getMaximum());
+  jScrollPane4.getVerticalScrollBar().setValue(jScrollPane4.getVerticalScrollBar().getMaximum());
+  jScrollPane5.getVerticalScrollBar().setValue(jScrollPane5.getVerticalScrollBar().getMaximum());
  }
 
- public static void main ( String args[] ) {
-  try {
-   for ( javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.
-           getInstalledLookAndFeels() ) {
-    if ( "Nimbus".equals(info.getName()) ) {
-     javax.swing.UIManager.setLookAndFeel(info.getClassName());
-     break;
-    }
-   }
-  } catch ( ClassNotFoundException | InstantiationException |
-            IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex ) {
-  }
-
-  java.awt.EventQueue.invokeLater(() -> {
-   new LogManager().setVisible(true);
-  });
+ public void update () {
+  jTextPane1.setText(main.Main.LOG.getE());
+  jTextPane2.setText(main.Main.LOG.getW());
+  jTextPane3.setText(main.Main.LOG.getI());
+  jTextPane4.setText(main.Main.LOG.getD());
+  jTextPane5.setText(main.Main.LOG.getAll());
  }
 
- private Logger log = new Logger();
-
- //private final JButton jButton1 = new JButton();
  private final JPanel jPanel1 = new JPanel();
  private final JPanel jPanel2 = new JPanel();
  private final JPanel jPanel3 = new JPanel();

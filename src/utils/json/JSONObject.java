@@ -390,14 +390,14 @@ public final class JSONObject {
 
   if ( x.nextClean() != '{' ) {
    main.Main.LOG.addE(new Exception(
-                      "A JSONObject text must begin with '{'"));
+           "A JSONObject text must begin with '{'"));
   }
   for ( ;; ) {
    c = x.nextClean();
    switch ( c ) {
     case 0:
      main.Main.LOG.addE(new Exception(
-                        "A JSONObject text must end with '}'"));
+             "A JSONObject text must end with '}'"));
     case '}':
      return;
     default:
@@ -409,7 +409,7 @@ public final class JSONObject {
    c = x.nextClean();
    if ( c != ':' ) {
     main.Main.LOG.addE(new Exception(
-                       "Expected a ':' after a key"));
+            "Expected a ':' after a key"));
    }
    this.putOnce(key , x.nextValue());
 
@@ -427,7 +427,7 @@ public final class JSONObject {
      return;
     default:
      main.Main.LOG.addE(new Exception(
-                        "Expected a ',' or '}'"));
+             "Expected a ',' or '}'"));
    }
   }
  }

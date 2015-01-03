@@ -1,4 +1,5 @@
 package main;
-public class LevelEditor extends javax.swing.JFrame{
+
+public class LevelEditor extends javax.swing.JFrame {
 
 }

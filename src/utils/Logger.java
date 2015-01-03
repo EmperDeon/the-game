@@ -24,21 +24,25 @@ public class Logger implements Serializable {
  public void addE ( Exception ex ) {
   this.exep.add(new LogEx(Thread.currentThread().getStackTrace()[2].toString() ,
                           ex));
+  main.Main.logmanager.update();
  }
 
  public void addW ( String info ) {
   this.warn.add(new LogE(Thread.currentThread().getStackTrace()[2].toString() ,
                          info));
+  main.Main.logmanager.update();
  }
 
  public void addI ( String info ) {
   this.info.add(new LogE(Thread.currentThread().getStackTrace()[2].toString() ,
                          info));
+  main.Main.logmanager.update();
  }
 
  public void addD ( String info ) {
   this.debg.add(new LogE(Thread.currentThread().getStackTrace()[2].toString() ,
                          info));
+  main.Main.logmanager.update();
  }
 
  public String getAll () {
@@ -54,7 +58,7 @@ public class Logger implements Serializable {
   all.stream().forEach(( e ) -> {
    s.append(e.toString());
   });
-  
+
   all.clear();
   return s.toString();
  }

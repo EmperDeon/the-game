@@ -331,7 +331,7 @@ public final class ModEditor extends javax.swing.JFrame {
 
    mod.save(dir + "/mod.json");
    ibc.save(dir + "/ibc.json");
-   
+
    gen(dir);
   }
 
@@ -516,10 +516,10 @@ public final class ModEditor extends javax.swing.JFrame {
    } catch ( IOException ex ) {
     main.Main.LOG.addE(ex);
    }
-   compile(srcdir);   
+   compile(srcdir);
   }
 
-  public void compile(String dir){
+  public void compile ( String dir ) {
    ArrayList<String> src = new ArrayList<>();
    src.add(dir + "TextMod.java");
    src.add(dir + "ModAct.java");

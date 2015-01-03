@@ -82,7 +82,7 @@ public class Tex {
     texID = tmp[0];
    } else {
     Main.LOG.addE(new GLException(
-                  "No GL context given, can't create texture ID"));
+            "No GL context given, can't create texture ID"));
    }
   }
   return 0 != texID;
@@ -155,8 +155,8 @@ public class Tex {
     case GL.GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
      if ( !gl.isExtensionAvailable(GLExtensions.EXT_texture_compression_s3tc)
           && !gl.isExtensionAvailable(GLExtensions.NV_texture_compression_vtc) ) {
-      Main.LOG.addE(                    new GLException(
-                            "DXTn compressed textures not supported by this graphics card"));
+      Main.LOG.addE(new GLException(
+              "DXTn compressed textures not supported by this graphics card"));
      }
      break;
     default:
@@ -229,7 +229,7 @@ public class Tex {
    if ( data.isDataCompressed() ) {
     if ( data.getMipmapData() != null ) {
      Main.LOG.addE(new GLException(
-                   "Mipmapped non-power-of-two compressed textures only supported on OpenGL 2.0 hard(GL_ARB_texture_non_power_of_two)"));
+             "Mipmapped non-power-of-two compressed textures only supported on OpenGL 2.0 hard(GL_ARB_texture_non_power_of_two)"));
     }
 
     expandingCompressedTexture = true;
@@ -237,7 +237,7 @@ public class Tex {
 
    if ( data.getBorder() != 0 ) {
     Main.LOG.addE(new RuntimeException(
-                  "Scaling up a non-power-of-two texture which has a border won't work"));
+            "Scaling up a non-power-of-two texture which has a border won't work"));
    }
    texWidth = nextPowerOfTwo(imgWidth);
    texHeight = nextPowerOfTwo(imgHeight);
@@ -256,7 +256,7 @@ public class Tex {
 
    if ( data.isDataCompressed() ) {
     Main.LOG.addE(new GLException(
-                  "May not request mipmap generation for compressed textures"));
+            "May not request mipmap generation for compressed textures"));
    }
 
    try {
