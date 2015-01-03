@@ -1,20 +1,10 @@
 package main;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Locale;
-import javax.swing.JTextField;
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
-
 public class Test {
 
  public static void main ( String args[] ) {
 
-   //  String s;
+  //  String s;
 //  try ( BufferedReader fr = new BufferedReader(new FileReader("1.java")) ) {
 //   try ( BufferedWriter fw = new BufferedWriter(new FileWriter("2.java")) ) {
 //     while ((s = fr.readLine()) != null) {
@@ -43,12 +33,12 @@ public class Test {
 //
 //  boolean success = task.call();
 //  System.out.println("Success: " + success);
-  JTextField modname = new JTextField();
-  modname.setText("test");
-
-  String srcdir = main.Main.mdir + "src/mods/" + modname.getText() + "/";
-  File d = new File(srcdir);
-  d.mkdirs();
+//  JTextField modname = new JTextField();
+//  modname.setText("test");
+//
+//  String srcdir = main.Main.mdir + "src/mods/" + modname.getText() + "/";
+//  File d = new File(srcdir);
+//  d.mkdirs();
   /*
    *
    * try ( FileWriter t = new FileWriter(new File(d , "TextMod.java")) ) {
@@ -228,42 +218,41 @@ public class Test {
    *
    * }
    */
-  
-   ArrayList<String> src = new ArrayList<>();
-   src.add(srcdir + "TextMod.java");
-   src.add(srcdir + "ModAct.java");
-   src.add(srcdir + "ItemAct.java");
-   src.add(srcdir + "BlockAct.java");
-
-   ArrayList<String> arg = new ArrayList<>();
-   arg.add("-d");
-   arg.add(main.Main.mdir+"tmp/"+modname.getText()+"/");
-   arg.add("-classpath");
-   String t = main.Main.mdir + "game.jar";
-//   for ( File e : new File(main.Main.mdir + "lib/").listFiles() ) {
-//    t += ";" + e.getAbsolutePath();
-//   }
-   arg.add(t);
-   
-   JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-   DiagnosticCollector<JavaFileObject> coll = new DiagnosticCollector<>();
-   
-   StandardJavaFileManager fileManager = compiler.getStandardFileManager(
-           coll , null , null);
-
-   JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager ,
-                                                        coll,
-                                                        arg ,
-                                                        null , fileManager.
-                                                        getJavaFileObjectsFromStrings(
-                                                                src));
-
-   boolean success = task.call();
-   System.out.println("Success: " + success);
-
-   coll.getDiagnostics().stream().
-          forEach(( e ) -> {
-           System.out.println(e.getMessage(Locale.ENGLISH));
-  });
+//   ArrayList<String> src = new ArrayList<>();
+//   src.add(srcdir + "TextMod.java");
+//   src.add(srcdir + "ModAct.java");
+//   src.add(srcdir + "ItemAct.java");
+//   src.add(srcdir + "BlockAct.java");
+//
+//   ArrayList<String> arg = new ArrayList<>();
+//   arg.add("-d");
+//   arg.add(main.Main.mdir+"tmp/"+modname.getText()+"/");
+//   arg.add("-classpath");
+//   String t = main.Main.mdir + "game.jar";
+////   for ( File e : new File(main.Main.mdir + "lib/").listFiles() ) {
+////    t += ";" + e.getAbsolutePath();
+////   }
+//   arg.add(t);
+//   
+//   JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+//   DiagnosticCollector<JavaFileObject> coll = new DiagnosticCollector<>();
+//   
+//   StandardJavaFileManager fileManager = compiler.getStandardFileManager(
+//           coll , null , null);
+//
+//   JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager ,
+//                                                        coll,
+//                                                        arg ,
+//                                                        null , fileManager.
+//                                                        getJavaFileObjectsFromStrings(
+//                                                                src));
+//
+//   boolean success = task.call();
+//   System.out.println("Success: " + success);
+//
+//   coll.getDiagnostics().stream().
+//          forEach(( e ) -> {
+//           System.out.println(e.getMessage(Locale.ENGLISH));
+//  });
  }
 }
