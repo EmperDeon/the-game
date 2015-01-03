@@ -1,11 +1,11 @@
 package main;
 
-import sun.reflect.CallerSensitive;
-
 public class Test {
- @CallerSensitive
+ 
  public static void test(){
-  System.out.println(sun.reflect.Reflection.getCallerClass(2));
+  StackTraceElement st = Thread.currentThread().getStackTrace()[2];
+  System.out.println(st.getClassName());
+  System.out.println(st);
  }
  public static void main ( String args[] ) {
   test();

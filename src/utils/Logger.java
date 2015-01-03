@@ -15,34 +15,54 @@ public class Logger implements Serializable {
  private final ArrayList<LogE> warn = new ArrayList<>();
  private final ArrayList<LogE> info = new ArrayList<>();
  private final ArrayList<LogE> debg = new ArrayList<>();
+ private final ArrayList<LogEn> all = new ArrayList<>();
 
  public Logger () {
 
  }
 
- public void addE ( Exception ex) {
+ public void addE ( Exception ex ) {
+  this.exep.add(new LogEx(Thread.currentThread().getStackTrace()[2].toString() ,
+                          ex));
+ }
+
+ public void addW ( String info ) {
+  this.warn.add(new LogE(Thread.currentThread().getStackTrace()[2].toString() ,
+                         info));
+ }
+
+ public void addI ( String info ) {
+  this.info.add(new LogE(Thread.currentThread().getStackTrace()[2].toString() ,
+                         info));
+ }
+
+ public void addD ( String info ) {
+  this.debg.add(new LogE(Thread.currentThread().getStackTrace()[2].toString() ,
+                         info));
+ }
+
+ public String getAll () {
+  StringBuilder s = new StringBuilder();
+
+  all.addAll(exep);
+  all.addAll(debg);
+  all.addAll(info);
+  all.addAll(warn);
+
+  all.sort(( LogEn o1 , LogEn o2 ) -> o1.getDate().compareTo(o2.getDate()));
+
+  all.stream().forEach(( e ) -> {
+   s.append(e.toString());
+  });
   
-  this.exep.add(new LogEx(sun.reflect.Reflection.getCallerClass(2).getName() , ex));
- }
-
- public void addW ( String info) {
-  this.warn.add(new LogE(sun.reflect.Reflection.getCallerClass(2).getName() , info));
- }
-
- public void addI ( String info) {
-  System.out.println(sun.reflect.Reflection.getCallerClass(2).getName());
-  this.info.add(new LogE(sun.reflect.Reflection.getCallerClass(2).getName() , info));
- }
-
- public void addD ( String info) {
-  this.debg.add(new LogE(sun.reflect.Reflection.getCallerClass(2).getName() , info));
+  all.clear();
+  return s.toString();
  }
 
  public String getE () {
   StringBuilder s = new StringBuilder();
   exep.stream().forEach(x -> {
    s.append(x.toString());
-   s.append("\n");
   });
   return s.toString();
  }
@@ -51,7 +71,6 @@ public class Logger implements Serializable {
   StringBuilder s = new StringBuilder();
   warn.stream().forEach(x -> {
    s.append(x.toString());
-   s.append("\n");
   });
   return s.toString();
  }
@@ -60,7 +79,6 @@ public class Logger implements Serializable {
   StringBuilder s = new StringBuilder();
   info.stream().forEach(x -> {
    s.append(x.toString());
-   s.append("\n");
   });
   return s.toString();
  }
@@ -69,7 +87,6 @@ public class Logger implements Serializable {
   StringBuilder s = new StringBuilder();
   debg.stream().forEach(x -> {
    s.append(x.toString());
-   s.append("\n");
   });
   return s.toString();
  }
@@ -85,7 +102,15 @@ public class Logger implements Serializable {
   System.out.println("Saved");
  }
 
- private class LogE implements Serializable {
+ private interface LogEn {
+
+  public Date getDate ();
+
+  @Override
+  public String toString ();
+ }
+
+ private class LogE implements LogEn , Serializable {
 
   private final String clas;
   private final String info;
@@ -99,17 +124,23 @@ public class Logger implements Serializable {
 
   @Override
   public String toString () {
-   return "[" + new SimpleDateFormat().format(date) + "] " + clas + " - " + info + " \n";
+   return "[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info + " \n";
+  }
+
+  @Override
+  public Date getDate () {
+   return date;
   }
  }
 
- private class LogEx implements Serializable {
+ private class LogEx implements LogEn , Serializable {
 
   private final String clas;
   private final Exception ex;
   private final Date date;
 
   public LogEx ( String clas , Exception info ) {
+
    this.clas = clas;
    this.ex = info;
    this.date = new Date();
@@ -124,8 +155,13 @@ public class Logger implements Serializable {
     t.append("\n");
    }
 
-   return "[" + new SimpleDateFormat().format(date) + "] Exception in " + clas + " - " + t.
+   return "[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] Exception in " + clas + " - " + t.
            toString() + " \n";
+  }
+
+  @Override
+  public Date getDate () {
+   return date;
   }
  }
 }

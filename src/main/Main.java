@@ -22,11 +22,22 @@ public final class Main implements Runnable {
  public final static JSONObject OPTIONS = new JSONObject(mdir + "options.db");
  public final static MActionListener TIMER = new MActionListener();
  public final static ModsContainer mods = new ModsContainer();
+ 
+ public static LogManager logmanager = new LogManager();
+ public static ModEditor modeditor = new ModEditor();
+ public static ModelEditor modeleditor = new ModelEditor();
+ public static LevelEditor leveleditor = new LevelEditor();
+ public static OptionsEditor optionseditor = new OptionsEditor(); 
+ 
  public static MainForm mainform;
  public boolean running = true;
 
  @Override
  public void run () {
+//  System.getProperties().stringPropertyNames().stream().
+//          forEach(( e ) -> {
+//           LOG.addI(e + ": " + System.getProperties().getProperty(e));
+//          });
   mods.load();
   LibLoader.loadLibs();
  }
@@ -48,7 +59,12 @@ public final class Main implements Runnable {
   }
 
   mainform = new MainForm();
-
+  logmanager = new LogManager();
+  modeditor = new ModEditor(); 
+  modeleditor = new ModelEditor(); 
+  leveleditor = new LevelEditor(); 
+  optionseditor = new OptionsEditor();  
+  
   Tm.start();
  }
 

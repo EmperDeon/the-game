@@ -41,7 +41,7 @@ import utils.vec.Vec2;
 public final class ModEditor extends javax.swing.JFrame {
 
  public ModEditor () {
-  this.setVisible(true);
+  this.setVisible(false);
   this.setTitle("Mod Editor");
   this.setLayout(null);
   this.setBounds(300 , 300 , 727 , 440);

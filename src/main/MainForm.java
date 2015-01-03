@@ -100,7 +100,8 @@ public class MainForm extends JFrame {
   options.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
    public void mouseClicked ( MouseEvent evt ) {
-
+    main.Main.optionseditor.setVisible(true);
+    setVisible(false);
    }
   });
   options.setBounds(459 , 10 , 100 , 30);
@@ -113,7 +114,8 @@ public class MainForm extends JFrame {
   modelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
    public void mouseClicked ( MouseEvent evt ) {
-
+    main.Main.modeditor.setVisible(true);
+    setVisible(false);
    }
   });
   modelEdit.setBounds(5 , 5 , 100 , 30);
@@ -122,7 +124,7 @@ public class MainForm extends JFrame {
   modsEdit.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
    public void mouseClicked ( MouseEvent evt ) {
-    ModEditor m = new ModEditor();
+    main.Main.modeditor.setVisible(true);
     setVisible(false);
    }
   });
@@ -132,7 +134,7 @@ public class MainForm extends JFrame {
   logEdit.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
    public void mouseClicked ( MouseEvent evt ) {
-    new LogManager().setVisible(true);
+    main.Main.logmanager.setVisible(true);
    }
   });
   logEdit.setBounds(5 , 48 , 100 , 30);
@@ -141,7 +143,8 @@ public class MainForm extends JFrame {
   levelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
    @Override
    public void mouseClicked ( MouseEvent evt ) {
-
+    main.Main.leveleditor.setVisible(true);
+    setVisible(false);
    }
   });
   levelEdit.setBounds(130 , 48 , 100 , 30);
