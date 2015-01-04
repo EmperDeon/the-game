@@ -1,9 +1,6 @@
 package utils.json.zip;
 
-import utils.json.JSONArray;
-import utils.json.JSONException;
-import utils.json.JSONObject;
-import utils.json.Kim;
+import utils.json.*;
 
 /*
  * Copyright (c) 2012 JSON.org
@@ -15,8 +12,8 @@ import utils.json.Kim;
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
@@ -30,7 +27,7 @@ import utils.json.Kim;
  */
 /**
  * JSONzip is a binary compression scheme for JSON text.
- *
+ * <p>
  * @author JSON.org
  * @version 2014-05-03
  */
@@ -42,33 +39,31 @@ public class Unzipper extends JSONzip {
  BitReader bitreader;
 
  /**
-  * Create a new unzipper. It may be used for an entire session or
-  * subsession.
-  *
-  * @param bitreader
-  *                  The bitreader that this decoder will read from.
+  * Create a new unzipper. It may be used for an entire session or subsession.
+  * <p>
+  * @param bitreader The bitreader that this decoder will read from.
   */
- public Unzipper ( BitReader bitreader ) {
+ public Unzipper(BitReader bitreader) {
   super();
   this.bitreader = bitreader;
  }
 
  /**
   * Read one bit.
-  *
+  * <p>
   * @return true if 1, false if 0.
-  *
+  * <p>
   * @throws JSONException
   */
- private boolean bit () throws JSONException {
+ private boolean bit() throws JSONException {
   boolean value;
   try {
    value = this.bitreader.bit();
-   if ( probe ) {
+   if (probe) {
     log(value ? 1 : 0);
    }
    return value;
-  } catch ( Throwable e ) {
+  } catch (Throwable e) {
    throw new JSONException(e);
   }
 
@@ -77,161 +72,159 @@ public class Unzipper extends JSONzip {
  /**
   * Read enough bits to obtain an integer from the keep, and increase that
   * integer's weight.
-  *
-  * @param keep      The keep providing the context.
+  * <p>
+  * @param keep The keep providing the context.
   * @param bitreader The bitreader that is the source of bits.
-  *
+  * <p>
   * @return The value associated with the number.
-  *
+  * <p>
   * @throws JSONException
   */
- private Object getAndTick ( Keep keep , BitReader bitreader )
-         throws JSONException {
+ private Object getAndTick(Keep keep, BitReader bitreader)
+    throws JSONException {
   try {
    int width = keep.bitsize();
    int integer = bitreader.read(width);
    Object value = keep.value(integer);
-   if ( JSONzip.probe ) {
+   if (JSONzip.probe) {
     JSONzip.log("\"" + value + "\"");
-    JSONzip.log(integer , width);
+    JSONzip.log(integer, width);
    }
-   if ( integer >= keep.length ) {
+   if (integer >= keep.length) {
     throw new JSONException("Deep error.");
    }
    keep.tick(integer);
    return value;
-  } catch ( Throwable e ) {
+  } catch (Throwable e) {
    throw new JSONException(e);
   }
  }
 
  /**
-  * The pad method skips the bits that padded a stream to fit some
-  * allocation. pad(8) will skip over the remainder of a byte.
-  *
+  * The pad method skips the bits that padded a stream to fit some allocation.
+  * pad(8) will skip over the remainder of a byte.
+  * <p>
   * @param width The width of the pad field in bits.
-  *
+  * <p>
   * @return true if all of the padding bits were zero.
-  *
+  * <p>
   * @throws JSONException
   */
- public boolean pad ( int width ) throws JSONException {
+ public boolean pad(int width) throws JSONException {
   try {
    return this.bitreader.pad(width);
-  } catch ( Throwable e ) {
+  } catch (Throwable e) {
    throw new JSONException(e);
   }
  }
 
  /**
   * Read an integer, specifying its width in bits.
-  *
-  * @param width
-  *              0 to 32.
-  *
+  * <p>
+  * @param width 0 to 32.
+  * <p>
   * @return An unsigned integer.
-  *
+  * <p>
   * @throws JSONException
   */
- private int read ( int width ) throws JSONException {
+ private int read(int width) throws JSONException {
   try {
    int value = this.bitreader.read(width);
-   if ( probe ) {
-    log(value , width);
+   if (probe) {
+    log(value, width);
    }
    return value;
-  } catch ( Throwable e ) {
+  } catch (Throwable e) {
    throw new JSONException(e);
   }
  }
 
  /**
   * Read Huffman encoded characters into a keep.
-  *
+  * <p>
   * @param huff A Huffman decoder.
-  * @param ext  A Huffman decoder for the extended bytes.
+  * @param ext A Huffman decoder for the extended bytes.
   * @param keep The keep that will receive the kim.
-  *
+  * <p>
   * @return The string that was read.
-  *
+  * <p>
   * @throws JSONException
   */
- private String read ( Huff huff , Huff ext , Keep keep ) throws JSONException {
+ private String read(Huff huff, Huff ext, Keep keep) throws JSONException {
   Kim kim;
   int at = 0;
   int allocation = 256;
   byte[] bytes = new byte[allocation];
-  if ( bit() ) {
-   return getAndTick(keep , this.bitreader).toString();
+  if (bit()) {
+   return getAndTick(keep, this.bitreader).toString();
   }
-  while ( true ) {
-   if ( at >= allocation ) {
+  while (true) {
+   if (at >= allocation) {
     allocation *= 2;
-    bytes = java.util.Arrays.copyOf(bytes , allocation);
+    bytes = java.util.Arrays.copyOf(bytes, allocation);
    }
    int c = huff.read(this.bitreader);
-   if ( c == end ) {
+   if (c == end) {
     break;
    }
-   while ( ( c & 128 ) == 128 ) {
-    bytes[at] = ( byte ) c;
+   while ((c & 128) == 128) {
+    bytes[at] = (byte) c;
     at += 1;
     c = ext.read(this.bitreader);
    }
-   bytes[at] = ( byte ) c;
+   bytes[at] = (byte) c;
    at += 1;
   }
-  if ( at == 0 ) {
+  if (at == 0) {
    return "";
   }
-  kim = new Kim(bytes , at);
+  kim = new Kim(bytes, at);
   keep.register(kim);
   return kim.toString();
  }
 
  /**
   * Read a JSONArray.
-  *
-  * @param stringy
-  *                true if the first element is a string.
-  *
+  * <p>
+  * @param stringy true if the first element is a string.
+  * <p>
   * @throws JSONException
   */
- private JSONArray readArray ( boolean stringy ) throws JSONException {
+ private JSONArray readArray(boolean stringy) throws JSONException {
   JSONArray jsonarray = new JSONArray();
   jsonarray.put(stringy
-          ? read(this.stringhuff , this.stringhuffext , this.stringkeep)
-          : readValue());
-  while ( true ) {
-   if ( probe ) {
+     ? read(this.stringhuff, this.stringhuffext, this.stringkeep)
+     : readValue());
+  while (true) {
+   if (probe) {
     log();
    }
-   if ( !bit() ) {
-    if ( !bit() ) {
+   if (!bit()) {
+    if (!bit()) {
      return jsonarray;
     }
     jsonarray.put(stringy
-            ? readValue()
-            : read(this.stringhuff , this.stringhuffext ,
-                   this.stringkeep));
+       ? readValue()
+       : read(this.stringhuff, this.stringhuffext,
+              this.stringkeep));
    } else {
     jsonarray.put(stringy
-            ? read(this.stringhuff , this.stringhuffext ,
-                   this.stringkeep)
-            : readValue());
+       ? read(this.stringhuff, this.stringhuffext,
+              this.stringkeep)
+       : readValue());
    }
   }
  }
 
  /**
   * Read a JSON value. The type of value is determined by the next 3 bits.
-  *
+  * <p>
   * @return The read value.
-  *
+  * <p>
   * @throws JSONException
   */
- private Object readJSON () throws JSONException {
-  switch ( read(3) ) {
+ private Object readJSON() throws JSONException {
+  switch (read(3)) {
    case zipObject:
     return readObject();
    case zipArrayString:
@@ -251,31 +244,31 @@ public class Unzipper extends JSONzip {
   }
  }
 
- private JSONObject readObject () throws JSONException {
+ private JSONObject readObject() throws JSONException {
   JSONObject jsonobject = new JSONObject();
-  while ( true ) {
-   if ( probe ) {
+  while (true) {
+   if (probe) {
     log();
    }
-   String name = read(this.namehuff , this.namehuffext , this.namekeep);
-   if ( jsonobject.opt(name) != null ) {
+   String name = read(this.namehuff, this.namehuffext, this.namekeep);
+   if (jsonobject.opt(name) != null) {
     throw new JSONException("Duplicate key.");
    }
-   jsonobject.put(name , !bit()
-                  ? read(this.stringhuff , this.stringhuffext , this.stringkeep)
+   jsonobject.put(name, !bit()
+                  ? read(this.stringhuff, this.stringhuffext, this.stringkeep)
                   : readValue());
-   if ( !bit() ) {
+   if (!bit()) {
     return jsonobject;
    }
   }
  }
 
- private Object readValue () throws JSONException {
-  switch ( read(2) ) {
+ private Object readValue() throws JSONException {
+  switch (read(2)) {
    case 0:
     int nr_bits = !bit() ? 4 : !bit() ? 7 : 14;
     int integer = read(nr_bits);
-    switch ( nr_bits ) {
+    switch (nr_bits) {
      case 7:
       integer += int4;
       break;
@@ -287,9 +280,9 @@ public class Unzipper extends JSONzip {
    case 1:
     byte[] bytes = new byte[256];
     int length = 0;
-    while ( true ) {
+    while (true) {
      int c = read(4);
-     if ( c == endOfNumber ) {
+     if (c == endOfNumber) {
       break;
      }
      bytes[length] = bcd[c];
@@ -297,15 +290,15 @@ public class Unzipper extends JSONzip {
     }
     Object value;
     try {
-     value = JSONObject.stringToValue(new String(bytes , 0 , length ,
+     value = JSONObject.stringToValue(new String(bytes, 0, length,
                                                  "US-ASCII"));
-    } catch ( java.io.UnsupportedEncodingException e ) {
+    } catch (java.io.UnsupportedEncodingException e) {
      throw new JSONException(e);
     }
     this.valuekeep.register(value);
     return value;
    case 2:
-    return getAndTick(this.valuekeep , this.bitreader);
+    return getAndTick(this.valuekeep, this.bitreader);
    case 3:
     return readJSON();
    default:
@@ -313,7 +306,7 @@ public class Unzipper extends JSONzip {
   }
  }
 
- public Object decode () throws JSONException {
+ public Object decode() throws JSONException {
   generate();
   return readJSON();
  }

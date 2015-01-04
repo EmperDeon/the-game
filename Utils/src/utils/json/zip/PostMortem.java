@@ -10,8 +10,8 @@ package utils.json.zip;
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
@@ -30,7 +30,7 @@ package utils.json.zip;
  * same internal data structures were constructed on both ends. If those
  * structures are not exactly equivalent, then it is likely that the
  * implementations are not correct, even if conventional tests are passed.
- *
+ * <p>
  * PostMortem allows for testing of deep structures without breaking
  * encapsulation.
  */
@@ -38,11 +38,10 @@ public interface PostMortem {
 
  /**
   * Determine if two objects are equivalent.
-  *
-  * @param pm
-  *           Another object of the same type.
-  *
+  * <p>
+  * @param pm Another object of the same type.
+  * <p>
   * @return true if they match.
   */
- public boolean postMortem ( PostMortem pm );
+ public boolean postMortem(PostMortem pm);
 }

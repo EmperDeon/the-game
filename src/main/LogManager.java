@@ -48,7 +48,8 @@ public class LogManager extends javax.swing.JFrame {
   jScrollPane3.setViewportView(jTextPane3);
   jScrollPane4.setViewportView(jTextPane4);
   jScrollPane5.setViewportView(jTextPane5);
-  jScrollPane5.getVerticalScrollBar().setValue(jScrollPane5.getVerticalScrollBar().getMaximum());
+  jScrollPane5.getVerticalScrollBar().setValue(jScrollPane5.
+          getVerticalScrollBar().getMaximum());
   jPanel1.add(jScrollPane1);
   jPanel2.add(jScrollPane2);
   jPanel3.add(jScrollPane3);
@@ -87,11 +88,16 @@ public class LogManager extends javax.swing.JFrame {
   jScrollPane4.setBounds(0 , 0 , width - 2 , height - 52);
   jScrollPane5.setBounds(0 , 0 , width - 2 , height - 52);
 
-  jScrollPane1.getVerticalScrollBar().setValue(jScrollPane1.getVerticalScrollBar().getMaximum());
-  jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
-  jScrollPane3.getVerticalScrollBar().setValue(jScrollPane3.getVerticalScrollBar().getMaximum());
-  jScrollPane4.getVerticalScrollBar().setValue(jScrollPane4.getVerticalScrollBar().getMaximum());
-  jScrollPane5.getVerticalScrollBar().setValue(jScrollPane5.getVerticalScrollBar().getMaximum());
+  jScrollPane1.getVerticalScrollBar().setValue(jScrollPane1.
+          getVerticalScrollBar().getMaximum());
+  jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.
+          getVerticalScrollBar().getMaximum());
+  jScrollPane3.getVerticalScrollBar().setValue(jScrollPane3.
+          getVerticalScrollBar().getMaximum());
+  jScrollPane4.getVerticalScrollBar().setValue(jScrollPane4.
+          getVerticalScrollBar().getMaximum());
+  jScrollPane5.getVerticalScrollBar().setValue(jScrollPane5.
+          getVerticalScrollBar().getMaximum());
  }
 
  public void update () {

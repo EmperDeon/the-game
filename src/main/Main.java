@@ -24,12 +24,12 @@ public final class Main implements Runnable {
  public final static ModsContainer mods = new ModsContainer();
 
  public static LogManager logmanager;
- public static ModEditor modeditor ;
+ public static ModEditor modeditor;
  public static ModelEditor modeleditor;
  public static LevelEditor leveleditor;
  public static OptionsEditor optionseditor;
  public static MainForm mainform;
- 
+
  public boolean running = true;
 
  @Override

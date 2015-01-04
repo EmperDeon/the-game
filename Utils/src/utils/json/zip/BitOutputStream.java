@@ -13,8 +13,8 @@ import java.io.OutputStream;
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
@@ -28,9 +28,9 @@ import java.io.OutputStream;
  */
 /**
  * This is a big endian bit writer. It writes its bits to an OutputStream.
- *
+ * <p>
  * @version 2013-05-03
- *
+ * <p>
  */
 public class BitOutputStream implements BitWriter {
 
@@ -55,52 +55,50 @@ public class BitOutputStream implements BitWriter {
  private int vacant = 8;
 
  /**
-  * Use an OutputStream to produce a BitWriter. The BitWriter will send its
-  * bits to the OutputStream as each byte is filled.
-  *
-  * @param out
-  *            An Output Stream
+  * Use an OutputStream to produce a BitWriter. The BitWriter will send its bits
+  * to the OutputStream as each byte is filled.
+  * <p>
+  * @param out An Output Stream
   */
- public BitOutputStream ( OutputStream out ) {
+ public BitOutputStream(OutputStream out) {
   this.out = out;
  }
 
  /**
-  * Returns the number of bits that have been written to this
-  * bitOutputStream. This may include bits that have not yet been written
-  * to the underlying outputStream.
+  * Returns the number of bits that have been written to this bitOutputStream.
+  * This may include bits that have not yet been written to the underlying
+  * outputStream.
   */
- public long nrBits () {
+ public long nrBits() {
   return this.nrBits;
  }
 
  /**
   * Write a 1 bit.
-  *
+  * <p>
   * @throws IOException
   */
- public void one () throws IOException {
-  write(1 , 1);
+ public void one() throws IOException {
+  write(1, 1);
  }
 
  /**
   * Pad the rest of the block with zeros and flush. pad(8) flushes the last
   * unfinished byte. The underlying OutputStream will be flushed.
-  *
-  * @param width
-  *              The size of the block to pad in bits.
-  *              This will typically be 8, 16, 32, 64, 128, 256, etc.
-  *
+  * <p>
+  * @param width The size of the block to pad in bits. This will typically be 8,
+  * 16, 32, 64, 128, 256, etc.
+  * <p>
   * @throws IOException
   */
- public void pad ( int width ) throws IOException {
-  int gap = ( int ) this.nrBits % width;
-  if ( gap < 0 ) {
+ public void pad(int width) throws IOException {
+  int gap = (int) this.nrBits % width;
+  if (gap < 0) {
    gap += width;
   }
-  if ( gap != 0 ) {
+  if (gap != 0) {
    int padding = width - gap;
-   while ( padding > 0 ) {
+   while (padding > 0) {
     this.zero();
     padding -= 1;
    }
@@ -110,32 +108,30 @@ public class BitOutputStream implements BitWriter {
 
  /**
   * Write some bits. Up to 32 bits can be written at a time.
-  *
-  * @param bits
-  *              The bits to be written.
-  * @param width
-  *              The number of bits to write. (0..32)
-  *
+  * <p>
+  * @param bits The bits to be written.
+  * @param width The number of bits to write. (0..32)
+  * <p>
   * @throws IOException
   */
- public void write ( int bits , int width ) throws IOException {
-  if ( bits == 0 && width == 0 ) {
+ public void write(int bits, int width) throws IOException {
+  if (bits == 0 && width == 0) {
    return;
   }
-  if ( width <= 0 || width > 32 ) {
+  if (width <= 0 || width > 32) {
    throw new IOException("Bad write width.");
   }
-  while ( width > 0 ) {
+  while (width > 0) {
    int actual = width;
-   if ( actual > this.vacant ) {
+   if (actual > this.vacant) {
     actual = this.vacant;
    }
-   this.unwritten |= ( ( bits >>> ( width - actual ) )
-                       & ( ( 1 << actual ) - 1 ) ) << ( this.vacant - actual );
+   this.unwritten |= ((bits >>> (width - actual))
+      & ((1 << actual) - 1)) << (this.vacant - actual);
    width -= actual;
    nrBits += actual;
    this.vacant -= actual;
-   if ( this.vacant == 0 ) {
+   if (this.vacant == 0) {
     this.out.write(this.unwritten);
     this.unwritten = 0;
     this.vacant = 8;
@@ -145,11 +141,11 @@ public class BitOutputStream implements BitWriter {
 
  /**
   * Write a 0 bit.
-  *
+  * <p>
   * @throws IOException
   */
- public void zero () throws IOException {
-  write(0 , 1);
+ public void zero() throws IOException {
+  write(0, 1);
 
  }
 }
