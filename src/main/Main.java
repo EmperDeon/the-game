@@ -23,13 +23,13 @@ public final class Main implements Runnable {
  public final static MActionListener TIMER = new MActionListener();
  public final static ModsContainer mods = new ModsContainer();
 
- public static LogManager logmanager = new LogManager();
- public static ModEditor modeditor = new ModEditor();
- public static ModelEditor modeleditor = new ModelEditor();
- public static LevelEditor leveleditor = new LevelEditor();
- public static OptionsEditor optionseditor = new OptionsEditor();
-
+ public static LogManager logmanager;
+ public static ModEditor modeditor ;
+ public static ModelEditor modeleditor;
+ public static LevelEditor leveleditor;
+ public static OptionsEditor optionseditor;
  public static MainForm mainform;
+ 
  public boolean running = true;
 
  @Override

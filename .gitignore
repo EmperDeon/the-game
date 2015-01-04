@@ -5,3 +5,6 @@
 *.war
 *.ear
 /dist/
+/Utils/nbproject/private/
+/Utils/build/
+/Utils/dist/

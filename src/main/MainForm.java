@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ListDataListener;
 import static main.Main.LOG;
 import static main.Main.Tr;
 import static main.Main.mods;
@@ -220,6 +221,30 @@ public class MainForm extends JFrame {
 
   private final ArrayList<Object> cont = new ArrayList<>();
 
+    /**
+     * Adds a listener to the list that's notified each time a change
+     * to the data model occurs.
+     *
+     * @param l the <code>ListDataListener</code> to be added
+     */
+  @Override
+    public void addListDataListener(ListDataListener l) {
+        listenerList.add(ListDataListener.class, l);
+    }
+
+
+    /**
+     * Removes a listener from the list that's notified each time a
+     * change to the data model occurs.
+     *
+     * @param l the <code>ListDataListener</code> to be removed
+     */
+  @Override
+    public void removeListDataListener(ListDataListener l) {
+        listenerList.remove(ListDataListener.class, l);
+    }
+  
+  
   @Override
   public int getSize () {
    return cont.size();
@@ -232,7 +257,12 @@ public class MainForm extends JFrame {
 
   public void add ( Object obj ) {
    cont.add(obj);
+   System.out.println("obj - "+obj.toString());
+   for(ListDataListener e : listenerList.getListeners(ListDataListener.class))
+    e.contentsChanged(null);
   }
  }
 
+ 
+ 
 }

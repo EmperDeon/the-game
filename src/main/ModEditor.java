@@ -410,7 +410,7 @@ public final class ModEditor extends javax.swing.JFrame {
             write("  } catch ( IOException | IllegalArgumentException | ClassNotFoundException |\n");
     t.
             write("            InstantiationException | IllegalAccessException e ) {\n");
-    t.write("   main.Main.LOG.addE(\"Containers.loadDir()\" , e);\n");
+    t.write("   main.Main.LOG.addE(e);\n");
     t.write("  }\n");
     t.write("  return this;\n");
     t.write(" }\n");
@@ -423,14 +423,14 @@ public final class ModEditor extends javax.swing.JFrame {
     t.write("    t = ibc.getJSONObject(\"Block\" + i);\n");
     t.write("    c.put(new LevBlock(mod.getString(\"name\") , t));\n");
     t.
-            write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded block\");\n");
+            write("    main.Main.LOG.addI(\"Loaded block\");\n");
     t.write("   }\n");
     t.write("\n");
     t.write("   for ( int i = 0 ; i < mod.getInt(\"Items\") ; i++ ) {\n");
     t.write("    t = ibc.getJSONObject(\"Item\" + i);\n");
     t.write("    c.put(new IItem(mod.getString(\"name\") , t));\n");
     t.
-            write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded item\");\n");
+            write("    main.Main.LOG.addI(\"Loaded item\");\n");
     t.write("   }\n");
     t.write("\n");
     t.write("   for ( int i = 0 ; i < mod.getInt(\"Crafts\") ; i++ ) {\n");
@@ -440,7 +440,7 @@ public final class ModEditor extends javax.swing.JFrame {
     t.write("               t.getString(\"Elements\")\n");
     t.write("    );\n");
     t.
-            write("    main.Main.LOG.addI(\"mods.containers.ModsContainer.loadDir\" , \"Loaded craft\");\n");
+            write("    main.Main.LOG.addI(\"Loaded craft\");\n");
     t.write("   }\n");
     t.write("  }\n");
     t.write("\n");
