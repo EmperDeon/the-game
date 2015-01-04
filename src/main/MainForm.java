@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -7,6 +9,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +26,7 @@ import javax.swing.event.ListDataListener;
 import static main.Main.LOG;
 import static main.Main.Tr;
 import static main.Main.mods;
+import utils.exceptions.LoggerExc;
 
 public class MainForm extends JFrame {
 
@@ -44,10 +48,10 @@ public class MainForm extends JFrame {
  private final JPanel panel = new JPanel();
  private final JPanel logpanel = new JPanel();
 
- private final Pop cpop = new Pop(coreList);
- private final Pop mpop = new Pop(modsList);
- public final Model cmod = new Model();
- public final Model mmod = new Model();
+ private final CPop cpop = new CPop();
+ private final MPop mpop = new MPop();
+ public final MModel cmod = new MModel();
+ public final CModel mmod = new CModel();
 
  public MainForm () {
   setTitle("Launcher");
@@ -74,6 +78,7 @@ public class MainForm extends JFrame {
     }
    }
   });
+  modsList.setCellRenderer(new MCellRenderer());
 
   coreList.setModel(cmod);
   jScrollPane2.setViewportView(coreList);
@@ -86,6 +91,7 @@ public class MainForm extends JFrame {
     }
    }
   });
+  coreList.setCellRenderer(new CCellRenderer());
 
   start.setText("Start");
   start.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -188,27 +194,27 @@ public class MainForm extends JFrame {
   repaint();
  }
 
- private class Pop extends JPopupMenu {
+ private class CPop extends JPopupMenu {
 
   private final JMenuItem enab;
   private final JMenuItem disb;
   private final JMenuItem delt;
 
-  public Pop ( JList l ) {
+  public CPop () {
 
    enab = new JMenuItem("Включить выбранный мод");
    enab.addActionListener(e -> {
-    System.out.println(l.getSelectedIndex());
+    cmod.enable(coreList.getSelectedIndex());
    });
 
    disb = new JMenuItem("Выключить выбранный мод");
    disb.addActionListener(e -> {
-
+    cmod.disable(coreList.getSelectedIndex());
    });
 
    delt = new JMenuItem("Удалить выбранный мод");
    delt.addActionListener(e -> {
-
+    cmod.delete(coreList.getSelectedIndex());
    });
 
    add(enab);
@@ -217,34 +223,69 @@ public class MainForm extends JFrame {
   }
  }
 
- public class Model extends AbstractListModel {
+ private class MPop extends JPopupMenu {
 
-  private final ArrayList<Object> cont = new ArrayList<>();
+  private final JMenuItem enab;
+  private final JMenuItem disb;
+  private final JMenuItem delt;
 
-    /**
-     * Adds a listener to the list that's notified each time a change
-     * to the data model occurs.
-     *
-     * @param l the <code>ListDataListener</code> to be added
-     */
+  public MPop () {
+
+   enab = new JMenuItem("Включить выбранный мод");
+   enab.addActionListener(e -> {
+    mmod.enable(modsList.getSelectedIndex());
+   });
+
+   disb = new JMenuItem("Выключить выбранный мод");
+   disb.addActionListener(e -> {
+    mmod.disable(modsList.getSelectedIndex());
+   });
+
+   delt = new JMenuItem("Удалить выбранный мод");
+   delt.addActionListener(e -> {
+    mmod.delete(modsList.getSelectedIndex());
+   });
+
+   add(enab);
+   add(disb);
+   add(delt);
+  }
+ }
+
+ public class MModel extends AbstractListModel {
+
+  private final ArrayList<String> cont = new ArrayList<>();
+  private final ArrayList<String> disb = new ArrayList<>();
+
+  public MModel () {
+   cont.add("test");
+  }
+
+  /**
+   * Adds a listener to the list that's notified each time a change
+   * to the data model occurs.
+   *
+   * @param l the <code>ListDataListener</code> to be added
+   */
   @Override
-    public void addListDataListener(ListDataListener l) {
-        listenerList.add(ListDataListener.class, l);
-    }
+  public void addListDataListener ( ListDataListener l ) {
+   listenerList.add(ListDataListener.class , l);
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
+  }
 
-
-    /**
-     * Removes a listener from the list that's notified each time a
-     * change to the data model occurs.
-     *
-     * @param l the <code>ListDataListener</code> to be removed
-     */
+  /**
+   * Removes a listener from the list that's notified each time a
+   * change to the data model occurs.
+   *
+   * @param l the <code>ListDataListener</code> to be removed
+   */
   @Override
-    public void removeListDataListener(ListDataListener l) {
-        listenerList.remove(ListDataListener.class, l);
-    }
-  
-  
+  public void removeListDataListener ( ListDataListener l ) {
+   listenerList.remove(ListDataListener.class , l);
+  }
+
   @Override
   public int getSize () {
    return cont.size();
@@ -255,14 +296,183 @@ public class MainForm extends JFrame {
    return cont.get(i);
   }
 
-  public void add ( Object obj ) {
+  public void add ( String obj ) {
    cont.add(obj);
-   System.out.println("obj - "+obj.toString());
-   for(ListDataListener e : listenerList.getListeners(ListDataListener.class))
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
     e.contentsChanged(null);
+   }
+  }
+
+  public boolean isDisabled ( int i ) {
+   if ( i != -1 ) {
+    return disb.contains(cont.get(i));
+   }
+   return false;
+  }
+
+  public void delete ( int i ) {
+   if ( i != -1 ) {
+    cont.remove(i);
+   } else {
+    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+   }
+   // main.Main.mods.deleteMod(cont.get(i));
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
+  }
+
+  public void disable ( int i ) {
+   if ( i != -1 ) {
+    disb.add(cont.get(i));
+   } else {
+    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+   }
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
+   // main.Main.mods.disableMod(cont.get(i));
+  }
+
+  public void enable ( int i ) {
+   if ( i != -1 ) {
+    disb.remove(i);
+   } else {
+    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+   }
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
   }
  }
 
- 
- 
+ public class CModel extends AbstractListModel {
+
+  private final ArrayList<String> cont = new ArrayList<>();
+  private final ArrayList<String> disb = new ArrayList<>();
+
+  public CModel () {
+   cont.add("test");
+  }
+
+  /**
+   * Adds a listener to the list that's notified each time a change
+   * to the data model occurs.
+   *
+   * @param l the <code>ListDataListener</code> to be added
+   */
+  @Override
+  public void addListDataListener ( ListDataListener l ) {
+   listenerList.add(ListDataListener.class , l);
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
+  }
+
+  /**
+   * Removes a listener from the list that's notified each time a
+   * change to the data model occurs.
+   *
+   * @param l the <code>ListDataListener</code> to be removed
+   */
+  @Override
+  public void removeListDataListener ( ListDataListener l ) {
+   listenerList.remove(ListDataListener.class , l);
+  }
+
+  @Override
+  public int getSize () {
+   return cont.size();
+  }
+
+  @Override
+  public Object getElementAt ( int i ) {
+   return cont.get(i);
+  }
+
+  public void add ( String obj ) {
+   cont.add(obj);
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
+  }
+
+  public boolean isDisabled ( int i ) {
+   if ( i != -1 ) {
+    return disb.contains(cont.get(i));
+   }
+   return false;
+  }
+
+  public void delete ( int i ) {
+   if ( i != -1 ) {
+    cont.remove(i);
+   } else {
+    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+   }
+   // main.Main.mods.deleteCMod(cont.get(i));
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
+  }
+
+  public void disable ( int i ) {
+   if ( i != -1 ) {
+    disb.add(cont.get(i));
+   } else {
+    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+   }
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
+   // main.Main.mods.disableCMod(cont.get(i));
+  }
+
+  public void enable ( int i ) {
+   if ( i != -1 ) {
+    disb.remove(i);
+   } else {
+    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+   }
+   for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
+    e.contentsChanged(null);
+   }
+  }
+ }
+
+ public class MCellRenderer extends DefaultListCellRenderer {
+
+  @Override
+  public Component getListCellRendererComponent ( JList list , Object value ,
+                                                  int index , boolean isSelected ,
+                                                  boolean cellHasFocus ) {
+   Component c = super.getListCellRendererComponent(list , value , index ,
+                                                    isSelected , cellHasFocus);
+   if ( mmod.isDisabled(index) ) {
+    c.setBackground(new Color(176 , 179 , 184));
+   } else if ( isSelected ) {
+    c.setBackground(new Color(214 , 217 , 223));
+   }
+
+   return c;
+  }
+ }
+
+ public class CCellRenderer extends DefaultListCellRenderer {
+
+  @Override
+  public Component getListCellRendererComponent ( JList list , Object value ,
+                                                  int index , boolean isSelected ,
+                                                  boolean cellHasFocus ) {
+   Component c = super.getListCellRendererComponent(list , value , index ,
+                                                    isSelected , cellHasFocus);
+   if ( cmod.isDisabled(index) ) {
+    c.setBackground(new Color(176 , 179 , 184));
+   } else if ( isSelected ) {
+    c.setBackground(new Color(214 , 217 , 223));
+   }
+
+   return c;
+  }
+ }
 }

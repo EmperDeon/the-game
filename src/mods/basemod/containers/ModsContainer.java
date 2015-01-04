@@ -12,6 +12,7 @@ import java.util.TreeMap;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import main.Main;
+import static main.Main.LOG;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.TextMod;
@@ -25,6 +26,8 @@ public final class ModsContainer implements Serializable {
 
  transient final TreeMap<Mid , CoreMod> cmods;
  transient final TreeMap<Mid , BaseMod> mods;
+ transient final TreeMap<Mid , BaseMod> dism;
+ transient final TreeMap<Mid , CoreMod> disc;
  private final TreeMap<Mid , LevBlock> bcont;
  private final TreeMap<Mid , IItem> icont;
  private final Crafting ccont;
@@ -41,6 +44,8 @@ public final class ModsContainer implements Serializable {
   icont = new TreeMap<>();
   ccont = new Crafting();
   actmap = new ActMap();
+  dism = new TreeMap<>();
+  disc = new TreeMap<>();
  }
 
  public void add ( Mid id , BaseMod b ) {
@@ -73,8 +78,28 @@ public final class ModsContainer implements Serializable {
   } else if ( v instanceof IItem ) {
    icont.put(v.getId() , ( IItem ) v);
   } else {
-   main.Main.LOG.addE(new Exception("v is not a Base"));
+   LOG.addE(new Exception("v is not a Base"));
   }
+ }
+
+ public void disableMod ( String mid ) {
+  dism.put(new Mid(mid) , mods.remove(new Mid(mid)));
+  LOG.addI("Disabled mod " + mid);
+ }
+
+ public void deleteMod ( String mid ) {
+  mods.remove(new Mid(mid));
+  LOG.addI("Deleted mod " + mid);
+ }
+
+ public void disableCMod ( String mid ) {
+  disc.put(new Mid(mid) , cmods.remove(new Mid(mid)));
+  LOG.addI("Disabled coremod " + mid);
+ }
+
+ public void deleteCMod ( String mid ) {
+  cmods.remove(new Mid(mid));
+  LOG.addI("Deleted coremod " + mid);
  }
 
  public void putCraft ( Integer type , String grid , String elements ) {
@@ -90,33 +115,33 @@ public final class ModsContainer implements Serializable {
  }
 
  public void init () {
-  main.Main.LOG.addI("Init Started");
+  LOG.addI("Init Started");
   mods.values().stream().forEach(( BaseMod m ) -> {
    m.init(ModsContainer.this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("Init Ended");
+  LOG.addI("Init Ended");
   test();
  }
 
  public void reinit () {
-  main.Main.LOG.addI("Reinit Started");
+  LOG.addI("Reinit Started");
   mods.values().stream().forEach(m -> {
    m.reinit(this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("Reinit Ended");
+  LOG.addI("Reinit Ended");
   test();
  }
 
  public void postinit () {
-  main.Main.LOG.addI("Postinit Started");
+  LOG.addI("Postinit Started");
   init.clear();
   mods.values().stream().forEach(( m ) -> {
    m.postinit(this);
    init.add(m.getId());
   });
-  main.Main.LOG.addI("Postinit Ended");
+  LOG.addI("Postinit Ended");
  }
 
  public void destroy () {
@@ -140,7 +165,7 @@ public final class ModsContainer implements Serializable {
      return true;
     }
    } catch ( IOException ex ) {
-    main.Main.LOG.addE(ex);
+    LOG.addE(ex);
    }
    return false;
   });
@@ -171,7 +196,7 @@ public final class ModsContainer implements Serializable {
    this.icont.putAll(t.icont);
    this.actmap.addAll(t.getActmap());
   } catch ( Exception e ) {
-   main.Main.LOG.addE(e);
+   LOG.addE(e);
    System.out.println(e.toString());
   }
   reinit();
@@ -184,7 +209,7 @@ public final class ModsContainer implements Serializable {
    o.writeObject(this);
    o.flush();
   } catch ( Exception e ) {
-   main.Main.LOG.addE(e);
+   LOG.addE(e);
   }
  }
 
