@@ -3,6 +3,8 @@ package main;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import mods.basemod.containers.ModsContainer;
+import mods.basemod.containers.Repository;
+import mods.basemod.containers.Resources;
 import render.Render;
 import utils.LibLoader;
 import utils.Logger;
@@ -17,7 +19,8 @@ public final class Main implements Runnable {
  public final static Thread Tr = new Thread(rend);
 
  public final static String mdir = "/usr/games/game/";
-
+ public final static Resources RES = new Resources();
+ public final static Repository REP = new Repository();
  public final static Logger LOG = new Logger();
  public final static JSONObject OPTIONS = new JSONObject(mdir + "options.db");
  public final static MActionListener TIMER = new MActionListener();

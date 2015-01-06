@@ -5,69 +5,69 @@ import utils.vec.Vec3;
 
 public class Mid implements Comparable , Serializable {
 
- private final String m;
- private final String i;
- private final String s;
+ protected final String mid;
+ protected final String iid;
+ protected final String sid;
 
  public Mid ( Mid tid ) {
-  this.m = tid.m;
-  this.s = tid.s;
-  this.i = tid.i;
+  this.mid = tid.mid;
+  this.sid = tid.sid;
+  this.iid = tid.iid;
  }
 
  public Mid ( String m ) {
-  this.m = m;
-  this.i = "";
-  this.s = "";
+  this.mid = m;
+  this.iid = "";
+  this.sid = "";
  }
 
  public Mid ( String m , String i ) {
-  this.m = m;
-  this.i = i;
-  this.s = "";
+  this.mid = m;
+  this.iid = i;
+  this.sid = "";
  }
 
  public Mid ( String m , String i , String s ) {
-  this.m = m;
-  this.s = s;
-  this.i = i;
+  this.mid = m;
+  this.sid = s;
+  this.iid = i;
  }
 
  public Vec3<String> getIds () {
-  return new Vec3<>(m , s , i);
+  return new Vec3<>(mid , sid , iid);
  }
 
  public String getMid () {
-  return m;
+  return mid;
  }
 
  public String getIid () {
-  return i;
+  return iid;
  }
 
  public String getSid () {
-  return s;
+  return sid;
  }
 
  public boolean isM () {
-  return ( i.equals("") ) && ( s.equals("") );
+  return ( iid.equals("") ) && ( sid.equals("") );
  }
 
  public boolean isI () {
-  return ( s.equals("") );
+  return ( sid.equals("") );
  }
 
  public boolean isS () {
-  return !s.equals("");
+  return !sid.equals("");
  }
 
  @Override
  public int compareTo ( Object m ) {
   Mid o = ( Mid ) m;
   Integer x, y, z;
-  x = this.m.compareTo(o.getMid());
-  y = this.i.compareTo(o.getIid());
-  z = this.s.compareTo(o.getSid());
+  x = this.mid.compareTo(o.getMid());
+  y = this.iid.compareTo(o.getIid());
+  z = this.sid.compareTo(o.getSid());
 
   if ( x != 0 ) {
    return x;
@@ -82,6 +82,6 @@ public class Mid implements Comparable , Serializable {
 
  @Override
  public String toString () {
-  return "ID: " + m + " . " + i + " . " + s;
+  return "ID: " + mid + " . " + iid + " . " + sid;
  }
 }
