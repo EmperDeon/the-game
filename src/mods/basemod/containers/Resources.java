@@ -20,8 +20,16 @@ public class Resources {
   this.map.put(k , v);
  }
  
- public void putAll(){
+ public void putAll(String mid){
   
+ }
+ 
+ public void load(){
+ 
+ }
+ 
+ public void save(){
+ 
  }
  
 }

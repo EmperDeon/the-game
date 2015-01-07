@@ -18,7 +18,8 @@ public final class Main implements Runnable {
  public final static Thread Tm = new Thread(main);
  public final static Thread Tr = new Thread(rend);
 
- public final static String mdir = "/usr/games/game/";
+ public final static String mdir = System.getProperty("user.dir").substring(0, System.getProperty("user.dir").lastIndexOf("/")+1); 
+
  public final static Resources RES = new Resources();
  public final static Repository REP = new Repository();
  public final static Logger LOG = new Logger();
@@ -35,6 +36,8 @@ public final class Main implements Runnable {
 
  public boolean running = true;
 
+
+ 
  @Override
  public void run () {
   System.getProperties().stringPropertyNames().stream().
@@ -61,13 +64,15 @@ public final class Main implements Runnable {
             IllegalAccessException | UnsupportedLookAndFeelException ex ) {
   }
 
-  mainform = new MainForm();
+  
   logmanager = new LogManager();
+  logmanager.setVisible(true);
   modeditor = new ModEditor();
   modeleditor = new ModelEditor();
   leveleditor = new LevelEditor();
   optionseditor = new OptionsEditor();
-
+  mainform = new MainForm();
+  
   Tm.start();
  }
 
