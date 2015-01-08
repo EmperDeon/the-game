@@ -297,7 +297,7 @@ public final class ModEditor extends javax.swing.JFrame {
  }
 
  private void gen () {
-  for ( int i = 0 ; i < 5000 ; i++ ) {
+  for ( int i = 0 ; i < 100000 ; i++ ) {
    bm.add(new Mid("0" , "Block" + i , "0") , new Model("file1") ,
           new HashMap<>());
 //   cm.add(i , "1x1" , "1=1");
