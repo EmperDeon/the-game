@@ -9,13 +9,11 @@ public class Model implements Serializable {
  public Model ( String file ) {
   this.file = file;
  }
- 
- public void load(){
-  
+
+ public void load () {
+
  }
 
- 
- 
  @Override
  public String toString () {
   return "Model: " + file;
