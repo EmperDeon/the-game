@@ -1,4 +1,12 @@
 package mods.basemod.containers;
-public class Repository {
 
+import mods.basemod.Resource;
+import mods.basemod.Rid;
+
+public class Repository {
+ 
+ 
+ public Resource get(Rid id){
+  
+ }
 }
