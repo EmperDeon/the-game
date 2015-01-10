@@ -5,7 +5,7 @@ import static main.Main.LOG;
 import mods.basemod.Resource;
 import mods.basemod.Rid;
 
-public abstract class Resources {
+public class Resources {
 
  private final TreeMap<Rid , Resource> map = new TreeMap<>();
 

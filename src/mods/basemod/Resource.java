@@ -2,9 +2,9 @@ package mods.basemod;
 
 import java.io.Serializable;
 
-public class Resource implements Serializable {
+public abstract class Resource implements Serializable {
 
- enum Type {
+ public enum Type {
 
   Model, Sound
  }
