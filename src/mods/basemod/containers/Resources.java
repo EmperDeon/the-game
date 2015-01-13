@@ -10,6 +10,7 @@ public class Resources {
  private final TreeMap<Rid , Resource> map = new TreeMap<>();
 
  public Resources () {
+
   LOG.addI("Resource inited");
  }
 

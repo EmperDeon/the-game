@@ -11,6 +11,11 @@ public class Rid extends Mid implements Comparable {
   this.rid = id;
  }
 
+ public Rid ( String m , String i , String s , String rid ) {
+  super(m , i , s);
+  this.rid = rid;
+ }
+
  public String getRId () {
   return rid;
  }

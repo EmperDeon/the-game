@@ -32,6 +32,7 @@ import mods.basemod.CraftE;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.Model;
+import mods.basemod.Rid;
 import mods.basemod.containers.Mid;
 import utils.Unzipper;
 import utils.Zipper;
@@ -298,7 +299,11 @@ public final class ModEditor extends javax.swing.JFrame {
 
  private void gen () {
   for ( int i = 0 ; i < 100000 ; i++ ) {
-   bm.add(new Mid("0" , "Block" + i , "0") , new Model("file1") ,
+   bm.add(new Mid("0" , "Block" + i , "0") , new Model(new Rid(new Mid("0" ,
+                                                                       "Block" + i ,
+                                                                       "0") ,
+                                                               "basicSound") ,
+                                                       "file1") ,
           new HashMap<>());
 //   cm.add(i , "1x1" , "1=1");
 //   im.add(new Mid("0" , "Item" + i , "0") , 1 , new Model("file1") , 1 ,
@@ -624,7 +629,9 @@ public final class ModEditor extends javax.swing.JFrame {
 
   public void add () {
    add(new Mid(modname.getText() , iiname.getText() , isname.getText()) ,
-       new Model(imodel.getText()) ,
+       new Model(
+               new Mid(modname.getText() , iiname.getText() , isname.getText()) ,
+               imodel.getText()) ,
        ip.getMap());
    iiname.setText("");
    isname.setText("");
@@ -728,7 +735,9 @@ public final class ModEditor extends javax.swing.JFrame {
 
   public void add () {
    add(new Mid(modname.getText() , bbname.getText() , bsname.getText()) ,
-       new Model(bmodel.getText()) , bp.getMap());
+       new Model(
+               new Mid(modname.getText() , bbname.getText() , bsname.getText()) ,
+               bmodel.getText()) , bp.getMap());
   }
 
   public void add ( Mid id , Model model , Map<String , String> map ) {

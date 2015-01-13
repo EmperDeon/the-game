@@ -1,13 +1,12 @@
 package mods.basemod;
 
 import java.io.Serializable;
+import mods.basemod.containers.Mid;
 
-public class Model implements Serializable {
+public class Model extends Resource implements Serializable {
 
- private final String file;
-
- public Model ( String file ) {
-  this.file = file;
+ public Model ( Mid id , String file ) {
+  super(new Rid(id , "model") , Resource.Type.Model , file);
  }
 
  public void load () {
@@ -16,10 +15,10 @@ public class Model implements Serializable {
 
  @Override
  public String toString () {
-  return "Model: " + file;
+  return "Model: " + url;
  }
 
  public String getFile () {
-  return file;
+  return url;
  }
 }
