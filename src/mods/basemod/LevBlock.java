@@ -3,6 +3,7 @@ package mods.basemod;
 import java.io.Serializable;
 import java.util.Map;
 import mods.basemod.containers.Mid;
+import mods.basemod.resources.Model;
 import utils.json.JSONObject;
 
 public class LevBlock extends IItem implements Serializable {

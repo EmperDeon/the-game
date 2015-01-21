@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import mods.basemod.containers.Mid;
 import mods.basemod.interfaces.InvItem;
+import mods.basemod.resources.Model;
 import utils.json.JSONObject;
 
 public class IItem implements Serializable , InvItem {

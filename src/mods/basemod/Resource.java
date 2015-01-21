@@ -4,7 +4,6 @@ import java.io.Serializable;
 import static main.Main.LOG;
 import mods.basemod.resources.Model;
 import mods.basemod.resources.Sound;
-import utils.exceptions.LoggerExc;
 
 public abstract class Resource implements Serializable {
 
@@ -35,11 +34,15 @@ public abstract class Resource implements Serializable {
  }
 
  public static Resource getResource ( Rid k , String v ) {
-  switch (k.getType()){
-   case Model: return new Model(k, v);
-   case Sound: return new Sound(k, v);
-   default : LOG.addE("Error with parse Resource type "+k.toString()); return null; 
-    
+  switch ( k.getType() ) {
+   case Model:
+    return new Model(k , v);
+   case Sound:
+    return new Sound(k , v);
+   default:
+    LOG.addE("Error with parse Resource type " + k.toString());
+    return null;
+
   }
  }
 
@@ -50,7 +53,7 @@ public abstract class Resource implements Serializable {
    case "Sound":
     return Type.Sound;
    default:
-    LOG.addE(new LoggerExc("Error with parse type " + s));
+    LOG.addE("Error with parse type " + s);
     return Type.Null;
   }
  }

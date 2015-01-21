@@ -78,7 +78,7 @@ public final class ModsContainer implements Serializable {
   } else if ( v instanceof IItem ) {
    icont.put(v.getId() , ( IItem ) v);
   } else {
-   LOG.addE(new Exception("v is not a Base"));
+   LOG.addE("v is not a Base");
   }
  }
 

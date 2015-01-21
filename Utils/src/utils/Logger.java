@@ -23,7 +23,7 @@ public class Logger implements Serializable {
                           new LoggerExc(ex)));
   main.Main.logmanager.update();
  }
- 
+
  public void addE(Exception ex) {
   this.exep.add(new LogEx(Thread.currentThread().getStackTrace()[2].toString(),
                           ex));

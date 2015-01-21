@@ -33,9 +33,7 @@ public class Rid extends Mid implements Comparable {
  public String getRId () {
   return rid;
  }
- 
- 
- 
+
  @Override
  public int compareTo ( Object m ) {
   Rid o = ( Rid ) m;

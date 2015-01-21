@@ -8,11 +8,11 @@ import mods.basemod.containers.Mid;
 public class Model extends Resource implements Serializable {
 
  public Model ( Mid id , String file ) {
-  super(new Rid(id ,  Resource.Type.Model, "model") , Resource.Type.Model , file);
+  super(new Rid(id , Resource.Type.Model , "model") , Resource.Type.Model , file);
  }
 
- public Model (Rid k, String url ) {
-  super(k, Resource.Type.Model, url);
+ public Model ( Rid k , String url ) {
+  super(k , Resource.Type.Model , url);
  }
 
  public void load () {

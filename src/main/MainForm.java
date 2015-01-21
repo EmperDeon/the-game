@@ -26,7 +26,6 @@ import javax.swing.event.ListDataListener;
 import static main.Main.LOG;
 import static main.Main.Tr;
 import static main.Main.mods;
-import utils.exceptions.LoggerExc;
 
 public class MainForm extends JFrame {
 
@@ -314,7 +313,7 @@ public class MainForm extends JFrame {
    if ( i != -1 ) {
     cont.remove(i);
    } else {
-    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+    main.Main.LOG.addE("No selected mod");
    }
    // main.Main.mods.deleteMod(cont.get(i));
    for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
@@ -326,7 +325,7 @@ public class MainForm extends JFrame {
    if ( i != -1 ) {
     disb.add(cont.get(i));
    } else {
-    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+    main.Main.LOG.addE("No selected mod");
    }
    for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
     e.contentsChanged(null);
@@ -338,7 +337,7 @@ public class MainForm extends JFrame {
    if ( i != -1 ) {
     disb.remove(i);
    } else {
-    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+    main.Main.LOG.addE("No selected mod");
    }
    for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
     e.contentsChanged(null);
@@ -408,7 +407,7 @@ public class MainForm extends JFrame {
    if ( i != -1 ) {
     cont.remove(i);
    } else {
-    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+    main.Main.LOG.addE("No selected mod");
    }
    // main.Main.mods.deleteCMod(cont.get(i));
    for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
@@ -420,7 +419,7 @@ public class MainForm extends JFrame {
    if ( i != -1 ) {
     disb.add(cont.get(i));
    } else {
-    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+    main.Main.LOG.addE("No selected mod");
    }
    for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
     e.contentsChanged(null);
@@ -432,7 +431,7 @@ public class MainForm extends JFrame {
    if ( i != -1 ) {
     disb.remove(i);
    } else {
-    main.Main.LOG.addE(new LoggerExc("No selected mod"));
+    main.Main.LOG.addE("No selected mod");
    }
    for ( ListDataListener e : listenerList.getListeners(ListDataListener.class) ) {
     e.contentsChanged(null);
