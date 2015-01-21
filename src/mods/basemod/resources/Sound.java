@@ -5,8 +5,8 @@ import mods.basemod.Rid;
 
 public class Sound extends Resource {
 
- public Sound ( Rid id , Type type , String url ) {
-  super(id , type , url);
+ public Sound ( Rid id , String url ) {
+  super(id , Type.Sound , url);
  }
 
 }

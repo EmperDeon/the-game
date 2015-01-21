@@ -32,7 +32,6 @@ import mods.basemod.CraftE;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
 import mods.basemod.Model;
-import mods.basemod.Rid;
 import mods.basemod.containers.Mid;
 import utils.Unzipper;
 import utils.Zipper;
@@ -299,10 +298,9 @@ public final class ModEditor extends javax.swing.JFrame {
 
  private void gen () {
   for ( int i = 0 ; i < 100000 ; i++ ) {
-   bm.add(new Mid("0" , "Block" + i , "0") , new Model(new Rid(new Mid("0" ,
-                                                                       "Block" + i ,
-                                                                       "0") ,
-                                                               "basicSound") ,
+   bm.add(new Mid("0" , "Block" + i , "0") , new Model(new Mid("0" ,
+                                                               "Block" + i ,
+                                                               "0") ,
                                                        "file1") ,
           new HashMap<>());
 //   cm.add(i , "1x1" , "1=1");
