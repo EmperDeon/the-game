@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-import main.Main;
 import static main.Main.LOG;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;
@@ -110,7 +109,7 @@ public final class ModsContainer implements Serializable {
  public void test () {
   mods.keySet().stream().
           forEach(( m ) -> {
-           Main.mainform.mmod.add(m.getMid());
+     //      Main.mainform.mmod.add(m.getMid());
           });
  }
 
