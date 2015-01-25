@@ -58,7 +58,7 @@ public final class Main implements Runnable {
 
  public static void main ( String args[] ) {
   QApplication.initialize(args);
-  
+
   mainform = new LauncherForm();
   
   

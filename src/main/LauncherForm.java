@@ -27,7 +27,7 @@ public final class LauncherForm extends QMainWindow {
  public LauncherForm () {
   super();
   show();
-
+  setMinimumSize(500, 400);
   field = new QLineEdit();
   browser = new QWebView();
   browser.page().settings().setAttribute(WebAttribute.JavascriptEnabled, false);
@@ -116,7 +116,6 @@ public final class LauncherForm extends QMainWindow {
   browser.load(new QUrl(url));
   
   browser.setHtml(html.toString() , new QUrl(url));
-  browser.font().setPixelSize(5);
  }
 
  @Override

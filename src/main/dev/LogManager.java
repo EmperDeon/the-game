@@ -17,8 +17,16 @@ import utils.Logger.Type;
  *
  * @author ilya
  */
-public class LogManager extends QWidget {
-
+public final class LogManager extends QWidget {
+// private final TimerTask task = new TimerTask(){
+//
+//  @Override
+//  public void run () {
+//   update1();
+//  }
+// 
+// };
+// private final Timer timer = new Timer();
  private Type active = Type.All;
  private final QPushButton mexcp;
  private final QPushButton mwarn;
@@ -28,15 +36,17 @@ public class LogManager extends QWidget {
  private final QTextEdit edit;
  private final QVBoxLayout layout;
  private final QHBoxLayout blay;
+ public boolean finished = false;
  public LogManager () {
   layout = new QVBoxLayout(this);
   blay = new QHBoxLayout(this);
   
   setMinimumSize(300 , 400);
 
-  edit = new QTextEdit(this);
-  edit.setMinimumSize(300, 400);
-    
+  edit = new QTextEdit();
+  //edit.setMinimumSize(300, 400);
+  edit.moveToThread(main.Main.Tm);
+  
   mexcp = new QPushButton ("Show exception level", this);
   mexcp.clicked.connect(this , "mexcp()");
 
@@ -60,11 +70,10 @@ public class LogManager extends QWidget {
   
   layout.addLayout(blay);
   layout.addWidget(edit);
-  
-  
 
   this.layout().activate();
-  show();
+  finished = true;
+  //timer.scheduleAtFixedRate(task , 2000 , 500);
  }
 
  public void mexcp () {

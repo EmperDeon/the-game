@@ -1,6 +1,10 @@
 package utils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -119,7 +123,7 @@ public class Logger implements Serializable {
    this.info = info;
    this.date = new Date();
    this.type = type;
-    main.Main.logmanager.update1();
+   if(main.Main.logmanager.finished) main.Main.logmanager.update1();
   }
 
   @Override
@@ -150,7 +154,7 @@ public class Logger implements Serializable {
    this.clas = Thread.currentThread().getStackTrace()[2].toString();
    this.ex = info;
    this.date = new Date();
-   main.Main.logmanager.update1();
+   if(main.Main.logmanager.finished) main.Main.logmanager.update1();
   }
 
   @Override
