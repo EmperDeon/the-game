@@ -5,123 +5,100 @@
  */
 package main.dev;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextPane;
+import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QMainWindow;
+import com.trolltech.qt.gui.QMenu;
+import com.trolltech.qt.gui.QTextEdit;
+import static main.Main.LOG;
+import utils.Logger.Type;
 
 /**
  *
  * @author ilya
  */
-public class LogManager extends javax.swing.JFrame {
+public class LogManager extends QMainWindow {
 
- private int width, height;
+ private Type active = Type.All;
+ private final QMenu menu;
+ private final QAction mexcp;
+ private final QAction mwarn;
+ private final QAction minfo;
+ private final QAction mdebg;
+ private final QAction mall;
+ private final QTextEdit edit;
 
- /**
-  * Creates new form LogExplorer
-  */
  public LogManager () {
-  setVisible(false);
-  setTitle("LogManager");
-  setBounds(0 , 0 , this.getMaximumSize().width , this.getMaximumSize().height);
-  setLayout(null);
-  addComponentListener(new ComponentAdapter() {
-   @Override
-   public void componentResized ( java.awt.event.ComponentEvent evt ) {
-    resize();
-   }
-  });
-  addWindowListener(new WindowAdapter() {
-   @Override
-   public void windowClosing ( WindowEvent e ) {
-    main.Main.main.destroy();
-    setVisible(false);
-   }
-  });
+  setMinimumSize(300 , 400);
 
-  jScrollPane1.setViewportView(jTextPane1);
-  jScrollPane2.setViewportView(jTextPane2);
-  jScrollPane3.setViewportView(jTextPane3);
-  jScrollPane4.setViewportView(jTextPane4);
-  jScrollPane5.setViewportView(jTextPane5);
-  jScrollPane5.getVerticalScrollBar().setValue(jScrollPane5.
-          getVerticalScrollBar().getMaximum());
-  jPanel1.add(jScrollPane1);
-  jPanel2.add(jScrollPane2);
-  jPanel3.add(jScrollPane3);
-  jPanel4.add(jScrollPane4);
-  jPanel5.add(jScrollPane5);
+  edit = new QTextEdit(this);
+  
+  menu = menuBar().addMenu("Show other level");
+  
+  mexcp = new QAction("Show exception level", this);
+  mexcp.triggered.connect(this , "mexcp()");
+  menu.addAction(mexcp);
+  mwarn = new QAction("Show warning level", this);
+  mwarn.triggered.connect(this , "mwarn()");
 
-  jPanel1.setLayout(null);
-  jPanel2.setLayout(null);
-  jPanel3.setLayout(null);
-  jPanel4.setLayout(null);
-  jPanel5.setLayout(null);
+  minfo = new QAction("Show information level", this);
+  minfo.triggered.connect(this , "minfo()");
 
-  jTabbedPane1.addTab("Exceptions" , jPanel1);
-  jTabbedPane1.addTab("Warnings" , jPanel2);
-  jTabbedPane1.addTab("Info" , jPanel3);
-  jTabbedPane1.addTab("Debug" , jPanel4);
-  jTabbedPane1.addTab("All" , jPanel5);
+  mdebg = new QAction("Show debud level", this);
+  mdebg.triggered.connect(this , "mdebg()");
 
-  add(jTabbedPane1);
+  mall = new QAction("Show all levels", this);
+  mall.triggered.connect(this , "mall()");
 
-  resize();
+  menu.addAction(mexcp);
+  menu.addAction(mwarn);
+  menu.addAction(minfo);
+  menu.addAction(mdebg);
+  menu.addAction(mall);
+  
+  layout().addWidget(edit);
 
-  repaint();
+  
 
+  show();
  }
 
- private void resize () {
-  width = getWidth();
-  height = getHeight();
-
-  jTabbedPane1.setBounds(0 , 0 , width , height);
-
-  jScrollPane1.setBounds(0 , 0 , width - 2 , height - 52);
-  jScrollPane2.setBounds(0 , 0 , width - 2 , height - 52);
-  jScrollPane3.setBounds(0 , 0 , width - 2 , height - 52);
-  jScrollPane4.setBounds(0 , 0 , width - 2 , height - 52);
-  jScrollPane5.setBounds(0 , 0 , width - 2 , height - 52);
-
-  jScrollPane1.getVerticalScrollBar().setValue(jScrollPane1.
-          getVerticalScrollBar().getMaximum());
-  jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.
-          getVerticalScrollBar().getMaximum());
-  jScrollPane3.getVerticalScrollBar().setValue(jScrollPane3.
-          getVerticalScrollBar().getMaximum());
-  jScrollPane4.getVerticalScrollBar().setValue(jScrollPane4.
-          getVerticalScrollBar().getMaximum());
-  jScrollPane5.getVerticalScrollBar().setValue(jScrollPane5.
-          getVerticalScrollBar().getMaximum());
+ public void mexcp () {
+  edit.setHtml(LOG.getE());
+  active = Type.Error;
  }
 
- public void update () {
-  jTextPane1.setText(main.Main.LOG.getE());
-  jTextPane2.setText(main.Main.LOG.getW());
-  jTextPane3.setText(main.Main.LOG.getI());
-  jTextPane4.setText(main.Main.LOG.getD());
-  jTextPane5.setText(main.Main.LOG.getAll());
+ public void mwarn () {
+  edit.setHtml(LOG.getW());
+  active = Type.Warning;
  }
 
- private final JPanel jPanel1 = new JPanel();
- private final JPanel jPanel2 = new JPanel();
- private final JPanel jPanel3 = new JPanel();
- private final JPanel jPanel4 = new JPanel();
- private final JPanel jPanel5 = new JPanel();
- private final JScrollPane jScrollPane1 = new JScrollPane();
- private final JScrollPane jScrollPane2 = new JScrollPane();
- private final JScrollPane jScrollPane3 = new JScrollPane();
- private final JScrollPane jScrollPane4 = new JScrollPane();
- private final JScrollPane jScrollPane5 = new JScrollPane();
- private final JTabbedPane jTabbedPane1 = new JTabbedPane();
- private final JTextPane jTextPane1 = new JTextPane();
- private final JTextPane jTextPane2 = new JTextPane();
- private final JTextPane jTextPane3 = new JTextPane();
- private final JTextPane jTextPane4 = new JTextPane();
- private final JTextPane jTextPane5 = new JTextPane();
+ public void minfo () {
+  edit.setHtml(LOG.getI());
+  active = Type.Info;
+ }
+
+ public void mdebg () {
+  edit.setHtml(LOG.getD());
+  active = Type.Debug;
+ }
+
+ public void mall () {
+  edit.setHtml(LOG.getAll());
+  active = Type.All;
+ }
+
+ public void update1 () {
+  switch ( active ) {
+   case Error:
+    mexcp();
+   case Warning:
+    mwarn();
+   case Info:
+    minfo();
+   case Debug:
+    mdebg();
+   case All:
+    mall();
+  }
+ }
 }

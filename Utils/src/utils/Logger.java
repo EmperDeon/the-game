@@ -7,45 +7,33 @@ import java.util.Date;
 import utils.exceptions.LoggerExc;
 
 public class Logger implements Serializable {
-
+ public enum Type {
+  Error, Warning, Info, Debug, All
+ }
  private final ArrayList<LogEx> exep = new ArrayList<>();
  private final ArrayList<LogE> warn = new ArrayList<>();
  private final ArrayList<LogE> info = new ArrayList<>();
  private final ArrayList<LogE> debg = new ArrayList<>();
  private final ArrayList<LogEn> all = new ArrayList<>();
 
- public Logger() {
-
- }
-
  public void addE(String ex) {
-  this.exep.add(new LogEx(Thread.currentThread().getStackTrace()[2].toString(),
-                          new LoggerExc(ex)));
-  main.Main.logmanager.update();
+  this.exep.add(new LogEx(new LoggerExc(ex)));
  }
 
  public void addE(Exception ex) {
-  this.exep.add(new LogEx(Thread.currentThread().getStackTrace()[2].toString(),
-                          ex));
-  main.Main.logmanager.update();
+  this.exep.add(new LogEx(ex));
  }
 
  public void addW(String info) {
-  this.warn.add(new LogE(Thread.currentThread().getStackTrace()[2].toString(),
-                         info));
-  main.Main.logmanager.update();
+  this.warn.add(new LogE(info, Type.Warning));
  }
 
  public void addI(String info) {
-  this.info.add(new LogE(Thread.currentThread().getStackTrace()[2].toString(),
-                         info));
-  main.Main.logmanager.update();
+  this.info.add(new LogE(info, Type.Info));
  }
 
  public void addD(String info) {
-  this.debg.add(new LogE(Thread.currentThread().getStackTrace()[2].toString(),
-                         info));
-  main.Main.logmanager.update();
+  this.debg.add(new LogE(info, Type.Debug));
  }
 
  public String getAll() {
@@ -100,13 +88,12 @@ public class Logger implements Serializable {
 
  public void save() {
   try (ObjectOutputStream s = new ObjectOutputStream(new FileOutputStream(
-     new File("/usr/games/game/log.log")))) {
+     new File(main.Main.mdir+"log.log")))) {
    s.writeObject(this);
    s.flush();
   } catch (IOException e) {
    System.out.println("Error" + e.toString());
   }
-  System.out.println("Saved");
  }
 
  private interface LogEn {
@@ -122,16 +109,25 @@ public class Logger implements Serializable {
   private final String clas;
   private final String info;
   private final Date date;
-
-  public LogE(String clas, String info) {
-   this.clas = clas;
+  private final Type type;
+  public LogE(String info, Type type) {
+   this.clas = Thread.currentThread().getStackTrace()[2].toString();
    this.info = info;
    this.date = new Date();
+   this.type = type;
+   main.Main.logmanager.update1();
   }
-
+  
   @Override
   public String toString() {
-   return "[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info + " \n";
+   switch (type) {
+    case Warning:
+     return "<p style=\" color: #ffc100 \" >[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info + "</p>";
+    case Info:
+     return "<p style=\" color: #009dff \" >[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info + "</p>";
+    default:
+     return "<p style=\" color: #9f9f9f \" >[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info + "</p>";
+   }
   }
 
   @Override
@@ -146,11 +142,11 @@ public class Logger implements Serializable {
   private final Exception ex;
   private final Date date;
 
-  public LogEx(String clas, Exception info) {
-
-   this.clas = clas;
+  public LogEx(Exception info) {
+   this.clas = Thread.currentThread().getStackTrace()[2].toString();
    this.ex = info;
    this.date = new Date();
+   main.Main.logmanager.update1();
   }
 
   @Override
@@ -165,8 +161,8 @@ public class Logger implements Serializable {
     }
    }
 
-   return "[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] Exception in " + clas + " - " + t.
-      toString() + " \n";
+   return "<p style=\" color: red \" >[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] Exception in " + clas + " - " + t.
+      toString() + "</p>";
   }
 
   @Override

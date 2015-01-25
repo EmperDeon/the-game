@@ -68,7 +68,7 @@ public final class Main implements Runnable {
 //  modeleditor = new ModelEditor();
 //  leveleditor = new LevelEditor();
 //  optionseditor = new OptionsEditor();
-  if(OPTIONS.getBoolean("DevMode"))
+  if(!OPTIONS.getBoolean("DevMode"))
    mainform.show();
   else
    devform.show();
