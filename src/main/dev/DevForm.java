@@ -1,28 +1,13 @@
-package main;
+package main.dev;
 
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QListView;
+import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QVBoxLayout;
-import com.trolltech.qt.gui.QWidget;
 import utils.qt.QTreeModel;
 
-public final class MainForm extends QWidget {
-
-// volatile QPixmap originalPixmap;
-//
-// private final QLabel screenshotLabel;
-// private final QGroupBox optionsGroupBox;
-// private final QSpinBox delaySpinBox;
-// private final QLabel delaySpinBoxLabel;
-// private final QCheckBox hideThisWindowCheckBox;
-// private final QPushButton newScreenshotButton;
-// private final QPushButton saveScreenshotButton;
-// private final QPushButton quitScreenshotButton;
-//
-
-// private final QGridLayout optionsGroupBoxLayout;
-// private final QHBoxLayout buttonsLayout;
+public class DevForm extends QMainWindow{
  private final QHBoxLayout mainLayout = new QHBoxLayout();
  private final QListView mmods = new QListView();
  private final QListView cmods = new QListView();
@@ -30,8 +15,10 @@ public final class MainForm extends QWidget {
  private final QTreeModel cmodel = new QTreeModel();
  private final QVBoxLayout panel = new QVBoxLayout();
 
- public MainForm () {
+ public DevForm () {
   super();
+  show();
+  
   setMinimumSize(700 , 400);
   setWindowIcon(new QIcon("classpath:com/trolltech/images/qt-logo.png"));
   setWindowTitle(tr("Screenshot"));
@@ -53,9 +40,7 @@ public final class MainForm extends QWidget {
 
 
  }
-
 }
-
 //  screenshotLabel = new QLabel();
 //  screenshotLabel.setSizePolicy(QSizePolicy.Policy.Expanding,
 //                                QSizePolicy.Policy.Expanding);

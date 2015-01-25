@@ -1,4 +1,4 @@
-package main;
+package main.dev;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -28,6 +28,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
+import main.Main;
 import mods.basemod.CraftE;
 import mods.basemod.IItem;
 import mods.basemod.LevBlock;

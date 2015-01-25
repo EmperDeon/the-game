@@ -1,7 +1,8 @@
 package main;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import com.trolltech.qt.gui.QApplication;
+import main.dev.DevForm;
+import main.dev.LogManager;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
 import utils.LibLoader;
@@ -23,23 +24,22 @@ public final class Main implements Runnable {
                                                   "user.dir").lastIndexOf("/") + 1);
  }
 
- 
  public final static JSONObject OPTIONS = new JSONObject(mdir + "options.db");
  public final static MActionListener TIMER = new MActionListener();
  public final static ModsContainer mods = new ModsContainer();
 
-// public static LogManager logmanager;
+ public static LogManager logmanager;
 // public static ModEditor modeditor;
 // public static ModelEditor modeleditor;
 // public static LevelEditor leveleditor;
 // public static OptionsEditor optionseditor;
- public static MainForm mainform;
+ public static LauncherForm mainform;
+ public static DevForm devform;
 
  public final static Logger LOG = new Logger();
- 
+
 // public final static Resources RES = new Resources();
 // public final static Repository REP = new Repository();
- 
  public boolean running = true;
 
  @Override
@@ -57,26 +57,24 @@ public final class Main implements Runnable {
  }
 
  public static void main ( String args[] ) {
-  try {
-   for ( UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels() ) {
-    if ( "Nimbus".equals(info.getName()) ) {
-     UIManager.setLookAndFeel(info.getClassName());
-     break;
-    }
-   }
-  } catch ( ClassNotFoundException | InstantiationException |
-            IllegalAccessException | UnsupportedLookAndFeelException ex ) {
-  }
-
-//  logmanager = new LogManager();
+  QApplication.initialize(args);
+  
+  mainform = new LauncherForm();
+  
+  
+  logmanager = new LogManager();
 //  logmanager.setVisible(true);
 //  modeditor = new ModEditor();
 //  modeleditor = new ModelEditor();
 //  leveleditor = new LevelEditor();
 //  optionseditor = new OptionsEditor();
-  mainform = new MainForm();
-
+  if(OPTIONS.getBoolean("DevMode"))
+   mainform.show();
+  else
+   devform.show();
   Tm.start();
+  QApplication.execStatic();
+  QApplication.shutdown();
  }
 
 }
