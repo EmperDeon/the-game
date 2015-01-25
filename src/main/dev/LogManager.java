@@ -5,10 +5,11 @@
  */
 package main.dev;
 
-import com.trolltech.qt.gui.QAction;
-import com.trolltech.qt.gui.QMainWindow;
-import com.trolltech.qt.gui.QMenu;
+import com.trolltech.qt.gui.QHBoxLayout;
+import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTextEdit;
+import com.trolltech.qt.gui.QVBoxLayout;
+import com.trolltech.qt.gui.QWidget;
 import static main.Main.LOG;
 import utils.Logger.Type;
 
@@ -16,49 +17,53 @@ import utils.Logger.Type;
  *
  * @author ilya
  */
-public class LogManager extends QMainWindow {
+public class LogManager extends QWidget {
 
  private Type active = Type.All;
- private final QMenu menu;
- private final QAction mexcp;
- private final QAction mwarn;
- private final QAction minfo;
- private final QAction mdebg;
- private final QAction mall;
+ private final QPushButton mexcp;
+ private final QPushButton mwarn;
+ private final QPushButton minfo;
+ private final QPushButton mdebg;
+ private final QPushButton mall;
  private final QTextEdit edit;
-
+ private final QVBoxLayout layout;
+ private final QHBoxLayout blay;
  public LogManager () {
+  layout = new QVBoxLayout(this);
+  blay = new QHBoxLayout(this);
+  
   setMinimumSize(300 , 400);
 
   edit = new QTextEdit(this);
+  edit.setMinimumSize(300, 400);
+    
+  mexcp = new QPushButton ("Show exception level", this);
+  mexcp.clicked.connect(this , "mexcp()");
+
+  mwarn = new QPushButton ("Show warning level", this);
+  mwarn.clicked.connect(this , "mwarn()");
+
+  minfo = new QPushButton ("Show information level", this);
+  minfo.clicked.connect(this , "minfo()");
+
+  mdebg = new QPushButton ("Show debud level", this);
+  mdebg.clicked.connect(this , "mdebg()");
+
+  mall = new QPushButton ("Show all levels", this);
+  mall.clicked.connect(this , "mall()");
+
+  blay.addWidget(mexcp);
+  blay.addWidget(mwarn);
+  blay.addWidget(minfo);
+  blay.addWidget(mdebg);
+  blay.addWidget(mall);
   
-  menu = menuBar().addMenu("Show other level");
+  layout.addLayout(blay);
+  layout.addWidget(edit);
   
-  mexcp = new QAction("Show exception level", this);
-  mexcp.triggered.connect(this , "mexcp()");
-  menu.addAction(mexcp);
-  mwarn = new QAction("Show warning level", this);
-  mwarn.triggered.connect(this , "mwarn()");
-
-  minfo = new QAction("Show information level", this);
-  minfo.triggered.connect(this , "minfo()");
-
-  mdebg = new QAction("Show debud level", this);
-  mdebg.triggered.connect(this , "mdebg()");
-
-  mall = new QAction("Show all levels", this);
-  mall.triggered.connect(this , "mall()");
-
-  menu.addAction(mexcp);
-  menu.addAction(mwarn);
-  menu.addAction(minfo);
-  menu.addAction(mdebg);
-  menu.addAction(mall);
-  
-  layout().addWidget(edit);
-
   
 
+  this.layout().activate();
   show();
  }
 

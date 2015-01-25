@@ -37,7 +37,7 @@ public class Logger implements Serializable {
  }
 
  public String getAll() {
-  StringBuilder s = new StringBuilder();
+  StringBuilder s = new StringBuilder("<html><body>");
 
   all.addAll(exep);
   all.addAll(debg);
@@ -49,46 +49,50 @@ public class Logger implements Serializable {
   all.stream().forEach((e) -> {
    s.append(e.toString());
   });
-
+  s.append("</body></html>");
   all.clear();
   return s.toString();
  }
 
  public String getE() {
-  StringBuilder s = new StringBuilder();
+  StringBuilder s = new StringBuilder("<html><body>");
   exep.stream().forEach(x -> {
    s.append(x.toString());
   });
+  s.append("</body></html>");
   return s.toString();
  }
 
  public String getW() {
-  StringBuilder s = new StringBuilder();
+  StringBuilder s = new StringBuilder("<html><body>");
   warn.stream().forEach(x -> {
    s.append(x.toString());
   });
+  s.append("</body></html>");
   return s.toString();
  }
 
  public String getI() {
-  StringBuilder s = new StringBuilder();
+  StringBuilder s = new StringBuilder("<html><body>");
   info.stream().forEach(x -> {
    s.append(x.toString());
   });
+  s.append("</body></html>");
   return s.toString();
  }
 
  public String getD() {
-  StringBuilder s = new StringBuilder();
+  StringBuilder s = new StringBuilder("<html><body>");
   debg.stream().forEach(x -> {
    s.append(x.toString());
   });
+  s.append("</body></html>");
   return s.toString();
  }
 
  public void save() {
   try (ObjectOutputStream s = new ObjectOutputStream(new FileOutputStream(
-     new File(main.Main.mdir+"log.log")))) {
+     new File(main.Main.mdir + "log.log")))) {
    s.writeObject(this);
    s.flush();
   } catch (IOException e) {
@@ -117,7 +121,7 @@ public class Logger implements Serializable {
    this.type = type;
    main.Main.logmanager.update1();
   }
-  
+
   @Override
   public String toString() {
    switch (type) {
