@@ -1,10 +1,12 @@
 package utils;
 
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.TreeMap;
 
 public class MActionListener {
-
  private final TreeMap<String, ActE> cont = new TreeMap<>();
 
  public MActionListener() {
@@ -31,11 +33,11 @@ public class MActionListener {
   protected final ArrayList<ActionListener> arr = new ArrayList<>();
 
   public synchronized void add(Integer delay, ActionListener e) {
-   timer.scheduleAtFixedRate(new TimerTask() {
+   timer.schedule(new TimerTask() {
     @Override
     public void run() {
-     arr.stream().forEach((ActionListener e) -> {
-      e.actionPerformed(null);
+     arr.stream().forEach(( ActionListener e1 ) -> {
+      e1.actionPerformed(null);
      });
     }
    }, 10, delay);

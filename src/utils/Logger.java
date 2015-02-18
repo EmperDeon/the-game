@@ -1,9 +1,9 @@
 package utils;
 
+import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.FileWriter;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,107 +12,114 @@ import utils.exceptions.LoggerExc;
 
 public class Logger implements Serializable {
  public enum Type {
-  Error, Warning, Info, Debug, All
+  error, warning, info, debug
  }
- private final ArrayList<LogEx> exep = new ArrayList<>();
- private final ArrayList<LogE> warn = new ArrayList<>();
- private final ArrayList<LogE> info = new ArrayList<>();
- private final ArrayList<LogE> debg = new ArrayList<>();
- private final ArrayList<LogEn> all = new ArrayList<>();
+ 
+ private final ArrayList<LogEn> list = new ArrayList<>();
 
+ public Logger(){
+  main.Main.TIMER.addT("loggerExport", 200, ( ActionEvent e ) -> {
+   main.Main.LOG.export("now.log");
+  });
+ }
+ 
  public void addE(String ex) {
-  this.exep.add(new LogEx(new LoggerExc(ex)));
+  this.list.add(new LogEx(new LoggerExc(ex)));
  }
 
  public void addE(Exception ex) {
-  this.exep.add(new LogEx(ex));
+  this.list.add(new LogEx(ex));
  }
 
  public void addW(String info) {
-  this.warn.add(new LogE(info, Type.Warning));
+  this.list.add(new LogE(info, Type.warning));
  }
 
  public void addI(String info) {
-  this.info.add(new LogE(info, Type.Info));
+  this.list.add(new LogE(info, Type.info));
  }
 
  public void addD(String info) {
-  this.debg.add(new LogE(info, Type.Debug));
+  this.list.add(new LogE(info, Type.debug));
  }
-
- public String getAll() {
-  StringBuilder s = new StringBuilder("<html><body>");
-
-  all.addAll(exep);
-  all.addAll(debg);
-  all.addAll(info);
-  all.addAll(warn);
-
-  all.sort((LogEn o1, LogEn o2) -> o1.getDate().compareTo(o2.getDate()));
-
-  all.stream().forEach((e) -> {
-   s.append(e.toString());
-  });
-  s.append("</body></html>");
-  all.clear();
-  return s.toString();
- }
-
- public String getE() {
-  StringBuilder s = new StringBuilder("<html><body>");
-  exep.stream().forEach(x -> {
-   s.append(x.toString());
-  });
-  s.append("</body></html>");
-  return s.toString();
- }
-
- public String getW() {
-  StringBuilder s = new StringBuilder("<html><body>");
-  warn.stream().forEach(x -> {
-   s.append(x.toString());
-  });
-  s.append("</body></html>");
-  return s.toString();
- }
-
- public String getI() {
-  StringBuilder s = new StringBuilder("<html><body>");
-  info.stream().forEach(x -> {
-   s.append(x.toString());
-  });
-  s.append("</body></html>");
-  return s.toString();
- }
-
- public String getD() {
-  StringBuilder s = new StringBuilder("<html><body>");
-  debg.stream().forEach(x -> {
-   s.append(x.toString());
-  });
-  s.append("</body></html>");
-  return s.toString();
- }
+//
+// public String getAll() {
+//  StringBuilder s = new StringBuilder("<html><body>");
+//
+//  all.addAll(exep);
+//  all.addAll(debg);
+//  all.addAll(info);
+//  all.addAll(warn);
+//
+//  all.sort((LogEn o1, LogEn o2) -> o1.getDate().compareTo(o2.getDate()));
+//
+//  all.stream().forEach((e) -> {
+//   s.append(e.toString());
+//  });
+//  s.append("</body></html>");
+//  all.clear();
+//  return s.toString();
+// }
+//
+// public String getE() {
+//  StringBuilder s = new StringBuilder("<html><body>");
+//  exep.stream().forEach(x -> {
+//   s.append(x.toString());
+//  });
+//  s.append("</body></html>");
+//  return s.toString();
+// }
+//
+// public String getW() {
+//  StringBuilder s = new StringBuilder("<html><body>");
+//  warn.stream().forEach(x -> {
+//   s.append(x.toString());
+//  });
+//  s.append("</body></html>");
+//  return s.toString();
+// }
+//
+// public String getI() {
+//  StringBuilder s = new StringBuilder("<html><body>");
+//  info.stream().forEach(x -> {
+//   s.append(x.toString());
+//  });
+//  s.append("</body></html>");
+//  return s.toString();
+// }
+//
+// public String getD() {
+//  StringBuilder s = new StringBuilder("<html><body>");
+//  debg.stream().forEach(x -> {
+//   s.append(x.toString());
+//  });
+//  s.append("</body></html>");
+//  return s.toString();
+// }
 
  public void save() {
-  try (ObjectOutputStream s = new ObjectOutputStream(new FileOutputStream(
-     new File(main.Main.mdir + "log.log")))) {
-   s.writeObject(this);
-   s.flush();
-  } catch (IOException e) {
-   System.out.println("Error" + e.toString());
+  Date now = new Date();
+  String file = "log/"+new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss").format(now)+".log";
+  if(!new File(file).exists())
+   export(file);
+  else
+   export("log/"+new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss").format(now)+"_1.log");
+ }
+ 
+ public void export(String file){
+  try(BufferedWriter out = new BufferedWriter(new FileWriter(main.Main.mdir + file))){
+   for(LogEn e : list){
+    out.write(e.toString()+"\n");
+   }
+   out.flush();
+  }catch(Exception ex){
+   System.err.println("Error in class Logger.export("+file+")");
   }
  }
 
- private interface LogEn {
+ private interface LogEn {}
 
-  public Date getDate();
-
-  @Override
-  public String toString();
- }
-
- private class LogE implements LogEn, Serializable {
+ private class LogE implements LogEn {
 
   private final String clas;
   private final String info;
@@ -123,28 +130,22 @@ public class Logger implements Serializable {
    this.info = info;
    this.date = new Date();
    this.type = type;
-   if(main.Main.logmanager.finished) main.Main.logmanager.update1();
   }
 
   @Override
   public String toString() {
    switch (type) {
-    case Warning:
-     return "<p style=\" color: #ffc100 \" >[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info + "</p>";
-    case Info:
-     return "<p style=\" color: #009dff \" >[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info + "</p>";
+    case warning:
+     return "warning&[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info;
+    case info:
+     return "info&[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info;
     default:
-     return "<p style=\" color: #9f9f9f \" >[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info + "</p>";
+     return "debug&[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info;
    }
-  }
-
-  @Override
-  public Date getDate() {
-   return date;
   }
  }
 
- private class LogEx implements LogEn, Serializable {
+ private class LogEx implements LogEn {
 
   private final String clas;
   private final Exception ex;
@@ -154,7 +155,6 @@ public class Logger implements Serializable {
    this.clas = Thread.currentThread().getStackTrace()[2].toString();
    this.ex = info;
    this.date = new Date();
-   if(main.Main.logmanager.finished) main.Main.logmanager.update1();
   }
 
   @Override
@@ -169,13 +169,8 @@ public class Logger implements Serializable {
     }
    }
 
-   return "<p style=\" color: red \" >[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] Exception in " + clas + " - " + t.
-      toString() + "</p>";
-  }
-
-  @Override
-  public Date getDate() {
-   return date;
+   return "error&[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] Exception in " + clas + " - " + t.
+      toString();
   }
  }
 }

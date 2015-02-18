@@ -2,7 +2,6 @@ package main;
 
 import com.trolltech.qt.gui.QApplication;
 import main.dev.DevForm;
-import main.dev.LogManager;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
 import utils.LibLoader;
@@ -28,12 +27,10 @@ public final class Main implements Runnable {
  public final static MActionListener TIMER = new MActionListener();
  public final static ModsContainer mods = new ModsContainer();
 
- public static LogManager logmanager;
 // public static ModEditor modeditor;
 // public static ModelEditor modeleditor;
 // public static LevelEditor leveleditor;
 // public static OptionsEditor optionseditor;
- public static LauncherForm mainform;
  public static DevForm devform;
 
  public final static Logger LOG = new Logger();
@@ -53,24 +50,17 @@ public final class Main implements Runnable {
  }
 
  public void destroy () {
-  mainform.setVisible(true);
+  
  }
 
  public static void main ( String args[] ) {
   QApplication.initialize(args);
-
-  mainform = new LauncherForm();
   
-  
-  logmanager = new LogManager();
-//  logmanager.setVisible(true);
 //  modeditor = new ModEditor();
 //  modeleditor = new ModelEditor();
 //  leveleditor = new LevelEditor();
 //  optionseditor = new OptionsEditor();
-  if(!OPTIONS.getBoolean("DevMode"))
-   mainform.show();
-  else
+  if(OPTIONS.getBoolean("DevMode"))
    devform.show();
   Tm.start();
   QApplication.execStatic();
