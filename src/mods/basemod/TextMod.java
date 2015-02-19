@@ -21,7 +21,7 @@ public class TextMod implements BaseMod {
 
  public TextMod ( String file ) {
   Unzipper.unzipmod(file);
-  mod = new JSONObject(main.Main.mdir + "tmp/" + file.substring(file.
+  mod = new JSONObject(main.Main.DIR + "tmp/" + file.substring(file.
           lastIndexOf("/") + 1 , file.lastIndexOf(".mod")) + "/mod.json");
 
   isEmpty = mod.getBoolean("isEmpty");
@@ -31,7 +31,7 @@ public class TextMod implements BaseMod {
   if ( isEmpty ) {
    ibc = null;
   } else {
-   ibc = new JSONObject(main.Main.mdir + "tmp/" + file.substring(file.
+   ibc = new JSONObject(main.Main.DIR + "tmp/" + file.substring(file.
            lastIndexOf("/") + 1 , file.lastIndexOf(".mod")) + "/ibc.json");
   }
 

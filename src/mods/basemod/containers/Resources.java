@@ -32,7 +32,7 @@ public class Resources {
  }
 
  public synchronized void putAll ( String mid ) {
-  String dirname = main.Main.mdir + "tmp/" + mid + "/res/";
+  String dirname = main.Main.DIR + "tmp/" + mid + "/res/";
   JSONObject t = new JSONObject(dirname + "map.json");
   t.getMap().keySet().stream().forEach(( s ) -> {
    this.map.put(new Rid(s) , Resource.getResource(new Rid(s) , t.getString(s)));
@@ -50,7 +50,7 @@ public class Resources {
  public synchronized void load () {
   LOG.addI("Load started");
   try ( ObjectInputStream in = new ObjectInputStream(new GZIPInputStream(
-          new FileInputStream(main.Main.mdir + "res/map.res"))) ) {
+          new FileInputStream(main.Main.DIR + "res/map.res"))) ) {
    Map t = ( Map ) in.readObject();
    this.map.putAll(t);
 
@@ -63,7 +63,7 @@ public class Resources {
  public synchronized void save () {
   LOG.addI("Save started");
   try ( ObjectOutputStream out = new ObjectOutputStream(new GZIPOutputStream(
-          new FileOutputStream(main.Main.mdir + "res/map.res"))) ) {
+          new FileOutputStream(main.Main.DIR + "res/map.res"))) ) {
    out.writeObject(map);
    out.flush();
   } catch ( Exception ex ) {

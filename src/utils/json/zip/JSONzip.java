@@ -44,13 +44,13 @@ package utils.json.zip;
  * @author JSON.org
  * @version 2014-05-20
  */
-public abstract class JSONzip implements None, PostMortem {
+public abstract class JSONzip implements None , PostMortem {
 
  /**
   * The characters in JSON numbers can be reduced to 4 bits each.
   */
  public static final byte[] bcd = {
-  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '-', '+',
+  '0' , '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' , '.' , '-' , '+' ,
   'E'
  };
 
@@ -162,7 +162,7 @@ public abstract class JSONzip implements None, PostMortem {
  /**
   * Initialize the data structures.
   */
- protected JSONzip() {
+ protected JSONzip () {
   this.namehuff = new Huff(end + 1);
   this.namehuffext = new Huff(end + 1);
   this.namekeep = new Keep(9);
@@ -175,7 +175,7 @@ public abstract class JSONzip implements None, PostMortem {
  /**
   * Generate the Huffman tables.
   */
- protected void generate() {
+ protected void generate () {
   this.namehuff.generate();
   this.namehuffext.generate();
   this.stringhuff.generate();
@@ -185,7 +185,7 @@ public abstract class JSONzip implements None, PostMortem {
  /**
   * Write an end-of-line to the console.
   */
- static void log() {
+ static void log () {
   log("\n");
  }
 
@@ -194,7 +194,7 @@ public abstract class JSONzip implements None, PostMortem {
   * <p>
   * @param integer The integer to write to the log.
   */
- static void log(int integer) {
+ static void log ( int integer ) {
   log(integer + " ");
  }
 
@@ -203,10 +203,10 @@ public abstract class JSONzip implements None, PostMortem {
   * suppressed if it is 1.
   * <p>
   * @param integer The integer to write to the log.
-  * @param width The width of the integer in bits.
+  * @param width   The width of the integer in bits.
   */
- static void log(int integer, int width) {
-  if (width == 1) {
+ static void log ( int integer , int width ) {
+  if ( width == 1 ) {
    log(integer);
   } else {
    log(integer + ":" + width + " ");
@@ -218,7 +218,7 @@ public abstract class JSONzip implements None, PostMortem {
   * <p>
   * @param string The string to be written to the log.
   */
- static void log(String string) {
+ static void log ( String string ) {
   System.out.print(string);
  }
 
@@ -226,13 +226,13 @@ public abstract class JSONzip implements None, PostMortem {
   * Write a character or its code to the console.
   * <p>
   * @param integer The charcode to be written to the log.
-  * @param width The width of the charcode in bits.
+  * @param width   The width of the charcode in bits.
   */
- static void logchar(int integer, int width) {
-  if (integer > ' ' && integer <= '}') {
-   log("'" + (char) integer + "':" + width + " ");
+ static void logchar ( int integer , int width ) {
+  if ( integer > ' ' && integer <= '}' ) {
+   log("'" + ( char ) integer + "':" + width + " ");
   } else {
-   log(integer, width);
+   log(integer , width);
   }
  }
 
@@ -244,12 +244,12 @@ public abstract class JSONzip implements None, PostMortem {
   * <p>
   * @return true if the structures match.
   */
- public boolean postMortem(PostMortem pm) {
-  JSONzip that = (JSONzip) pm;
+ public boolean postMortem ( PostMortem pm ) {
+  JSONzip that = ( JSONzip ) pm;
   return this.namehuff.postMortem(that.namehuff)
-     && this.namekeep.postMortem(that.namekeep)
-     && this.stringkeep.postMortem(that.stringkeep)
-     && this.stringhuff.postMortem(that.stringhuff)
-     && this.valuekeep.postMortem(that.valuekeep);
+         && this.namekeep.postMortem(that.namekeep)
+         && this.stringkeep.postMortem(that.stringkeep)
+         && this.stringhuff.postMortem(that.stringhuff)
+         && this.valuekeep.postMortem(that.valuekeep);
  }
 }

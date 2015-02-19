@@ -66,37 +66,37 @@ public class HTTP {
   * @param string An HTTP header string.
   * <p>
   * @return A JSONObject containing the elements and attributes of the XML
-  * string.
+  *         string.
   * <p>
   * @throws JSONException
   */
- public static JSONObject toJSONObject(String string) throws JSONException {
+ public static JSONObject toJSONObject ( String string ) throws JSONException {
   JSONObject jo = new JSONObject();
   HTTPTokener x = new HTTPTokener(string);
   String token;
 
   token = x.nextToken();
-  if (token.toUpperCase().startsWith("HTTP")) {
+  if ( token.toUpperCase().startsWith("HTTP") ) {
 
 // Response
-   jo.put("HTTP-Version", token);
-   jo.put("Status-Code", x.nextToken());
-   jo.put("Reason-Phrase", x.nextTo('\0'));
+   jo.put("HTTP-Version" , token);
+   jo.put("Status-Code" , x.nextToken());
+   jo.put("Reason-Phrase" , x.nextTo('\0'));
    x.next();
 
   } else {
 
 // Request
-   jo.put("Method", token);
-   jo.put("Request-URI", x.nextToken());
-   jo.put("HTTP-Version", x.nextToken());
+   jo.put("Method" , token);
+   jo.put("Request-URI" , x.nextToken());
+   jo.put("HTTP-Version" , x.nextToken());
   }
 
 // Fields
-  while (x.more()) {
+  while ( x.more() ) {
    String name = x.nextTo(':');
    x.next(':');
-   jo.put(name, x.nextTo('\0'));
+   jo.put(name , x.nextTo('\0'));
    x.next();
   }
   return jo;
@@ -122,17 +122,17 @@ public class HTTP {
   * <p>
   * @throws JSONException if the object does not contain enough information.
   */
- public static String toString(JSONObject jo) throws JSONException {
+ public static String toString ( JSONObject jo ) throws JSONException {
   Iterator<String> keys = jo.keys();
   String string;
   StringBuilder sb = new StringBuilder();
-  if (jo.has("Status-Code") && jo.has("Reason-Phrase")) {
+  if ( jo.has("Status-Code") && jo.has("Reason-Phrase") ) {
    sb.append(jo.getString("HTTP-Version"));
    sb.append(' ');
    sb.append(jo.getString("Status-Code"));
    sb.append(' ');
    sb.append(jo.getString("Reason-Phrase"));
-  } else if (jo.has("Method") && jo.has("Request-URI")) {
+  } else if ( jo.has("Method") && jo.has("Request-URI") ) {
    sb.append(jo.getString("Method"));
    sb.append(' ');
    sb.append('"');
@@ -144,11 +144,11 @@ public class HTTP {
    throw new JSONException("Not enough material for an HTTP header.");
   }
   sb.append(CRLF);
-  while (keys.hasNext()) {
+  while ( keys.hasNext() ) {
    string = keys.next();
-   if (!"HTTP-Version".equals(string) && !"Status-Code".equals(string)
-      && !"Reason-Phrase".equals(string) && !"Method".equals(string)
-      && !"Request-URI".equals(string) && !jo.isNull(string)) {
+   if ( !"HTTP-Version".equals(string) && !"Status-Code".equals(string)
+        && !"Reason-Phrase".equals(string) && !"Method".equals(string)
+        && !"Request-URI".equals(string) && !jo.isNull(string) ) {
     sb.append(string);
     sb.append(": ");
     sb.append(jo.getString(string));

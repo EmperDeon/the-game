@@ -2,11 +2,16 @@ package main;
 
 import com.trolltech.qt.gui.QApplication;
 import main.dev.DevForm;
+import main.dev.LevelEditor;
+import main.dev.ModEditor;
+import main.dev.ModelEditor;
+import main.dev.OptionsEditor;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
 import utils.LibLoader;
 import utils.Logger;
 import utils.MActionListener;
+import utils.Translator;
 import utils.json.JSONObject;
 
 public final class Main implements Runnable {
@@ -16,21 +21,22 @@ public final class Main implements Runnable {
  public final static Thread Tm = new Thread(main);
  public final static Thread Tr = new Thread(rend);
 
- public final static String mdir;
-
+ public final static String DIR;
  static {
-  mdir = System.getProperty("user.dir").substring(0 , System.getProperty(
+  DIR = System.getProperty("user.dir").substring(0 , System.getProperty(
                                                   "user.dir").lastIndexOf("/") + 1);
  }
+ 
+ public final static JSONObject OPTIONS = new JSONObject(DIR + "options.db");
+ public final static MActionListener ACTIONS = new MActionListener();
+ public final static ModsContainer MODS = new ModsContainer();
+ public final static Translator TRANSLATE = new Translator();
+ 
+ public static ModEditor modeditor;
+ public static ModelEditor modeleditor;
+ public static LevelEditor leveleditor;
+ public static OptionsEditor optionseditor;
 
- public final static JSONObject OPTIONS = new JSONObject(mdir + "options.db");
- public final static MActionListener TIMER = new MActionListener();
- public final static ModsContainer mods = new ModsContainer();
-
-// public static ModEditor modeditor;
-// public static ModelEditor modeleditor;
-// public static LevelEditor leveleditor;
-// public static OptionsEditor optionseditor;
  public static DevForm devform;
 
  public final static Logger LOG = new Logger();
@@ -45,26 +51,33 @@ public final class Main implements Runnable {
           forEach(( e ) -> {
            LOG.addI(e + ": " + System.getProperties().getProperty(e));
           });
-  mods.load();
+  MODS.load();
   LibLoader.loadLibs();
  }
 
  public void destroy () {
-  
+
  }
 
  public static void main ( String args[] ) {
   QApplication.initialize(args);
+  devform = new DevForm();
+
+  modeditor = new ModEditor();
+  //modeleditor = new ModelEditor();
+  //leveleditor = new LevelEditor();
+  optionseditor = new OptionsEditor();
   
-//  modeditor = new ModEditor();
-//  modeleditor = new ModelEditor();
-//  leveleditor = new LevelEditor();
-//  optionseditor = new OptionsEditor();
-  if(OPTIONS.getBoolean("DevMode"))
+  if ( OPTIONS.getBoolean("DevMode") ) {
    devform.show();
-  Tm.start();
+  }
+  //Tm.start();
   QApplication.execStatic();
   QApplication.shutdown();
  }
 
+ 
+ public final static String t(String k){
+  return TRANSLATE.get(k);
+ }
 }

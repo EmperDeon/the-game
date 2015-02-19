@@ -48,7 +48,7 @@ public class Display extends org.fenggui.Display {
  public void setBack ( Integer id , String b ) {
   try {
    layout.addBack(new GuiId(id) , new Pixmap(Binding.getInstance().
-                  getTexture(Main.mdir + b)));
+                  getTexture(Main.DIR + b)));
   } catch ( IOException ex ) {
    Main.LOG.addE(ex);
   }

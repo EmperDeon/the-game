@@ -8,7 +8,7 @@ public class GuiType {
 
  public int type;
 
- public GuiType(int t) {
+ public GuiType ( int t ) {
   this.type = t;
  }
 

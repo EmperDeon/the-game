@@ -62,7 +62,7 @@ public class JSONStringer extends JSONWriter {
  /**
   * Make a fresh JSONStringer. It can be used to build one JSON text.
   */
- public JSONStringer() {
+ public JSONStringer () {
   super(new StringWriter());
  }
 
@@ -75,7 +75,7 @@ public class JSONStringer extends JSONWriter {
   * <p>
   * @return The JSON text.
   */
- public String toString() {
+ public String toString () {
   return this.mode == 'd' ? this.writer.toString() : null;
  }
 }

@@ -49,13 +49,13 @@ public class CookieList {
   * <p>
   * @throws JSONException
   */
- public static JSONObject toJSONObject(String string) throws JSONException {
+ public static JSONObject toJSONObject ( String string ) throws JSONException {
   JSONObject jo = new JSONObject();
   JSONTokener x = new JSONTokener(string);
-  while (x.more()) {
+  while ( x.more() ) {
    String name = Cookie.unescape(x.nextTo('='));
    x.next('=');
-   jo.put(name, Cookie.unescape(x.nextTo(';')));
+   jo.put(name , Cookie.unescape(x.nextTo(';')));
    x.next();
   }
   return jo;
@@ -73,15 +73,15 @@ public class CookieList {
   * <p>
   * @throws JSONException
   */
- public static String toString(JSONObject jo) throws JSONException {
+ public static String toString ( JSONObject jo ) throws JSONException {
   boolean b = false;
   Iterator<String> keys = jo.keys();
   String string;
   StringBuilder sb = new StringBuilder();
-  while (keys.hasNext()) {
+  while ( keys.hasNext() ) {
    string = keys.next();
-   if (!jo.isNull(string)) {
-    if (b) {
+   if ( !jo.isNull(string) ) {
+    if ( b ) {
      sb.append(';');
     }
     sb.append(Cookie.escape(string));

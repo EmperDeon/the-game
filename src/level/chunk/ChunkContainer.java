@@ -25,7 +25,7 @@ public final class ChunkContainer {
  public ChunkContainer ( String dir ) throws TermEx {
   this.dir = dir;
 
-  if ( !new File(main.Main.mdir + "saves/World1/rg").canRead() ) {
+  if ( !new File(main.Main.DIR + "saves/World1/rg").canRead() ) {
    gen("World1" , 8);
   }
 
@@ -43,7 +43,7 @@ public final class ChunkContainer {
    }
   }
 
-  File f = new File(main.Main.mdir + "saves/" + name + "/rg/");
+  File f = new File(main.Main.DIR + "saves/" + name + "/rg/");
   f.mkdirs();
 
   for ( OctChunk oc : oct ) {

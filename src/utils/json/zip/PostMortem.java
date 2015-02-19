@@ -43,5 +43,5 @@ public interface PostMortem {
   * <p>
   * @return true if they match.
   */
- public boolean postMortem(PostMortem pm);
+ public boolean postMortem ( PostMortem pm );
 }

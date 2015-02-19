@@ -16,5 +16,5 @@ public interface JSONString {
   * <p>
   * @return A strictly syntactically correct JSON text.
   */
- public String toJSONString();
+ public String toJSONString ();
 }

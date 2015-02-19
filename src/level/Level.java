@@ -17,11 +17,11 @@ public class Level {
  public ChunkId pos = new ChunkId(0 , 0);
 
  public Level ( String name ) throws TermEx {
-  File f = new File(main.Main.mdir + "saves/" + name + "/rg");
+  File f = new File(main.Main.DIR + "saves/" + name + "/rg");
   if ( f.canRead() && f.listFiles() != null ) { // Created ?   
    this.name = name;
-   this.rch = new ChunkContainer(main.Main.mdir + "saves/" + name + "/");
-   load(main.Main.mdir + "saves/" + name + "/");
+   this.rch = new ChunkContainer(main.Main.DIR + "saves/" + name + "/");
+   load(main.Main.DIR + "saves/" + name + "/");
   } else {
    this.name = name;
 
@@ -30,7 +30,7 @@ public class Level {
 //   options.add("lchunks" , null);
 //   options.add("pos_x" , "0");
 //   options.add("pos_y" , "0");
-   this.rch = new ChunkContainer(main.Main.mdir + "saves/" + name + "/rg/");
+   this.rch = new ChunkContainer(main.Main.DIR + "saves/" + name + "/rg/");
   //this.lch = new ChunkContainer(main.Main.mdir + "saves/"+name+"/");
 
    //save();

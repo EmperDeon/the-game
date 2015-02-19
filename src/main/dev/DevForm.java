@@ -4,41 +4,77 @@ import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QListView;
 import com.trolltech.qt.gui.QMainWindow;
+import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QVBoxLayout;
+import com.trolltech.qt.gui.QWidget;
 import utils.qt.QTreeModel;
 
-public class DevForm extends QMainWindow{
+public class DevForm extends QMainWindow {
+
  private final QHBoxLayout mainLayout = new QHBoxLayout();
  private final QListView mmods = new QListView();
  private final QListView cmods = new QListView();
  private final QTreeModel mmodel = new QTreeModel();
  private final QTreeModel cmodel = new QTreeModel();
  private final QVBoxLayout panel = new QVBoxLayout();
-
+ 
+ private final QPushButton boptions = new QPushButton(("Options"));
+ private final QPushButton bmodsed = new QPushButton(("Mods Editor"));
+ private final QPushButton bleveled = new QPushButton(("Level Editor"));
+ private final QPushButton bmodeled = new QPushButton(("Model Editor"));
+ private final QPushButton brinit= new QPushButton(("Reinitialize"));
+ 
  public DevForm () {
   super();
-  show();
-  
-  setMinimumSize(700 , 400);
+  QWidget mainW = new QWidget();
+  setMinimumSize(400 , 180);
   setWindowIcon(new QIcon("classpath:com/trolltech/images/qt-logo.png"));
-  setWindowTitle(tr("Screenshot"));
-  resize(700 , 400);
+  setWindowTitle(tr("Developers utils"));
+  resize(400, 180);
 
   mmods.setModel(mmodel);
-
   cmods.setModel(cmodel);
   
+  panel.addWidget(boptions);
+  panel.addWidget(bmodsed);
+  panel.addWidget(bleveled);
+  panel.addWidget(bmodeled);
+  panel.addWidget(brinit);
   
+  boptions.clicked.connect(this,"options()");
+  bmodsed.clicked.connect(this,"mods()");
+  bleveled.clicked.connect(this,"level()");
+  bmodeled.clicked.connect(this,"models()");
+  brinit.clicked.connect(this,"reinit()");
   
-//  QPushButton button = new QPushButton(text);
-//  button.clicked.connect(receiver , member);
-  
-  mainLayout.addWidget(mmods,30);
-  mainLayout.addWidget(cmods,30);
+  mainLayout.addWidget(mmods , 30);
+  mainLayout.addWidget(cmods , 30);
   mainLayout.addLayout(panel);
-  setLayout(mainLayout);
+  mainW.setLayout(mainLayout);
+  
+  
 
-
+  setCentralWidget(mainW);
+ }
+ 
+ public void options(){
+  main.Main.optionseditor.show();
+ }
+ 
+ public void mods(){
+  main.Main.modeditor.show();
+ }
+ 
+ public void models(){
+  main.Main.modeditor.show();
+ }
+ 
+ public void level(){
+  main.Main.leveleditor.show();
+ }
+ 
+ public void reinit(){
+  
  }
 }
 //  screenshotLabel = new QLabel();
@@ -78,9 +114,8 @@ public class DevForm extends QMainWindow{
 //  buttonsLayout.addWidget(saveScreenshotButton);
 //  buttonsLayout.addWidget(quitScreenshotButton);
 //
-  
+
 //  mainLayout.addWidget(cmods);
 //  mainLayout.addLayout(buttonsLayout);
-  
 //
 //  delaySpinBox.setValue(5);

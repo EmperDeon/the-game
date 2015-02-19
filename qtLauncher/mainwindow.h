@@ -4,6 +4,40 @@
 class QWebView;
 QT_BEGIN_NAMESPACE
 class QLineEdit;
+<<<<<<< HEAD
+
+QT_END_NAMESPACE
+
+class MainWindow : public QMainWindow {
+ Q_OBJECT
+
+public:
+ MainWindow();
+
+protected slots:
+ void adjustLocation();
+ void changeLocation();
+ void onStart();
+ void onLogger();
+ void downFinish(QNetworkReply *reply);
+ void unZip();
+
+private:
+ QWebView *view;
+ QLineEdit *locationEdit;
+ QAction *rotateAction;
+ QVBoxLayout *down;
+ QHBoxLayout *menu;
+ QLineEdit *login;
+ QLineEdit *passw;
+ QListView *vers;
+ QLabel *lvers;
+ QLabel *lpass;
+ QLabel *llogin;
+ QSpacerItem *space;
+ QPushButton *start;
+ QPushButton *logger;
+=======
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow{
@@ -35,5 +69,6 @@ class MainWindow : public QMainWindow{
   QSpacerItem *space;
   QPushButton *start;
   QPushButton *logger;
+>>>>>>> origin/master
 
 };

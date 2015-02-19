@@ -21,11 +21,11 @@ public class StdWidget extends Button {
  public StdWidget ( String enabled , String focused , String disabled ) {
   try {
    Pixmap enabledp = new Pixmap(Binding.getInstance().getTexture(
-           Main.mdir + enabled));
+           Main.DIR + enabled));
    Pixmap focusedp = new Pixmap(Binding.getInstance().getTexture(
-           Main.mdir + focused));
+           Main.DIR + focused));
    Pixmap disabledp = new Pixmap(Binding.getInstance().getTexture(
-           Main.mdir + disabled));
+           Main.DIR + disabled));
 
    initButton(enabledp , focusedp , focusedp , focusedp , disabledp);
   } catch ( IOException e ) {

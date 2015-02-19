@@ -34,7 +34,7 @@ public final class ModsContainer implements Serializable {
  private final ArrayList<Mid> init = new ArrayList<>();
  private boolean loaded = false;
 
- private final File file = new File(main.Main.mdir + "mods/container.all");
+ private final File file = new File(main.Main.DIR + "mods/container.all");
 
  public ModsContainer () {
   cmods = new TreeMap<>();
@@ -109,7 +109,7 @@ public final class ModsContainer implements Serializable {
  public void test () {
   mods.keySet().stream().
           forEach(( m ) -> {
-     //      Main.mainform.mmod.add(m.getMid());
+           //      Main.mainform.mmod.add(m.getMid());
           });
  }
 
@@ -157,7 +157,7 @@ public final class ModsContainer implements Serializable {
 
  public void loadDir ( boolean isI ) {
   TextMod t;
-  File e = new File(main.Main.mdir + "mods/");
+  File e = new File(main.Main.DIR + "mods/");
   File[] s = e.listFiles(pathname -> {
    try {
     if ( pathname.isFile() && pathname.getCanonicalPath().lastIndexOf(".mod") != -1 ) {
