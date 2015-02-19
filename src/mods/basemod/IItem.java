@@ -45,7 +45,7 @@ public class IItem implements Serializable , InvItem {
  public String getAllP () {
   String t = "";
   t = param.keySet().stream().
-          map(( s ) -> s + "=" + param.get(s)).
+          map(( s ) -> s + "=" + param.get(s)+"; ").
           reduce(t , String::concat);
   return t;
  }

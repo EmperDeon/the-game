@@ -1,5 +1,7 @@
 package main.dev;
 
-public class LevelEditor extends javax.swing.JFrame {
+import com.trolltech.qt.gui.QMainWindow;
+
+public class LevelEditor extends QMainWindow {
 
 }
