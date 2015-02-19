@@ -25,7 +25,7 @@ public final class Main implements Runnable {
  static {
   DIR = System.getProperty("user.dir").substring(0 , System.getProperty(
                                                   "user.dir").lastIndexOf("/") + 1);
- }
+ } 
  
  public final static JSONObject OPTIONS = new JSONObject(DIR + "options.db");
  public final static MActionListener ACTIONS = new MActionListener();
