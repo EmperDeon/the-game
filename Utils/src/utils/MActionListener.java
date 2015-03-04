@@ -7,19 +7,19 @@ public class MActionListener {
 
  private final TreeMap<String, ActE> cont = new TreeMap<>();
 
- public MActionListener() {
+ public MActionListener () {
 
  }
 
- public void add(String name, ActionListener e) {
-  if (!cont.containsKey(name)) {
+ public void add ( String name, ActionListener e ) {
+  if ( !cont.containsKey(name) ) {
    cont.put(name, new ActE());
   }
   cont.get(name).add(e);
  }
 
- public void addT(String name, Integer delay, ActionListener e) {
-  if (!cont.containsKey(name)) {
+ public void addT ( String name, Integer delay, ActionListener e ) {
+  if ( !cont.containsKey(name) ) {
    cont.put(name, new ActE());
   }
   cont.get(name).add(delay, e);
@@ -30,11 +30,11 @@ public class MActionListener {
   protected final Timer timer = new Timer();
   protected final ArrayList<ActionListener> arr = new ArrayList<>();
 
-  public synchronized void add(Integer delay, ActionListener e) {
+  public synchronized void add ( Integer delay, ActionListener e ) {
    timer.scheduleAtFixedRate(new TimerTask() {
     @Override
-    public void run() {
-     arr.stream().forEach((ActionListener e) -> {
+    public void run () {
+     arr.stream().forEach(( ActionListener e ) -> {
       e.actionPerformed(null);
      });
     }
@@ -42,7 +42,7 @@ public class MActionListener {
    arr.add(e);
   }
 
-  public synchronized void add(ActionListener e) {
+  public synchronized void add ( ActionListener e ) {
    arr.add(e);
   }
  }

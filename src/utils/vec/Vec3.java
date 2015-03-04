@@ -14,7 +14,7 @@ public class Vec3<T> implements Serializable {
   z = null;
  }
 
- public Vec3 ( T x , T y , T z ) {
+ public Vec3 ( T x, T y, T z ) {
   this.x = x;
   this.y = y;
   this.z = z;

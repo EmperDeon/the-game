@@ -1,7 +1,6 @@
 package render.gui;
 
-import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.*;
 import org.fenggui.IWidget;
 import org.fenggui.binding.render.Pixmap;
 import org.fenggui.util.Dimension;
@@ -10,15 +9,15 @@ import utils.vec.Vec2;
 
 public class Layout {
 
- private final TreeMap<GuiId , GuiE> map = new TreeMap<>();
- private final TreeMap<GuiId , Pixmap> back = new TreeMap<>();
+ private final TreeMap<GuiId, GuiE> map = new TreeMap<>();
+ private final TreeMap<GuiId, Pixmap> back = new TreeMap<>();
  private final int columns = 1;
- private final Vec2<Integer> space = new Vec2<>(0 , 0);
- private final Vec2<Integer> stdwh = new Vec2<>(200 , 40);
+ private final Vec2<Integer> space = new Vec2<>(0, 0);
+ private final Vec2<Integer> stdwh = new Vec2<>(200, 40);
  private final Display disp;
  private GuiId curr = new GuiId(0);
 
- public Layout ( Display disp , int sp1 , int sp2 , int w , int h ) {
+ public Layout ( Display disp, int sp1, int sp2, int w, int h ) {
   space.sX(sp1);
   space.sY(sp2);
   stdwh.sX(w);
@@ -51,9 +50,9 @@ public class Layout {
   });
  }
 
- public synchronized void add ( GuiId k , IWidget w ) {
+ public synchronized void add ( GuiId k, IWidget w ) {
   if ( !map.containsKey(k) ) {
-   map.put(k , new GuiE());
+   map.put(k, new GuiE());
   }
 
   if ( !k.equals(curr) ) {
@@ -67,8 +66,8 @@ public class Layout {
   return back.get(curr);
  }
 
- public void addBack ( GuiId k , Pixmap v ) {
-  back.put(k , v);
+ public void addBack ( GuiId k, Pixmap v ) {
+  back.put(k, v);
  }
 
  private class GuiE {
@@ -92,10 +91,10 @@ public class Layout {
    } else {
     col /= columns;
    }
-   this.minwh.sY(col * stdwh.gY() + space.gY() * ( col + 1 ));
-   this.minwh.sX(columns * stdwh.gX() + space.gX() * ( columns + 1 ));
-   xy.sX(( disp.getWidth() - minwh.gX() ) / 2);
-   xy.sY(( disp.getHeight() - minwh.gY() ) / 2);
+   this.minwh.sY(col * stdwh.gY() + space.gY() * (col + 1));
+   this.minwh.sX(columns * stdwh.gX() + space.gX() * (columns + 1));
+   xy.sX((disp.getWidth() - minwh.gX()) / 2);
+   xy.sY((disp.getHeight() - minwh.gY()) / 2);
   }
 
   public synchronized void doLayout ( Integer colum ) {
@@ -108,11 +107,11 @@ public class Layout {
      });
      int y = 0;
      for ( IWidget w : t ) {
-      w.setSize(new Dimension(stdwh.gX() , stdwh.gY()));
+      w.setSize(new Dimension(stdwh.gX(), stdwh.gY()));
       w.setX(xy.gX() + space.gX());
       w.
-              setY(disp.getHeight() - xy.gY() + space.gY() * ( y + 1 ) + stdwh.
-                      gY() * y);
+         setY(disp.getHeight() - xy.gY() + space.gY() * (y + 1) + stdwh.
+            gY() * y);
       y++;
      }
 

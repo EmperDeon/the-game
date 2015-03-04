@@ -4,7 +4,8 @@
 class QWebView;
 QT_BEGIN_NAMESPACE
 class QLineEdit;
-<<<<<<< HEAD
+
+<< << << < HEAD
 
 QT_END_NAMESPACE
 
@@ -37,10 +38,11 @@ private:
  QSpacerItem *space;
  QPushButton *start;
  QPushButton *logger;
-=======
-QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow{
+ == == == =
+         QT_END_NAMESPACE
+
+         class MainWindow : public QMainWindow {
   Q_OBJECT
 
  public:
@@ -69,6 +71,6 @@ class MainWindow : public QMainWindow{
   QSpacerItem *space;
   QPushButton *start;
   QPushButton *logger;
->>>>>>> origin/master
+  >>>>>>> origin / master
 
-};
+ };

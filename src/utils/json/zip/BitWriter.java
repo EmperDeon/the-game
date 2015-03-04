@@ -3,8 +3,7 @@ package utils.json.zip;
 import java.io.IOException;
 
 /**
- * A bitwriter is a an interface that allows for doing output at the bit level.
- * Most IO interfaces only allow for writing at the byte level or higher.
+ * A bitwriter is a an interface that allows for doing output at the bit level. Most IO interfaces only allow for writing at the byte level or higher.
  */
 public interface BitWriter {
 
@@ -18,8 +17,7 @@ public interface BitWriter {
  /**
   * Pad the rest of the block with zeros and flush.
   * <p>
-  * @param width The size in bits of the block to pad. This will typically be 8,
-  *              16, 32, 64, 128, 256, etc.
+  * @param width The size in bits of the block to pad. This will typically be 8, 16, 32, 64, 128, 256, etc.
   * <p>
   * @throws IOException
   */
@@ -28,12 +26,12 @@ public interface BitWriter {
  /**
   * Write some bits. Up to 32 bits can be written at a time.
   * <p>
-  * @param bits  The bits to be written.
+  * @param bits The bits to be written.
   * @param width The number of bits to write. (0..32)
   * <p>
   * @throws IOException
   */
- public void write ( int bits , int width ) throws IOException;
+ public void write ( int bits, int width ) throws IOException;
 
  /**
   * Write a 0 bit.

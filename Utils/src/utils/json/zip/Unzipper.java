@@ -5,25 +5,17 @@ import utils.json.*;
 /*
  * Copyright (c) 2012 JSON.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to
+ * do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
  * JSONzip is a binary compression scheme for JSON text.
@@ -43,7 +35,7 @@ public class Unzipper extends JSONzip {
   * <p>
   * @param bitreader The bitreader that this decoder will read from.
   */
- public Unzipper(BitReader bitreader) {
+ public Unzipper ( BitReader bitreader ) {
   super();
   this.bitreader = bitreader;
  }
@@ -55,23 +47,22 @@ public class Unzipper extends JSONzip {
   * <p>
   * @throws JSONException
   */
- private boolean bit() throws JSONException {
+ private boolean bit () throws JSONException {
   boolean value;
   try {
    value = this.bitreader.bit();
-   if (probe) {
+   if ( probe ) {
     log(value ? 1 : 0);
    }
    return value;
-  } catch (Throwable e) {
+  } catch ( Throwable e ) {
    throw new JSONException(e);
   }
 
  }
 
  /**
-  * Read enough bits to obtain an integer from the keep, and increase that
-  * integer's weight.
+  * Read enough bits to obtain an integer from the keep, and increase that integer's weight.
   * <p>
   * @param keep The keep providing the context.
   * @param bitreader The bitreader that is the source of bits.
@@ -80,29 +71,28 @@ public class Unzipper extends JSONzip {
   * <p>
   * @throws JSONException
   */
- private Object getAndTick(Keep keep, BitReader bitreader)
+ private Object getAndTick ( Keep keep, BitReader bitreader )
     throws JSONException {
   try {
    int width = keep.bitsize();
    int integer = bitreader.read(width);
    Object value = keep.value(integer);
-   if (JSONzip.probe) {
+   if ( JSONzip.probe ) {
     JSONzip.log("\"" + value + "\"");
     JSONzip.log(integer, width);
    }
-   if (integer >= keep.length) {
+   if ( integer >= keep.length ) {
     throw new JSONException("Deep error.");
    }
    keep.tick(integer);
    return value;
-  } catch (Throwable e) {
+  } catch ( Throwable e ) {
    throw new JSONException(e);
   }
  }
 
  /**
-  * The pad method skips the bits that padded a stream to fit some allocation.
-  * pad(8) will skip over the remainder of a byte.
+  * The pad method skips the bits that padded a stream to fit some allocation. pad(8) will skip over the remainder of a byte.
   * <p>
   * @param width The width of the pad field in bits.
   * <p>
@@ -110,10 +100,10 @@ public class Unzipper extends JSONzip {
   * <p>
   * @throws JSONException
   */
- public boolean pad(int width) throws JSONException {
+ public boolean pad ( int width ) throws JSONException {
   try {
    return this.bitreader.pad(width);
-  } catch (Throwable e) {
+  } catch ( Throwable e ) {
    throw new JSONException(e);
   }
  }
@@ -127,14 +117,14 @@ public class Unzipper extends JSONzip {
   * <p>
   * @throws JSONException
   */
- private int read(int width) throws JSONException {
+ private int read ( int width ) throws JSONException {
   try {
    int value = this.bitreader.read(width);
-   if (probe) {
+   if ( probe ) {
     log(value, width);
    }
    return value;
-  } catch (Throwable e) {
+  } catch ( Throwable e ) {
    throw new JSONException(e);
   }
  }
@@ -150,24 +140,24 @@ public class Unzipper extends JSONzip {
   * <p>
   * @throws JSONException
   */
- private String read(Huff huff, Huff ext, Keep keep) throws JSONException {
+ private String read ( Huff huff, Huff ext, Keep keep ) throws JSONException {
   Kim kim;
   int at = 0;
   int allocation = 256;
   byte[] bytes = new byte[allocation];
-  if (bit()) {
+  if ( bit() ) {
    return getAndTick(keep, this.bitreader).toString();
   }
-  while (true) {
-   if (at >= allocation) {
+  while ( true ) {
+   if ( at >= allocation ) {
     allocation *= 2;
     bytes = java.util.Arrays.copyOf(bytes, allocation);
    }
    int c = huff.read(this.bitreader);
-   if (c == end) {
+   if ( c == end ) {
     break;
    }
-   while ((c & 128) == 128) {
+   while ( (c & 128) == 128 ) {
     bytes[at] = (byte) c;
     at += 1;
     c = ext.read(this.bitreader);
@@ -175,7 +165,7 @@ public class Unzipper extends JSONzip {
    bytes[at] = (byte) c;
    at += 1;
   }
-  if (at == 0) {
+  if ( at == 0 ) {
    return "";
   }
   kim = new Kim(bytes, at);
@@ -190,17 +180,17 @@ public class Unzipper extends JSONzip {
   * <p>
   * @throws JSONException
   */
- private JSONArray readArray(boolean stringy) throws JSONException {
+ private JSONArray readArray ( boolean stringy ) throws JSONException {
   JSONArray jsonarray = new JSONArray();
   jsonarray.put(stringy
      ? read(this.stringhuff, this.stringhuffext, this.stringkeep)
      : readValue());
-  while (true) {
-   if (probe) {
+  while ( true ) {
+   if ( probe ) {
     log();
    }
-   if (!bit()) {
-    if (!bit()) {
+   if ( !bit() ) {
+    if ( !bit() ) {
      return jsonarray;
     }
     jsonarray.put(stringy
@@ -223,8 +213,8 @@ public class Unzipper extends JSONzip {
   * <p>
   * @throws JSONException
   */
- private Object readJSON() throws JSONException {
-  switch (read(3)) {
+ private Object readJSON () throws JSONException {
+  switch ( read(3) ) {
    case zipObject:
     return readObject();
    case zipArrayString:
@@ -244,31 +234,31 @@ public class Unzipper extends JSONzip {
   }
  }
 
- private JSONObject readObject() throws JSONException {
+ private JSONObject readObject () throws JSONException {
   JSONObject jsonobject = new JSONObject();
-  while (true) {
-   if (probe) {
+  while ( true ) {
+   if ( probe ) {
     log();
    }
    String name = read(this.namehuff, this.namehuffext, this.namekeep);
-   if (jsonobject.opt(name) != null) {
+   if ( jsonobject.opt(name) != null ) {
     throw new JSONException("Duplicate key.");
    }
    jsonobject.put(name, !bit()
                   ? read(this.stringhuff, this.stringhuffext, this.stringkeep)
                   : readValue());
-   if (!bit()) {
+   if ( !bit() ) {
     return jsonobject;
    }
   }
  }
 
- private Object readValue() throws JSONException {
-  switch (read(2)) {
+ private Object readValue () throws JSONException {
+  switch ( read(2) ) {
    case 0:
     int nr_bits = !bit() ? 4 : !bit() ? 7 : 14;
     int integer = read(nr_bits);
-    switch (nr_bits) {
+    switch ( nr_bits ) {
      case 7:
       integer += int4;
       break;
@@ -280,9 +270,9 @@ public class Unzipper extends JSONzip {
    case 1:
     byte[] bytes = new byte[256];
     int length = 0;
-    while (true) {
+    while ( true ) {
      int c = read(4);
-     if (c == endOfNumber) {
+     if ( c == endOfNumber ) {
       break;
      }
      bytes[length] = bcd[c];
@@ -292,7 +282,7 @@ public class Unzipper extends JSONzip {
     try {
      value = JSONObject.stringToValue(new String(bytes, 0, length,
                                                  "US-ASCII"));
-    } catch (java.io.UnsupportedEncodingException e) {
+    } catch ( java.io.UnsupportedEncodingException e ) {
      throw new JSONException(e);
     }
     this.valuekeep.register(value);
@@ -306,7 +296,7 @@ public class Unzipper extends JSONzip {
   }
  }
 
- public Object decode() throws JSONException {
+ public Object decode () throws JSONException {
   generate();
   return readJSON();
  }

@@ -2,32 +2,23 @@ package utils.json;
 /*
  * Copyright (c) 2002 JSON.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to
+ * do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 import java.util.Iterator;
 
 /**
- * This provides static methods to convert an XML text into a JSONObject, and to
- * covert a JSONObject into an XML text.
+ * This provides static methods to convert an XML text into a JSONObject, and to covert a JSONObject into an XML text.
  * <p>
  * @author JSON.org
  * @version 2014-05-03
@@ -120,8 +111,7 @@ public class XML {
  }
 
  /**
-  * Throw an exception if the string contains whitespace. Whitespace is not
-  * allowed in tagNames and attributes.
+  * Throw an exception if the string contains whitespace. Whitespace is not allowed in tagNames and attributes.
   * <p>
   * @param string A string.
   * <p>
@@ -135,7 +125,7 @@ public class XML {
   for ( i = 0 ; i < length ; i += 1 ) {
    if ( Character.isWhitespace(string.charAt(i)) ) {
     throw new JSONException("'" + string
-                            + "' contains a space character.");
+       + "' contains a space character.");
    }
   }
  }
@@ -143,15 +133,15 @@ public class XML {
  /**
   * Scan the content following the named tag, attaching it to the context.
   * <p>
-  * @param x       The XMLTokener containing the source string.
+  * @param x The XMLTokener containing the source string.
   * @param context The JSONObject that will include the new material.
-  * @param name    The tag name.
+  * @param name The tag name.
   * <p>
   * @return true if the close tag is processed.
   * <p>
   * @throws JSONException
   */
- private static boolean parse ( XMLTokener x , JSONObject context ,
+ private static boolean parse ( XMLTokener x, JSONObject context,
                                 String name ) throws JSONException {
   char c;
   int i;
@@ -186,7 +176,7 @@ public class XML {
      if ( x.next() == '[' ) {
       string = x.nextCDATA();
       if ( string.length() > 0 ) {
-       context.accumulate("content" , string);
+       context.accumulate("content", string);
       }
       return false;
      }
@@ -230,7 +220,7 @@ public class XML {
 
 // Open tag <
   } else {
-   tagName = ( String ) token;
+   tagName = (String) token;
    token = null;
    jsonobject = new JSONObject();
    for ( ;; ) {
@@ -240,18 +230,18 @@ public class XML {
 
 // attribute = value
     if ( token instanceof String ) {
-     string = ( String ) token;
+     string = (String) token;
      token = x.nextToken();
      if ( token == EQ ) {
       token = x.nextToken();
-      if ( !( token instanceof String ) ) {
+      if ( !(token instanceof String) ) {
        throw x.syntaxError("Missing value");
       }
-      jsonobject.accumulate(string ,
-                            XML.stringToValue(( String ) token));
+      jsonobject.accumulate(string,
+                            XML.stringToValue((String) token));
       token = null;
      } else {
-      jsonobject.accumulate(string , "");
+      jsonobject.accumulate(string, "");
      }
 
 // Empty tag <.../>
@@ -260,9 +250,9 @@ public class XML {
       throw x.syntaxError("Misshaped tag");
      }
      if ( jsonobject.length() > 0 ) {
-      context.accumulate(tagName , jsonobject);
+      context.accumulate(tagName, jsonobject);
      } else {
-      context.accumulate(tagName , "");
+      context.accumulate(tagName, "");
      }
      return false;
 
@@ -276,23 +266,23 @@ public class XML {
        }
        return false;
       } else if ( token instanceof String ) {
-       string = ( String ) token;
+       string = (String) token;
        if ( string.length() > 0 ) {
-        jsonobject.accumulate("content" ,
+        jsonobject.accumulate("content",
                               XML.stringToValue(string));
        }
 
 // Nested element
       } else if ( token == LT ) {
-       if ( parse(x , jsonobject , tagName) ) {
+       if ( parse(x, jsonobject, tagName) ) {
         if ( jsonobject.length() == 0 ) {
-         context.accumulate(tagName , "");
+         context.accumulate(tagName, "");
         } else if ( jsonobject.length() == 1
-                    && jsonobject.opt("content") != null ) {
-         context.accumulate(tagName ,
+           && jsonobject.opt("content") != null ) {
+         context.accumulate(tagName,
                             jsonobject.opt("content"));
         } else {
-         context.accumulate(tagName , jsonobject);
+         context.accumulate(tagName, jsonobject);
         }
         return false;
        }
@@ -306,10 +296,8 @@ public class XML {
  }
 
  /**
-  * Try to convert a string into a number, boolean, or null. If the string can't
-  * be converted, return the string. This is much less ambitious than
-  * JSONObject.stringToValue, especially because it does not attempt to convert
-  * plus forms, octal forms, hex forms, or E forms lacking decimal points.
+  * Try to convert a string into a number, boolean, or null. If the string can't be converted, return the string. This is much less ambitious than JSONObject.stringToValue, especially because it does
+  * not attempt to convert plus forms, octal forms, hex forms, or E forms lacking decimal points.
   * <p>
   * @param string A String.
   * <p>
@@ -330,7 +318,7 @@ public class XML {
 // Double. If that doesn't work, return the string.
   try {
    char initial = string.charAt(0);
-   if ( initial == '-' || ( initial >= '0' && initial <= '9' ) ) {
+   if ( initial == '-' || (initial >= '0' && initial <= '9') ) {
     Long value = new Long(string);
     if ( value.toString().equals(string) ) {
      return value;
@@ -349,14 +337,9 @@ public class XML {
  }
 
  /**
-  * Convert a well-formed (but not necessarily valid) XML string into a
-  * JSONObject. Some information may be lost in this transformation because JSON
-  * is a data format and XML is a document format. XML uses elements,
-  * attributes, and content text, while JSON uses unordered collections of
-  * name/value pairs and arrays of values. JSON does not does not like to
-  * distinguish between elements and attributes. Sequences of similar elements
-  * are represented as JSONArrays. Content text may be placed in a "content"
-  * member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code> are ignored.
+  * Convert a well-formed (but not necessarily valid) XML string into a JSONObject. Some information may be lost in this transformation because JSON is a data format and XML is a document format. XML
+  * uses elements, attributes, and content text, while JSON uses unordered collections of name/value pairs and arrays of values. JSON does not does not like to distinguish between elements and
+  * attributes. Sequences of similar elements are represented as JSONArrays. Content text may be placed in a "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code> are ignored.
   * <p>
   * @param string The source string.
   * <p>
@@ -368,7 +351,7 @@ public class XML {
   JSONObject jo = new JSONObject();
   XMLTokener x = new XMLTokener(string);
   while ( x.more() && x.skipPast("<") ) {
-   parse(x , jo , null);
+   parse(x, jo, null);
   }
   return jo;
  }
@@ -383,21 +366,21 @@ public class XML {
   * @throws JSONException
   */
  public static String toString ( Object object ) throws JSONException {
-  return toString(object , null);
+  return toString(object, null);
  }
 
  /**
   * Convert a JSONObject into a well-formed, element-normal XML string.
   * <p>
-  * @param object  A JSONObject.
+  * @param object A JSONObject.
   * @param tagName The optional name of the enclosing tag.
   * <p>
   * @return A string.
   * <p>
   * @throws JSONException
   */
- public static String toString ( Object object , String tagName )
-         throws JSONException {
+ public static String toString ( Object object, String tagName )
+    throws JSONException {
   StringBuilder sb = new StringBuilder();
   int i;
   JSONArray ja;
@@ -417,7 +400,7 @@ public class XML {
    }
 
 // Loop thru the keys.
-   jo = ( JSONObject ) object;
+   jo = (JSONObject) object;
    keys = jo.keys();
    while ( keys.hasNext() ) {
     key = keys.next();
@@ -425,12 +408,12 @@ public class XML {
     if ( value == null ) {
      value = "";
     }
-    string = value instanceof String ? ( String ) value : null;
+    string = value instanceof String ? (String) value : null;
 
 // Emit content in body
     if ( "content".equals(key) ) {
      if ( value instanceof JSONArray ) {
-      ja = ( JSONArray ) value;
+      ja = (JSONArray) value;
       length = ja.length();
       for ( i = 0 ; i < length ; i += 1 ) {
        if ( i > 0 ) {
@@ -444,7 +427,7 @@ public class XML {
 
 // Emit an array of similar keys
     } else if ( value instanceof JSONArray ) {
-     ja = ( JSONArray ) value;
+     ja = (JSONArray) value;
      length = ja.length();
      for ( i = 0 ; i < length ; i += 1 ) {
       value = ja.get(i);
@@ -457,7 +440,7 @@ public class XML {
        sb.append(key);
        sb.append('>');
       } else {
-       sb.append(toString(value , key));
+       sb.append(toString(value, key));
       }
      }
     } else if ( "".equals(value) ) {
@@ -467,7 +450,7 @@ public class XML {
 
 // Emit a new tag <k>
     } else {
-     sb.append(toString(value , key));
+     sb.append(toString(value, key));
     }
    }
    if ( tagName != null ) {
@@ -486,17 +469,17 @@ public class XML {
     object = new JSONArray(object);
    }
    if ( object instanceof JSONArray ) {
-    ja = ( JSONArray ) object;
+    ja = (JSONArray) object;
     length = ja.length();
     for ( i = 0 ; i < length ; i += 1 ) {
-     sb.append(toString(ja.opt(i) , tagName == null ? "array" : tagName));
+     sb.append(toString(ja.opt(i), tagName == null ? "array" : tagName));
     }
     return sb.toString();
    } else {
-    string = ( object == null ) ? "null" : escape(object.toString());
-    return ( tagName == null ) ? "\"" + string + "\""
-            : ( string.length() == 0 ) ? "<" + tagName + "/>"
-                    : "<" + tagName + ">" + string + "</" + tagName + ">";
+    string = (object == null) ? "null" : escape(object.toString());
+    return (tagName == null) ? "\"" + string + "\""
+       : (string.length() == 0) ? "<" + tagName + "/>"
+          : "<" + tagName + ">" + string + "</" + tagName + ">";
    }
   }
  }

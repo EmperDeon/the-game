@@ -1,12 +1,6 @@
 package level.chunk;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import main.Main;
 import utils.exceptions.TermEx;
@@ -24,12 +18,12 @@ public final class OctChunkIds implements Serializable {
    if ( f.canRead() ) {
     try {
      ObjectInputStream o = new ObjectInputStream(new FileInputStream(new File(
-             this.file)));
-     this.chids = ( ( ArrayList<OctChunkId> ) o.readObject() );
+        this.file)));
+     this.chids = ((ArrayList<OctChunkId>) o.readObject());
     } catch ( IOException | ClassNotFoundException ex ) {
      main.Main.LOG.addE(ex);
      throw new TermEx(
-             "ChunkContainer . OctChunkIds . load() - error read OctChunk");
+        "ChunkContainer . OctChunkIds . load() - error read OctChunk");
     }
    } else {
     this.chids = new ArrayList<>();
@@ -39,7 +33,7 @@ public final class OctChunkIds implements Serializable {
      System.out.println(oc.getAbsolutePath());
      try {
       ObjectInputStream fi = new ObjectInputStream(new FileInputStream(oc));
-      OctChunk o = ( OctChunk ) fi.readObject();
+      OctChunk o = (OctChunk) fi.readObject();
 
      } catch ( IOException | ClassNotFoundException ex ) {
       throw new TermEx("ChunkContainer . OctChunkIds . load() - error read rg/");
@@ -56,7 +50,7 @@ public final class OctChunkIds implements Serializable {
  public void save () {
   try {
    ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(
-           this.file));
+      this.file));
    serial.writeObject(chids);
    serial.flush();
    System.out.println("Saved");
@@ -71,7 +65,7 @@ public final class OctChunkIds implements Serializable {
   load();
  }
 
- public OctChunkIds ( ArrayList<OctChunk> chs , String dir ) {
+ public OctChunkIds ( ArrayList<OctChunk> chs, String dir ) {
   for ( OctChunk ch : chs ) {
    chids.add(ch.getId());
   }
@@ -79,9 +73,9 @@ public final class OctChunkIds implements Serializable {
   this.file = dir + "OctChIds.db";
  }
 
- public String search ( int x , int y ) {
+ public String search ( int x, int y ) {
   for ( OctChunkId id : chids ) {
-   String r = id.test(x , y);
+   String r = id.test(x, y);
    if ( r != null ) {
     return r;
    }
@@ -91,14 +85,6 @@ public final class OctChunkIds implements Serializable {
 }
 /*
  *
- * for (File oc : oct) {
- * System.out.println(oc.getAbsolutePath());
- * try{
- * ObjectInputStream serial = new ObjectInputStream(new FileInputStream(oc));
- * OctChunk o = (OctChunk)serial.readObject();
- * OctChunkId i = o.getId();
- * chids.add( i );
- * }catch(IOException | ClassNotFoundException ex){
- * throw new TermEx("ChunkContainer . OctChunkIds . load() - no ChIds");
- * } *
+ * for (File oc : oct) { System.out.println(oc.getAbsolutePath()); try{ ObjectInputStream serial = new ObjectInputStream(new FileInputStream(oc)); OctChunk o = (OctChunk)serial.readObject();
+ * OctChunkId i = o.getId(); chids.add( i ); }catch(IOException | ClassNotFoundException ex){ throw new TermEx("ChunkContainer . OctChunkIds . load() - no ChIds"); } *
  */

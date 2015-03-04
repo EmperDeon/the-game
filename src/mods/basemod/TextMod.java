@@ -1,11 +1,8 @@
 package mods.basemod;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import mods.basemod.containers.Mid;
-import mods.basemod.containers.ModsContainer;
+import java.io.*;
+import java.net.*;
+import mods.basemod.containers.*;
 import mods.basemod.interfaces.BaseMod;
 import utils.Unzipper;
 import utils.json.JSONObject;
@@ -22,7 +19,7 @@ public class TextMod implements BaseMod {
  public TextMod ( String file ) {
   Unzipper.unzipmod(file);
   mod = new JSONObject(main.Main.DIR + "tmp/" + file.substring(file.
-          lastIndexOf("/") + 1 , file.lastIndexOf(".mod")) + "/mod.json");
+     lastIndexOf("/") + 1, file.lastIndexOf(".mod")) + "/mod.json");
 
   isEmpty = mod.getBoolean("isEmpty");
   id = new Mid(mod.getString("name"));
@@ -32,7 +29,7 @@ public class TextMod implements BaseMod {
    ibc = null;
   } else {
    ibc = new JSONObject(main.Main.DIR + "tmp/" + file.substring(file.
-           lastIndexOf("/") + 1 , file.lastIndexOf(".mod")) + "/ibc.json");
+      lastIndexOf("/") + 1, file.lastIndexOf(".mod")) + "/ibc.json");
   }
 
  }
@@ -53,8 +50,8 @@ public class TextMod implements BaseMod {
   if ( isClass() ) {
    try {
     URLClassLoader classLoader = new URLClassLoader(
-            new URL[]{zip.toURI().toURL()});
-    TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();
+       new URL[]{ zip.toURI().toURL() });
+    TextMod b = (TextMod) classLoader.loadClass(cl).newInstance();
     return b;
    } catch ( IOException | IllegalArgumentException | ClassNotFoundException |
              InstantiationException | IllegalAccessException e ) {
@@ -70,20 +67,20 @@ public class TextMod implements BaseMod {
   if ( !isEmpty ) {
    for ( int i = 0 ; i < mod.getInt("Blocks") ; i++ ) {
     t = ibc.getJSONObject("Block" + i);
-    c.put(new LevBlock(mod.getString("name") , t));
+    c.put(new LevBlock(mod.getString("name"), t));
     main.Main.LOG.addI("Loaded block");
    }
 
    for ( int i = 0 ; i < mod.getInt("Items") ; i++ ) {
     t = ibc.getJSONObject("Item" + i);
-    c.put(new IItem(mod.getString("name") , t));
+    c.put(new IItem(mod.getString("name"), t));
     main.Main.LOG.addI("Loaded item");
    }
 
    for ( int i = 0 ; i < mod.getInt("Crafts") ; i++ ) {
     t = ibc.getJSONObject("Craft" + i);
-    c.putCraft(t.getInt("Type") ,
-               t.getString("Grid") ,
+    c.putCraft(t.getInt("Type"),
+               t.getString("Grid"),
                t.getString("Elements")
     );
     main.Main.LOG.addI("Loaded craft");

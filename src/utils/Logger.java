@@ -1,24 +1,21 @@
 package utils;
 
 import java.awt.event.ActionEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Serializable;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import utils.exceptions.LoggerExc;
 
 public class Logger implements Serializable {
 
  public enum Type {
+
   error, warning, info, debug
  }
- 
+
  private final ArrayList<LogEn> list = new ArrayList<>();
 
- public Logger(){
+ public Logger () {
   main.Main.ACTIONS.addT("loggerExport", 200, ( ActionEvent e ) -> {
    main.Main.LOG.export("now.log");
   });
@@ -33,14 +30,14 @@ public class Logger implements Serializable {
  }
 
  public void addW ( String info ) {
-  this.list.add(new LogE(info , Type.warning));
+  this.list.add(new LogE(info, Type.warning));
  }
 
  public void addI ( String info ) {
-  this.list.add(new LogE(info , Type.info));
+  this.list.add(new LogE(info, Type.info));
  }
 
- public void addD(String info) {
+ public void addD ( String info ) {
   this.list.add(new LogE(info, Type.debug));
  }
 
@@ -50,13 +47,14 @@ public class Logger implements Serializable {
   if ( !new File(file).exists() ) {
    export(file);
   } else {
-   export("log/" + new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss").format(now) + "_1.log");
+   export(
+      "log/" + new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss").format(now) + "_1.log");
   }
  }
 
  public void export ( String file ) {
   try ( BufferedWriter out = new BufferedWriter(new FileWriter(
-          main.Main.DIR + file)) ) {
+     main.Main.DIR + file)) ) {
    for ( LogEn e : list ) {
     out.write(e.toString() + "\n");
    }
@@ -66,8 +64,9 @@ public class Logger implements Serializable {
    System.err.println("Error in class Logger.export(" + file + ")");
   }
  }
- 
- private interface LogEn {}
+
+ private interface LogEn {
+ }
 
  private class LogE implements LogEn {
 
@@ -76,7 +75,7 @@ public class Logger implements Serializable {
   private final Date date;
   private final Type type;
 
-  public LogE ( String info , Type type ) {
+  public LogE ( String info, Type type ) {
    this.clas = Thread.currentThread().getStackTrace()[2].toString();
    this.info = info;
    this.date = new Date();
@@ -84,10 +83,11 @@ public class Logger implements Serializable {
   }
 
   @Override
-  public String toString() {
-   switch (type) {
+  public String toString () {
+   switch ( type ) {
     case warning:
-     return "warning&[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info;
+     return "warning&[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(
+        date) + "] " + clas + " - " + info;
     case info:
      return "info&[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + "] " + clas + " - " + info;
     default:

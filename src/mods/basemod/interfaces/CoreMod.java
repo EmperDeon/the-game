@@ -1,7 +1,6 @@
 package mods.basemod.interfaces;
 
-import mods.basemod.containers.Mid;
-import mods.basemod.containers.ModsContainer;
+import mods.basemod.containers.*;
 
 public interface CoreMod extends Base {
 

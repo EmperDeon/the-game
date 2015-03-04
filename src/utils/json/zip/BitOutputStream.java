@@ -1,30 +1,21 @@
 package utils.json.zip;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 /*
  * Copyright (c) 2013 JSON.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to
+ * do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
  * This is a big endian bit writer. It writes its bits to an OutputStream.
@@ -55,8 +46,7 @@ public class BitOutputStream implements BitWriter {
  private int vacant = 8;
 
  /**
-  * Use an OutputStream to produce a BitWriter. The BitWriter will send its bits
-  * to the OutputStream as each byte is filled.
+  * Use an OutputStream to produce a BitWriter. The BitWriter will send its bits to the OutputStream as each byte is filled.
   * <p>
   * @param out An Output Stream
   */
@@ -65,9 +55,7 @@ public class BitOutputStream implements BitWriter {
  }
 
  /**
-  * Returns the number of bits that have been written to this bitOutputStream.
-  * This may include bits that have not yet been written to the underlying
-  * outputStream.
+  * Returns the number of bits that have been written to this bitOutputStream. This may include bits that have not yet been written to the underlying outputStream.
   */
  public long nrBits () {
   return this.nrBits;
@@ -79,20 +67,18 @@ public class BitOutputStream implements BitWriter {
   * @throws IOException
   */
  public void one () throws IOException {
-  write(1 , 1);
+  write(1, 1);
  }
 
  /**
-  * Pad the rest of the block with zeros and flush. pad(8) flushes the last
-  * unfinished byte. The underlying OutputStream will be flushed.
+  * Pad the rest of the block with zeros and flush. pad(8) flushes the last unfinished byte. The underlying OutputStream will be flushed.
   * <p>
-  * @param width The size of the block to pad in bits. This will typically be 8,
-  *              16, 32, 64, 128, 256, etc.
+  * @param width The size of the block to pad in bits. This will typically be 8, 16, 32, 64, 128, 256, etc.
   * <p>
   * @throws IOException
   */
  public void pad ( int width ) throws IOException {
-  int gap = ( int ) this.nrBits % width;
+  int gap = (int) this.nrBits % width;
   if ( gap < 0 ) {
    gap += width;
   }
@@ -109,12 +95,12 @@ public class BitOutputStream implements BitWriter {
  /**
   * Write some bits. Up to 32 bits can be written at a time.
   * <p>
-  * @param bits  The bits to be written.
+  * @param bits The bits to be written.
   * @param width The number of bits to write. (0..32)
   * <p>
   * @throws IOException
   */
- public void write ( int bits , int width ) throws IOException {
+ public void write ( int bits, int width ) throws IOException {
   if ( bits == 0 && width == 0 ) {
    return;
   }
@@ -126,8 +112,8 @@ public class BitOutputStream implements BitWriter {
    if ( actual > this.vacant ) {
     actual = this.vacant;
    }
-   this.unwritten |= ( ( bits >>> ( width - actual ) )
-                       & ( ( 1 << actual ) - 1 ) ) << ( this.vacant - actual );
+   this.unwritten |= ((bits >>> (width - actual))
+      & ((1 << actual) - 1)) << (this.vacant - actual);
    width -= actual;
    nrBits += actual;
    this.vacant -= actual;
@@ -145,7 +131,7 @@ public class BitOutputStream implements BitWriter {
   * @throws IOException
   */
  public void zero () throws IOException {
-  write(0 , 1);
+  write(0, 1);
 
  }
 }

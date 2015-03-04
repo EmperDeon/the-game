@@ -6,39 +6,30 @@ import utils.json.Kim;
 /*
  * Copyright (c) 2013 JSON.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to
+ * do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * A keep is a data structure that associates strings (or substrings) with
- * numbers. This allows the sending of small integers instead of strings.
+ * A keep is a data structure that associates strings (or substrings) with numbers. This allows the sending of small integers instead of strings.
  * <p>
  * @author JSON.org
  * @version 2013-05-03
  */
-class Keep implements None , PostMortem {
+class Keep implements None, PostMortem {
 
  private int capacity;
  protected int length;
  private Object[] list;
- private HashMap<Object , Integer> map;
+ private HashMap<Object, Integer> map;
  private int power;
  private long[] ticks;
 
@@ -48,7 +39,7 @@ class Keep implements None , PostMortem {
   this.power = 0;
   this.ticks = new long[this.capacity];
   this.list = new Object[this.capacity];
-  this.map = new HashMap<Object , Integer>(this.capacity);
+  this.map = new HashMap<Object, Integer>(this.capacity);
  }
 
  /**
@@ -63,9 +54,7 @@ class Keep implements None , PostMortem {
  }
 
  /**
-  * Return the number of bits required to contain an integer based on the
-  * current length of the keep. As the keep fills up, the number of bits
-  * required to identify one of its items goes up.
+  * Return the number of bits required to contain an integer based on the current length of the keep. As the keep fills up, the number of bits required to identify one of its items goes up.
   */
  public int bitsize () {
   while ( 1 << this.power < this.length ) {
@@ -82,9 +71,7 @@ class Keep implements None , PostMortem {
  }
 
  /**
-  * Compact the keep. A keep may contain at most this.capacity elements. The
-  * keep contents can be reduced by deleting all elements with low use counts,
-  * and by reducing the use counts of the survivors.
+  * Compact the keep. A keep may contain at most this.capacity elements. The keep contents can be reduced by deleting all elements with low use counts, and by reducing the use counts of the survivors.
   */
  private void compact () {
   int from = 0;
@@ -95,7 +82,7 @@ class Keep implements None , PostMortem {
    if ( usage > 0 ) {
     this.ticks[to] = usage;
     this.list[to] = key;
-    this.map.put(key , to);
+    this.map.put(key, to);
     to += 1;
    } else {
     this.map.remove(key);
@@ -112,8 +99,7 @@ class Keep implements None , PostMortem {
  }
 
  /**
-  * Find the integer value associated with this key, or nothing if this key is
-  * not in the keep.
+  * Find the integer value associated with this key, or nothing if this key is not in the keep.
   * <p>
   * @param key An object.
   * <p>
@@ -121,11 +107,11 @@ class Keep implements None , PostMortem {
   */
  public int find ( Object key ) {
   Object o = this.map.get(key);
-  return o instanceof Integer ? ( ( Integer ) o ).intValue() : none;
+  return o instanceof Integer ? ((Integer) o).intValue() : none;
  }
 
  public boolean postMortem ( PostMortem pm ) {
-  Keep that = ( Keep ) pm;
+  Keep that = (Keep) pm;
   if ( this.length != that.length ) {
    JSONzip.log(this.length + " <> " + that.length);
    return false;
@@ -147,8 +133,8 @@ class Keep implements None , PostMortem {
    }
    if ( !b ) {
     JSONzip.log("\n[" + i + "]\n " + this.list[i] + "\n "
-                + that.list[i] + "\n " + this.ticks[i] + "\n "
-                + that.ticks[i]);
+       + that.list[i] + "\n " + this.ticks[i] + "\n "
+       + that.ticks[i]);
     return false;
    }
   }
@@ -156,8 +142,7 @@ class Keep implements None , PostMortem {
  }
 
  /**
-  * Register a value in the keep. Compact the keep if it is full. The next time
-  * this value is encountered, its integer can be sent instead.
+  * Register a value in the keep. Compact the keep if it is full. The next time this value is encountered, its integer can be sent instead.
   * <p>
   * @param value A value.
   */
@@ -172,7 +157,7 @@ class Keep implements None , PostMortem {
    compact();
   }
   this.list[this.length] = value;
-  this.map.put(value , this.length);
+  this.map.put(value, this.length);
   this.ticks[this.length] = 1;
   if ( JSONzip.probe ) {
    JSONzip.log("<" + this.length + " " + value + "> ");

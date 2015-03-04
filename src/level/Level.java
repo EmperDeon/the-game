@@ -1,9 +1,7 @@
 package level;
 
 import java.io.File;
-import level.chunk.Chunk;
-import level.chunk.ChunkContainer;
-import level.chunk.ChunkId;
+import level.chunk.*;
 import utils.exceptions.TermEx;
 
 public class Level {
@@ -14,7 +12,7 @@ public class Level {
  private final ChunkContainer rch;
  private final String name;
  public Boolean loaded = false;
- public ChunkId pos = new ChunkId(0 , 0);
+ public ChunkId pos = new ChunkId(0, 0);
 
  public Level ( String name ) throws TermEx {
   File f = new File(main.Main.DIR + "saves/" + name + "/rg");
@@ -66,13 +64,10 @@ public class Level {
  }
 
  /*
-  * public void tick(){
-  * for(int i=0;i<ch.size();i++)
-  * ch.get(i).tick(); *
-  * }
+  * public void tick(){ for(int i=0;i<ch.size();i++) ch.get(i).tick(); * }
   */
- public Chunk get ( int x , int y ) {
-  return rch.get(x , y);
+ public Chunk get ( int x, int y ) {
+  return rch.get(x, y);
  }
 
 }

@@ -11,7 +11,7 @@ public class OctChunk implements Serializable {
  private final int x;
  private final int y;
 
- public OctChunk ( String nm , int x , int y ) {
+ public OctChunk ( String nm, int x, int y ) {
   this.dir = main.Main.DIR + "saves/" + nm + "/rg/";
   fl = "region" + x + "" + y + ".rg";
 
@@ -21,12 +21,12 @@ public class OctChunk implements Serializable {
   chs = new Chunk[8][8];
   for ( int ix = 0 ; ix < 8 ; ix++ ) {
    for ( int iy = 0 ; iy < 8 ; iy++ ) {
-    chs[ix][iy] = new Chunk(x * 8 + ix , y * 8 + iy);
+    chs[ix][iy] = new Chunk(x * 8 + ix, y * 8 + iy);
    }
   }
  }
 
- public OctChunk ( String nm , int x , int y , Chunk[][] ch ) {
+ public OctChunk ( String nm, int x, int y, Chunk[][] ch ) {
   this.dir = main.Main.DIR + "saves/" + nm + "/rg/";
   fl = "region" + x + "" + y + ".rg";
 
@@ -47,7 +47,7 @@ public class OctChunk implements Serializable {
   return dir + fl;
  }
 
- public Chunk getCh ( int x , int y ) {
+ public Chunk getCh ( int x, int y ) {
   return chs[x][y];
  }
 
@@ -66,14 +66,14 @@ public class OctChunk implements Serializable {
   int i = 0;
   for ( Chunk[] chs1 : chs ) {
    for ( Chunk ch : chs1 ) {
-    ids[i] = new ChunkId(ch.idx , ch.idy);
+    ids[i] = new ChunkId(ch.idx, ch.idy);
     i++;
    }
   }
-  return new OctChunkId("region" + this.x + "" + this.y + ".rg" , ids);
+  return new OctChunkId("region" + this.x + "" + this.y + ".rg", ids);
  }
 
- public void replaceChunk ( int x , int y , Chunk ch ) {
+ public void replaceChunk ( int x, int y, Chunk ch ) {
   this.chs[x][y] = ch;
  }
 }

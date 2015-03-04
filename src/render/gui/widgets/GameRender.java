@@ -2,31 +2,14 @@ package render.gui.widgets;
 
 import java.io.IOException;
 import java.util.TreeMap;
-import org.fenggui.Display;
-import org.fenggui.IBasicContainer;
-import org.fenggui.IWidget;
+import org.fenggui.*;
 import org.fenggui.binding.render.Graphics;
-import org.fenggui.event.FocusEvent;
-import org.fenggui.event.IPositionChangedListener;
-import org.fenggui.event.ISizeChangedListener;
-import org.fenggui.event.PositionChangedEvent;
-import org.fenggui.event.SizeChangedEvent;
-import org.fenggui.event.key.KeyPressedEvent;
-import org.fenggui.event.key.KeyReleasedEvent;
-import org.fenggui.event.key.KeyTypedEvent;
-import org.fenggui.event.mouse.MouseClickedEvent;
-import org.fenggui.event.mouse.MouseDoubleClickedEvent;
-import org.fenggui.event.mouse.MouseDraggedEvent;
-import org.fenggui.event.mouse.MouseEnteredEvent;
-import org.fenggui.event.mouse.MouseExitedEvent;
-import org.fenggui.event.mouse.MousePressedEvent;
-import org.fenggui.event.mouse.MouseReleasedEvent;
-import org.fenggui.event.mouse.MouseWheelEvent;
+import org.fenggui.event.*;
+import org.fenggui.event.key.*;
+import org.fenggui.event.mouse.*;
 import org.fenggui.layout.ILayoutData;
-import org.fenggui.theme.xml.IXMLStreamableException;
-import org.fenggui.theme.xml.InputOutputStream;
-import org.fenggui.util.Dimension;
-import org.fenggui.util.Point;
+import org.fenggui.theme.xml.*;
+import org.fenggui.util.*;
 import render.Render;
 import render.Render.Hooks;
 
@@ -36,7 +19,7 @@ public class GameRender implements IWidget {
  private final Render rend = main.Main.rend;
  private final Hooks hook;
  private boolean visible = false;
- private final TreeMap<String , Object> map = new TreeMap<>();
+ private final TreeMap<String, Object> map = new TreeMap<>();
 
  public GameRender () {
   hook = rend.gethook();
@@ -54,7 +37,7 @@ public class GameRender implements IWidget {
 
  @Override
  public IWidget clone () throws CloneNotSupportedException {
-  return ( IWidget ) super.clone();
+  return (IWidget) super.clone();
  }
 
  @Override
@@ -73,8 +56,8 @@ public class GameRender implements IWidget {
  }
 
  @Override
- public void mouseMoved ( int displayX , int displayY ) {
-  hook.mouseMoved(displayX , displayY);
+ public void mouseMoved ( int displayX, int displayY ) {
+  hook.mouseMoved(displayX, displayY);
  }
 
  @Override
@@ -171,7 +154,7 @@ public class GameRender implements IWidget {
  }
 
  @Override
- public IWidget getWidget ( int x , int y ) {
+ public IWidget getWidget ( int x, int y ) {
   return this;
  }
 
@@ -181,12 +164,12 @@ public class GameRender implements IWidget {
 
  @Override
  public Dimension getSize () {
-  return new Dimension(parent.getWidth() , parent.getHeight());
+  return new Dimension(parent.getWidth(), parent.getHeight());
  }
 
  @Override
  public Dimension getMinSize () {
-  return new Dimension(parent.getWidth() , parent.getHeight());
+  return new Dimension(parent.getWidth(), parent.getHeight());
  }
 
  @Override
@@ -201,7 +184,7 @@ public class GameRender implements IWidget {
 
  @Override
  public Point getPosition () {
-  return new Point(0 , 0);
+  return new Point(0, 0);
  }
 
  @Override
@@ -276,8 +259,8 @@ public class GameRender implements IWidget {
  }
 
  @Override
- public void setData ( String key , Object data ) {
-  this.map.put(key , data);
+ public void setData ( String key, Object data ) {
+  this.map.put(key, data);
  }
 
  @Override
@@ -286,7 +269,7 @@ public class GameRender implements IWidget {
  }
 
  @Override
- public void process ( InputOutputStream stream ) throws IOException ,
+ public void process ( InputOutputStream stream ) throws IOException,
                                                          IXMLStreamableException {
  }
 

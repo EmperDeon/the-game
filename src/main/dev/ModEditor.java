@@ -3,16 +3,13 @@ package main.dev;
 import com.trolltech.qt.gui.*;
 import java.io.*;
 import java.util.*;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.tools.*;
 import main.Main;
-import mods.basemod.CraftE;
-import mods.basemod.IItem;
+import mods.basemod.*;
 import mods.basemod.containers.Mid;
 import mods.basemod.resources.Model;
-import utils.Unzipper;
-import utils.Zipper;
+import utils.*;
 import utils.json.JSONObject;
 
 public final class ModEditor extends QMainWindow {
@@ -25,16 +22,16 @@ public final class ModEditor extends QMainWindow {
   tabs = new QTabWidget(this);
   itab = new ItemsTab();
   ctab = new CraftTab();
-  bgen = new QPushButton(( "Generate" ));
-  bsave = new QPushButton(( "Save mod" ));
+  bgen = new QPushButton(("Generate"));
+  bsave = new QPushButton(("Save mod"));
   modname = new QLineEdit();
 
-  tabs.addTab(itab , ( "Items" ));
-  tabs.addTab(ctab , ( "Crafts" ));
+  tabs.addTab(itab, ("Items"));
+  tabs.addTab(ctab, ("Crafts"));
 
   panel.addWidget(new QLabel("Modname:"));
   panel.addWidget(modname);
-  panel.addSpacerItem(new QSpacerItem(10 , 10));
+  panel.addSpacerItem(new QSpacerItem(10, 10));
   panel.addWidget(bgen);
   panel.addWidget(bsave);
 
@@ -68,23 +65,24 @@ public final class ModEditor extends QMainWindow {
    badd = new QPushButton("Add item");
    bmap = new QPushButton("Properties");
    map = new PropMap();
-   
+
    view.insertColumn(0);
-   view.setColumnWidth(0 , 40);
+   view.setColumnWidth(0, 40);
    view.insertColumn(1);
-   view.setColumnWidth(1 , 40);
+   view.setColumnWidth(1, 40);
    view.insertColumn(2);
-   view.setColumnWidth(2 , 500);
+   view.setColumnWidth(2, 500);
    view.insertColumn(3);
-   view.setColumnWidth(3 , 500);
+   view.setColumnWidth(3, 500);
 
-   view.setHorizontalHeaderLabels(Arrays.asList(new String[]{"Item id" , "Sub-item id" ,
-                                                             "Model" ,
-                                                             "Parameters"}));
+   view.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Item id",
+                                                              "Sub-item id",
+                                                              "Model",
+                                                              "Parameters" }));
 
-   form.addRow("Item id:" , iid);
-   form.addRow("SUb-item id:" , sid);
-   form.addRow("Model:" , model);
+   form.addRow("Item id:", iid);
+   form.addRow("SUb-item id:", sid);
+   form.addRow("Model:", model);
 
    form2.addLayout(form);
    form2.addWidget(badd);
@@ -99,26 +97,32 @@ public final class ModEditor extends QMainWindow {
    list.add(e);
    int row = list.size() - 1;
    view.insertRow(row);
-   view.setItem(row , 0 , new QTableWidgetItem(e.getId().getIid()));
-   view.setItem(row , 1 , new QTableWidgetItem(e.getId().getSid()));
-   view.setItem(row , 2 , new QTableWidgetItem(e.getModel().getFile()));
-   view.setItem(row , 3 , new QTableWidgetItem(e.getAllP()));
+   view.setItem(row, 0, new QTableWidgetItem(e.getId().getIid()));
+   view.setItem(row, 1, new QTableWidgetItem(e.getId().getSid()));
+   view.setItem(row, 2, new QTableWidgetItem(e.getModel().getFile()));
+   view.setItem(row, 3, new QTableWidgetItem(e.getAllP()));
   }
 
-  public void add (String iid, String sid, String model, Map<String, String> params) {
-   add(new IItem(new Mid(modname.text(), iid, sid), new Model(new Mid(modname.text(), iid, sid), model), params));
+  public void add ( String iid, String sid, String model,
+                    Map<String, String> params ) {
+   add(new IItem(new Mid(modname.text(), iid, sid), new Model(new Mid(modname.
+                 text(), iid, sid), model), params));
   }
 
   public void add () {
    add(this.iid.text(), this.sid.text(), this.model.text(), this.map.get());
   }
-  
-  public int lsize (){return this.list.size();}
-  
-  public boolean isEmpty(){return list.isEmpty();}
-  
-  public void save(JSONObject o){
-  
+
+  public int lsize () {
+   return this.list.size();
+  }
+
+  public boolean isEmpty () {
+   return list.isEmpty();
+  }
+
+  public void save ( JSONObject o ) {
+
   }
  }
 
@@ -143,21 +147,21 @@ public final class ModEditor extends QMainWindow {
    badd = new QPushButton("Add craft");
 
    view.insertColumn(0);
-   view.setColumnWidth(0 , 40);
+   view.setColumnWidth(0, 40);
    view.insertColumn(1);
-   view.setColumnWidth(1 , 40);
+   view.setColumnWidth(1, 40);
    view.insertColumn(2);
-   view.setColumnWidth(2 , 500);
+   view.setColumnWidth(2, 500);
    view.insertColumn(3);
-   view.setColumnWidth(3 , 500);
+   view.setColumnWidth(3, 500);
 
-   view.setHorizontalHeaderLabels(Arrays.asList(new String[]{"Type" , "Grid" ,
-                                                             "Elements" ,
-                                                             "Parameters"}));
+   view.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Type", "Grid",
+                                                              "Elements",
+                                                              "Parameters" }));
 
-   form.addRow("Type:" , type);
-   form.addRow("Elements: " , elements);
-   form.addRow("Grid:" , size);
+   form.addRow("Type:", type);
+   form.addRow("Elements: ", elements);
+   form.addRow("Grid:", size);
 
    form2.addLayout(form);
    form2.addWidget(badd);
@@ -172,35 +176,42 @@ public final class ModEditor extends QMainWindow {
    list.add(e);
    int row = list.size() - 1;
    view.insertRow(row);
-   view.setItem(row , 0 , new QTableWidgetItem(e.getType().toString()));
-   view.setItem(row , 1 , new QTableWidgetItem(e.getGrid()));
-   view.setItem(row , 2 , new QTableWidgetItem(e.getElements()));
-   view.setItem(row , 3 , new QTableWidgetItem(e.getParams()));
+   view.setItem(row, 0, new QTableWidgetItem(e.getType().toString()));
+   view.setItem(row, 1, new QTableWidgetItem(e.getGrid()));
+   view.setItem(row, 2, new QTableWidgetItem(e.getElements()));
+   view.setItem(row, 3, new QTableWidgetItem(e.getParams()));
   }
 
-  public void add ( Integer type , String grid , String elements ) {
-   add(new CraftE(type , grid , elements));
+  public void add ( Integer type, String grid, String elements ) {
+   add(new CraftE(type, grid, elements));
   }
 
   public void add () {
-   add(Integer.parseInt(type.text()) , size.text() , elements.text());
+   add(Integer.parseInt(type.text()), size.text(), elements.text());
   }
-  
-  public int lsize (){return this.list.size();}
-  
-  public boolean isEmpty(){return list.isEmpty();}
-  
-  public void save(JSONObject o){
-  
+
+  public int lsize () {
+   return this.list.size();
+  }
+
+  public boolean isEmpty () {
+   return list.isEmpty();
+  }
+
+  public void save ( JSONObject o ) {
+
   }
  }
 
- private final class PropMap extends QWidget{
+ private final class PropMap extends QWidget {
+
   private final TreeMap<String, String> map = new TreeMap<>();
-  
-  public TreeMap<String, String> get(){ return map; }
+
+  public TreeMap<String, String> get () {
+   return map;
+  }
  }
- 
+
 // private final ParamF bp = new ParamF("Block");
 // private final ParamF ip = new ParamF("Item");
 //// private final ParamF cp = new ParamF();
@@ -214,10 +225,10 @@ public final class ModEditor extends QMainWindow {
  private void save () {
   String t = null;
   JSONMod s = new JSONMod();
-  int x = JOptionPane.showConfirmDialog(null ,
-                                        "Are you have a mod archive or mod folder ?" ,
-                                        "Mod archive" ,
-                                        JOptionPane.YES_NO_OPTION ,
+  int x = JOptionPane.showConfirmDialog(null,
+                                        "Are you have a mod archive or mod folder ?",
+                                        "Mod archive",
+                                        JOptionPane.YES_NO_OPTION,
                                         JOptionPane.QUESTION_MESSAGE);
   switch ( x ) {
    case 0:
@@ -243,8 +254,8 @@ public final class ModEditor extends QMainWindow {
 
  private void gen () {
   for ( int i = 0 ; i < 100000 ; i++ ) {
-   itab.add( "Block" + i , "0"  , "file1" , new HashMap<>());
-   ctab.add(1 , "1x1" , Integer.toString(i));
+   itab.add("Block" + i, "0", "file1", new HashMap<>());
+   ctab.add(1, "1x1", Integer.toString(i));
   }
   save();
  }
@@ -256,16 +267,16 @@ public final class ModEditor extends QMainWindow {
    JSONObject mod = new JSONObject();
    JSONObject ibc = new JSONObject();
 
-   mod.put("name" , modname.text());
-   mod.put("class" , "mods." + modname.text() + ".main");
+   mod.put("name", modname.text());
+   mod.put("class", "mods." + modname.text() + ".main");
    if ( itab.isEmpty() && ctab.isEmpty() ) {
-    mod.put("isEmpty" , true);
+    mod.put("isEmpty", true);
    } else {
-    mod.put("isEmpty" , false);
+    mod.put("isEmpty", false);
    }
 
-   mod.put("Items" , itab.lsize());
-   mod.put("Crafts" , ctab.lsize());
+   mod.put("Items", itab.lsize());
+   mod.put("Crafts", ctab.lsize());
 
    itab.save(ibc);
    ctab.save(ibc);
@@ -281,7 +292,7 @@ public final class ModEditor extends QMainWindow {
    File d = new File(srcdir);
    d.mkdirs();
 
-   try ( FileWriter t = new FileWriter(new File(d , "Mod.java")) ) {
+   try ( FileWriter t = new FileWriter(new File(d, "Mod.java")) ) {
     t.write("package mods." + modname.text() + ";\n");
     t.write("\n");
     t.write("import java.io.File;\n");
@@ -306,8 +317,10 @@ public final class ModEditor extends QMainWindow {
     t.write("\n");
     t.write(" public Mod ( String file ) {\n");
     t.write("  Unzipper.unzipmod(file);\n");
-    t.write("  mod = new JSONObject(main.Main.mdir + \"tmp/\" + file.substring(file.\n");
-    t.write("          lastIndexOf(\"/\") + 1 , file.lastIndexOf(\".mod\")) + \"/mod.json\");\n");
+    t.write(
+       "  mod = new JSONObject(main.Main.mdir + \"tmp/\" + file.substring(file.\n");
+    t.write(
+       "          lastIndexOf(\"/\") + 1 , file.lastIndexOf(\".mod\")) + \"/mod.json\");\n");
     t.write("  \n");
     t.write("  isEmpty = mod.getBoolean(\"isEmpty\");\n");
     t.write("  id = new Mid(mod.getString(\"name\"));\n");
@@ -316,8 +329,10 @@ public final class ModEditor extends QMainWindow {
     t.write("  if ( isEmpty ) {\n");
     t.write("   ibc = null;\n");
     t.write("  } else {\n");
-    t.write("   ibc = new JSONObject(main.Main.mdir + \"tmp/\" + file.substring(file.\n");
-    t.write("           lastIndexOf(\"/\") + 1 , file.lastIndexOf(\".mod\")) + \"/ibc.json\");\n");
+    t.write(
+       "   ibc = new JSONObject(main.Main.mdir + \"tmp/\" + file.substring(file.\n");
+    t.write(
+       "           lastIndexOf(\"/\") + 1 , file.lastIndexOf(\".mod\")) + \"/ibc.json\");\n");
     t.write("  }\n");
     t.write("\n");
     t.write(" }\n");
@@ -339,10 +354,13 @@ public final class ModEditor extends QMainWindow {
     t.write("  try {\n");
     t.write("   URLClassLoader classLoader = new URLClassLoader(\n");
     t.write("           new URL[]{zip.toURI().toURL()});\n");
-    t.write("   TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();\n");
+    t.write(
+       "   TextMod b = ( TextMod ) classLoader.loadClass(cl).newInstance();\n");
     t.write("   return b;\n");
-    t.write("  } catch ( IOException | IllegalArgumentException | ClassNotFoundException |\n");
-    t.write("            InstantiationException | IllegalAccessException e ) {\n");
+    t.write(
+       "  } catch ( IOException | IllegalArgumentException | ClassNotFoundException |\n");
+    t.write(
+       "            InstantiationException | IllegalAccessException e ) {\n");
     t.write("   main.Main.LOG.addE(e);\n");
     t.write("  }\n");
     t.write("  return this;\n");
@@ -372,8 +390,10 @@ public final class ModEditor extends QMainWindow {
     t.write("  //put actions to modact.java, item.java \n");
     t.write("  ModAct.putAll(c);\n");
     t.write("  ItemAct.putAll(c);\n");
-    t.write("  //Ex. c.addAction(id of Block/Item (Mid) , id of action(String) , () -> { action } (Action));  () -> {  } is a lambda expreesion\n");
-    t.write("  //Or  c.addAction(Mid , action (String) , ( int act , boolean shift ) -> { action } (Action)); for multiaction with mouse\n");
+    t.write(
+       "  //Ex. c.addAction(id of Block/Item (Mid) , id of action(String) , () -> { action } (Action));  () -> {  } is a lambda expreesion\n");
+    t.write(
+       "  //Or  c.addAction(Mid , action (String) , ( int act , boolean shift ) -> { action } (Action)); for multiaction with mouse\n");
     t.write(" \n");
     t.write("  c.initF(id);\n");
     t.write(" }\n");
@@ -405,7 +425,7 @@ public final class ModEditor extends QMainWindow {
 
    }
 
-   try ( FileWriter t = new FileWriter(new File(d , "ModAct.java")) ) {
+   try ( FileWriter t = new FileWriter(new File(d, "ModAct.java")) ) {
     t.write("package mods." + modname.text() + ";\n");
     t.write("import mods.basemod.containers.ModsContainer;\n");
     t.write("public class ModAct {\n");
@@ -416,7 +436,7 @@ public final class ModEditor extends QMainWindow {
    } catch ( IOException ex ) {
 
    }
-   try ( FileWriter t = new FileWriter(new File(d , "ItemAct.java")) ) {
+   try ( FileWriter t = new FileWriter(new File(d, "ItemAct.java")) ) {
     t.write("package mods." + modname.text() + ";\n");
     t.write("import mods.basemod.containers.ModsContainer;\n");
     t.write("public class ItemAct {\n");
@@ -446,22 +466,22 @@ public final class ModEditor extends QMainWindow {
    DiagnosticCollector<JavaFileObject> coll = new DiagnosticCollector<>();
 
    StandardJavaFileManager fileManager = compiler.getStandardFileManager(
-           coll , null , null);
+      coll, null, null);
 
-   JavaCompiler.CompilationTask task = compiler.getTask(null , fileManager ,
-                                                        coll ,
-                                                        arg ,
-                                                        null , fileManager.
+   JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager,
+                                                        coll,
+                                                        arg,
+                                                        null, fileManager.
                                                         getJavaFileObjectsFromStrings(
-                                                                src));
+                                                           src));
 
    boolean success = task.call();
-   main.Main.LOG.addI("Mod build "+ (success ? "success" : "not success" ));
+   main.Main.LOG.addI("Mod build " + (success ? "success" : "not success"));
 
    coll.getDiagnostics().stream().
-           forEach(( e ) -> {
-            System.out.println(e.getMessage(Locale.ENGLISH));
-           });
+      forEach(( e ) -> {
+       System.out.println(e.getMessage(Locale.ENGLISH));
+      });
   }
  }
 

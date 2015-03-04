@@ -3,7 +3,8 @@
 class QWebView;
 QT_BEGIN_NAMESPACE
 class QLineEdit;
-<<<<<<< HEAD
+
+<< << << < HEAD
 
 QT_END_NAMESPACE
 
@@ -28,10 +29,11 @@ private:
  QAction *mInfo;
  QAction *mDebg;
  QMenu *mlevel;
-=======
-QT_END_NAMESPACE
 
-class Logger : public QMainWindow{
+ == == == =
+         QT_END_NAMESPACE
+
+         class Logger : public QMainWindow {
   Q_OBJECT
 
  public:
@@ -52,5 +54,5 @@ class Logger : public QMainWindow{
   QAction *mInfo;
   QAction *mDebg;
   QMenu *mlevel;
->>>>>>> origin/master
-};
+  >>>>>>> origin / master
+ };

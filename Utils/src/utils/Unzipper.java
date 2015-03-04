@@ -2,60 +2,59 @@ package utils;
 
 import java.io.*;
 import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.util.zip.*;
 
 public class Unzipper {
 
- public static void unzip(String file) {
+ public static void unzip ( String file ) {
 
   Enumeration entries;
   String dirName = main.Main.mdir + "tmp/" + file + "/";
-  if (!dirName.isEmpty()) {
+  if ( !dirName.isEmpty() ) {
    new File(dirName).mkdirs();
   }
 
-  try (ZipFile zip = new ZipFile(file + ".zip")) {
+  try ( ZipFile zip = new ZipFile(file + ".zip") ) {
    entries = zip.entries();
 
-   while (entries.hasMoreElements()) {
+   while ( entries.hasMoreElements() ) {
     ZipEntry entry = (ZipEntry) entries.nextElement();
     String zip_path = entry.getName();
     write(dirName, zip_path, zip.getInputStream(entry));
    }
-  } catch (IOException e) {
+  } catch ( IOException e ) {
    main.Main.LOG.addE(e);
   }
  }
 
- public static void unzipmod(String file) {
+ public static void unzipmod ( String file ) {
   Enumeration entries;
   String dirName = main.Main.mdir + "tmp/" + file.substring(file.lastIndexOf(
      "/") + 1, file.lastIndexOf(".mod")) + "/";
-  if (!dirName.isEmpty()) {
+  if ( !dirName.isEmpty() ) {
    new File(dirName).mkdirs();
   }
 
-  try (ZipFile zip = new ZipFile(file)) {
+  try ( ZipFile zip = new ZipFile(file) ) {
    entries = zip.entries();
 
-   while (entries.hasMoreElements()) {
+   while ( entries.hasMoreElements() ) {
     ZipEntry entry = (ZipEntry) entries.nextElement();
     String zip_path = entry.getName();
     write(dirName, zip_path, zip.getInputStream(entry));
    }
-  } catch (IOException e) {
+  } catch ( IOException e ) {
    main.Main.LOG.addE(e);
   }
  }
 
- private static void write(String dirName, String FilePath, InputStream in)
+ private static void write ( String dirName, String FilePath, InputStream in )
     throws IOException {
   String m_FilePath = FilePath;
   String m_NewFilePath = dirName;
   boolean m_kol = true;
-  while (m_kol) {
-   if (m_FilePath.indexOf(File.separatorChar) < 0) {
+  while ( m_kol ) {
+   if ( m_FilePath.indexOf(File.separatorChar) < 0 ) {
     m_kol = false;
    } else {
     Integer resName = m_FilePath.indexOf(File.separatorChar);
@@ -65,12 +64,12 @@ public class Unzipper {
     m_NewFilePath = m_NewFilePath + m_DirName;
    }
   }
-  if (!new File(dirName + "/" + FilePath).isDirectory()) {
-   try (OutputStream out = new BufferedOutputStream(new FileOutputStream(
-      dirName + "/" + FilePath))) {
+  if ( !new File(dirName + "/" + FilePath).isDirectory() ) {
+   try ( OutputStream out = new BufferedOutputStream(new FileOutputStream(
+      dirName + "/" + FilePath)) ) {
     byte[] buffer = new byte[1024];
     int len;
-    while ((len = in.read(buffer)) >= 0) {
+    while ( (len = in.read(buffer)) >= 0 ) {
      out.write(buffer, 0, len);
     }
     in.close();

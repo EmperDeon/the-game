@@ -27,8 +27,8 @@ public class GuiId implements Comparable<GuiId> {
   if ( getClass() != obj.getClass() ) {
    return false;
   }
-  final GuiId other = ( GuiId ) obj;
-  if ( !Objects.equals(this.id , other.id) ) {
+  final GuiId other = (GuiId) obj;
+  if ( !Objects.equals(this.id, other.id) ) {
    return false;
   }
   return true;

@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import javax.media.opengl.awt.GLCanvas;
 import main.Main;
 import org.fenggui.IWidget;
-import org.fenggui.binding.render.Binding;
-import org.fenggui.binding.render.Graphics;
-import org.fenggui.binding.render.IOpenGL;
-import org.fenggui.binding.render.Pixmap;
+import org.fenggui.binding.render.*;
 import org.fenggui.binding.render.jogl.JOGLBinding;
 import org.fenggui.event.WidgetListChangedEvent;
 import utils.GuiId;
@@ -17,7 +14,7 @@ import utils.vec.Vec2;
 public class Display extends org.fenggui.Display {
 
  private final Layout layout = new Layout(this);
- private final Vec2<Integer> t = new Vec2<>(0 , 0);
+ private final Vec2<Integer> t = new Vec2<>(0, 0);
 
  public Display ( GLCanvas canvas ) {
   super(new JOGLBinding(canvas));
@@ -31,23 +28,23 @@ public class Display extends org.fenggui.Display {
   layout.doLayout();
  }
 
- public synchronized void addWidget ( Integer id , IWidget w ) {
-  notifyList.add(notifyList.size() , w);
+ public synchronized void addWidget ( Integer id, IWidget w ) {
+  notifyList.add(notifyList.size(), w);
   w.setParent(this);
 
-  layout.add(new GuiId(id) , w);
+  layout.add(new GuiId(id), w);
 
   if ( getDisplay() != null ) {
    w.addedToWidgetTree();
   }
 
   updateMinSize();
-  widgetAdded(new WidgetListChangedEvent(this , w));
+  widgetAdded(new WidgetListChangedEvent(this, w));
  }
 
- public void setBack ( Integer id , String b ) {
+ public void setBack ( Integer id, String b ) {
   try {
-   layout.addBack(new GuiId(id) , new Pixmap(Binding.getInstance().
+   layout.addBack(new GuiId(id), new Pixmap(Binding.getInstance().
                   getTexture(Main.DIR + b)));
   } catch ( IOException ex ) {
    Main.LOG.addE(ex);
@@ -56,7 +53,7 @@ public class Display extends org.fenggui.Display {
 
  @Override
  public synchronized void display () {
-  if ( ( t.gX() != getWidth() ) || ( t.gY() != getHeight() ) ) {
+  if ( (t.gX() != getWidth()) || (t.gY() != getHeight()) ) {
    doLayout();
   }
 
@@ -72,12 +69,12 @@ public class Display extends org.fenggui.Display {
   // no OpenGL extensions are installed. Should be replaced by something else if
   // possible.
   // opengl.activateTexture(0);
-  gl.setViewPort(0 , 0 , binding.getCanvasWidth() , binding.getCanvasHeight());
+  gl.setViewPort(0, 0, binding.getCanvasWidth(), binding.getCanvasHeight());
 
   gl.setProjectionMatrixMode();
   gl.pushMatrix();
   gl.loadIdentity();
-  gl.setOrtho2D(0 , binding.getCanvasWidth() , 0 , binding.getCanvasHeight());
+  gl.setOrtho2D(0, binding.getCanvasWidth(), 0, binding.getCanvasHeight());
 
   gl.setModelMatrixMode();
   gl.pushMatrix();
@@ -106,7 +103,7 @@ public class Display extends org.fenggui.Display {
   gl.popAllAttribs();
  }
 
- private boolean clipWidget ( Graphics g , IWidget c ) {
+ private boolean clipWidget ( Graphics g, IWidget c ) {
   int startX = c.getX() < 0 ? 0 : c.getX();
   int startY = c.getY() < 0 ? 0 : c.getY();
 
@@ -120,8 +117,8 @@ public class Display extends org.fenggui.Display {
    int cWidth = c.getSize().getWidth();
    int cHeight = c.getSize().getHeight();
 
-   g.addClipSpace(startX , startY ,
-                  c.getX() + cWidth > getWidth() ? getWidth() - startX : cWidth ,
+   g.addClipSpace(startX, startY,
+                  c.getX() + cWidth > getWidth() ? getWidth() - startX : cWidth,
                   c.getY() + cHeight > getHeight() ? getHeight() - startY : cHeight);
 
    if ( g.getClipSpace() != null ) {
@@ -138,13 +135,13 @@ public class Display extends org.fenggui.Display {
 
   gl.pushMatrix();
 
-  clipWidget(g , w);
+  clipWidget(g, w);
 
-  g.translate(w.getX() , w.getY());
+  g.translate(w.getX(), w.getY());
 
   w.paint(g);
 
-  g.translate(-w.getX() , -w.getY());
+  g.translate(-w.getX(), -w.getY());
 
   g.removeLastClipSpace();
   gl.popMatrix();
@@ -157,7 +154,7 @@ public class Display extends org.fenggui.Display {
 
   gl.pushMatrix();
 
-  g.drawScaledImage(layout.getBack() , 0 , 0 , getWidth() , getHeight());
+  g.drawScaledImage(layout.getBack(), 0, 0, getWidth(), getHeight());
 
   g.removeLastClipSpace();
   gl.popMatrix();

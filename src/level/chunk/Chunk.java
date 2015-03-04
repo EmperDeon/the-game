@@ -3,8 +3,7 @@ package level.chunk;
 import java.io.Serializable;
 import java.util.ArrayList;
 import mods.basemod.LevBlock;
-import render.RendTexCoord;
-import render.TId;
+import render.*;
 import utils.vec.Vec3;
 
 public class Chunk implements Serializable {
@@ -15,10 +14,10 @@ public class Chunk implements Serializable {
  public ArrayList<RendTexCoord> Texrend;
  public ChunkId id;
 
- public Chunk ( int x , int y ) {
+ public Chunk ( int x, int y ) {
   this.idx = x;
   this.idy = y;
-  this.id = new ChunkId(x , y);
+  this.id = new ChunkId(x, y);
   //gen();
   blocks = new LevBlock[16][16][256];
   //[16][16][128]
@@ -36,28 +35,28 @@ public class Chunk implements Serializable {
 //      tid = blocks[ix][iy][iz].getId().getIid();
 
       if ( blocks[ix][iy - 1][iz] == null ) {// 0
-       Texrend.add(new RendTexCoord(new Vec3<>(ix , iy , iz) , 0 , new TId(mid ,
-                                                                           tid)));
+       Texrend.add(new RendTexCoord(new Vec3<>(ix, iy, iz), 0, new TId(mid,
+                                                                       tid)));
       }
       if ( blocks[ix][iy + 1][iz] == null ) {// 1
-       Texrend.add(new RendTexCoord(new Vec3<>(ix , iy , iz) , 1 , new TId(mid ,
-                                                                           tid)));
+       Texrend.add(new RendTexCoord(new Vec3<>(ix, iy, iz), 1, new TId(mid,
+                                                                       tid)));
       }
       if ( blocks[ix][iy][iz - 1] == null ) {// 2
-       Texrend.add(new RendTexCoord(new Vec3<>(ix , iy , iz) , 2 , new TId(mid ,
-                                                                           tid)));
+       Texrend.add(new RendTexCoord(new Vec3<>(ix, iy, iz), 2, new TId(mid,
+                                                                       tid)));
       }
       if ( blocks[ix][iy][iz + 1] == null ) {// 3
-       Texrend.add(new RendTexCoord(new Vec3<>(ix , iy , iz) , 3 , new TId(mid ,
-                                                                           tid)));
+       Texrend.add(new RendTexCoord(new Vec3<>(ix, iy, iz), 3, new TId(mid,
+                                                                       tid)));
       }
       if ( blocks[ix - 1][iy][iz] == null ) {// 4
-       Texrend.add(new RendTexCoord(new Vec3<>(ix , iy , iz) , 4 , new TId(mid ,
-                                                                           tid)));
+       Texrend.add(new RendTexCoord(new Vec3<>(ix, iy, iz), 4, new TId(mid,
+                                                                       tid)));
       }
       if ( blocks[ix + 1][iy][iz] == null ) {// 5
-       Texrend.add(new RendTexCoord(new Vec3<>(ix , iy , iz) , 5 , new TId(mid ,
-                                                                           tid)));
+       Texrend.add(new RendTexCoord(new Vec3<>(ix, iy, iz), 5, new TId(mid,
+                                                                       tid)));
       }
      }
     }
@@ -73,11 +72,11 @@ public class Chunk implements Serializable {
 //
  }
 
- public void redact ( Vec3<Integer> pos , LevBlock block ) {
+ public void redact ( Vec3<Integer> pos, LevBlock block ) {
   this.blocks[pos.gX()][pos.gY()][pos.gZ()] = block;
  }
 
- public void redactObl ( Vec3<Integer> pos1 , Vec3<Integer> pos2 ,
+ public void redactObl ( Vec3<Integer> pos1, Vec3<Integer> pos2,
                          LevBlock block ) {
   this.blocks[pos1.gX()][pos1.gY()][pos1.gZ()] = block;
  }

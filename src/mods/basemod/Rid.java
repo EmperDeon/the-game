@@ -13,19 +13,19 @@ public class Rid extends Mid implements Comparable {
  }
 
  public Rid ( String[] s ) {
-  super(s[0] , s[1] , s[2]);
+  super(s[0], s[1], s[2]);
   type = Resource.getType(s[3]);
   rid = s[4];
  }
 
- public Rid ( Mid mid , Type type , String id ) {
+ public Rid ( Mid mid, Type type, String id ) {
   super(mid);
   this.rid = id;
   this.type = type;
  }
 
- public Rid ( String m , String i , String s , Type type , String rid ) {
-  super(m , i , s);
+ public Rid ( String m, String i, String s, Type type, String rid ) {
+  super(m, i, s);
   this.rid = rid;
   this.type = type;
  }
@@ -36,7 +36,7 @@ public class Rid extends Mid implements Comparable {
 
  @Override
  public int compareTo ( Object m ) {
-  Rid o = ( Rid ) m;
+  Rid o = (Rid) m;
   Integer x, y, z, s;
   x = this.mid.compareTo(o.mid);
   y = this.iid.compareTo(o.iid);

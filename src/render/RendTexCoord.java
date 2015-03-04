@@ -8,7 +8,7 @@ public class RendTexCoord {
  private Vec3<Integer> coord;
  private TId tid;
 
- public RendTexCoord ( Vec3<Integer> coord , int face , TId tid ) {
+ public RendTexCoord ( Vec3<Integer> coord, int face, TId tid ) {
   this.coord = coord;
   this.face = face;
   this.tid = tid;

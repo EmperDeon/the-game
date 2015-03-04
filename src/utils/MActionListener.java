@@ -1,30 +1,28 @@
 package utils;
 
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MActionListener {
+
  private final TreeMap<String, ActE> cont = new TreeMap<>();
 
  public MActionListener () {
 
  }
 
- public void add ( String name , ActionListener e ) {
+ public void add ( String name, ActionListener e ) {
   if ( !cont.containsKey(name) ) {
-   cont.put(name , new ActE());
+   cont.put(name, new ActE());
   }
   cont.get(name).add(e);
  }
 
- public void addT ( String name , Integer delay , ActionListener e ) {
+ public void addT ( String name, Integer delay, ActionListener e ) {
   if ( !cont.containsKey(name) ) {
-   cont.put(name , new ActE());
+   cont.put(name, new ActE());
   }
-  cont.get(name).add(delay , e);
+  cont.get(name).add(delay, e);
  }
 
  private static class ActE {
@@ -32,7 +30,7 @@ public class MActionListener {
   protected final Timer timer = new Timer();
   protected final ArrayList<ActionListener> arr = new ArrayList<>();
 
-  public synchronized void add ( Integer delay , ActionListener e ) {
+  public synchronized void add ( Integer delay, ActionListener e ) {
    timer.schedule(new TimerTask() {
     @Override
     public void run () {
@@ -40,7 +38,7 @@ public class MActionListener {
       e1.actionPerformed(null);
      });
     }
-   } , 10 , delay);
+   }, 10, delay);
    arr.add(e);
   }
 

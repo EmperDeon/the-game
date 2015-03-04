@@ -21,11 +21,9 @@ public interface BitReader {
  /**
   * Check that the rest of the block has been padded with zeros.
   * <p>
-  * @param width The size in bits of the block to pad. This will typically be 8,
-  *              16, 32, 64, 128, 256, etc.
+  * @param width The size in bits of the block to pad. This will typically be 8, 16, 32, 64, 128, 256, etc.
   * <p>
-  * @return true if the block was zero padded, or false if the the padding
-  *         contained any one bits.
+  * @return true if the block was zero padded, or false if the the padding contained any one bits.
   * <p>
   * @throws IOException
   */

@@ -1,7 +1,6 @@
 package mods.basemod;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class CraftE {
 
@@ -9,7 +8,8 @@ public class CraftE {
  private final String grid;
  private final String elements;
  private final ArrayList<String> param;
- public CraftE ( Integer type , String grid , String elements , String... param) {
+
+ public CraftE ( Integer type, String grid, String elements, String... param ) {
   this.type = type;
   this.grid = grid;
   this.elements = elements;
@@ -29,10 +29,12 @@ public class CraftE {
   return elements;
  }
 
- public String getParams(){
+ public String getParams () {
   StringBuilder s = new StringBuilder();
-  param.stream().forEach(( t ) -> { s.append(t); });
+  param.stream().forEach(( t ) -> {
+   s.append(t);
+  });
   return s.toString();
  }
- 
+
 }

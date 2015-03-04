@@ -1,34 +1,20 @@
 package mods.basemod.containers;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
+import java.io.*;
+import java.util.*;
+import java.util.zip.*;
 import static main.Main.LOG;
-import mods.basemod.IItem;
-import mods.basemod.LevBlock;
-import mods.basemod.TextMod;
-import mods.basemod.interfaces.Action;
-import mods.basemod.interfaces.ActionU;
-import mods.basemod.interfaces.Base;
-import mods.basemod.interfaces.BaseMod;
-import mods.basemod.interfaces.CoreMod;
+import mods.basemod.*;
+import mods.basemod.interfaces.*;
 
 public final class ModsContainer implements Serializable {
 
- transient final TreeMap<Mid , CoreMod> cmods;
- transient final TreeMap<Mid , BaseMod> mods;
- transient final TreeMap<Mid , BaseMod> dism;
- transient final TreeMap<Mid , CoreMod> disc;
- private final TreeMap<Mid , LevBlock> bcont;
- private final TreeMap<Mid , IItem> icont;
+ transient final TreeMap<Mid, CoreMod> cmods;
+ transient final TreeMap<Mid, BaseMod> mods;
+ transient final TreeMap<Mid, BaseMod> dism;
+ transient final TreeMap<Mid, CoreMod> disc;
+ private final TreeMap<Mid, LevBlock> bcont;
+ private final TreeMap<Mid, IItem> icont;
  private final Crafting ccont;
  private final ActMap actmap;
  private final ArrayList<Mid> init = new ArrayList<>();
@@ -47,16 +33,16 @@ public final class ModsContainer implements Serializable {
   disc = new TreeMap<>();
  }
 
- public void add ( Mid id , BaseMod b ) {
-  mods.put(id , b);
+ public void add ( Mid id, BaseMod b ) {
+  mods.put(id, b);
  }
 
- public void addAction ( Mid id , String s , Action act ) {
-  actmap.add(id , s , act);
+ public void addAction ( Mid id, String s, Action act ) {
+  actmap.add(id, s, act);
  }
 
- public void addActionU ( Mid id , String s , ActionU act ) {
-  actmap.add(id , s , act);
+ public void addActionU ( Mid id, String s, ActionU act ) {
+  actmap.add(id, s, act);
  }
 //
 // public Tex getITex ( Mid id ) {
@@ -69,20 +55,20 @@ public final class ModsContainer implements Serializable {
 
  public void put ( Base v ) {
   if ( v instanceof BaseMod ) {
-   mods.put(v.getId() , ( BaseMod ) v);
+   mods.put(v.getId(), (BaseMod) v);
   } else if ( v instanceof CoreMod ) {
-   cmods.put(v.getId() , ( CoreMod ) v);
+   cmods.put(v.getId(), (CoreMod) v);
   } else if ( v instanceof LevBlock ) {
-   bcont.put(v.getId() , ( LevBlock ) v);
+   bcont.put(v.getId(), (LevBlock) v);
   } else if ( v instanceof IItem ) {
-   icont.put(v.getId() , ( IItem ) v);
+   icont.put(v.getId(), (IItem) v);
   } else {
    LOG.addE("v is not a Base");
   }
  }
 
  public void disableMod ( String mid ) {
-  dism.put(new Mid(mid) , mods.remove(new Mid(mid)));
+  dism.put(new Mid(mid), mods.remove(new Mid(mid)));
   LOG.addI("Disabled mod " + mid);
  }
 
@@ -92,7 +78,7 @@ public final class ModsContainer implements Serializable {
  }
 
  public void disableCMod ( String mid ) {
-  disc.put(new Mid(mid) , cmods.remove(new Mid(mid)));
+  disc.put(new Mid(mid), cmods.remove(new Mid(mid)));
   LOG.addI("Disabled coremod " + mid);
  }
 
@@ -101,16 +87,16 @@ public final class ModsContainer implements Serializable {
   LOG.addI("Deleted coremod " + mid);
  }
 
- public void putCraft ( Integer type , String grid , String elements ) {
-  ccont.add(type , grid , elements);
+ public void putCraft ( Integer type, String grid, String elements ) {
+  ccont.add(type, grid, elements);
  }
 
  // -----------------------
  public void test () {
   mods.keySet().stream().
-          forEach(( m ) -> {
-           //      Main.mainform.mmod.add(m.getMid());
-          });
+     forEach(( m ) -> {
+      //      Main.mainform.mmod.add(m.getMid());
+     });
  }
 
  public void init () {
@@ -188,8 +174,8 @@ public final class ModsContainer implements Serializable {
  public void fload () {
   loadDir(false);
   try ( ObjectInputStream o = new ObjectInputStream(new GZIPInputStream(
-          new FileInputStream(file))) ) {
-   ModsContainer t = ( ModsContainer ) o.readObject();
+     new FileInputStream(file))) ) {
+   ModsContainer t = (ModsContainer) o.readObject();
    this.bcont.putAll(t.bcont);
    this.ccont.addAll(t.ccont);
    this.icont.putAll(t.icont);
@@ -204,7 +190,7 @@ public final class ModsContainer implements Serializable {
 
  public void fsave () {
   try ( ObjectOutputStream o = new ObjectOutputStream(new GZIPOutputStream(
-          new FileOutputStream(file))) ) {
+     new FileOutputStream(file))) ) {
    o.writeObject(this);
    o.flush();
   } catch ( Exception e ) {
@@ -234,11 +220,11 @@ public final class ModsContainer implements Serializable {
   return ccont;
  }
 
- public TreeMap<Mid , CoreMod> getCmods () {
+ public TreeMap<Mid, CoreMod> getCmods () {
   return cmods;
  }
 
- public TreeMap<Mid , BaseMod> getMods () {
+ public TreeMap<Mid, BaseMod> getMods () {
   return mods;
  }
 
@@ -254,11 +240,11 @@ public final class ModsContainer implements Serializable {
   return actmap;
  }
 
- public TreeMap<Mid , LevBlock> getBcont () {
+ public TreeMap<Mid, LevBlock> getBcont () {
   return bcont;
  }
 
- public TreeMap<Mid , IItem> getIcont () {
+ public TreeMap<Mid, IItem> getIcont () {
   return icont;
  }
 

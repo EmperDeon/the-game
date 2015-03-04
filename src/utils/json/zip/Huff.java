@@ -5,25 +5,17 @@ import utils.json.JSONException;
 /*
  * Copyright (c) 2013 JSON.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to
+ * do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
  * JSONzip is a compression scheme for JSON text.
@@ -32,20 +24,15 @@ import utils.json.JSONException;
  * @version 2014-05-20
  */
 /**
- * A Huffman encoder/decoder. It operates over a domain of integers, which may
- * map to characters or other symbols. Symbols that are used frequently are
- * given shorter codes than symbols that are used infrequently. This usually
- * produces shorter messages.
+ * A Huffman encoder/decoder. It operates over a domain of integers, which may map to characters or other symbols. Symbols that are used frequently are given shorter codes than symbols that are used
+ * infrequently. This usually produces shorter messages.
  * <p>
- * Initially, all of the symbols are given the same weight. The weight of a
- * symbol is incremented by the tick method. The generate method is used to
- * generate the encoding table. The table must be generated before encoding or
- * decoding. You may regenerate the table with the latest weights at any time.
+ * Initially, all of the symbols are given the same weight. The weight of a symbol is incremented by the tick method. The generate method is used to generate the encoding table. The table must be
+ * generated before encoding or decoding. You may regenerate the table with the latest weights at any time.
  * <p>
- * After a million ticks, it is assumed that the distribution is well understood
- * and that no more regeneration will be required.
+ * After a million ticks, it is assumed that the distribution is well understood and that no more regeneration will be required.
  */
-public class Huff implements None , PostMortem {
+public class Huff implements None, PostMortem {
 
  /**
   * The number of symbols known to the encoder.
@@ -107,12 +94,12 @@ public class Huff implements None , PostMortem {
 
   public boolean postMortem ( PostMortem pm ) {
    boolean result = true;
-   Symbol that = ( Symbol ) pm;
+   Symbol that = (Symbol) pm;
 
    if ( this.integer != that.integer || this.weight != that.weight ) {
     return false;
    }
-   if ( ( this.back == null ) != ( that.back == null ) ) {
+   if ( (this.back == null) != (that.back == null) ) {
     return false;
    }
    Symbol zero = this.zero;
@@ -159,8 +146,7 @@ public class Huff implements None , PostMortem {
  }
 
  /**
-  * Generate the encoding/decoding table. The table determines the bit sequences
-  * used by the read and write methods.
+  * Generate the encoding/decoding table. The table determines the bit sequences used by the read and write methods.
   */
  public void generate () {
   if ( !this.upToDate ) {
@@ -295,16 +281,15 @@ public class Huff implements None , PostMortem {
   for ( int integer = 0 ; integer < this.domain ; integer += 1 ) {
    if ( !postMortem(integer) ) {
     JSONzip.log("\nBad huff ");
-    JSONzip.logchar(integer , integer);
+    JSONzip.logchar(integer, integer);
     return false;
    }
   }
-  return this.table.postMortem(( ( Huff ) pm ).table);
+  return this.table.postMortem(((Huff) pm).table);
  }
 
  /**
-  * Read bits until a symbol can be identified. The weight of the read symbol
-  * will be incremented.
+  * Read bits until a symbol can be identified. The weight of the read symbol will be incremented.
   * <p>
   * @param bitreader The source of bits.
   * <p>
@@ -322,7 +307,7 @@ public class Huff implements None , PostMortem {
    }
    tick(symbol.integer);
    if ( JSONzip.probe ) {
-    JSONzip.logchar(symbol.integer , this.width);
+    JSONzip.logchar(symbol.integer, this.width);
    }
    return symbol.integer;
   } catch ( Throwable e ) {
@@ -344,21 +329,20 @@ public class Huff implements None , PostMortem {
  }
 
  /**
-  * Recur from a symbol back, emitting bits. We recur before emitting to make
-  * the bits come out in the right order.
+  * Recur from a symbol back, emitting bits. We recur before emitting to make the bits come out in the right order.
   * <p>
-  * @param symbol    The symbol to write.
+  * @param symbol The symbol to write.
   * @param bitwriter The bitwriter to write it to.
   * <p>
   * @throws JSONException
   */
- private void write ( Symbol symbol , BitWriter bitwriter )
-         throws JSONException {
+ private void write ( Symbol symbol, BitWriter bitwriter )
+    throws JSONException {
   try {
    Symbol back = symbol.back;
    if ( back != null ) {
     this.width += 1;
-    write(back , bitwriter);
+    write(back, bitwriter);
     if ( back.zero == symbol ) {
      bitwriter.zero();
     } else {
@@ -371,20 +355,19 @@ public class Huff implements None , PostMortem {
  }
 
  /**
-  * Write the bits corresponding to a symbol. The weight of the symbol will be
-  * incremented.
+  * Write the bits corresponding to a symbol. The weight of the symbol will be incremented.
   * <p>
-  * @param value     The number of the symbol to write
+  * @param value The number of the symbol to write
   * @param bitwriter The destination of the bits.
   * <p>
   * @throws JSONException
   */
- public void write ( int value , BitWriter bitwriter ) throws JSONException {
+ public void write ( int value, BitWriter bitwriter ) throws JSONException {
   this.width = 0;
-  write(this.symbols[value] , bitwriter);
+  write(this.symbols[value], bitwriter);
   tick(value);
   if ( JSONzip.probe ) {
-   JSONzip.logchar(value , this.width);
+   JSONzip.logchar(value, this.width);
   }
  }
 }

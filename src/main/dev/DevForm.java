@@ -1,12 +1,6 @@
 package main.dev;
 
-import com.trolltech.qt.gui.QHBoxLayout;
-import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QListView;
-import com.trolltech.qt.gui.QMainWindow;
-import com.trolltech.qt.gui.QPushButton;
-import com.trolltech.qt.gui.QVBoxLayout;
-import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.*;
 import utils.qt.QTreeModel;
 
 public class DevForm extends QMainWindow {
@@ -17,64 +11,62 @@ public class DevForm extends QMainWindow {
  private final QTreeModel mmodel = new QTreeModel();
  private final QTreeModel cmodel = new QTreeModel();
  private final QVBoxLayout panel = new QVBoxLayout();
- 
+
  private final QPushButton boptions = new QPushButton(("Options"));
  private final QPushButton bmodsed = new QPushButton(("Mods Editor"));
  private final QPushButton bleveled = new QPushButton(("Level Editor"));
  private final QPushButton bmodeled = new QPushButton(("Model Editor"));
- private final QPushButton brinit= new QPushButton(("Reinitialize"));
- 
+ private final QPushButton brinit = new QPushButton(("Reinitialize"));
+
  public DevForm () {
   super();
   QWidget mainW = new QWidget();
-  setMinimumSize(400 , 180);
+  setMinimumSize(400, 180);
   setWindowIcon(new QIcon("classpath:com/trolltech/images/qt-logo.png"));
-  setWindowTitle(tr("Developers utils"));
+  setWindowTitle(tr("Developer utils"));
   resize(400, 180);
 
   mmods.setModel(mmodel);
   cmods.setModel(cmodel);
-  
+
   panel.addWidget(boptions);
   panel.addWidget(bmodsed);
   panel.addWidget(bleveled);
   panel.addWidget(bmodeled);
   panel.addWidget(brinit);
-  
-  boptions.clicked.connect(this,"options()");
-  bmodsed.clicked.connect(this,"mods()");
-  bleveled.clicked.connect(this,"level()");
-  bmodeled.clicked.connect(this,"models()");
-  brinit.clicked.connect(this,"reinit()");
-  
-  mainLayout.addWidget(mmods , 30);
-  mainLayout.addWidget(cmods , 30);
+
+  boptions.clicked.connect(this, "options()");
+  bmodsed.clicked.connect(this, "mods()");
+  bleveled.clicked.connect(this, "level()");
+  bmodeled.clicked.connect(this, "models()");
+  brinit.clicked.connect(this, "reinit()");
+
+  mainLayout.addWidget(mmods, 30);
+  mainLayout.addWidget(cmods, 30);
   mainLayout.addLayout(panel);
   mainW.setLayout(mainLayout);
-  
-  
 
   setCentralWidget(mainW);
  }
- 
- public void options(){
+
+ public void options () {
   main.Main.optionseditor.show();
  }
- 
- public void mods(){
+
+ public void mods () {
   main.Main.modeditor.show();
  }
- 
- public void models(){
+
+ public void models () {
   main.Main.modeditor.show();
  }
- 
- public void level(){
+
+ public void level () {
   main.Main.leveleditor.show();
  }
- 
- public void reinit(){
-  
+
+ public void reinit () {
+  main.Main.main.reinit();
  }
 }
 //  screenshotLabel = new QLabel();

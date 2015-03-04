@@ -20,7 +20,7 @@ public class Vec6<T> implements Serializable {
   this.z2 = null;
  }
 
- public Vec6 ( T x , T y , T z , T x2 , T y2 , T z2 ) {
+ public Vec6 ( T x, T y, T z, T x2, T y2, T z2 ) {
   this.x1 = x;
   this.y1 = y;
   this.z1 = z;

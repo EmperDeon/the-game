@@ -2,30 +2,21 @@ package utils.json;
 /*
  * Copyright (c) 2002 JSON.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to
+ * do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * The XMLTokener extends the JSONTokener to provide additional methods for the
- * parsing of XML texts.
+ * The XMLTokener extends the JSONTokener to provide additional methods for the parsing of XML texts.
  * <p>
  * @author JSON.org
  * @version 2014-05-03
@@ -33,18 +24,17 @@ package utils.json;
 public class XMLTokener extends JSONTokener {
 
  /**
-  * The table of entity values. It initially contains Character values for amp,
-  * apos, gt, lt, quot.
+  * The table of entity values. It initially contains Character values for amp, apos, gt, lt, quot.
   */
- public static final java.util.HashMap<String , Character> entity;
+ public static final java.util.HashMap<String, Character> entity;
 
  static {
-  entity = new java.util.HashMap<String , Character>(8);
-  entity.put("amp" , XML.AMP);
-  entity.put("apos" , XML.APOS);
-  entity.put("gt" , XML.GT);
-  entity.put("lt" , XML.LT);
-  entity.put("quot" , XML.QUOT);
+  entity = new java.util.HashMap<String, Character>(8);
+  entity.put("amp", XML.AMP);
+  entity.put("apos", XML.APOS);
+  entity.put("gt", XML.GT);
+  entity.put("lt", XML.LT);
+  entity.put("quot", XML.QUOT);
  }
 
  /**
@@ -75,7 +65,7 @@ public class XMLTokener extends JSONTokener {
    sb.append(c);
    i = sb.length() - 3;
    if ( i >= 0 && sb.charAt(i) == ']'
-        && sb.charAt(i + 1) == ']' && sb.charAt(i + 2) == '>' ) {
+      && sb.charAt(i + 1) == ']' && sb.charAt(i + 2) == '>' ) {
     sb.setLength(i);
     return sb.toString();
    }
@@ -83,11 +73,18 @@ public class XMLTokener extends JSONTokener {
  }
 
  /**
-  * Get the next XML outer token, trimming whitespace. There are two kinds of
-  * tokens: the '<' character which begins a markup tag, and the content text
-  * between markup tags. <p>
+  * Get the next XML outer token, trimming whitespace. There are two kinds of tokens: the '<' character which begins a markup tag, and the content text between markup tags. <p>
   * @return A string, or a '<' Character, or null if there is no more source tex
+  * <p>
+  * <p>
   * <
+  * <p>
+  * <p>
+  * <p>
+  * <p>
+  *
+  *
+  *
   *
   *
   *
@@ -132,8 +129,7 @@ public class XMLTokener extends JSONTokener {
  }
 
  /**
-  * Return the next entity. These entities are translated to Characters:
-  * <code>&amp;  &apos;  &gt;  &lt;  &quot;</code>.
+  * Return the next entity. These entities are translated to Characters: <code>&amp;  &apos;  &gt;  &lt;  &quot;</code>.
   * <p>
   * @param ampersand An ampersand character.
   * <p>
@@ -162,12 +158,9 @@ public class XMLTokener extends JSONTokener {
   * Returns the next XML meta token. This is used for skipping over <!...>
   * and <?...?> structures.
   * <p>
-  * @return Syntax characters (<code>< > / = ! ?</code>) are returned as
-  *         Character, and strings and names are returned as Boolean. We don't care what
-  *         the values actually are.
+  * @return Syntax characters (<code>< > / = ! ?</code>) are returned as Character, and strings and names are returned as Boolean. We don't care what the values actually are.
   * <p>
-  * @throws JSONException If a string is not properly closed or if the XML is
-  *                       badly structured.
+  * @throws JSONException If a string is not properly closed or if the XML is badly structured.
   */
  public Object nextMeta () throws JSONException {
   char c;
@@ -226,9 +219,8 @@ public class XMLTokener extends JSONTokener {
  }
 
  /**
-  * Get the next XML Token. These tokens are found inside of angle brackets. It
-  * may be one of these characters: <code>/ > = ! ?</code> or it may be a string
-  * wrapped in single quotes or double quotes, or it may be a name.
+  * Get the next XML Token. These tokens are found inside of angle brackets. It may be one of these characters: <code>/ > = ! ?</code> or it may be a string wrapped in single quotes or double quotes,
+  * or it may be a name.
   * <p>
   * @return a String or a Character.
   * <p>
@@ -308,8 +300,7 @@ public class XMLTokener extends JSONTokener {
  }
 
  /**
-  * Skip characters until past the requested string. If it is not found, we are
-  * left at the end of the source with a result of false.
+  * Skip characters until past the requested string. If it is not found, we are left at the end of the source with a result of false.
   * <p>
   * @param to A string to skip past.
   * <p>
@@ -325,8 +316,7 @@ public class XMLTokener extends JSONTokener {
   char[] circle = new char[length];
 
   /*
-   * First fill the circle buffer with as many characters as are in the to
-   * string. If we reach an early end, bail.
+   * First fill the circle buffer with as many characters as are in the to string. If we reach an early end, bail.
    */
   for ( i = 0 ; i < length ; i += 1 ) {
    c = next();
@@ -372,8 +362,7 @@ public class XMLTokener extends JSONTokener {
     return false;
    }
    /*
-    * Shove the character in the circle buffer and advance the circle offset.
-    * The offset is mod n.
+    * Shove the character in the circle buffer and advance the circle offset. The offset is mod n.
     */
    circle[offset] = c;
    offset += 1;

@@ -3,19 +3,8 @@ package render;
 import javax.media.opengl.GL2;
 import org.fenggui.binding.render.Graphics;
 import org.fenggui.event.FocusEvent;
-import org.fenggui.event.key.KeyAdapter;
-import org.fenggui.event.key.KeyPressedEvent;
-import org.fenggui.event.key.KeyReleasedEvent;
-import org.fenggui.event.key.KeyTypedEvent;
-import org.fenggui.event.mouse.MouseAdapter;
-import org.fenggui.event.mouse.MouseClickedEvent;
-import org.fenggui.event.mouse.MouseDoubleClickedEvent;
-import org.fenggui.event.mouse.MouseDraggedEvent;
-import org.fenggui.event.mouse.MouseEnteredEvent;
-import org.fenggui.event.mouse.MouseExitedEvent;
-import org.fenggui.event.mouse.MousePressedEvent;
-import org.fenggui.event.mouse.MouseReleasedEvent;
-import org.fenggui.event.mouse.MouseWheelEvent;
+import org.fenggui.event.key.*;
+import org.fenggui.event.mouse.*;
 import render.gui.Gui;
 import utils.exceptions.TermEx;
 import utils.vec.Vec2;
@@ -71,7 +60,7 @@ public class Render implements Runnable {
   return hook;
  }
 
- public void setMcoord ( int x , int y ) {
+ public void setMcoord ( int x, int y ) {
   mcoord.sX(x);
   mcoord.sY(y);
  }
@@ -93,9 +82,9 @@ public class Render implements Runnable {
    mhook.mousePressed(e);
   }
 
-  public void mouseMoved ( int displayX , int displayY ) {
+  public void mouseMoved ( int displayX, int displayY ) {
    mhook.mouseMoved(null);
-   setMcoord(displayY , displayY);
+   setMcoord(displayY, displayY);
   }
 
   public void mouseDragged ( MouseDraggedEvent e ) {

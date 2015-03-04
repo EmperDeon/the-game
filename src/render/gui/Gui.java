@@ -1,14 +1,9 @@
 package render.gui;
 
 import com.jogamp.opengl.util.Animator;
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLEventListener;
+import java.awt.*;
+import java.awt.event.*;
+import javax.media.opengl.*;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
@@ -34,8 +29,8 @@ public class Gui extends JFrame {
   eventListener = new Listener();
   canvas.addGLEventListener(eventListener);
 
-  getContentPane().add(canvas , java.awt.BorderLayout.CENTER);
-  setSize(800 , 400);
+  getContentPane().add(canvas, java.awt.BorderLayout.CENTER);
+  setSize(800, 400);
 
   Animator animator = new Animator(canvas);
   animator.setRunAsFastAsPossible(true);
@@ -62,13 +57,13 @@ public class Gui extends JFrame {
 //   display.addWidget(0,new Loading());
 
   // 1 - Main menu
-  display.setBack(0 , "res/bg.png");
+  display.setBack(0, "res/bg.png");
 
-  display.addWidget(0 , new StdButton("                   Text 2" , e -> {
+  display.addWidget(0, new StdButton("                   Text 2", e -> {
    System.out.println("Test 2");
   }));
 
-  display.addWidget(0 , new StdButton("                   Text 1" , e -> {
+  display.addWidget(0, new StdButton("                   Text 1", e -> {
    System.out.println("Test 1");
   }));
 
@@ -106,29 +101,29 @@ public class Gui extends JFrame {
 
    display.display();
 
-   screenshotActor.renderToDos(display.getBinding().getOpenGL() , display.
-                               getWidth() , display.getHeight());
+   screenshotActor.renderToDos(display.getBinding().getOpenGL(), display.
+                               getWidth(), display.getHeight());
   }
 
   @Override
-  public void reshape ( GLAutoDrawable drawable , int x , int y , int width ,
+  public void reshape ( GLAutoDrawable drawable, int x, int y, int width,
                         int height ) {
-   gl.glViewport(0 , 0 , width , height);
+   gl.glViewport(0, 0, width, height);
    gl.glMatrixMode(GL2.GL_PROJECTION);
    gl.glLoadIdentity();
-   glu.gluPerspective(45 , ( double ) width / ( double ) height , 4 , 1000);
+   glu.gluPerspective(45, (double) width / (double) height, 4, 1000);
    gl.glMatrixMode(GL2.GL_MODELVIEW);
    gl.glLoadIdentity();
 
   }
 
-  public void displayChanged ( GLAutoDrawable arg0 , boolean arg1 , boolean arg2 ) {
+  public void displayChanged ( GLAutoDrawable arg0, boolean arg1, boolean arg2 ) {
   }
 
   @Override
   public void init ( GLAutoDrawable drawable ) {
    gl = drawable.getGL().getGL2();
-   gl.glClearColor(146f / 255f , 164f / 255f , 1 , 0.0f);
+   gl.glClearColor(146f / 255f, 164f / 255f, 1, 0.0f);
    gl.glEnable(GL2.GL_BLEND);
 
    gl.glDisable(GL2.GL_TEXTURE_2D);
@@ -136,19 +131,19 @@ public class Gui extends JFrame {
    gl.glDepthFunc(GL2.GL_LEQUAL);
    gl.glShadeModel(GL2.GL_SMOOTH);
    gl.glEnable(GL2.GL_LIGHTING);
-   gl.glLightfv(GL2.GL_LIGHT1 , GL2.GL_AMBIENT , new float[]{146f / 255f ,
-                                                             164f / 255f , 1f ,
-                                                             1.0f} , 0);
-   gl.glLightfv(GL2.GL_LIGHT1 , GL2.GL_DIFFUSE ,
-                new float[]{1f , 1f , 1f , 1.0f} , 0);
+   gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, new float[]{ 146f / 255f,
+                                                            164f / 255f, 1f,
+                                                            1.0f }, 0);
+   gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE,
+                new float[]{ 1f, 1f, 1f, 1.0f }, 0);
    gl.
-           glLightfv(GL2.GL_LIGHT1 , GL2.GL_POSITION , new float[]{-100 , -100 ,
-                                                                   400} , 0);
+      glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, new float[]{ -100, -100,
+                                                             400 }, 0);
    gl.glEnable(GL2.GL_LIGHT1);
 
    display = new Display(canvas);
 
-   eventbinding = new EventBinding(canvas , display);
+   eventbinding = new EventBinding(canvas, display);
 
    buildGUI();
 

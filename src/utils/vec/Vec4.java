@@ -17,7 +17,7 @@ public class Vec4<T> implements Serializable {
   this.y2 = null;
  }
 
- public Vec4 ( T x1 , T y1 , T x2 , T y2 ) {
+ public Vec4 ( T x1, T y1, T x2, T y2 ) {
   this.x1 = x1;
   this.x2 = x2;
   this.y1 = y1;
@@ -69,17 +69,17 @@ public class Vec4<T> implements Serializable {
   if ( getClass() != obj.getClass() ) {
    return false;
   }
-  final Vec4<?> other = ( Vec4<?> ) obj;
-  if ( !Objects.equals(this.x1 , other.x1) ) {
+  final Vec4<?> other = (Vec4<?>) obj;
+  if ( !Objects.equals(this.x1, other.x1) ) {
    return false;
   }
-  if ( !Objects.equals(this.y1 , other.y1) ) {
+  if ( !Objects.equals(this.y1, other.y1) ) {
    return false;
   }
-  if ( !Objects.equals(this.x2 , other.x2) ) {
+  if ( !Objects.equals(this.x2, other.x2) ) {
    return false;
   }
-  if ( !Objects.equals(this.y2 , other.y2) ) {
+  if ( !Objects.equals(this.y2, other.y2) ) {
    return false;
   }
   return true;

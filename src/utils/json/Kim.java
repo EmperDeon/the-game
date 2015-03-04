@@ -4,55 +4,35 @@ package utils.json;
 /*
  * Copyright (c) 2013 JSON.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to
+ * do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * Kim makes immutable eight bit Unicode strings. If the MSB of a byte is set,
- * then the next byte is a continuation byte. The last byte of a character never
- * has the MSB reset. Every byte that is not the last byte has the MSB set. Kim
- * stands for "Keep it minimal". A Unicode character is never longer than 3
- * bytes. Every byte contributes 7 bits to the character. ASCII is unmodified.
+ * Kim makes immutable eight bit Unicode strings. If the MSB of a byte is set, then the next byte is a continuation byte. The last byte of a character never has the MSB reset. Every byte that is not
+ * the last byte has the MSB set. Kim stands for "Keep it minimal". A Unicode character is never longer than 3 bytes. Every byte contributes 7 bits to the character. ASCII is unmodified.
  * <p>
- * Kim UTF-8 one byte U+007F U+007F two bytes U+3FFF U+07FF three bytes U+10FFF
- * U+FFFF four bytes U+10FFFF
+ * Kim UTF-8 one byte U+007F U+007F two bytes U+3FFF U+07FF three bytes U+10FFF U+FFFF four bytes U+10FFFF
  * <p>
- * Characters in the ranges U+0800..U+3FFF and U+10000..U+10FFFF will be one
- * byte smaller when encoded in Kim compared to UTF-8.
+ * Characters in the ranges U+0800..U+3FFF and U+10000..U+10FFFF will be one byte smaller when encoded in Kim compared to UTF-8.
  * <p>
- * Kim is beneficial when using scripts such as Old South Arabian, Aramaic,
- * Avestan, Balinese, Batak, Bopomofo, Buginese, Buhid, Carian, Cherokee,
- * Coptic, Cyrillic, Deseret, Egyptian Hieroglyphs, Ethiopic, Georgian,
- * Glagolitic, Gothic, Hangul Jamo, Hanunoo, Hiragana, Kanbun, Kaithi, Kannada,
- * Katakana, Kharoshthi, Khmer, Lao, Lepcha, Limbu, Lycian, Lydian, Malayalam,
- * Mandaic, Meroitic, Miao, Mongolian, Myanmar, New Tai Lue, Ol Chiki, Old
- * Turkic, Oriya, Osmanya, Pahlavi, Parthian, Phags-Pa, Phoenician, Samaritan,
- * Sharada, Sinhala, Sora Sompeng, Tagalog, Tagbanwa, Takri, Tai Le, Tai Tham,
- * Tamil, Telugu, Thai, Tibetan, Tifinagh, UCAS.
+ * Kim is beneficial when using scripts such as Old South Arabian, Aramaic, Avestan, Balinese, Batak, Bopomofo, Buginese, Buhid, Carian, Cherokee, Coptic, Cyrillic, Deseret, Egyptian Hieroglyphs,
+ * Ethiopic, Georgian, Glagolitic, Gothic, Hangul Jamo, Hanunoo, Hiragana, Kanbun, Kaithi, Kannada, Katakana, Kharoshthi, Khmer, Lao, Lepcha, Limbu, Lycian, Lydian, Malayalam, Mandaic, Meroitic, Miao,
+ * Mongolian, Myanmar, New Tai Lue, Ol Chiki, Old Turkic, Oriya, Osmanya, Pahlavi, Parthian, Phags-Pa, Phoenician, Samaritan, Sharada, Sinhala, Sora Sompeng, Tagalog, Tagbanwa, Takri, Tai Le, Tai
+ * Tham, Tamil, Telugu, Thai, Tibetan, Tifinagh, UCAS.
  * <p>
- * A kim object can be constructed from an ordinary UTF-16 string, or from a
- * byte array. A kim object can produce a UTF-16 string.
+ * A kim object can be constructed from an ordinary UTF-16 string, or from a byte array. A kim object can produce a UTF-16 string.
  * <p>
- * As with UTF-8, it is possible to detect character boundaries within a byte
- * sequence. UTF-8 is one of the world's great inventions. While Kim is more
- * efficient, it is not clear that it is worth the expense of transition.
+ * As with UTF-8, it is possible to detect character boundaries within a byte sequence. UTF-8 is one of the world's great inventions. While Kim is more efficient, it is not clear that it is worth the
+ * expense of transition.
  * <p>
  * @version 2013-04-18
  */
@@ -69,8 +49,7 @@ public class Kim {
  private int hashcode = 0;
 
  /**
-  * The number of bytes in the kim. The number of bytes can be as much as three
-  * times the number of characters.
+  * The number of bytes in the kim. The number of bytes can be as much as three times the number of characters.
   */
  public int length = 0;
 
@@ -83,10 +62,10 @@ public class Kim {
   * Make a kim from a portion of a byte array.
   * <p>
   * @param bytes A byte array.
-  * @param from  The index of the first byte.
-  * @param thru  The index of the last byte plus one.
+  * @param from The index of the first byte.
+  * @param thru The index of the last byte plus one.
   */
- public Kim ( byte[] bytes , int from , int thru ) {
+ public Kim ( byte[] bytes, int from, int thru ) {
 
 // As the bytes are copied into the new kim, a hashcode is computed using a
 // modified Fletcher code.
@@ -97,10 +76,10 @@ public class Kim {
   if ( this.length > 0 ) {
    this.bytes = new byte[this.length];
    for ( int at = 0 ; at < this.length ; at += 1 ) {
-    value = ( int ) bytes[at + from] & 0xFF;
+    value = (int) bytes[at + from] & 0xFF;
     sum += value;
     this.hashcode += sum;
-    this.bytes[at] = ( byte ) value;
+    this.bytes[at] = (byte) value;
    }
    this.hashcode += sum << 16;
   }
@@ -109,23 +88,22 @@ public class Kim {
  /**
   * Make a kim from a byte array.
   * <p>
-  * @param bytes  The byte array.
+  * @param bytes The byte array.
   * @param length The number of bytes.
   */
- public Kim ( byte[] bytes , int length ) {
-  this(bytes , 0 , length);
+ public Kim ( byte[] bytes, int length ) {
+  this(bytes, 0, length);
  }
 
  /**
-  * Make a new kim from a substring of an existing kim. The coordinates are in
-  * byte units, not character units.
+  * Make a new kim from a substring of an existing kim. The coordinates are in byte units, not character units.
   * <p>
-  * @param kim  The source of bytes.
+  * @param kim The source of bytes.
   * @param from The point at which to take bytes.
   * @param thru The point at which to stop taking bytes.
   */
- public Kim ( Kim kim , int from , int thru ) {
-  this(kim.bytes , from , thru);
+ public Kim ( Kim kim, int from, int thru ) {
+  this(kim.bytes, from, thru);
  }
 
  /**
@@ -170,39 +148,39 @@ public class Kim {
    for ( int i = 0 ; i < stringLength ; i += 1 ) {
     int character = string.charAt(i);
     if ( character <= 0x7F ) {
-     bytes[at] = ( byte ) character;
+     bytes[at] = (byte) character;
      sum += character;
      this.hashcode += sum;
      at += 1;
     } else if ( character <= 0x3FFF ) {
-     b = 0x80 | ( character >>> 7 );
-     bytes[at] = ( byte ) b;
+     b = 0x80 | (character >>> 7);
+     bytes[at] = (byte) b;
      sum += b;
      this.hashcode += sum;
      at += 1;
      b = character & 0x7F;
-     bytes[at] = ( byte ) b;
+     bytes[at] = (byte) b;
      sum += b;
      this.hashcode += sum;
      at += 1;
     } else {
      if ( character >= 0xD800 && character <= 0xDBFF ) {
       i += 1;
-      character = ( ( ( character & 0x3FF ) << 10 ) | ( string
-              .charAt(i) & 0x3FF ) ) + 65536;
+      character = (((character & 0x3FF) << 10) | (string
+         .charAt(i) & 0x3FF)) + 65536;
      }
-     b = 0x80 | ( character >>> 14 );
-     bytes[at] = ( byte ) b;
+     b = 0x80 | (character >>> 14);
+     bytes[at] = (byte) b;
      sum += b;
      this.hashcode += sum;
      at += 1;
-     b = 0x80 | ( ( character >>> 7 ) & 0xFF );
-     bytes[at] = ( byte ) b;
+     b = 0x80 | ((character >>> 7) & 0xFF);
+     bytes[at] = (byte) b;
      sum += b;
      this.hashcode += sum;
      at += 1;
      b = character & 0x7F;
-     bytes[at] = ( byte ) b;
+     bytes[at] = (byte) b;
      sum += b;
      this.hashcode += sum;
      at += 1;
@@ -213,9 +191,8 @@ public class Kim {
  }
 
  /**
-  * Returns the character at the specified index. The index refers to byte
-  * values and ranges from 0 to length - 1. The index of the next character is
-  * at index + Kim.characterSize(kim.characterAt(index)).
+  * Returns the character at the specified index. The index refers to byte values and ranges from 0 to length - 1. The index of the next character is at index +
+  * Kim.characterSize(kim.characterAt(index)).
   * <p>
   * @param at the index of the char value. The first character is at 0.
   * <p>
@@ -224,21 +201,21 @@ public class Kim {
   */
  public int characterAt ( int at ) throws JSONException {
   int c = get(at);
-  if ( ( c & 0x80 ) == 0 ) {
+  if ( (c & 0x80) == 0 ) {
    return c;
   }
   int character;
   int c1 = get(at + 1);
-  if ( ( c1 & 0x80 ) == 0 ) {
-   character = ( ( c & 0x7F ) << 7 ) | c1;
+  if ( (c1 & 0x80) == 0 ) {
+   character = ((c & 0x7F) << 7) | c1;
    if ( character > 0x7F ) {
     return character;
    }
   } else {
    int c2 = get(at + 2);
-   character = ( ( c & 0x7F ) << 14 ) | ( ( c1 & 0x7F ) << 7 ) | c2;
-   if ( ( c2 & 0x80 ) == 0 && character > 0x3FFF && character <= 0x10FFFF
-        && ( character < 0xD800 || character > 0xDFFF ) ) {
+   character = ((c & 0x7F) << 14) | ((c1 & 0x7F) << 7) | c2;
+   if ( (c2 & 0x80) == 0 && character > 0x3FFF && character <= 0x10FFFF
+      && (character < 0xD800 || character > 0xDFFF) ) {
     return character;
    }
   }
@@ -265,36 +242,34 @@ public class Kim {
   * Copy the contents of this kim to a byte array.
   * <p>
   * @param bytes A byte array of sufficient size.
-  * @param at    The position within the byte array to take the byes.
+  * @param at The position within the byte array to take the byes.
   * <p>
   * @return The position immediately after the copy.
   */
- public int copy ( byte[] bytes , int at ) {
-  System.arraycopy(this.bytes , 0 , bytes , at , this.length);
+ public int copy ( byte[] bytes, int at ) {
+  System.arraycopy(this.bytes, 0, bytes, at, this.length);
   return at + this.length;
  }
 
  /**
-  * Two kim objects containing exactly the same bytes in the same order are
-  * equal to each other.
+  * Two kim objects containing exactly the same bytes in the same order are equal to each other.
   * <p>
   * @param obj the other kim with which to compare.
   * <p>
-  * @returns true if this and obj are both kim objects containing identical byte
-  * sequences.
+  * @returns true if this and obj are both kim objects containing identical byte sequences.
   */
  public boolean equals ( Object obj ) {
-  if ( !( obj instanceof Kim ) ) {
+  if ( !(obj instanceof Kim) ) {
    return false;
   }
-  Kim that = ( Kim ) obj;
+  Kim that = (Kim) obj;
   if ( this == that ) {
    return true;
   }
   if ( this.hashcode != that.hashcode ) {
    return false;
   }
-  return java.util.Arrays.equals(this.bytes , that.bytes);
+  return java.util.Arrays.equals(this.bytes, that.bytes);
  }
 
  /**
@@ -310,7 +285,7 @@ public class Kim {
   if ( at < 0 || at > this.length ) {
    throw new JSONException("Bad character at " + at);
   }
-  return ( ( int ) this.bytes[at] ) & 0xFF;
+  return ((int) this.bytes[at]) & 0xFF;
  }
 
  /**
@@ -321,9 +296,7 @@ public class Kim {
  }
 
  /**
-  * Produce a UTF-16 String from this kim. The number of codepoints in the
-  * string will not be greater than the number of bytes in the kim, although it
-  * could be less.
+  * Produce a UTF-16 String from this kim. The number of codepoints in the string will not be greater than the number of bytes in the kim, although it could be less.
   * <p>
   * @return The string. A kim memoizes its string representation.
   * <p>
@@ -337,16 +310,16 @@ public class Kim {
    for ( int at = 0 ; at < this.length ; at += characterSize(c) ) {
     c = this.characterAt(at);
     if ( c < 0x10000 ) {
-     chars[length] = ( char ) c;
+     chars[length] = (char) c;
      length += 1;
     } else {
-     chars[length] = ( char ) ( 0xD800 | ( ( c - 0x10000 ) >>> 10 ) );
+     chars[length] = (char) (0xD800 | ((c - 0x10000) >>> 10));
      length += 1;
-     chars[length] = ( char ) ( 0xDC00 | ( c & 0x03FF ) );
+     chars[length] = (char) (0xDC00 | (c & 0x03FF));
      length += 1;
     }
    }
-   this.string = new String(chars , 0 , length);
+   this.string = new String(chars, 0, length);
   }
   return this.string;
  }

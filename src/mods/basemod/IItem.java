@@ -1,32 +1,31 @@
 package mods.basemod;
 
 import java.io.Serializable;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import mods.basemod.containers.Mid;
 import mods.basemod.interfaces.InvItem;
 import mods.basemod.resources.Model;
 import utils.json.JSONObject;
 
-public class IItem implements Serializable , InvItem {
+public class IItem implements Serializable, InvItem {
 
  protected final Mid id;
- protected final TreeMap<String , Object> param;
+ protected final TreeMap<String, Object> param;
 
- public TreeMap<String , Object> getParam () {
+ public TreeMap<String, Object> getParam () {
   return param;
  }
  protected final Model model;
 
- public IItem ( Mid id , Model model , Map<String , String> map ) {
+ public IItem ( Mid id, Model model, Map<String, String> map ) {
   this.param = new TreeMap<>(map);
   this.id = id;
   this.model = model;
  }
 
- public IItem ( String m , JSONObject o ) {
-  this.id = new Mid(m , o.getString("Iid") , o.getString("Sid"));
-  this.model = new Model(id , o.getString("Model"));
+ public IItem ( String m, JSONObject o ) {
+  this.id = new Mid(m, o.getString("Iid"), o.getString("Sid"));
+  this.model = new Model(id, o.getString("Model"));
   this.param = new TreeMap<>(o.getJSONObject("Params").getMap());
  }
 
@@ -45,18 +44,18 @@ public class IItem implements Serializable , InvItem {
  public String getAllP () {
   String t = "";
   t = param.keySet().stream().
-          map(( s ) -> s + "=" + param.get(s)+"; ").
-          reduce(t , String::concat);
+     map(( s ) -> s + "=" + param.get(s) + "; ").
+     reduce(t, String::concat);
   return t;
  }
 
  @Override
- public void addParam ( String k , String v ) {
-  this.param.put(k , v);
+ public void addParam ( String k, String v ) {
+  this.param.put(k, v);
  }
 
  @Override
- public void addAllP ( Map<String , String> p ) {
+ public void addAllP ( Map<String, String> p ) {
   this.param.putAll(p);
  }
 
@@ -76,9 +75,9 @@ public class IItem implements Serializable , InvItem {
 
  @Override
  public void toJSON ( JSONObject o ) {
-  o.put("Iid" , id.getIid());
-  o.put("Sid" , id.getSid());
-  o.put("Model" , model.getFile());
-  o.put("Params" , param);
+  o.put("Iid", id.getIid());
+  o.put("Sid", id.getSid());
+  o.put("Model", model.getFile());
+  o.put("Params", param);
  }
 }

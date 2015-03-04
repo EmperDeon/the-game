@@ -17,10 +17,10 @@ public class QTextEdit extends com.trolltech.qt.gui.QTextEdit {
   // com.trolltech.qt.GeneratorUtilities.threadCheck(this);
   if ( nativeId() == 0 ) {
    throw new QNoNativeResourcesException(
-           "Function call on incomplete object of type: " + getClass().getName());
+      "Function call on incomplete object of type: " + getClass().getName());
   }
-  __qt_setHtml_String(nativeId() , text);
+  __qt_setHtml_String(nativeId(), text);
  }
 
- native void __qt_setHtml_String ( long __this__nativeId , java.lang.String text );
+ native void __qt_setHtml_String ( long __this__nativeId, java.lang.String text );
 }

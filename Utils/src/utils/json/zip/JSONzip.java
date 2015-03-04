@@ -2,44 +2,29 @@ package utils.json.zip;
 /*
  * Copyright (c) 2013 JSON.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to
+ * do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
  * The Software shall be used for Good, not Evil.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * JSONzip is a binary-encoded JSON dialect. It is designed to compress the
- * messages in a session in bandwidth constrained applications, such as mobile.
+ * JSONzip is a binary-encoded JSON dialect. It is designed to compress the messages in a session in bandwidth constrained applications, such as mobile.
  * <p>
- * JSONzip is adaptive, so with each message seen, it should improve its
- * compression. It minimizes JSON's overhead, reducing punctuation to a small
- * number of bits. It uses Huffman encoding to reduce the average size of
- * characters. It uses caches (or Keeps) to keep recently seen strings and
- * values, so repetitive content (such as object keys) can be substantially
- * reduced. It uses a character encoding called Kim (Keep it minimal) that is
- * smaller than UTF-8 for most East European, African, and Asian scripts.
+ * JSONzip is adaptive, so with each message seen, it should improve its compression. It minimizes JSON's overhead, reducing punctuation to a small number of bits. It uses Huffman encoding to reduce
+ * the average size of characters. It uses caches (or Keeps) to keep recently seen strings and values, so repetitive content (such as object keys) can be substantially reduced. It uses a character
+ * encoding called Kim (Keep it minimal) that is smaller than UTF-8 for most East European, African, and Asian scripts.
  * <p>
- * JSONzip tends to reduce most content by about half. If there is a lot of
- * recurring information, the reduction can be much more dramatic.
+ * JSONzip tends to reduce most content by about half. If there is a lot of recurring information, the reduction can be much more dramatic.
  * <p>
- * FOR EVALUATION PURPOSES ONLY. THIS PACKAGE HAS NOT YET BEEN TESTED ADEQUATELY
- * FOR PRODUCTION USE.
+ * FOR EVALUATION PURPOSES ONLY. THIS PACKAGE HAS NOT YET BEEN TESTED ADEQUATELY FOR PRODUCTION USE.
  * <p>
  * @author JSON.org
  * @version 2014-05-20
@@ -162,7 +147,7 @@ public abstract class JSONzip implements None, PostMortem {
  /**
   * Initialize the data structures.
   */
- protected JSONzip() {
+ protected JSONzip () {
   this.namehuff = new Huff(end + 1);
   this.namehuffext = new Huff(end + 1);
   this.namekeep = new Keep(9);
@@ -175,7 +160,7 @@ public abstract class JSONzip implements None, PostMortem {
  /**
   * Generate the Huffman tables.
   */
- protected void generate() {
+ protected void generate () {
   this.namehuff.generate();
   this.namehuffext.generate();
   this.stringhuff.generate();
@@ -185,7 +170,7 @@ public abstract class JSONzip implements None, PostMortem {
  /**
   * Write an end-of-line to the console.
   */
- static void log() {
+ static void log () {
   log("\n");
  }
 
@@ -194,19 +179,18 @@ public abstract class JSONzip implements None, PostMortem {
   * <p>
   * @param integer The integer to write to the log.
   */
- static void log(int integer) {
+ static void log ( int integer ) {
   log(integer + " ");
  }
 
  /**
-  * Write two integers, separated by ':' to the console. The second integer is
-  * suppressed if it is 1.
+  * Write two integers, separated by ':' to the console. The second integer is suppressed if it is 1.
   * <p>
   * @param integer The integer to write to the log.
   * @param width The width of the integer in bits.
   */
- static void log(int integer, int width) {
-  if (width == 1) {
+ static void log ( int integer, int width ) {
+  if ( width == 1 ) {
    log(integer);
   } else {
    log(integer + ":" + width + " ");
@@ -218,7 +202,7 @@ public abstract class JSONzip implements None, PostMortem {
   * <p>
   * @param string The string to be written to the log.
   */
- static void log(String string) {
+ static void log ( String string ) {
   System.out.print(string);
  }
 
@@ -228,8 +212,8 @@ public abstract class JSONzip implements None, PostMortem {
   * @param integer The charcode to be written to the log.
   * @param width The width of the charcode in bits.
   */
- static void logchar(int integer, int width) {
-  if (integer > ' ' && integer <= '}') {
+ static void logchar ( int integer, int width ) {
+  if ( integer > ' ' && integer <= '}' ) {
    log("'" + (char) integer + "':" + width + " ");
   } else {
    log(integer, width);
@@ -237,14 +221,12 @@ public abstract class JSONzip implements None, PostMortem {
  }
 
  /**
-  * This method is used for testing the implementation of JSONzip. It is not
-  * suitable for any other purpose. It is used to compare a Compressor and a
-  * Decompressor, verifying that the data structures that were built during
-  * zipping and unzipping were the same.
+  * This method is used for testing the implementation of JSONzip. It is not suitable for any other purpose. It is used to compare a Compressor and a Decompressor, verifying that the data structures
+  * that were built during zipping and unzipping were the same.
   * <p>
   * @return true if the structures match.
   */
- public boolean postMortem(PostMortem pm) {
+ public boolean postMortem ( PostMortem pm ) {
   JSONzip that = (JSONzip) pm;
   return this.namehuff.postMortem(that.namehuff)
      && this.namekeep.postMortem(that.namekeep)

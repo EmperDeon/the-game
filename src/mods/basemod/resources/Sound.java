@@ -1,12 +1,11 @@
 package mods.basemod.resources;
 
-import mods.basemod.Resource;
-import mods.basemod.Rid;
+import mods.basemod.*;
 
 public class Sound extends Resource {
 
- public Sound ( Rid id , String url ) {
-  super(id , Type.Sound , url);
+ public Sound ( Rid id, String url ) {
+  super(id, Type.Sound, url);
  }
 
 }

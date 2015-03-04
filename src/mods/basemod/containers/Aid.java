@@ -4,13 +4,13 @@ public class Aid extends Mid {
 
  private final String action;
 
- public Aid ( Mid t , String a ) {
+ public Aid ( Mid t, String a ) {
   super(t);
   this.action = a;
  }
 
- public Aid ( String m , String b , String s , String a ) {
-  super(m , b , s);
+ public Aid ( String m, String b, String s, String a ) {
+  super(m, b, s);
   this.action = a;
  }
 

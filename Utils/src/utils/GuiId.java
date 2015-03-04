@@ -6,36 +6,36 @@ public class GuiId implements Comparable<GuiId> {
 
  private final Integer id;
 
- public GuiId(Integer id) {
+ public GuiId ( Integer id ) {
   this.id = id;
  }
 
- public int getId() {
+ public int getId () {
   return id;
  }
 
  @Override
- public int hashCode() {
+ public int hashCode () {
   return id.hashCode();
  }
 
  @Override
- public boolean equals(Object obj) {
-  if (obj == null) {
+ public boolean equals ( Object obj ) {
+  if ( obj == null ) {
    return false;
   }
-  if (getClass() != obj.getClass()) {
+  if ( getClass() != obj.getClass() ) {
    return false;
   }
   final GuiId other = (GuiId) obj;
-  if (!Objects.equals(this.id, other.id)) {
+  if ( !Objects.equals(this.id, other.id) ) {
    return false;
   }
   return true;
  }
 
  @Override
- public int compareTo(GuiId o) {
+ public int compareTo ( GuiId o ) {
   return this.id.compareTo(o.id);
  }
 }

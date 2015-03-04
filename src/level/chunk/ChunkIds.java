@@ -11,10 +11,10 @@ public class ChunkIds {
   // 
  }
 
- public int getIdC ( int x , int y ) {
+ public int getIdC ( int x, int y ) {
   int i = 0;
   for ( ChunkId ch : chid ) {
-   if ( ch.test(x , y) ) {
+   if ( ch.test(x, y) ) {
     return i;
    }
    i++;
@@ -22,9 +22,9 @@ public class ChunkIds {
   return 0;
  }
 
- public void add ( int i , int x , int y ) {
+ public void add ( int i, int x, int y ) {
   id.add(i);
-  chid.add(new ChunkId(x , y));
+  chid.add(new ChunkId(x, y));
  }
 
  public ChunkId getId ( int i ) {
@@ -36,19 +36,19 @@ public class ChunkIds {
   chid.clear();
  }
 
- public boolean test ( int x , int y ) {
+ public boolean test ( int x, int y ) {
   for ( ChunkId chid1 : chid ) {
-   if ( chid1.test(x , y) ) {
+   if ( chid1.test(x, y) ) {
     return true;
    }
   }
   return false;
  }
 
- public void free ( int x , int y ) {
+ public void free ( int x, int y ) {
   int i = 0;
   for ( ChunkId ch : chid ) {
-   if ( ch.test(x , y) ) {
+   if ( ch.test(x, y) ) {
     id.remove(i);
     chid.remove(i);
    }

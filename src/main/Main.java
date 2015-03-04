@@ -1,17 +1,10 @@
 package main;
 
 import com.trolltech.qt.gui.QApplication;
-import main.dev.DevForm;
-import main.dev.LevelEditor;
-import main.dev.ModEditor;
-import main.dev.ModelEditor;
-import main.dev.OptionsEditor;
+import main.dev.*;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
-import utils.LibLoader;
-import utils.Logger;
-import utils.MActionListener;
-import utils.Translator;
+import utils.*;
 import utils.json.JSONObject;
 
 public final class Main implements Runnable {
@@ -22,16 +15,17 @@ public final class Main implements Runnable {
  public final static Thread Tr = new Thread(rend);
 
  public final static String DIR;
+
  static {
-  DIR = System.getProperty("user.dir").substring(0 , System.getProperty(
-                                                  "user.dir").lastIndexOf("/") + 1);
- } 
- 
+  DIR = System.getProperty("user.dir").substring(0, System.getProperty(
+                                                 "user.dir").lastIndexOf("/") + 1);
+ }
+
  public final static JSONObject OPTIONS = new JSONObject(DIR + "options.db");
  public final static MActionListener ACTIONS = new MActionListener();
  public final static ModsContainer MODS = new ModsContainer();
  public final static Translator TRANSLATE = new Translator();
- 
+
  public static ModEditor modeditor;
  public static ModelEditor modeleditor;
  public static LevelEditor leveleditor;
@@ -48,11 +42,15 @@ public final class Main implements Runnable {
  @Override
  public void run () {
   System.getProperties().stringPropertyNames().stream().
-          forEach(( e ) -> {
-           LOG.addI(e + ": " + System.getProperties().getProperty(e));
-          });
+     forEach(( e ) -> {
+      LOG.addI(e + ": " + System.getProperties().getProperty(e));
+     });
   MODS.load();
   LibLoader.loadLibs();
+ }
+
+ public void reinit () {
+
  }
 
  public void destroy () {
@@ -67,7 +65,7 @@ public final class Main implements Runnable {
   //modeleditor = new ModelEditor();
   //leveleditor = new LevelEditor();
   optionseditor = new OptionsEditor();
-  
+
   if ( OPTIONS.getBoolean("DevMode") ) {
    devform.show();
   }
@@ -76,8 +74,7 @@ public final class Main implements Runnable {
   QApplication.shutdown();
  }
 
- 
- public final static String t(String k){
+ public final static String t ( String k ) {
   return TRANSLATE.get(k);
  }
 }

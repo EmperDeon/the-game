@@ -18,7 +18,7 @@ public class Vec5<T> implements Serializable {
   this.dy = null;
  }
 
- public Vec5 ( T x , T y , T z , T dx , T dy ) {
+ public Vec5 ( T x, T y, T z, T dx, T dy ) {
   this.x = x;
   this.y = y;
   this.z = z;

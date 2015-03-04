@@ -7,14 +7,14 @@ public class OctChunkId implements Serializable {
  private final String name;
  private final ChunkId[] ids;
 
- public OctChunkId ( String name , ChunkId[] ids ) {
+ public OctChunkId ( String name, ChunkId[] ids ) {
   this.ids = ids;
   this.name = name;
  }
 
- public String test ( int x , int y ) {
+ public String test ( int x, int y ) {
   for ( ChunkId id : ids ) {
-   if ( id.test(x , y) ) {
+   if ( id.test(x, y) ) {
     return this.name;
    }
   }
