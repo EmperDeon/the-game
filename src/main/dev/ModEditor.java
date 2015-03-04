@@ -35,6 +35,9 @@ public final class ModEditor extends QMainWindow {
   panel.addWidget(bgen);
   panel.addWidget(bsave);
 
+  bsave.clicked.connect(this, "save()");
+  bgen.clicked.connect(this, "gen()");
+  
   mainLayout.addLayout(panel);
   mainLayout.addWidget(tabs);
   mainW.setLayout(mainLayout);
@@ -155,7 +158,14 @@ public final class ModEditor extends QMainWindow {
   }
 
   public void save ( JSONObject o ) {
-
+      JSONObject t = new JSONObject();
+   IItem e;
+   for ( int i = 0 ; i < list.size() ; i++ ) {
+    e = list.get(i);
+    e.toJSON(t);
+    o.put("Item" + i , t);
+    t.clear();
+   }
   }
  }
 
@@ -266,22 +276,19 @@ public final class ModEditor extends QMainWindow {
   }
 
   public void save ( JSONObject o ) {
-
+   JSONObject t = new JSONObject();
+   CraftE e;
+   for ( int i = 0 ; i < list.size() ; i++ ) {
+    e = list.get(i);
+    t.put("Type" , e.getType());
+    t.put("Grid" , e.getGrid());
+    t.put("Elements" , e.getElements());
+    o.put("Craft" + i , t);
+    t.clear();
+   }
   }
  }
 
- private final class PropMap extends QWidget {
-
-  private final TreeMap<String, String> map = new TreeMap<>();
-
-  public TreeMap<String, String> get () {
-   return map;
-  }
- }
-
-// private final ParamF bp = new ParamF("Block");
-// private final ParamF ip = new ParamF("Item");
-//// private final ParamF cp = new ParamF();
  private final ItemsTab itab;
  private final CraftTab ctab;
  private final QTabWidget tabs;
@@ -289,7 +296,7 @@ public final class ModEditor extends QMainWindow {
  private final QPushButton bsave;
  private final QPushButton bgen;
 
- private void save () {
+ public void save () {
   String t = null;
   JSONMod s = new JSONMod();
   int x = JOptionPane.showConfirmDialog(null,
@@ -319,7 +326,7 @@ public final class ModEditor extends QMainWindow {
   }
  }
 
- private void gen () {
+ public void gen () {
   for ( int i = 0 ; i < 100000 ; i++ ) {
    itab.add("Block" + i, "0", "file1", new HashMap<>());
    ctab.add(1, "1x1", Integer.toString(i));
