@@ -48,23 +48,32 @@ public final class ModEditor extends QMainWindow {
   public final QLineEdit sid;
   public final QLineEdit model;
   public final QTableWidget view;
+  public final QTableWidget prop;
   private final QPushButton badd;
-  private final QPushButton bmap;
-  private final PropMap map;
-  public final ArrayList<IItem> list = new ArrayList<>();
+  private final QPushButton padd;
+  private final QLineEdit pkey;
+  private final QLineEdit pval;
+  //private final PropMap map;
+  public final List<IItem> list = new ArrayList<>();
+  private final Map<String, String> pmap = new TreeMap<>();
 
   public ItemsTab () {
    QVBoxLayout main = new QVBoxLayout();
-   QHBoxLayout form2 = new QHBoxLayout();
+   QHBoxLayout form3 = new QHBoxLayout();
    QFormLayout form = new QFormLayout();
+   QVBoxLayout form2 = new QVBoxLayout();
+   QHBoxLayout form4 = new QHBoxLayout();
 
    view = new QTableWidget();
+   prop = new QTableWidget();
    iid = new QLineEdit();
    sid = new QLineEdit();
    model = new QLineEdit();
    badd = new QPushButton("Add item");
-   bmap = new QPushButton("Properties");
-   map = new PropMap();
+   padd = new QPushButton("Add");
+   pkey = new QLineEdit();
+   pval = new QLineEdit();
+//map = new PropMap();
 
    view.insertColumn(0);
    view.setColumnWidth(0, 40);
@@ -75,19 +84,35 @@ public final class ModEditor extends QMainWindow {
    view.insertColumn(3);
    view.setColumnWidth(3, 500);
 
-   view.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Item id",
-                                                              "Sub-item id",
-                                                              "Model",
-                                                              "Parameters" }));
+   view.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Item id", "Sub-item id", "Model", "Parameters" }));
+
+   prop.insertColumn(0);
+   prop.setColumnWidth(0, 150);
+   prop.insertColumn(1);
+   prop.setColumnWidth(1, 200);
+
+   prop.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Key", "Value" }));
+   prop.setMaximumSize(800, 90);
+   prop.setMinimumSize(100, 90);
+
+   padd.clicked.connect(this, "padd()");
+   badd.clicked.connect(this, "add()");
+
+   form2.addWidget(prop);
+   form4.addWidget(pkey);
+   form4.addWidget(pval);
+   form4.addWidget(padd);
+   form2.addLayout(form4);
 
    form.addRow("Item id:", iid);
    form.addRow("SUb-item id:", sid);
    form.addRow("Model:", model);
+   form.addRow(badd);
 
-   form2.addLayout(form);
-   form2.addWidget(badd);
+   form3.addLayout(form);
+   form3.addLayout(form2);
 
-   main.addLayout(form2);
+   main.addLayout(form3);
    main.addWidget(view);
 
    setLayout(main);
@@ -110,7 +135,15 @@ public final class ModEditor extends QMainWindow {
   }
 
   public void add () {
-   add(this.iid.text(), this.sid.text(), this.model.text(), this.map.get());
+   add(this.iid.text(), this.sid.text(), this.model.text(), this.pmap);
+  }
+
+  public void padd () {
+   this.pmap.put(this.pkey.text(), this.pval.text());
+   int row = this.pmap.size() - 1;
+   this.prop.insertRow(row);
+   this.prop.setItem(row, 0, new QTableWidgetItem(this.pkey.text()));
+   this.prop.setItem(row, 1, new QTableWidgetItem(this.pval.text()));
   }
 
   public int lsize () {
@@ -132,20 +165,29 @@ public final class ModEditor extends QMainWindow {
   public final QLineEdit elements;
   public final QLineEdit size;
   public final QTableWidget view;
+  public final QTableWidget prop;
   private final QPushButton badd;
-  public final ArrayList<CraftE> list = new ArrayList<>();
-
+  private final QPushButton padd;
+  private final QLineEdit pkey;
+  public final List<CraftE> list = new ArrayList<>();
+  public final List<String> pmap = new ArrayList<>();
+  
   public CraftTab () {
    QVBoxLayout main = new QVBoxLayout();
-   QHBoxLayout form2 = new QHBoxLayout();
+   QHBoxLayout form3 = new QHBoxLayout();
    QFormLayout form = new QFormLayout();
-
+   QVBoxLayout form2 = new QVBoxLayout();
+   QHBoxLayout form4 = new QHBoxLayout();
+   
    view = new QTableWidget();
    type = new QLineEdit();
    elements = new QLineEdit();
    size = new QLineEdit();
    badd = new QPushButton("Add craft");
-
+   prop = new QTableWidget();
+   padd = new QPushButton("Add");
+   pkey = new QLineEdit();
+   
    view.insertColumn(0);
    view.setColumnWidth(0, 40);
    view.insertColumn(1);
@@ -155,18 +197,32 @@ public final class ModEditor extends QMainWindow {
    view.insertColumn(3);
    view.setColumnWidth(3, 500);
 
-   view.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Type", "Grid",
-                                                              "Elements",
-                                                              "Parameters" }));
+   view.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Type", "Grid", "Elements", "Parameters" }));
 
+   prop.insertColumn(0);
+   prop.setColumnWidth(0, 300);
+
+   prop.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Key"}));
+   prop.setMaximumSize(800, 90);
+   prop.setMinimumSize(100, 90);
+   
+   padd.clicked.connect(this, "padd()");
+   badd.clicked.connect(this, "add()");
+   
+   form2.addWidget(prop);
+   form4.addWidget(pkey);
+   form4.addWidget(padd);
+   form2.addLayout(form4);
+   
    form.addRow("Type:", type);
    form.addRow("Elements: ", elements);
    form.addRow("Grid:", size);
+   form.addRow(badd);
+   
+   form3.addLayout(form);
+   form3.addLayout(form2);
 
-   form2.addLayout(form);
-   form2.addWidget(badd);
-
-   main.addLayout(form2);
+   main.addLayout(form3);
    main.addWidget(view);
 
    setLayout(main);
@@ -182,14 +238,25 @@ public final class ModEditor extends QMainWindow {
    view.setItem(row, 3, new QTableWidgetItem(e.getParams()));
   }
 
+  public void add ( Integer type, String grid, String elements , List param) {
+   add(new CraftE(type, grid, elements, param));
+  }
+
   public void add ( Integer type, String grid, String elements ) {
    add(new CraftE(type, grid, elements));
   }
-
+  
   public void add () {
-   add(Integer.parseInt(type.text()), size.text(), elements.text());
+   add(Integer.parseInt(type.text()), size.text(), elements.text(), pmap);
   }
 
+  public void padd () {
+   this.pmap.add(this.pkey.text());
+   int row = this.pmap.size() - 1;
+   this.prop.insertRow(row);
+   this.prop.setItem(row, 0, new QTableWidgetItem(this.pkey.text()));
+  }
+  
   public int lsize () {
    return this.list.size();
   }
