@@ -22,10 +22,10 @@ public class Test extends Thread {
   optionseditor = new OptionsEditor();
 
 //  devform.show();
-  modeditor.show();
+//  modeditor.show();
 //  modeleditor.show();
 //  leveleditor.show();
-//  optionseditor.show();
+  optionseditor.show();
 
   QApplication.execStatic();
   QApplication.shutdown();

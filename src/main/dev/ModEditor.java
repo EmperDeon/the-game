@@ -13,6 +13,12 @@ import utils.*;
 import utils.json.JSONObject;
 
 public final class ModEditor extends QMainWindow {
+ private final ItemsTab itab;
+ private final CraftTab ctab;
+ private final QTabWidget tabs;
+ private final QLineEdit modname;
+ private final QPushButton bsave;
+ private final QPushButton bgen;
 
  public ModEditor () {
   QWidget mainW = new QWidget();
@@ -43,6 +49,45 @@ public final class ModEditor extends QMainWindow {
   mainW.setLayout(mainLayout);
 
   setCentralWidget(mainW);
+ }
+
+ public void save () {
+  String t = null;
+  JSONMod s = new JSONMod();
+  int x = JOptionPane.showConfirmDialog(null,
+                                        "Are you have a mod archive or mod folder ?",
+                                        "Mod archive",
+                                        JOptionPane.YES_NO_OPTION,
+                                        JOptionPane.QUESTION_MESSAGE);
+  switch ( x ) {
+   case 0:
+    JFileChooser f = new JFileChooser(Main.DIR + "mods/");
+    if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
+     t = f.getSelectedFile().getAbsolutePath();
+    }
+    Unzipper.unzipmod(t);
+    s.save(main.Main.DIR + "tmp/" + modname.text() + "/");
+    Zipper.zipmod(t);
+    break;
+   case 1:
+    t = main.Main.DIR + "mods/" + modname.text() + ".mod";
+    new File(main.Main.DIR + "tmp/" + modname.text() + "/").mkdirs();
+    s.save(main.Main.DIR + "tmp/" + modname.text() + "/");
+    Zipper.zipmod(t);
+    break;
+   default:
+    break;
+
+  }
+ }
+
+ public void gen () {
+  for ( int i = 0 ; i < 100000 ; i++ ) {
+   itab.add("Block" + i, "0", "file1", new HashMap<>());
+   ctab.add(1, "1x1", Integer.toString(i));
+  }
+  save();
+  System.gc();
  }
 
  private final class ItemsTab extends QWidget {
@@ -289,52 +334,6 @@ public final class ModEditor extends QMainWindow {
   }
  }
 
- private final ItemsTab itab;
- private final CraftTab ctab;
- private final QTabWidget tabs;
- private final QLineEdit modname;
- private final QPushButton bsave;
- private final QPushButton bgen;
-
- public void save () {
-  String t = null;
-  JSONMod s = new JSONMod();
-  int x = JOptionPane.showConfirmDialog(null,
-                                        "Are you have a mod archive or mod folder ?",
-                                        "Mod archive",
-                                        JOptionPane.YES_NO_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE);
-  switch ( x ) {
-   case 0:
-    JFileChooser f = new JFileChooser(Main.DIR + "mods/");
-    if ( f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION ) {
-     t = f.getSelectedFile().getAbsolutePath();
-    }
-    Unzipper.unzipmod(t);
-    s.save(main.Main.DIR + "tmp/" + modname.text() + "/");
-    Zipper.zipmod(t);
-    break;
-   case 1:
-    t = main.Main.DIR + "mods/" + modname.text() + ".mod";
-    new File(main.Main.DIR + "tmp/" + modname.text() + "/").mkdirs();
-    s.save(main.Main.DIR + "tmp/" + modname.text() + "/");
-    Zipper.zipmod(t);
-    break;
-   default:
-    break;
-
-  }
- }
-
- public void gen () {
-  for ( int i = 0 ; i < 100000 ; i++ ) {
-   itab.add("Block" + i, "0", "file1", new HashMap<>());
-   ctab.add(1, "1x1", Integer.toString(i));
-  }
-  save();
- }
-//
-
  private final class JSONMod {
 
   public void save ( String dir ) {
@@ -558,485 +557,4 @@ public final class ModEditor extends QMainWindow {
       });
   }
  }
-
-// private final class ItemsTable implements TableModel {
-//
-//  private TableModelListener listener;
-//
-//  private final ArrayList<IItem> items = new ArrayList<>();
-//
-//  @Override
-//  public void addTableModelListener ( TableModelListener listener ) {
-//   this.listener = listener;
-//  }
-//
-//  @Override
-//  public Class<?> getColumnClass ( int columnIndex ) {
-//   return String.class;
-//  }
-//
-//  @Override
-//  public int getColumnCount () {
-//   return 3;
-//  }
-//
-//  @Override
-//  public String getColumnName ( int columnIndex ) {
-//   switch ( columnIndex ) {
-//    case 0:
-//     return "I name";
-//    case 1:
-//     return "S name";
-//    case 2:
-//     return "Model";
-//   }
-//   return "";
-//  }
-//
-//  @Override
-//  public int getRowCount () {
-//   return items.size();
-//  }
-//
-//  @Override
-//  public Object getValueAt ( int rowIndex , int columnIndex ) {
-//   switch ( columnIndex ) {
-//    case 0:
-//     return items.get(rowIndex).getId().getIid();
-//    case 1:
-//     return items.get(rowIndex).getId().getSid();
-//    case 2:
-//     return items.get(rowIndex).getModel().getFile();
-//   }
-//   return "";
-//  }
-//
-//  @Override
-//  public boolean isCellEditable ( int rowIndex , int columnIndex ) {
-//   return false;
-//  }
-//
-//  @Override
-//  public void removeTableModelListener ( TableModelListener listener ) {
-//   listener = null;
-//  }
-//
-//  @Override
-//  public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
-//
-//  }
-//
-//  public void add () {
-//   add(new Mid(modname.getText() , iiname.getText() , isname.getText()) ,
-//       new Model(
-//               new Mid(modname.getText() , iiname.getText() , isname.getText()) ,
-//               imodel.getText()) ,
-//       ip.getMap());
-//   iiname.setText("");
-//   isname.setText("");
-//   imodel.setText("");
-//  }
-//
-//  public void add ( Mid id , Model model , Map<String , String> map ) {
-//   items.add(new IItem(id , model , map));
-//   listener.tableChanged(null);
-//  }
-//
-//  public void delete () {
-//   int n = itable.getSelectedRow();
-//
-//   if ( n != -1 ) {
-//    items.remove(n);
-//   } else {
-//    System.out.println("No selected index");
-//   }
-//   listener.tableChanged(null);
-//  }
-//
-//  public void save ( JSONObject obj ) {
-//   JSONObject t = new JSONObject();
-//   IItem e;
-//   for ( int i = 0 ; i < items.size() ; i++ ) {
-//    e = items.get(i);
-//    e.toJSON(t);
-//    obj.put("Item" + i , t);
-//    t.clear();
-//   }
-//  }
-// }
-//
-// private final class BlocksTable implements TableModel {
-//
-//  private TableModelListener listener;
-//
-//  private final ArrayList<LevBlock> items = new ArrayList<>();
-//
-//  @Override
-//  public void addTableModelListener ( TableModelListener listener ) {
-//   this.listener = listener;
-//  }
-//
-//  @Override
-//  public Class<?> getColumnClass ( int columnIndex ) {
-//   return String.class;
-//  }
-//
-//  @Override
-//  public int getColumnCount () {
-//   return 3;
-//  }
-//
-//  @Override
-//  public String getColumnName ( int columnIndex ) {
-//   switch ( columnIndex ) {
-//    case 0:
-//     return "B name";
-//    case 1:
-//     return "S name";
-//    case 2:
-//     return "Model";
-//   }
-//   return "";
-//  }
-//
-//  @Override
-//  public int getRowCount () {
-//   return items.size();
-//  }
-//
-//  @Override
-//  public Object getValueAt ( int rowIndex , int columnIndex ) {
-//   switch ( columnIndex ) {
-//    case 0:
-//     return items.get(rowIndex).getId().getIid();
-//    case 1:
-//     return items.get(rowIndex).getId().getSid();
-//    case 2:
-//     return items.get(rowIndex).getModel().getFile();
-//   }
-//   return "";
-//  }
-//
-//  @Override
-//  public boolean isCellEditable ( int rowIndex , int columnIndex ) {
-//   return false;
-//  }
-//
-//  @Override
-//  public void removeTableModelListener ( TableModelListener listener ) {
-//   listener = null;
-//  }
-//
-//  @Override
-//  public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
-//
-//  }
-//
-//  public void add () {
-//   add(new Mid(modname.getText() , bbname.getText() , bsname.getText()) ,
-//       new Model(
-//               new Mid(modname.getText() , bbname.getText() , bsname.getText()) ,
-//               bmodel.getText()) , bp.getMap());
-//  }
-//
-//  public void add ( Mid id , Model model , Map<String , String> map ) {
-//   items.add(new LevBlock(id , model , map));
-//   listener.tableChanged(null);
-//  }
-//
-//  public void delete () {
-//   int n = btable.getSelectedRow();
-//
-//   if ( n != -1 ) {
-//    items.remove(n);
-//   } else {
-//    System.out.println("No selected index");
-//   }
-//   listener.tableChanged(null);
-//  }
-//
-//  public void save ( JSONObject obj ) {
-//   JSONObject t = new JSONObject();
-//   int i = 0;
-//   for ( LevBlock e : items ) {
-//    e.toJSON(t);
-//    obj.put("Block" + i , t.getMap());
-//    i++;
-//    t.clear();
-//   }
-//  }
-// }
-//
-// private final class CraftsTable implements TableModel {
-//
-//  private TableModelListener listener;
-//
-//  private final ArrayList<CraftE> crafts = new ArrayList<>();
-//
-//  @Override
-//  public void addTableModelListener ( TableModelListener listener ) {
-//   this.listener = listener;
-//  }
-//
-//  @Override
-//  public Class<?> getColumnClass ( int columnIndex ) {
-//   return String.class;
-//  }
-//
-//  @Override
-//  public int getColumnCount () {
-//   return 3;
-//  }
-//
-//  @Override
-//  public String getColumnName ( int columnIndex ) {
-//   switch ( columnIndex ) {
-//    case 0:
-//     return "Type";
-//    case 1:
-//     return "Crafting Grid";
-//    case 2:
-//     return "Elements";
-//   }
-//   return "";
-//  }
-//
-//  @Override
-//  public int getRowCount () {
-//   return crafts.size();
-//  }
-//
-//  @Override
-//  public Object getValueAt ( int rowIndex , int columnIndex ) {
-//   switch ( columnIndex ) {
-//    case 0:
-//     return crafts.get(rowIndex).getType();
-//    case 1:
-//     return crafts.get(rowIndex).getGrid();
-//    case 2:
-//     return crafts.get(rowIndex).getElements();
-//   }
-//   return "";
-//  }
-//
-//  @Override
-//  public boolean isCellEditable ( int rowIndex , int columnIndex ) {
-//   return false;
-//  }
-//
-//  @Override
-//  public void removeTableModelListener ( TableModelListener listener ) {
-//   listener = null;
-//  }
-//
-//  @Override
-//  public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
-//
-//  }
-//
-//  public void add () {
-//   add(Integer.parseInt(ctype.getText()) , cgrid.getText() , celem.getText());
-//  }
-//
-//  public void add ( Integer type , String grid , String elements ) {
-//   crafts.add(new CraftE(type , grid , elements));
-//   listener.tableChanged(null);
-//  }
-//
-//  public void delete () {
-//   int n = ctable.getSelectedRow();
-//
-//   if ( n != -1 ) {
-//    crafts.remove(n);
-//   } else {
-//    System.out.println("No selected index");
-//   }
-//   listener.tableChanged(null);
-//  }
-//
-//  public void save ( JSONObject obj ) {
-//   JSONObject t = new JSONObject();
-//   CraftE e;
-//   for ( int i = 0 ; i < crafts.size() ; i++ ) {
-//    e = crafts.get(i);
-//    t.put("Type" , e.getType());
-//    t.put("Grid" , e.getGrid());
-//    t.put("Elements" , e.getElements());
-//    obj.put("Craft" + i , t);
-//    t.clear();
-//   }
-//  }
-// }
-//
-// private final class ParamF extends JFrame {
-//
-//  private final JLabel pl1 = new JLabel();
-//  private final JLabel pl2 = new JLabel();
-//  private final JTextField pk = new JTextField();
-//  private final JTextField pv = new JTextField();
-//  private final JButton padd = new JButton();
-//  private final JButton pdel = new JButton();
-//  private final JTable ptab = new JTable();
-//  private final ParamTable pmod = new ParamTable();
-//  private final JScrollPane pscr = new JScrollPane();
-//
-//  public ParamF ( String str ) {
-//   this.setVisible(false);
-//   this.setTitle(str + " params editor");
-//   this.setLayout(null);
-//   this.setBounds(300 , 300 , 500 , 350);
-//   this.setResizable(false);
-//   this.addWindowListener(new WindowAdapter() {
-//    @Override
-//    public void windowClosing ( WindowEvent e ) {
-//
-//    }
-//   });
-//
-//   pl1.setText("Key:");
-//   pl1.setBounds(5 , 10 , 50 , 20);
-//
-//   pk.setBounds(35 , 5 , 100 , 30);
-//
-//   pl2.setText("Value:");
-//   pl2.setBounds(160 , 10 , 50 , 20);
-//
-//   pv.setBounds(205 , 5 , 100 , 30);
-//
-//   padd.setText("Add");
-//   padd.setBounds(320 , 5 , 80 , 30);
-//   padd.addMouseListener(new MouseAdapter() {
-//    @Override
-//    public void mouseClicked ( MouseEvent evt ) {
-//     pmod.add();
-//     pk.setText("");
-//     pv.setText("");
-//    }
-//   });
-//
-//   pdel.setText("Delete");
-//   pdel.setBounds(405 , 5 , 80 , 30);
-//   pdel.addMouseListener(new MouseAdapter() {
-//    @Override
-//    public void mouseClicked ( MouseEvent evt ) {
-//     pmod.delete(ptab);
-//    }
-//   });
-//
-//   ptab.setModel(pmod);
-//   ptab.getTableHeader().setReorderingAllowed(false);
-//   pscr.setViewportView(ptab);
-//   pscr.setBounds(5 , 35 , 490 , 300);
-//
-//   add(pl1);
-//   add(pl2);
-//   add(padd);
-//   add(pdel);
-//   add(pk);
-//   add(pv);
-//   add(pscr);
-//  }
-//
-//  public Map<String , String> getMap () {
-//   return pmod.get();
-//  }
-//
-//  public void clear () {
-//   pmod.clear();
-//  }
-//
-//  private final class ParamTable implements TableModel {
-//
-//   private TableModelListener listener;
-//
-//   private final ArrayList<Vec2<String>> map = new ArrayList<>();
-//
-//   @Override
-//   public void addTableModelListener ( TableModelListener listener ) {
-//    this.listener = listener;
-//   }
-//
-//   @Override
-//   public Class<?> getColumnClass ( int columnIndex ) {
-//    return String.class;
-//   }
-//
-//   @Override
-//   public int getColumnCount () {
-//    return 2;
-//   }
-//
-//   @Override
-//   public String getColumnName ( int columnIndex ) {
-//    switch ( columnIndex ) {
-//     case 0:
-//      return "Key";
-//     case 1:
-//      return "Value";
-//    }
-//    return "";
-//   }
-//
-//   @Override
-//   public int getRowCount () {
-//    return map.size();
-//   }
-//
-//   @Override
-//   public Object getValueAt ( int rowIndex , int columnIndex ) {
-//    switch ( columnIndex ) {
-//     case 0:
-//      return map.get(rowIndex).gX();
-//     case 1:
-//      return map.get(rowIndex).gY();
-//    }
-//    return "";
-//   }
-//
-//   @Override
-//   public boolean isCellEditable ( int rowIndex , int columnIndex ) {
-//    return false;
-//   }
-//
-//   @Override
-//   public void removeTableModelListener ( TableModelListener listener ) {
-//    listener = null;
-//   }
-//
-//   @Override
-//   public void setValueAt ( Object value , int rowIndex , int columnIndex ) {
-//
-//   }
-//
-//   public void add () {
-//    map.add(new Vec2<>(pk.getText() , pv.getText()));
-//    listener.tableChanged(null);
-//   }
-//
-//   public void delete ( JTable tab ) {
-//    int n = tab.getSelectedRow();
-//
-//    if ( n != -1 ) {
-//     map.remove(n);
-//    } else {
-//     System.out.println("No selected index");
-//    }
-//    listener.tableChanged(null);
-//   }
-//
-//   public Map<String , String> get () {
-//    HashMap<String , String> m = new HashMap<>();
-//    map.stream().forEach(( e ) -> {
-//     m.put(e.gX() , e.gY());
-//    });
-//    return m;
-//   }
-//
-//   public void clear () {
-//    map.clear();
-//    listener.tableChanged(null);
-//   }
-//  }
-//
-// }
 }
