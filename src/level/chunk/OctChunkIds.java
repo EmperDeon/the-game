@@ -1,18 +1,24 @@
 package level.chunk;
 
-import utils.containers.ids.OctChunkId;
 import java.io.*;
 import java.util.ArrayList;
 import main.Main;
-import utils.exceptions.TermEx;
+import utils.containers.ids.OctChunkId;
+import utils.containers.pos.ChunkPos;
 
 public final class OctChunkIds implements Serializable {
 
  private ArrayList<OctChunkId> chids;
- private final String dir;
- private final String file;
+ private String dir;
+ private String file;
 
- public void load () throws TermEx {
+ public void load ( String dir ) {
+  this.file = dir + "OctChIds.db";
+  this.dir = dir + "rg/";
+  load();
+ }
+
+ public void load (){
   File d = new File(this.dir);
   if ( d.canRead() ) {
    File f = new File(this.file);
@@ -23,8 +29,8 @@ public final class OctChunkIds implements Serializable {
      this.chids = ((ArrayList<OctChunkId>) o.readObject());
     } catch ( IOException | ClassNotFoundException ex ) {
      main.Main.LOG.addE(ex);
-     throw new TermEx(
-        "ChunkContainer . OctChunkIds . load() - error read OctChunk");
+    // throw new TermEx(
+     //   "ChunkContainer . OctChunkIds . load() - error read OctChunk");
     }
    } else {
     this.chids = new ArrayList<>();
@@ -37,14 +43,14 @@ public final class OctChunkIds implements Serializable {
       OctChunk o = (OctChunk) fi.readObject();
 
      } catch ( IOException | ClassNotFoundException ex ) {
-      throw new TermEx("ChunkContainer . OctChunkIds . load() - error read rg/");
+     // throw new TermEx("ChunkContainer . OctChunkIds . load() - error read rg/");
      }
 
     }
     save();
    }
   } else {
-   throw new TermEx("ChunkContainer . OctChunkIds . load() - no rg/");
+  // throw new TermEx("ChunkContainer . OctChunkIds . load() - no rg/");
   }
  }
 
@@ -60,10 +66,8 @@ public final class OctChunkIds implements Serializable {
   }
  }
 
- public OctChunkIds ( String dir ) throws TermEx {// if not created
-  this.file = dir + "OctChIds.db";
-  this.dir = dir + "rg/";
-  load();
+ public OctChunkIds () {
+
  }
 
  public OctChunkIds ( ArrayList<OctChunk> chs, String dir ) {
@@ -74,12 +78,9 @@ public final class OctChunkIds implements Serializable {
   this.file = dir + "OctChIds.db";
  }
 
- public String search ( int x, int y ) {
+ public String search ( ChunkPos pos) {
   for ( OctChunkId id : chids ) {
-   String r = id.test(x, y);
-   if ( r != null ) {
-    return r;
-   }
+   
   }
   return null;
  }

@@ -1,31 +1,34 @@
 package level.chunk;
 
-import utils.containers.pos.ChunkPos;
 import java.io.*;
 import java.util.*;
 import main.Main;
 import mods.basemod.LevBlock;
+import utils.containers.pos.*;
 import utils.exceptions.TermEx;
-import utils.containers.vec.Vec3;
 
 public final class ChunkContainer {
 
- private final HashMap<ChunkPos, Chunk> chs = new HashMap();
- private final HashSet<ChunkPos> rch = new HashSet<>();
- private final OctChunkIds oids;
+ private final Map<ChunkPos, Chunk> chs = new HashMap();
+ private final Set<ChunkPos> rch = new HashSet<>();// Edited chunks
+ private final OctChunkIds oids = new OctChunkIds();
 
- private final String dir;//  game/save/name/
+ private String dir;//  game/save/name/
 
+ public ChunkContainer(){
+  
+ }
+ 
  public ChunkContainer ( String dir ) throws TermEx {
   this.dir = dir;
 
-  if ( !new File(main.Main.DIR + "saves/World1/rg").canRead() ) {
+  if ( !new File(dir).canRead() ) {
    gen("World1", 8);
   }
 
-  oids = new OctChunkIds(dir);
+  oids.load(dir);
 
-  load(new ChunkPos(0, 0), 8);
+  load(new ChunkPos(0, 0, 0), 8);
 
  }
 
@@ -56,7 +59,7 @@ public final class ChunkContainer {
  }
 
  public void add ( Chunk ch ) {
-  chs.put(ch.id, ch);
+  this.chs.put(ch.getId(), ch);
  }
 
  public void addAll ( OctChunk och ) {
@@ -67,10 +70,10 @@ public final class ChunkContainer {
  }
 
  public void load ( ChunkPos pos, int chpr ) {
-  int x1 = (pos.x - chpr) / 8;
-  int x2 = (pos.x + chpr) / 8;
-  int y1 = (pos.y - chpr) / 8;
-  int y2 = (pos.y + chpr) / 8;
+  int x1 = (pos.gX() - chpr) / 8;
+  int x2 = (pos.gX() + chpr) / 8;
+  int y1 = (pos.gY() - chpr) / 8;
+  int y2 = (pos.gY() + chpr) / 8;
 
   for ( int i1 = x1 ; i1 <= x2 ; i1++ ) {
    for ( int i2 = y1 ; i2 <= y2 ; i2++ ) {
@@ -79,12 +82,12 @@ public final class ChunkContainer {
   }
  }
 
- public void redact ( ChunkPos cid, Vec3<Integer> bpos, LevBlock block ) {
+ public void redact ( ChunkPos cid, BlockPos bpos, LevBlock block ) {
   chs.get(cid).redact(bpos, block);
   rch.add(cid);
  }
 
- public void redactObl ( ChunkPos cid, Vec3<Integer> pos1, Vec3<Integer> pos2,
+ public void redactObl ( ChunkPos cid, BlockPos pos1 , BlockPos pos2,
                          LevBlock block ) {
   chs.get(cid).redactObl(pos1, pos2, block);
   rch.add(cid);
@@ -101,22 +104,18 @@ public final class ChunkContainer {
   System.out.println("Loaded: " + file + " : " + chs.size());
  }
 
- public boolean test ( int x, int y ) {
-  return chs.containsKey(new ChunkPos(x, y));
- }
-
  public void clear () {
   chs.clear();
  }
 
- public void free ( int x, int y ) {
-  chs.remove(new ChunkPos(x, y));
+ public void free (ChunkPos pos) {
+  chs.remove(pos);
  }
 
  public void save () {
   if ( !rch.isEmpty() ) {
    for ( ChunkPos id : rch ) {
-    String file = oids.search(id.x, id.y);
+    String file = oids.search(id);
 
     OctChunk oc;
     try {
@@ -128,7 +127,7 @@ public final class ChunkContainer {
     }
 
     if ( oc != null ) {
-     oc.replaceChunk(id.x, id.y, chs.get(id));
+     oc.replaceChunk(id.gX(), id.y, chs.get(id));
 
      try {
       ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(
@@ -146,7 +145,7 @@ public final class ChunkContainer {
   }
  }
 
- public Chunk get ( int x, int y ) {
-  return chs.get(new ChunkPos(x, y));
+ public Chunk get (ChunkPos pos) {
+  return chs.get(pos);
  }
 }

@@ -91,4 +91,8 @@ public class Chunk implements Serializable {
  public void tick () {
   //
  }
+
+ public ChunkPos getId () {
+  return id;
+ }
 }

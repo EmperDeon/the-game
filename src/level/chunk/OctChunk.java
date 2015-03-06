@@ -1,9 +1,9 @@
 package level.chunk;
 
-import utils.containers.ids.OctChunkId;
-import utils.containers.pos.ChunkPos;
 import java.io.Serializable;
 import java.util.ArrayList;
+import utils.containers.ids.OctChunkId;
+import utils.containers.pos.ChunkPos;
 
 public class OctChunk implements Serializable {
 
@@ -68,7 +68,7 @@ public class OctChunk implements Serializable {
   int i = 0;
   for ( Chunk[] chs1 : chs ) {
    for ( Chunk ch : chs1 ) {
-    ids[i] = new ChunkPos(ch.idx, ch.idy);
+    ids[i] = new ChunkPos(ch);
     i++;
    }
   }
