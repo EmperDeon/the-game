@@ -1,66 +1,46 @@
 package level.chunk;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 import utils.containers.ids.OctChunkId;
-import utils.containers.pos.ChunkPos;
+import utils.containers.pos.*;
 
 public class OctChunk implements Serializable {
 
  private final String dir;
- private final Chunk[][] chs;
+ private final Map<ChunkPos, Chunk> map = new HashMap<>();
  private final String fl;
- private final int x;
- private final int y;
+ private final OctChunkPos pos;
 
  public OctChunk ( String nm, int x, int y ) {
   this.dir = main.Main.DIR + "saves/" + nm + "/rg/";
   fl = "region" + x + "" + y + ".rg";
 
-  this.x = x;
-  this.y = y;
+  pos = new OctChunkPos(x, y);
 
-  chs = new Chunk[8][8];
-  for ( int ix = 0 ; ix < 8 ; ix++ ) {
-   for ( int iy = 0 ; iy < 8 ; iy++ ) {
-    chs[ix][iy] = new Chunk(x * 8 + ix, y * 8 + iy);
+  for ( int ix = 0 ; ix <= 7 ; ix++ ) {
+   for ( int iy = 0 ; iy <= 7 ; iy++ ) {
+    for ( int iz = 0 ; iz <= 7 ; iz++ ) {
+     map.put(new ChunkPos(pos.gX() * 8 + ix, pos.gY() * 8 + iy, iz), new Chunk(new ChunkPos(pos.gX() * 8 + ix, pos.gY() * 8 + iy, iz)));
+    }
    }
   }
  }
-
- public OctChunk ( String nm, int x, int y, Chunk[][] ch ) {
-  this.dir = main.Main.DIR + "saves/" + nm + "/rg/";
-  fl = "region" + x + "" + y + ".rg";
-
-  this.x = x;
-  this.y = y;
-  this.chs = ch;
- }
-
+ 
  public void tick () {
-  for ( Chunk[] ch1 : chs ) {
-   for ( Chunk ch : ch1 ) {
-    ch.tick();
-   }
-  }
+  
  }
 
  public String getD () {
   return dir + fl;
  }
 
- public Chunk getCh ( int x, int y ) {
-  return chs[x][y];
+ public Chunk getCh ( ChunkPos pos) {
+  return this.map.get(pos);
  }
 
- public ArrayList<Chunk> getAllCh () {
-  ArrayList<Chunk> c = new ArrayList<>();
-  for ( int cx = 0 ; cx < 8 ; cx++ ) {
-   for ( int cy = 0 ; cy < 8 ; cy++ ) {
-    c.add(chs[cx][cy]);
-   }
-  }
-  return c;
+ public Collection<Chunk> getAllCh () {
+  return this.map.values();
  }
 
  public OctChunkId getId () {

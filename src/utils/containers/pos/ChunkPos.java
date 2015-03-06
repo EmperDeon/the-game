@@ -13,6 +13,6 @@ public class ChunkPos extends Position {
 
  @Override
  public String toString () {
-  return "Block: x = " + x + "; y = " + y + "; z = " + z + ";";
+  return "Chunk: x = " + x + "; y = " + y + "; z = " + z + ";";
  }
 }
