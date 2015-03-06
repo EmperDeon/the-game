@@ -16,7 +16,7 @@ public class CraftE {
   this.param = new ArrayList<>();
   this.param.addAll(Arrays.asList(param));
  }
- 
+
  public CraftE ( Integer type, String grid, String elements, List param ) {
   this.type = type;
   this.grid = grid;

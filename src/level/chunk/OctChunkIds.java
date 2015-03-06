@@ -1,6 +1,6 @@
 package level.chunk;
 
-import utils.ids.OctChunkId;
+import utils.containers.ids.OctChunkId;
 import java.io.*;
 import java.util.ArrayList;
 import main.Main;

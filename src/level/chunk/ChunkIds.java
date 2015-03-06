@@ -1,6 +1,6 @@
 package level.chunk;
 
-import utils.ids.ChunkId;
+import utils.containers.ids.ChunkId;
 import java.util.ArrayList;
 
 public class ChunkIds {

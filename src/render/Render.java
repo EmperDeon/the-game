@@ -7,7 +7,7 @@ import org.fenggui.event.key.*;
 import org.fenggui.event.mouse.*;
 import render.gui.Gui;
 import utils.exceptions.TermEx;
-import utils.vec.Vec2;
+import utils.containers.vec.Vec2;
 
 public class Render implements Runnable {
 

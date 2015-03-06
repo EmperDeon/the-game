@@ -1,12 +1,12 @@
 package mods.basemod;
 
-import utils.ids.Mid;
+import utils.containers.ids.Mid;
 import java.io.*;
 import java.net.*;
 import mods.basemod.containers.*;
 import mods.basemod.interfaces.BaseMod;
 import utils.Unzipper;
-import utils.json.JSONObject;
+import utils.containers.json.JSONObject;
 
 public class TextMod implements BaseMod {
 

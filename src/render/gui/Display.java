@@ -8,8 +8,8 @@ import org.fenggui.IWidget;
 import org.fenggui.binding.render.*;
 import org.fenggui.binding.render.jogl.JOGLBinding;
 import org.fenggui.event.WidgetListChangedEvent;
-import utils.GuiId;
-import utils.vec.Vec2;
+import utils.containers.ids.GuiId;
+import utils.containers.vec.Vec2;
 
 public class Display extends org.fenggui.Display {
 

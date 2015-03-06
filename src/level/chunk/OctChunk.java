@@ -1,7 +1,7 @@
 package level.chunk;
 
-import utils.ids.OctChunkId;
-import utils.ids.ChunkId;
+import utils.containers.ids.OctChunkId;
+import utils.containers.ids.ChunkId;
 import java.io.Serializable;
 import java.util.ArrayList;
 

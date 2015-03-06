@@ -1,12 +1,12 @@
 package mods.basemod.containers;
 
-import utils.ids.Rid;
+import utils.containers.ids.Rid;
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 import static main.Main.LOG;
 import mods.basemod.*;
-import utils.json.JSONObject;
+import utils.containers.json.JSONObject;
 
 public class Resources {
 

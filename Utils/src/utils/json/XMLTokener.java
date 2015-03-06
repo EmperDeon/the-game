@@ -76,6 +76,8 @@ public class XMLTokener extends JSONTokener {
   * Get the next XML outer token, trimming whitespace. There are two kinds of tokens: the '<' character which begins a markup tag, and the content text between markup tags. <p>
   * @return A string, or a '<' Character, or null if there is no more source tex
   * <p>
+  * <p>
+  * <p>
   * <
   * <p>
   * <p>

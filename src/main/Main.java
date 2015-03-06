@@ -5,7 +5,7 @@ import main.dev.*;
 import mods.basemod.containers.ModsContainer;
 import render.Render;
 import utils.*;
-import utils.json.JSONObject;
+import utils.containers.json.JSONObject;
 
 public final class Main implements Runnable {
 

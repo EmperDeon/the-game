@@ -2,7 +2,7 @@ package main.dev;
 
 import com.trolltech.qt.gui.*;
 import java.util.*;
-import utils.json.JSONObject;
+import utils.containers.json.JSONObject;
 
 public final class OptionsEditor extends QMainWindow {
  private final QTableWidget prop;

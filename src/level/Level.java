@@ -1,10 +1,10 @@
 package level;
 
-import utils.ids.ChunkId;
 import java.io.File;
 import level.chunk.*;
+import utils.containers.ids.ChunkId;
+import utils.containers.json.JSONObject;
 import utils.exceptions.TermEx;
-import utils.json.JSONObject;
 
 public class Level {
  private final int chpr = 8;
@@ -12,10 +12,10 @@ public class Level {
  private final ChunkContainer rch;
  private final String name;
  public Boolean loaded = false;
- public ChunkId pos = new ChunkId(0, 0);
+ public ChunkId pos = new ChunkId(0, 0, 0);
 
  private JSONObject options;
- 
+
  public Level ( String name ) throws TermEx {
   File f = new File(main.Main.DIR + "saves/" + name + "/rg");
   if ( f.canRead() && f.listFiles() != null ) { // Created ?   

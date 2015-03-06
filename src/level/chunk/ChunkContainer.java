@@ -1,12 +1,12 @@
 package level.chunk;
 
-import utils.ids.ChunkId;
+import utils.containers.ids.ChunkId;
 import java.io.*;
 import java.util.*;
 import main.Main;
 import mods.basemod.LevBlock;
 import utils.exceptions.TermEx;
-import utils.vec.Vec3;
+import utils.containers.vec.Vec3;
 
 public final class ChunkContainer {
 

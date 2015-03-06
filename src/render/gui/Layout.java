@@ -4,8 +4,8 @@ import java.util.*;
 import org.fenggui.IWidget;
 import org.fenggui.binding.render.Pixmap;
 import org.fenggui.util.Dimension;
-import utils.GuiId;
-import utils.vec.Vec2;
+import utils.containers.ids.GuiId;
+import utils.containers.vec.Vec2;
 
 public class Layout {
 

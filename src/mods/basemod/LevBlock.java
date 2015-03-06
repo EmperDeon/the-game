@@ -2,9 +2,9 @@ package mods.basemod;
 
 import java.io.Serializable;
 import java.util.Map;
-import utils.ids.Mid;
+import utils.containers.ids.Mid;
 import mods.basemod.resources.Model;
-import utils.json.JSONObject;
+import utils.containers.json.JSONObject;
 
 public class LevBlock extends IItem implements Serializable {
 

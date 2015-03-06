@@ -1,7 +1,7 @@
 package render;
 
-import utils.ids.TId;
-import utils.vec.Vec3;
+import utils.containers.ids.TId;
+import utils.containers.vec.Vec3;
 
 public class RendTexCoord {
 

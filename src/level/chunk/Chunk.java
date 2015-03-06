@@ -1,21 +1,14 @@
 package level.chunk;
 
-import utils.ids.TId;
-import utils.ids.ChunkId;
 import java.io.Serializable;
-import java.util.ArrayList;
 import mods.basemod.LevBlock;
 import render.*;
-import utils.vec.Vec3;
+import utils.containers.ids.*;
+import utils.containers.vec.Vec3;
 
 public class Chunk implements Serializable {
-
- public LevBlock[][][] blocks;
- public int idx;
- public int idy;
- public ArrayList<RendTexCoord> Texrend;
- public ChunkId id;
-
+ private ChunkId id;
+ private HashMap<
  public Chunk ( int x, int y ) {
   this.idx = x;
   this.idy = y;

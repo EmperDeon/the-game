@@ -1,7 +1,7 @@
 package mods.basemod.containers;
 
-import utils.ids.Mid;
-import utils.ids.Aid;
+import utils.containers.ids.Mid;
+import utils.containers.ids.Aid;
 import java.io.Serializable;
 import java.util.TreeMap;
 import mods.basemod.interfaces.*;

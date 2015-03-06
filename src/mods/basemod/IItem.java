@@ -2,10 +2,10 @@ package mods.basemod;
 
 import java.io.Serializable;
 import java.util.*;
-import utils.ids.Mid;
+import utils.containers.ids.Mid;
 import mods.basemod.interfaces.InvItem;
 import mods.basemod.resources.Model;
-import utils.json.JSONObject;
+import utils.containers.json.JSONObject;
 
 public class IItem implements Serializable, InvItem {
 

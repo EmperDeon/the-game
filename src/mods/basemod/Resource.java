@@ -1,6 +1,6 @@
 package mods.basemod;
 
-import utils.ids.Rid;
+import utils.containers.ids.Rid;
 import java.io.Serializable;
 import static main.Main.LOG;
 import mods.basemod.resources.*;

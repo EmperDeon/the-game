@@ -1,7 +1,8 @@
 package level.player;
 
+import utils.containers.vec.Vec3;
+import utils.containers.vec.Vec2;
 import level.Level;
-import utils.vec.*;
 
 public class Player {
 

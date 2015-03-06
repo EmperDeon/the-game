@@ -7,10 +7,10 @@ import javax.swing.*;
 import javax.tools.*;
 import main.Main;
 import mods.basemod.*;
-import utils.ids.Mid;
 import mods.basemod.resources.Model;
 import utils.*;
-import utils.json.JSONObject;
+import utils.containers.ids.Mid;
+import utils.containers.json.JSONObject;
 
 public final class ModEditor extends QMainWindow {
  private final ItemsTab itab;
@@ -43,7 +43,7 @@ public final class ModEditor extends QMainWindow {
 
   bsave.clicked.connect(this, "save()");
   bgen.clicked.connect(this, "gen()");
-  
+
   mainLayout.addLayout(panel);
   mainLayout.addWidget(tabs);
   mainW.setLayout(mainLayout);
@@ -203,12 +203,12 @@ public final class ModEditor extends QMainWindow {
   }
 
   public void save ( JSONObject o ) {
-      JSONObject t = new JSONObject();
+   JSONObject t = new JSONObject();
    IItem e;
    for ( int i = 0 ; i < list.size() ; i++ ) {
     e = list.get(i);
     e.toJSON(t);
-    o.put("Item" + i , t);
+    o.put("Item" + i, t);
     t.clear();
    }
   }
@@ -226,14 +226,14 @@ public final class ModEditor extends QMainWindow {
   private final QLineEdit pkey;
   public final List<CraftE> list = new ArrayList<>();
   public final List<String> pmap = new ArrayList<>();
-  
+
   public CraftTab () {
    QVBoxLayout main = new QVBoxLayout();
    QHBoxLayout form3 = new QHBoxLayout();
    QFormLayout form = new QFormLayout();
    QVBoxLayout form2 = new QVBoxLayout();
    QHBoxLayout form4 = new QHBoxLayout();
-   
+
    view = new QTableWidget();
    type = new QLineEdit();
    elements = new QLineEdit();
@@ -242,7 +242,7 @@ public final class ModEditor extends QMainWindow {
    prop = new QTableWidget();
    padd = new QPushButton("Add");
    pkey = new QLineEdit();
-   
+
    view.insertColumn(0);
    view.setColumnWidth(0, 40);
    view.insertColumn(1);
@@ -257,23 +257,23 @@ public final class ModEditor extends QMainWindow {
    prop.insertColumn(0);
    prop.setColumnWidth(0, 300);
 
-   prop.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Key"}));
+   prop.setHorizontalHeaderLabels(Arrays.asList(new String[]{ "Key" }));
    prop.setMaximumSize(800, 90);
    prop.setMinimumSize(100, 90);
-   
+
    padd.clicked.connect(this, "padd()");
    badd.clicked.connect(this, "add()");
-   
+
    form2.addWidget(prop);
    form4.addWidget(pkey);
    form4.addWidget(padd);
    form2.addLayout(form4);
-   
+
    form.addRow("Type:", type);
    form.addRow("Elements: ", elements);
    form.addRow("Grid:", size);
    form.addRow(badd);
-   
+
    form3.addLayout(form);
    form3.addLayout(form2);
 
@@ -293,14 +293,14 @@ public final class ModEditor extends QMainWindow {
    view.setItem(row, 3, new QTableWidgetItem(e.getParams()));
   }
 
-  public void add ( Integer type, String grid, String elements , List param) {
+  public void add ( Integer type, String grid, String elements, List param ) {
    add(new CraftE(type, grid, elements, param));
   }
 
   public void add ( Integer type, String grid, String elements ) {
    add(new CraftE(type, grid, elements));
   }
-  
+
   public void add () {
    add(Integer.parseInt(type.text()), size.text(), elements.text(), pmap);
   }
@@ -311,7 +311,7 @@ public final class ModEditor extends QMainWindow {
    this.prop.insertRow(row);
    this.prop.setItem(row, 0, new QTableWidgetItem(this.pkey.text()));
   }
-  
+
   public int lsize () {
    return this.list.size();
   }
@@ -325,10 +325,10 @@ public final class ModEditor extends QMainWindow {
    CraftE e;
    for ( int i = 0 ; i < list.size() ; i++ ) {
     e = list.get(i);
-    t.put("Type" , e.getType());
-    t.put("Grid" , e.getGrid());
-    t.put("Elements" , e.getElements());
-    o.put("Craft" + i , t);
+    t.put("Type", e.getType());
+    t.put("Grid", e.getGrid());
+    t.put("Elements", e.getElements());
+    o.put("Craft" + i, t);
     t.clear();
    }
   }
