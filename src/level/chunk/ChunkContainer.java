@@ -1,6 +1,6 @@
 package level.chunk;
 
-import utils.containers.ids.ChunkId;
+import utils.containers.pos.ChunkPos;
 import java.io.*;
 import java.util.*;
 import main.Main;
@@ -10,8 +10,8 @@ import utils.containers.vec.Vec3;
 
 public final class ChunkContainer {
 
- private final HashMap<ChunkId, Chunk> chs = new HashMap();
- private final HashSet<ChunkId> rch = new HashSet<>();
+ private final HashMap<ChunkPos, Chunk> chs = new HashMap();
+ private final HashSet<ChunkPos> rch = new HashSet<>();
  private final OctChunkIds oids;
 
  private final String dir;//  game/save/name/
@@ -25,7 +25,7 @@ public final class ChunkContainer {
 
   oids = new OctChunkIds(dir);
 
-  load(new ChunkId(0, 0), 8);
+  load(new ChunkPos(0, 0), 8);
 
  }
 
@@ -66,7 +66,7 @@ public final class ChunkContainer {
   }
  }
 
- public void load ( ChunkId pos, int chpr ) {
+ public void load ( ChunkPos pos, int chpr ) {
   int x1 = (pos.x - chpr) / 8;
   int x2 = (pos.x + chpr) / 8;
   int y1 = (pos.y - chpr) / 8;
@@ -79,12 +79,12 @@ public final class ChunkContainer {
   }
  }
 
- public void redact ( ChunkId cid, Vec3<Integer> bpos, LevBlock block ) {
+ public void redact ( ChunkPos cid, Vec3<Integer> bpos, LevBlock block ) {
   chs.get(cid).redact(bpos, block);
   rch.add(cid);
  }
 
- public void redactObl ( ChunkId cid, Vec3<Integer> pos1, Vec3<Integer> pos2,
+ public void redactObl ( ChunkPos cid, Vec3<Integer> pos1, Vec3<Integer> pos2,
                          LevBlock block ) {
   chs.get(cid).redactObl(pos1, pos2, block);
   rch.add(cid);
@@ -102,7 +102,7 @@ public final class ChunkContainer {
  }
 
  public boolean test ( int x, int y ) {
-  return chs.containsKey(new ChunkId(x, y));
+  return chs.containsKey(new ChunkPos(x, y));
  }
 
  public void clear () {
@@ -110,12 +110,12 @@ public final class ChunkContainer {
  }
 
  public void free ( int x, int y ) {
-  chs.remove(new ChunkId(x, y));
+  chs.remove(new ChunkPos(x, y));
  }
 
  public void save () {
   if ( !rch.isEmpty() ) {
-   for ( ChunkId id : rch ) {
+   for ( ChunkPos id : rch ) {
     String file = oids.search(id.x, id.y);
 
     OctChunk oc;
@@ -147,6 +147,6 @@ public final class ChunkContainer {
  }
 
  public Chunk get ( int x, int y ) {
-  return chs.get(new ChunkId(x, y));
+  return chs.get(new ChunkPos(x, y));
  }
 }

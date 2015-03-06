@@ -1,12 +1,16 @@
 package mods.basemod;
 
 import java.io.Serializable;
-import java.util.Map;
-import utils.containers.ids.Mid;
+import java.util.*;
 import mods.basemod.resources.Model;
+import utils.containers.ids.Mid;
 import utils.containers.json.JSONObject;
 
 public class LevBlock extends IItem implements Serializable {
+
+ public LevBlock () {
+  super(new Mid("main", "base"), new Model(new Mid("main", "base"), "base"), new TreeMap<>());
+ }
 
  public LevBlock ( Mid id, Model model, Map<String, String> map ) {
   super(id, model, map);

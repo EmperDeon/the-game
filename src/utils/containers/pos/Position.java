@@ -1,14 +1,13 @@
-package utils.containers.ids;
-
+package utils.containers.pos;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ChunkId implements Serializable, Comparable {
- private Integer x;
- private Integer y;
- private Integer z;
+public class Position implements Serializable, Comparable {
+ protected Integer x;
+ protected Integer y;
+ protected Integer z;
 
- public ChunkId ( int x, int y, int z ) {
+ public Position ( int x, int y, int z ) {
   this.x = x;
   this.y = y;
   this.z = z;
@@ -16,8 +15,8 @@ public class ChunkId implements Serializable, Comparable {
 
  @Override
  public int compareTo ( Object o ) {
-  if ( o instanceof ChunkId ) {
-   ChunkId t = (ChunkId) o;
+  if ( o instanceof Position ) {
+   Position t = (Position) o;
    if ( x != null && y != null && z != null && t.x != null && t.y != null && t.z != null ) {
     int tx = t.x.compareTo(x);
     int ty = t.y.compareTo(y);
@@ -58,7 +57,7 @@ public class ChunkId implements Serializable, Comparable {
   if ( getClass() != obj.getClass() ) {
    return false;
   }
-  ChunkId t = (ChunkId) obj;
+  Position t = (Position) obj;
   return Objects.equals(t.x, x) && Objects.equals(t.y, y) && Objects.equals(t.z, z);
  }
 

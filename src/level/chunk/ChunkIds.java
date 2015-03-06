@@ -1,12 +1,12 @@
 package level.chunk;
 
-import utils.containers.ids.ChunkId;
+import utils.containers.pos.ChunkPos;
 import java.util.ArrayList;
 
 public class ChunkIds {
 
  private final ArrayList<Integer> id = new ArrayList<>();
- private final ArrayList<ChunkId> chid = new ArrayList<>();
+ private final ArrayList<ChunkPos> chid = new ArrayList<>();
 
  public ChunkIds () {
   // 
@@ -14,7 +14,7 @@ public class ChunkIds {
 
  public int getIdC ( int x, int y ) {
   int i = 0;
-  for ( ChunkId ch : chid ) {
+  for ( ChunkPos ch : chid ) {
    if ( ch.test(x, y) ) {
     return i;
    }
@@ -25,10 +25,10 @@ public class ChunkIds {
 
  public void add ( int i, int x, int y ) {
   id.add(i);
-  chid.add(new ChunkId(x, y));
+  chid.add(new ChunkPos(x, y));
  }
 
- public ChunkId getId ( int i ) {
+ public ChunkPos getId ( int i ) {
   return chid.get(i);
  }
 
@@ -38,7 +38,7 @@ public class ChunkIds {
  }
 
  public boolean test ( int x, int y ) {
-  for ( ChunkId chid1 : chid ) {
+  for ( ChunkPos chid1 : chid ) {
    if ( chid1.test(x, y) ) {
     return true;
    }
@@ -48,7 +48,7 @@ public class ChunkIds {
 
  public void free ( int x, int y ) {
   int i = 0;
-  for ( ChunkId ch : chid ) {
+  for ( ChunkPos ch : chid ) {
    if ( ch.test(x, y) ) {
     id.remove(i);
     chid.remove(i);

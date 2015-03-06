@@ -2,7 +2,7 @@ package level;
 
 import java.io.File;
 import level.chunk.*;
-import utils.containers.ids.ChunkId;
+import utils.containers.pos.ChunkPos;
 import utils.containers.json.JSONObject;
 import utils.exceptions.TermEx;
 
@@ -12,7 +12,7 @@ public class Level {
  private final ChunkContainer rch;
  private final String name;
  public Boolean loaded = false;
- public ChunkId pos = new ChunkId(0, 0, 0);
+ public ChunkPos pos = new ChunkPos(0, 0, 0);
 
  private JSONObject options;
 
