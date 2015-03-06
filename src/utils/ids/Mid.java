@@ -1,4 +1,4 @@
-package mods.basemod.containers;
+package utils.ids;
 
 import java.io.Serializable;
 import utils.vec.Vec3;

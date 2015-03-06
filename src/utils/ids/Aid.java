@@ -1,4 +1,4 @@
-package mods.basemod.containers;
+package utils.ids;
 
 public class Aid extends Mid {
 

@@ -1,8 +1,9 @@
 package mods.basemod.resources;
 
+import utils.ids.Rid;
 import java.io.Serializable;
 import mods.basemod.*;
-import mods.basemod.containers.Mid;
+import utils.ids.Mid;
 
 public class Model extends Resource implements Serializable {
 

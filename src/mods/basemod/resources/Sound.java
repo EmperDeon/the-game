@@ -1,5 +1,6 @@
 package mods.basemod.resources;
 
+import utils.ids.Rid;
 import mods.basemod.*;
 
 public class Sound extends Resource {

@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.tools.*;
 import main.Main;
 import mods.basemod.*;
-import mods.basemod.containers.Mid;
+import utils.ids.Mid;
 import mods.basemod.resources.Model;
 import utils.*;
 import utils.json.JSONObject;

@@ -1,5 +1,6 @@
 package mods.basemod.containers;
 
+import utils.ids.Mid;
 import java.util.*;
 
 public class Dictionary {

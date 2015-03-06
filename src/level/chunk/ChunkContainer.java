@@ -1,5 +1,6 @@
 package level.chunk;
 
+import utils.ids.ChunkId;
 import java.io.*;
 import java.util.*;
 import main.Main;

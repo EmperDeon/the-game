@@ -2,7 +2,7 @@ package mods.basemod;
 
 import java.io.Serializable;
 import java.util.*;
-import mods.basemod.containers.Mid;
+import utils.ids.Mid;
 import mods.basemod.interfaces.InvItem;
 import mods.basemod.resources.Model;
 import utils.json.JSONObject;

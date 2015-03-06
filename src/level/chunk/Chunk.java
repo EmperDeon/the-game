@@ -1,5 +1,7 @@
 package level.chunk;
 
+import utils.ids.TId;
+import utils.ids.ChunkId;
 import java.io.Serializable;
 import java.util.ArrayList;
 import mods.basemod.LevBlock;

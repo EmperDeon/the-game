@@ -21,7 +21,7 @@ public final class Main implements Runnable {
                                                  "user.dir").lastIndexOf("/") + 1);
  }
 
- public final static JSONObject OPTIONS = new JSONObject(DIR + "options.db");
+ public final static JSONObject OPTIONS = new JSONObject(DIR + "options.json");
  public final static MActionListener ACTIONS = new MActionListener();
  public final static ModsContainer MODS = new ModsContainer();
  public final static Translator TRANSLATE = new Translator();

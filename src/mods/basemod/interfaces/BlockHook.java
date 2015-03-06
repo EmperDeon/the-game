@@ -1,6 +1,6 @@
 package mods.basemod.interfaces;
 
-import mods.basemod.containers.Mid;
+import utils.ids.Mid;
 
 public interface BlockHook {
 

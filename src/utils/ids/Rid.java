@@ -1,7 +1,8 @@
-package mods.basemod;
+package utils.ids;
 
+import mods.basemod.Resource;
 import mods.basemod.Resource.Type;
-import mods.basemod.containers.Mid;
+import utils.ids.Mid;
 
 public class Rid extends Mid implements Comparable {
 

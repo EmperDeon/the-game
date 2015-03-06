@@ -1,4 +1,4 @@
-package level.chunk;
+package utils.ids;
 
 import java.io.Serializable;
 
@@ -12,13 +12,4 @@ public class OctChunkId implements Serializable {
   this.name = name;
  }
 
- public String test ( int x, int y ) {
-  for ( ChunkId id : ids ) {
-   if ( id.test(x, y) ) {
-    return this.name;
-   }
-  }
-
-  return null;
- }
 }
