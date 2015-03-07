@@ -8,5 +8,4 @@ public final class ChunkContainer {
  private final Set<ChunkPos> rch = new HashSet<>();// Edited chunks
  private final RegionIds oids = new RegionIds();
 
- 
 }

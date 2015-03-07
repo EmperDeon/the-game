@@ -19,6 +19,10 @@ public class Logger implements Serializable {
   main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
    main.Main.LOG.export("now.log");
   });
+  System.getProperties().stringPropertyNames().stream().
+     forEach(( e ) -> {
+      addI(e + ": " + System.getProperties().getProperty(e));
+     });
  }
 
  public void addE ( String ex ) {

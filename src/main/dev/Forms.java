@@ -1,5 +1,6 @@
 package main.dev;
 import static main.Main.OPTIONS;
+import utils.Translator;
 
 public class Forms {
  public ModEditor modeditor;
@@ -7,9 +8,10 @@ public class Forms {
  public LevelEditor leveleditor;
  public OptionsEditor optionseditor;
  public DevForm devform;
+ public Translator TRANSLATE;
 
  public Forms () {
-
+  TRANSLATE = new Translator();
  }
 
  public void init () {
