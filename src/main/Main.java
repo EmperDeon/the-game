@@ -2,7 +2,7 @@ package main;
 
 import com.trolltech.qt.gui.QApplication;
 import main.dev.*;
-import mods.basemod.containers.ModsContainer;
+import mods.basemod.containers.*;
 import render.Render;
 import utils.*;
 import utils.containers.json.JSONObject;
@@ -14,18 +14,15 @@ public final class Main implements Runnable {
  public final static Thread Tm = new Thread(main);
  public final static Thread Tr = new Thread(rend);
 
- public final static String DIR;
-
- static {
-  DIR = System.getProperty("user.dir").substring(0, System.getProperty(
-                                                 "user.dir").lastIndexOf("/") + 1);
- }
-
+ public final static String DIR = System.getProperty("user.dir").substring(0, System.getProperty("user.dir").lastIndexOf("/") + 1);
+ 
  public final static JSONObject OPTIONS = new JSONObject(DIR + "options.json");
- public final static MActionListener ACTIONS = new MActionListener();
- public final static ModsContainer MODS = new ModsContainer();
+ public final static Server SERVER = new Server();
+ 
  public final static Translator TRANSLATE = new Translator();
 
+ 
+ 
  public static ModEditor modeditor;
  public static ModelEditor modeleditor;
  public static LevelEditor leveleditor;
@@ -35,9 +32,6 @@ public final class Main implements Runnable {
 
  public final static Logger LOG = new Logger();
 
-// public final static Resources RES = new Resources();
-// public final static Repository REP = new Repository();
- public boolean running = true;
 
  @Override
  public void run () {
@@ -45,7 +39,7 @@ public final class Main implements Runnable {
      forEach(( e ) -> {
       LOG.addI(e + ": " + System.getProperties().getProperty(e));
      });
-  MODS.load();
+  SERVER.getMods().load();
   LibLoader.loadLibs();
  }
 

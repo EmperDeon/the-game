@@ -6,13 +6,13 @@ import utils.containers.pos.*;
 
 public class Region implements Serializable {
  private final Map<ChunkPos, Chunk> map = new HashMap<>();
- private final OctChunkPos pos;
+ private final RegionPos pos;
 
  public Region ( String nm, int x, int y ) {
 //  this.dir = main.Main.DIR + "saves/" + nm + "/rg/";
 //  fl = "region" + x + "" + y + ".rg";
 
-  pos = new OctChunkPos(x, y);
+  pos = new RegionPos(x, y);
 
   for ( int ix = 0 ; ix <= 7 ; ix++ ) {
    for ( int iy = 0 ; iy <= 7 ; iy++ ) {

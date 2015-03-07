@@ -1,8 +1,8 @@
 package utils.containers.pos;
 
-public class OctChunkPos extends Position {
+public class RegionPos extends Position {
 
- public OctChunkPos ( int x, int y ) {
+ public RegionPos ( int x, int y ) {
   super(x, y, 0);
  }
 

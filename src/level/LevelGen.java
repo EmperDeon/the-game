@@ -7,15 +7,17 @@ import utils.containers.pos.*;
 
 public class LevelGen {
  private final Random random;
- 
+ private boolean sseed;
  public LevelGen ( long seed ) {
   this.random = new Random(seed);
+  sseed = true;
  }
- 
+
  public LevelGen () {
   this.random = new Random();
+  sseed = false;
  }
- 
+
  public void gen ( Chunk ch ) {
   Map<BlockPos, LevBlock> map = ch.getMap();
   for ( int x = 0 ; x < 16 ; x++ ) {
@@ -28,11 +30,16 @@ public class LevelGen {
    }
   }
  }
- 
+
  public void setSeed ( long seed ) {
   this.random.setSeed(seed);
+  sseed = true;
  }
- 
+
+ public boolean isSeed () {
+  return sseed;
+ }
+
 // public byte[] generateMap () {
 //  int w = this.width;
 //  int h = this.height;

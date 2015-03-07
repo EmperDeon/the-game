@@ -16,7 +16,7 @@ public class Logger implements Serializable {
  private final ArrayList<LogEn> list = new ArrayList<>();
 
  public Logger () {
-  main.Main.ACTIONS.addT("loggerExport", 200, ( ActionEvent e ) -> {
+  main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
    main.Main.LOG.export("now.log");
   });
  }
