@@ -1,6 +1,7 @@
 package main.dev;
 
 import com.trolltech.qt.gui.*;
+import main.Main;
 import utils.qt.QTreeModel;
 
 public class DevForm extends QMainWindow {
@@ -50,19 +51,19 @@ public class DevForm extends QMainWindow {
  }
 
  public void options () {
-  main.Main.optionseditor.show();
+  Main.FORMS.optionseditor.show();
  }
 
  public void mods () {
-  main.Main.modeditor.show();
+  Main.FORMS.modeditor.show();
  }
 
  public void models () {
-  main.Main.modeditor.show();
+  Main.FORMS.modeditor.show();
  }
 
  public void level () {
-  main.Main.leveleditor.show();
+  Main.FORMS.leveleditor.show();
  }
 
  public void reinit () {
