@@ -2,7 +2,7 @@ package utils.containers.pos;
 import level.chunk.Chunk;
 
 public class ChunkPos extends Position {
- 
+
  public ChunkPos ( Chunk c ) {
   super(c.getId().x, c.getId().y, c.getId().z);
  }

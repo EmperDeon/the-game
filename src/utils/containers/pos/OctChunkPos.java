@@ -1,7 +1,7 @@
 package utils.containers.pos;
 
 public class OctChunkPos extends Position {
- 
+
  public OctChunkPos ( int x, int y ) {
   super(x, y, 0);
  }

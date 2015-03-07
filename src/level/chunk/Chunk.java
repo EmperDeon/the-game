@@ -9,7 +9,7 @@ public class Chunk implements Serializable {
  private final ChunkPos id;
  private final Map<BlockPos, LevBlock> map = new HashMap<>();
 
- public Chunk ( ChunkPos pos) {
+ public Chunk ( ChunkPos pos ) {
   this.id = pos;
   //gen();
 

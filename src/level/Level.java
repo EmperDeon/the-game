@@ -52,7 +52,7 @@ public class Level {
  /*
   * public void tick(){ for(int i=0;i<ch.size();i++) ch.get(i).tick(); * }
   */
- public Chunk get ( ChunkPos pos) {
+ public Chunk get ( ChunkPos pos ) {
   return rch.get(pos);
  }
 

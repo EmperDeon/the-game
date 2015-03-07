@@ -15,10 +15,10 @@ public final class ChunkContainer {
 
  private String dir;//  game/save/name/
 
- public ChunkContainer(){
-  
+ public ChunkContainer () {
+
  }
- 
+
  public ChunkContainer ( String dir ) throws TermEx {
   this.dir = dir;
 
@@ -87,7 +87,7 @@ public final class ChunkContainer {
   rch.add(cid);
  }
 
- public void redactObl ( ChunkPos cid, BlockPos pos1 , BlockPos pos2,
+ public void redactObl ( ChunkPos cid, BlockPos pos1, BlockPos pos2,
                          LevBlock block ) {
   chs.get(cid).redactObl(pos1, pos2, block);
   rch.add(cid);
@@ -108,7 +108,7 @@ public final class ChunkContainer {
   chs.clear();
  }
 
- public void free (ChunkPos pos) {
+ public void free ( ChunkPos pos ) {
   chs.remove(pos);
  }
 
@@ -145,7 +145,7 @@ public final class ChunkContainer {
   }
  }
 
- public Chunk get (ChunkPos pos) {
+ public Chunk get ( ChunkPos pos ) {
   return chs.get(pos);
  }
 }

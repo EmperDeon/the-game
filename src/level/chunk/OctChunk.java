@@ -26,16 +26,16 @@ public class OctChunk implements Serializable {
    }
   }
  }
- 
+
  public void tick () {
-  
+
  }
 
  public String getD () {
   return dir + fl;
  }
 
- public Chunk getCh ( ChunkPos pos) {
+ public Chunk getCh ( ChunkPos pos ) {
   return this.map.get(pos);
  }
 

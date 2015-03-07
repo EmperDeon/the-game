@@ -18,7 +18,7 @@ public final class OctChunkIds implements Serializable {
   load();
  }
 
- public void load (){
+ public void load () {
   File d = new File(this.dir);
   if ( d.canRead() ) {
    File f = new File(this.file);
@@ -29,7 +29,7 @@ public final class OctChunkIds implements Serializable {
      this.chids = ((ArrayList<OctChunkId>) o.readObject());
     } catch ( IOException | ClassNotFoundException ex ) {
      main.Main.LOG.addE(ex);
-    // throw new TermEx(
+     // throw new TermEx(
      //   "ChunkContainer . OctChunkIds . load() - error read OctChunk");
     }
    } else {
@@ -43,14 +43,14 @@ public final class OctChunkIds implements Serializable {
       OctChunk o = (OctChunk) fi.readObject();
 
      } catch ( IOException | ClassNotFoundException ex ) {
-     // throw new TermEx("ChunkContainer . OctChunkIds . load() - error read rg/");
+      // throw new TermEx("ChunkContainer . OctChunkIds . load() - error read rg/");
      }
 
     }
     save();
    }
   } else {
-  // throw new TermEx("ChunkContainer . OctChunkIds . load() - no rg/");
+   // throw new TermEx("ChunkContainer . OctChunkIds . load() - no rg/");
   }
  }
 
@@ -78,9 +78,9 @@ public final class OctChunkIds implements Serializable {
   this.file = dir + "OctChIds.db";
  }
 
- public String search ( ChunkPos pos) {
+ public String search ( ChunkPos pos ) {
   for ( OctChunkId id : chids ) {
-   
+
   }
   return null;
  }
