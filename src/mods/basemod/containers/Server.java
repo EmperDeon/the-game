@@ -1,4 +1,5 @@
 package mods.basemod.containers;
+import java.awt.event.ActionEvent;
 import level.Level;
 import level.player.Player;
 import utils.MActionListener;
@@ -11,6 +12,12 @@ public class Server {
  // public final static Resources RES = new Resources();
  // public final static Repository REP = new Repository();
  private boolean running = true;
+
+ private void init () {
+  main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
+   main.Main.LOG.export("now.log");
+  });
+ }
 
  public MActionListener getActions () {
   return actions;

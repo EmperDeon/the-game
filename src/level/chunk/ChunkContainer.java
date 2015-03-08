@@ -14,5 +14,8 @@ public final class ChunkContainer {
   oids = new RegionIds();
  }
  
+ public void destroy () {
+ 
+ }
  
 }

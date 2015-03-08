@@ -1,6 +1,5 @@
 package utils;
 
-import java.awt.event.ActionEvent;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -16,9 +15,6 @@ public class Logger implements Serializable {
  private final List<LogEn> list = new ArrayList<>();
 
  public Logger () {
-  main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
-   main.Main.LOG.export("now.log");
-  });
   System.getProperties().stringPropertyNames().stream().
      forEach(( e ) -> {
       this.list.add(new LogE(e + ": " + System.getProperties().getProperty(e), Type.debug));
