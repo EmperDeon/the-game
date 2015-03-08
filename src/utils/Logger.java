@@ -13,7 +13,7 @@ public class Logger implements Serializable {
   error, warning, info, debug
  }
 
- private final ArrayList<LogEn> list = new ArrayList<>();
+ private final List<LogEn> list = new ArrayList<>();
 
  public Logger () {
   main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
@@ -21,7 +21,7 @@ public class Logger implements Serializable {
   });
   System.getProperties().stringPropertyNames().stream().
      forEach(( e ) -> {
-      addI(e + ": " + System.getProperties().getProperty(e));
+      this.list.add(new LogE(e + ": " + System.getProperties().getProperty(e), Type.debug));
      });
  }
 
@@ -64,7 +64,7 @@ public class Logger implements Serializable {
    }
    out.flush();
   } catch ( Exception ex ) {
-   ex.printStackTrace();
+   ex.printStackTrace(System.err);
    System.err.println("Error in class Logger.export(" + file + ")");
   }
  }

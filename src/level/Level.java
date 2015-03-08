@@ -1,6 +1,7 @@
 package level;
 
 import level.chunk.*;
+import level.player.Player;
 import utils.containers.json.JSONObject;
 
 public class Level {
@@ -9,6 +10,7 @@ public class Level {
  private final ChunkContainer rch;
  private String name;
 
+ private Player player;
  private JSONObject options;
 
  public Level () {
@@ -16,4 +18,5 @@ public class Level {
   this.rch = new ChunkContainer();
  }
 
+ 
 }
