@@ -1,6 +1,7 @@
 package utils.containers.pos;
 import java.io.Serializable;
 import java.util.Objects;
+import utils.containers.vec.Vec3;
 
 public class Position implements Serializable, Comparable {
  protected Integer x;
@@ -88,5 +89,21 @@ public class Position implements Serializable, Comparable {
 
  public void sZ ( Integer z ) {
   this.z = z;
+ }
+
+ public Vec3<Integer> get () {
+  return new Vec3<>(x, y, z);
+ }
+
+ public void set ( int x, int y, int z ) {
+  this.x = x;
+  this.y = y;
+  this.z = z;
+ }
+
+ public void set ( Vec3<Integer> o ) {
+  this.x = o.gX();
+  this.y = o.gY();
+  this.z = o.gZ();
  }
 }

@@ -1,24 +1,37 @@
 package level.player;
 
-import level.Level;
 import utils.containers.pos.PlayerPos;
 import utils.containers.vec.Vec3;
 
 public class Player {
-
- private final String name = "";
  private final PlayerPos coord;
  private final Vec3<Double> cam = new Vec3<>();
- private final Level level;
 
  private Health health;
 
- public Player ( PlayerPos coord, Level level ) {
-  this.level = level;
-  this.coord = coord;
+ public Player () {
+  this.coord = new PlayerPos();
+ }
+ 
+ public void init ( PlayerPos coord, Health health ){
+  this.coord.init(coord);
+  this.health.init(health);
+ }
+ 
+ public Vec3<Double> getCam () {
+  return cam;
+ }
+ 
+ public PlayerPos getCoord () {
+  return coord;
+ }
+ 
+ public Health getHealth () {
+  return health;
  }
 
  public void tick () {
 
  }
+ 
 }
