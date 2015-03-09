@@ -27,6 +27,10 @@ public class RegionPos extends Position {
 
  @Override
  public String toString () {
-  return "OctChunk: x = " + x + "; y = " + y + "; z = " + z + ";";
+  return "Region: x = " + x + "; y = " + y + ";";
+ }
+ 
+ public String getName(){
+  return "region/region"+x+"-"+y+".rg";
  }
 }

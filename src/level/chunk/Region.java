@@ -22,5 +22,12 @@ public class Region implements Serializable {
    }
   }
  }
-
+ 
+ public RegionPos getPos(){
+  return pos;
+ }
+ 
+ public String getName(){
+  return pos.getName();
+ }
 }
