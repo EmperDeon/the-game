@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.*;
 import level.chunk.*;
 import level.player.Player;
+import static main.Main.LOG;
 import utils.containers.json.JSONObject;
 
 public class Level {
@@ -32,6 +33,10 @@ public class Level {
   dir = "";
  }
 
+ public void create ( String name ) {
+
+ }
+
  public void destroy () {
   rch.destroy();
   options.save(dbfile);
@@ -39,7 +44,7 @@ public class Level {
   clear();
  }
 
- public void init ( String name ) {
+ public synchronized void load ( String name ) {
   if ( !"".equals(name) ) {
    destroy();
   }
@@ -50,33 +55,34 @@ public class Level {
  }
 
  public void init () {
-  if ( checkJson() ) {
-   loadJson();
-   loadRegions();
+  LOG.addD("Started init level " + name);
+  if ( new File(this.dbfile).canRead() ) {
+   options.load(map.get(name));
+   this.rch.load(dir);
+
+   LOG.addD("Ended init level " + name);
   } else {
+   LOG.addE("Level " + name + " does not have level.json");
    clear();
   }
  }
 
- public boolean checkJson () {
-  return new File(this.dbfile).canRead();
- }
-
- public void loadJson () {
-
- }
- private void loadRegions () {
-
+ public Collection<JSONObject> getMap () {
+  return this.map.values();
  }
 
  private void updateDir () {
   File dir1 = new File(main.Main.DIR + "saves/");
-  for(File f : dir1.listFiles()){
-   this.map.put(f.getName(), new JSONObject(main.Main.DIR+"saves/"+f.getName()+"/level.db"));
+  for ( File f : dir1.listFiles() ) {
+   if ( new File(main.Main.DIR + "saves/" + f.getName() + "/level.db").canRead() ) {
+    this.map.put(f.getName(), new JSONObject(main.Main.DIR + "saves/" + f.getName() + "/level.db"));
+   } else {
+    main.Main.LOG.addE("Level " + f.getName() + " does not have level.json");
+   }
   }
  }
 
- private static class LevelComparator implements Comparator {
+ private final class LevelComparator implements Comparator {
   @Override
   public int compare ( Object o1, Object o2 ) {
    if ( o1 instanceof JSONObject && o2 instanceof JSONObject ) {

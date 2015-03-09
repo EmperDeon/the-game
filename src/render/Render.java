@@ -6,7 +6,6 @@ import org.fenggui.event.FocusEvent;
 import org.fenggui.event.key.*;
 import org.fenggui.event.mouse.*;
 import render.gui.Gui;
-import utils.exceptions.TermEx;
 import utils.containers.vec.Vec2;
 
 public class Render implements Runnable {
@@ -21,7 +20,7 @@ public class Render implements Runnable {
 
  private Gui gui;
 
- public void init () throws TermEx {
+ public void init (){
   this.gui = new Gui();
   gui.setTitle("The Game");
   gui.setVisible(true);
@@ -34,13 +33,8 @@ public class Render implements Runnable {
 
  @Override
  public void run () {
-  try {
    init();
 
-   // destroy();
-  } catch ( TermEx ex ) {
-   Thread.currentThread().interrupt();
-  }
  }
 
  public void initfinal () {

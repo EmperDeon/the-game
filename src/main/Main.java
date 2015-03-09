@@ -23,7 +23,7 @@ public final class Main implements Runnable {
 
  @Override
  public void run () {
-  SERVER.getMods().load();
+  SERVER.init();
   LibLoader.loadLibs();
  }
 

@@ -13,10 +13,12 @@ public class Server {
  // public final static Repository REP = new Repository();
  private boolean running = true;
 
- private void init () {
+ public void init () {
   main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
    main.Main.LOG.export("now.log");
   });
+  
+  mods.init();
  }
 
  public MActionListener getActions () {
