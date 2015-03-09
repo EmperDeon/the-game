@@ -1,23 +1,30 @@
 package mods.basemod.containers;
 import java.awt.event.ActionEvent;
-import level.Level;
+import level.*;
 import level.player.Player;
 import utils.MActionListener;
+import utils.containers.ids.Mids;
 
 public class Server {
  private final MActionListener actions = new MActionListener();
  private final Level level = new Level();
+ private final LevelGen gen = new LevelGen();
+ private final Mids mids = new Mids();
  private final ModsContainer mods = new ModsContainer();
  private final Player player = new Player();
- // public final static Resources RES = new Resources();
+ private final Resources RES = new Resources();
  // public final static Repository REP = new Repository();
  private boolean running = true;
+ 
+ public Mids getMids () {
+  return mids;
+ }
 
  public void init () {
   main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
    main.Main.LOG.export("now.log");
   });
-  
+
   mods.init();
  }
 
@@ -36,7 +43,15 @@ public class Server {
  public Player getPlayer () {
   return this.player;
  }
-
+ 
+ public Resources getResources(){
+  return this.RES;
+ }
+ 
+ public LevelGen getWorldGen () {
+  return gen;
+ }
+ 
  public boolean isRunning () {
   return running;
  }

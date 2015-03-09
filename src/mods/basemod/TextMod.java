@@ -1,11 +1,12 @@
 package mods.basemod;
 
-import utils.containers.ids.Mid;
 import java.io.*;
 import java.net.*;
 import mods.basemod.containers.*;
 import mods.basemod.interfaces.BaseMod;
 import utils.Unzipper;
+import utils.containers.ids.Mid;
+import static utils.containers.ids.Mid.Mid;
 import utils.containers.json.JSONObject;
 
 public class TextMod implements BaseMod {
@@ -23,7 +24,7 @@ public class TextMod implements BaseMod {
      lastIndexOf("/") + 1, file.lastIndexOf(".mod")) + "/mod.json");
 
   isEmpty = mod.getBoolean("isEmpty");
-  id = new Mid(mod.getString("name"));
+  id = Mid(mod.getString("name"));
   // cl = mod.getString("class");
   cl = null;
   if ( isEmpty ) {

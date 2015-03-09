@@ -11,6 +11,7 @@ public class Chunk implements Serializable {
 
  public Chunk ( ChunkPos pos ) {
   this.id = pos;
+  
  }
 
  public void heightmap () {

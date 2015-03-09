@@ -3,7 +3,8 @@ package level.chunk;
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;
-import static main.Main.LOG;
+import level.LevelGen;
+import static main.Main.*;
 import utils.containers.pos.*;
 
 public final class ChunkContainer {
@@ -17,12 +18,26 @@ public final class ChunkContainer {
   oids = new RegionIds();
  }
 
- public void create () {
-
+ public void create ( String dir ) {
+  new File(dir + "region/").mkdirs();
+  for ( int px = -2 ; px <= 2 ; px++ ) {
+   for ( int py = -2 ; py <= 2 ; py++ ) {
+    reg.put(new RegionPos(px, py), new Region(new RegionPos(px, py)));
+   }
+  }
+  gen(SERVER.getWorldGen());
+  save(dir);
  }
 
- public void destroy () {
+ private void gen ( LevelGen gen ) {
+  reg.values().stream().
+     forEach(( r ) -> {
+      r.gen(gen);
+     });
+ }
 
+ public void destroy ( String dir ) {
+  save(dir);
  }
 
  public void load ( String dir ) {
@@ -36,22 +51,36 @@ public final class ChunkContainer {
    }
   }
 
-  for ( RegionPos r : reg.keySet() ) {
-   oids.put(r);
-
-  }
+  reg.keySet().stream().
+     forEach(( r ) -> {
+      oids.put(r);
+     });
+  LOG.addD("Loaded " + reg.size() + " regions");
  }
 
  public void save ( String dir ) {
-  reg.keySet().stream().
+  List<Region> t = new ArrayList<>();
+  RegionPos t1;
+  for ( ChunkPos r : rch ) {
+   t1 = oids.search(r);
+   if ( !(t1.isNull() || t.contains(reg.get(t1))) ) {
+    t.add(reg.get(t1));
+   }
+  }
+
+  t.stream().
      forEach(( r ) -> {
+      if ( new File(dir + r.getName()).canRead() ) {
+       new File(dir + r.getName()).delete();
+      }
       try ( ObjectOutputStream out = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream(dir + r.getName()))) ) {
-       out.writeObject(this);
+       out.writeObject(r);
        out.flush();
       } catch ( Exception ex ) {
        LOG.addE(ex);
       }
      });
+  LOG.addD("Writed " + t.size() + " regions");
  }
 
  public void edit ( ChunkPos pos ) {

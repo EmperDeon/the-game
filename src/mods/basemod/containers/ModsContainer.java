@@ -1,12 +1,13 @@
 package mods.basemod.containers;
 
-import utils.containers.ids.Mid;
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 import static main.Main.LOG;
 import mods.basemod.*;
 import mods.basemod.interfaces.*;
+import utils.containers.ids.Mid;
+import static utils.containers.ids.Mid.Mid;
 
 public final class ModsContainer implements Serializable {
 
@@ -69,22 +70,22 @@ public final class ModsContainer implements Serializable {
  }
 
  public void disableMod ( String mid ) {
-  dism.put(new Mid(mid), mods.remove(new Mid(mid)));
+  dism.put(Mid(mid), mods.remove(Mid(mid)));
   LOG.addI("Disabled mod " + mid);
  }
 
  public void deleteMod ( String mid ) {
-  mods.remove(new Mid(mid));
+  mods.remove(Mid(mid));
   LOG.addI("Deleted mod " + mid);
  }
 
  public void disableCMod ( String mid ) {
-  disc.put(new Mid(mid), cmods.remove(new Mid(mid)));
+  disc.put(Mid(mid), cmods.remove(Mid(mid)));
   LOG.addI("Disabled coremod " + mid);
  }
 
  public void deleteCMod ( String mid ) {
-  cmods.remove(new Mid(mid));
+  cmods.remove(Mid(mid));
   LOG.addI("Deleted coremod " + mid);
  }
 

@@ -2,9 +2,13 @@ package mods.basemod;
 
 import java.io.Serializable;
 import java.util.*;
-import utils.containers.ids.Mid;
+import mods.basemod.Resource.Type;
 import mods.basemod.interfaces.InvItem;
 import mods.basemod.resources.Model;
+import static mods.basemod.resources.Model.Model;
+import utils.containers.ids.Mid;
+import static utils.containers.ids.Mid.Mid;
+import static utils.containers.ids.Rid.Rid;
 import utils.containers.json.JSONObject;
 
 public class IItem implements Serializable, InvItem {
@@ -24,8 +28,8 @@ public class IItem implements Serializable, InvItem {
  }
 
  public IItem ( String m, JSONObject o ) {
-  this.id = new Mid(m, o.getString("Iid"), o.getString("Sid"));
-  this.model = new Model(id, o.getString("Model"));
+  this.id = Mid(m, o.getString("Iid"), o.getString("Sid"));
+  this.model = Model(Rid(id , Type.Model, "model"), o.getString("Model"));
   this.param = new TreeMap<>(o.getJSONObject("Params").getMap());
  }
 

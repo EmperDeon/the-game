@@ -1,16 +1,19 @@
 package mods.basemod.containers;
 
-import utils.containers.ids.Rid;
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 import static main.Main.LOG;
 import mods.basemod.*;
+import mods.basemod.resources.*;
+import utils.containers.ids.*;
+import static utils.containers.ids.Rid.Rid;
 import utils.containers.json.JSONObject;
 
 public class Resources {
 
  private final TreeMap<Rid, Resource> map = new TreeMap<>();
+ private final List<Rid> list = new ArrayList<>();
 
  public Resources () {
 
@@ -30,7 +33,7 @@ public class Resources {
   String dirname = main.Main.DIR + "tmp/" + mid + "/res/";
   JSONObject t = new JSONObject(dirname + "map.json");
   t.getMap().keySet().stream().forEach(( s ) -> {
-   this.map.put(new Rid(s), Resource.getResource(new Rid(s), t.getString(s)));
+   this.map.put(Rid(s), Resource.getResource(Rid(s), t.getString(s)));
   });
  }
 
@@ -42,6 +45,33 @@ public class Resources {
 
  }
 
+ public boolean containsR ( Rid id, Resource.Type type, String url ) {
+  return map.values().stream().anyMatch(( r ) -> (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())));
+ }
+
+ public boolean containsI ( Mid id, Resource.Type type, String rid ) {
+  return list.stream().anyMatch(( r ) -> (id.equals(r.getId()) && type.equals(r.getType()) && rid.equals(r.getRid())));
+ }
+
+ public Model getModel ( Rid id, Resource.Type type, String url ) {
+  for (Resource r : map.values()){
+   if (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())) return new Model(id, type, url);
+  }return null;
+ }
+
+ public Sound getSound ( Rid id, Resource.Type type, String url ) {
+  for (Resource r : map.values()){
+   if (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())) return new Sound(id, type, url);
+  }return null;
+ }
+ public Rid getRid ( Mid id, Resource.Type type, String rid ) {
+  for (Rid r : list){
+   if (id.equals(r.getId()) && type.equals(r.getType()) && rid.equals(r.getRid())) return r;
+  }return null;
+ }
+
+
+ 
  public synchronized void load () {
   LOG.addI("Load started");
   try ( ObjectInputStream in = new ObjectInputStream(new GZIPInputStream(

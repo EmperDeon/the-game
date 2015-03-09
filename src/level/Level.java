@@ -10,7 +10,7 @@ import utils.containers.json.JSONObject;
 public class Level {
  private final Map<String, JSONObject> map;
 
- private final LevelGen gen = new LevelGen();
+
 //private final ChunkContainer lch;
  protected final ChunkContainer rch;
  protected String name = "";
@@ -34,11 +34,18 @@ public class Level {
  }
 
  public void create ( String name ) {
-
+  this.name = name;
+  this.dir = main.Main.DIR + "saves/" + name + "/";
+  this.dbfile = dir + "level.json";
+  new File(dir).mkdirs();
+  
+  options.put("name", name);
+  options.put("last", new Date().getTime());
+  rch.create(dir);
  }
-
+ 
  public void destroy () {
-  rch.destroy();
+  rch.destroy(dir);
   options.save(dbfile);
   options.clear();
   clear();
@@ -56,8 +63,8 @@ public class Level {
 
  public void init () {
   LOG.addD("Started init level " + name);
-  if ( new File(this.dbfile).canRead() ) {
-   options.load(map.get(name));
+  if ( new File(dbfile).canRead() ) {
+   this.options.load(map.get(name));
    this.rch.load(dir);
 
    LOG.addD("Ended init level " + name);

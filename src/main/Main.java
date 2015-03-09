@@ -23,8 +23,10 @@ public final class Main implements Runnable {
 
  @Override
  public void run () {
-  SERVER.init();
   LibLoader.loadLibs();
+  SERVER.init();
+ 
+  SERVER.getLevel().create("World1");
  }
 
  public void reinit () {
@@ -40,7 +42,7 @@ public final class Main implements Runnable {
 
   FORMS.init();
 
-  //Tm.start();
+  Tm.start();
   QApplication.execStatic();
   QApplication.shutdown();
  }
