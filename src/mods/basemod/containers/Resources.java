@@ -11,7 +11,8 @@ import static utils.containers.ids.Rid.Rid;
 import utils.containers.json.JSONObject;
 
 public class Resources {
-
+ private final TreeMap<Rid, Sound> sounds = new TreeMap<>();
+ private final TreeMap<Rid, Model> models = new TreeMap<>();
  private final TreeMap<Rid, Resource> map = new TreeMap<>();
  private final List<Rid> list = new ArrayList<>();
 
@@ -46,7 +47,7 @@ public class Resources {
  }
 
  public boolean containsR ( Rid id, Resource.Type type, String url ) {
-  return map.values().stream().anyMatch(( r ) -> (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())));
+  return models.values().stream().anyMatch(( r ) -> (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())));
  }
 
  public boolean containsI ( Mid id, Resource.Type type, String rid ) {
@@ -54,24 +55,31 @@ public class Resources {
  }
 
  public Model getModel ( Rid id, Resource.Type type, String url ) {
-  for (Resource r : map.values()){
-   if (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())) return new Model(id, type, url);
-  }return null;
+  for ( Model r : models.values() ) {
+   if ( id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl()) ) {
+    return r;
+   }
+  }
+  return null;
  }
 
  public Sound getSound ( Rid id, Resource.Type type, String url ) {
-  for (Resource r : map.values()){
-   if (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())) return new Sound(id, type, url);
-  }return null;
+  for ( Sound r : sounds.values() ) {
+   if ( id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl()) ) {
+    return r;
+   }
+  }
+  return null;
  }
  public Rid getRid ( Mid id, Resource.Type type, String rid ) {
-  for (Rid r : list){
-   if (id.equals(r.getId()) && type.equals(r.getType()) && rid.equals(r.getRid())) return r;
-  }return null;
+  for ( Rid r : list ) {
+   if ( id.equals(r.getId()) && type.equals(r.getType()) && rid.equals(r.getRid()) ) {
+    return r;
+   }
+  }
+  return null;
  }
 
-
- 
  public synchronized void load () {
   LOG.addI("Load started");
   try ( ObjectInputStream in = new ObjectInputStream(new GZIPInputStream(

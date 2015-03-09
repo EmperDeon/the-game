@@ -33,6 +33,7 @@ public final class ChunkContainer {
   reg.values().stream().
      forEach(( r ) -> {
       r.gen(gen);
+      System.gc();
      });
  }
 
