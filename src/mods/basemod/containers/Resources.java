@@ -71,6 +71,7 @@ public class Resources {
   }
   return null;
  }
+ 
  public Rid getRid ( Mid id, Resource.Type type, String rid ) {
   for ( Rid r : list ) {
    if ( id.equals(r.getId()) && type.equals(r.getType()) && rid.equals(r.getRid()) ) {
