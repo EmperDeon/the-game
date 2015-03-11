@@ -2,6 +2,7 @@ package utils.containers.pos;
 
 public class BlockPos extends Position {
 
+ @Deprecated
  public BlockPos ( int x, int y, int z ) {
   super(x, y, z);
  }

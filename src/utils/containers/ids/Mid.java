@@ -1,7 +1,6 @@
 package utils.containers.ids;
 
 import java.io.Serializable;
-import static main.Main.SERVER;
 import utils.containers.vec.Vec3;
 
 public class Mid implements Comparable, Serializable {
@@ -10,49 +9,29 @@ public class Mid implements Comparable, Serializable {
  protected final String iid;
  protected final String sid;
 
- public static Mid Mid ( String m ) {
-  if ( SERVER.getMids().contains(m, "", "") ) {
-   return SERVER.getMids().get(m, "", "");
-  } else {
-   return new Mid(m);
-  }
- }
-
- public static Mid Mid ( String m, String i ) {
-  if ( SERVER.getMids().contains(m, i, "") ) {
-   return SERVER.getMids().get(m, i, "");
-  } else {
-   return new Mid(m);
-  }
- }
-
- public static Mid Mid ( String m, String i, String s ) {
-  if ( SERVER.getMids().contains(m, i, s) ) {
-   return SERVER.getMids().get(m, i, s);
-  } else {
-   return new Mid(m);
-  }
- }
-
+ @Deprecated
  public Mid ( Mid tid ) {
   this.mid = tid.mid;
   this.sid = tid.sid;
   this.iid = tid.iid;
  }
 
- protected Mid ( String m ) {
+ @Deprecated
+ public Mid ( String m ) {
   this.mid = m;
   this.iid = "";
   this.sid = "";
  }
 
- protected Mid ( String m, String i ) {
+ @Deprecated
+ public Mid ( String m, String i ) {
   this.mid = m;
   this.iid = i;
   this.sid = "";
  }
 
- protected Mid ( String m, String i, String s ) {
+ @Deprecated
+ public Mid ( String m, String i, String s ) {
   this.mid = m;
   this.sid = s;
   this.iid = i;

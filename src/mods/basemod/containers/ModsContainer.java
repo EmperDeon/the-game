@@ -7,7 +7,6 @@ import static main.Main.LOG;
 import mods.basemod.*;
 import mods.basemod.interfaces.*;
 import utils.containers.ids.Mid;
-import static utils.containers.ids.Mid.Mid;
 
 public final class ModsContainer implements Serializable {
 
@@ -70,22 +69,22 @@ public final class ModsContainer implements Serializable {
  }
 
  public void disableMod ( String mid ) {
-  dism.put(Mid(mid), mods.remove(Mid(mid)));
+  dism.put(Server.instanceMid(mid), mods.remove(Server.instanceMid(mid)));
   LOG.addI("Disabled mod " + mid);
  }
 
  public void deleteMod ( String mid ) {
-  mods.remove(Mid(mid));
+  mods.remove(Server.instanceMid(mid));
   LOG.addI("Deleted mod " + mid);
  }
 
  public void disableCMod ( String mid ) {
-  disc.put(Mid(mid), cmods.remove(Mid(mid)));
+  disc.put(Server.instanceMid(mid), cmods.remove(Server.instanceMid(mid)));
   LOG.addI("Disabled coremod " + mid);
  }
 
  public void deleteCMod ( String mid ) {
-  cmods.remove(Mid(mid));
+  cmods.remove(Server.instanceMid(mid));
   LOG.addI("Deleted coremod " + mid);
  }
 

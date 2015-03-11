@@ -7,7 +7,6 @@ import static main.Main.LOG;
 import mods.basemod.*;
 import mods.basemod.resources.*;
 import utils.containers.ids.*;
-import static utils.containers.ids.Rid.Rid;
 import utils.containers.json.JSONObject;
 
 public class Resources {
@@ -34,7 +33,7 @@ public class Resources {
   String dirname = main.Main.DIR + "tmp/" + mid + "/res/";
   JSONObject t = new JSONObject(dirname + "map.json");
   t.getMap().keySet().stream().forEach(( s ) -> {
-   this.map.put(Rid(s), Resource.getResource(Rid(s), t.getString(s)));
+   this.map.put(Server.instanceRid(s), Resource.getResource(Server.instanceRid(s), t.getString(s)));
   });
  }
 
@@ -45,6 +44,19 @@ public class Resources {
  public void reScan () {
 
  }
+ 
+ public void putModel(Model model ){
+  this.models.put(model.getId(), model);
+ }
+ 
+ public void putSound(Sound sound){
+  this.sounds.put(sound.getId(), sound);
+ }
+ 
+ public void putRid(Rid id){
+  this.list.add(id);
+ }
+ 
 
  public boolean containsR ( Rid id, Resource.Type type, String url ) {
   return models.values().stream().anyMatch(( r ) -> (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())));

@@ -1,17 +1,16 @@
 package level.chunk;
 
 import java.io.Serializable;
-import java.util.*;
 import mods.basemod.LevBlock;
 import utils.containers.pos.*;
 
 public class Chunk implements Serializable {
  private final ChunkPos id;
- private final Map<BlockPos, LevBlock> map = new HashMap<>();
+ private final LevBlock map[][][] = new LevBlock[16][16][256];
 
  public Chunk ( ChunkPos pos ) {
   this.id = pos;
-  
+
  }
 
  public void heightmap () {
@@ -38,7 +37,11 @@ public class Chunk implements Serializable {
   return id;
  }
 
- public Map<BlockPos, LevBlock> getMap () {
+ public void setBlock ( BlockPos pos, LevBlock block ) {
+  map[pos.gX()][pos.gY()][pos.gZ()] = block;
+ }
+
+ public LevBlock[][][] getMap () {
   return map;
  }
 }

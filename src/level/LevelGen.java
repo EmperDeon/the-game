@@ -3,7 +3,7 @@ package level;
 import java.util.*;
 import level.chunk.Chunk;
 import mods.basemod.LevBlock;
-import utils.containers.pos.*;
+import mods.basemod.containers.Server;
 
 public class LevelGen {
  private final Random random;
@@ -19,14 +19,13 @@ public class LevelGen {
  }
 
  public void gen ( Chunk ch ) {
-  Map<BlockPos, LevBlock> map = ch.getMap();
   for ( int x = 0 ; x < 16 ; x++ ) {
    for ( int y = 0 ; y < 16 ; y++ ) {
-    for ( int z = 0 ; z < 255 ; z++ ) {
-     if ( z < 100 ) {
-      map.put(new BlockPos(x, y, z), new LevBlock());
-     }
-    }
+    //for ( int z = 0 ; z < 255 ; z++ ) {
+    // if ( z < 100 ) {
+      ch.setBlock(Server.instanceBlockPos(x, y, 100), new LevBlock());
+    // }
+  //  }
    }
   }
  }

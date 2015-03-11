@@ -7,14 +7,17 @@ import utils.containers.ids.*;
 
 public class Model extends Resource implements Serializable {
 
- public static Model Model( Rid id, String file){
-  if(SERVER.getResources().containsR(id, Type.Model, file))
+ public static Model Model ( Rid id, String file ) {
+  if ( SERVER.getResources().containsR(id, Type.Model, file) ) {
    return SERVER.getResources().getModel(id, Type.Model, file);
-  else
-   return new Model(id, file);
+  } else {
+   Model model = new Model(id, file);
+   SERVER.getResources().putModel(model);
+   return model;
+  }
  }
- 
- public Model (Rid id, Type type, String url){
+
+ public Model ( Rid id, Type type, String url ) {
   super(id, type, url);
  }
 

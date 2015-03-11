@@ -1,6 +1,5 @@
 package utils.containers.ids;
 
-import static main.Main.SERVER;
 import mods.basemod.Resource;
 import mods.basemod.Resource.Type;
 
@@ -8,33 +7,21 @@ public class Rid extends Mid implements Comparable {
 
  protected final String rid;
  private final Type type;
-
- public static Rid Rid (String s){
-  return Rid(s.split(":"));
- }
  
- public static Rid Rid (String[] s){
-  return Rid (new Mid(s[0], s[1], s[2]), Resource.getType(s[3]), s[4]);
- }
- 
- public static Rid Rid (Mid mid, Type type , String id){
-  if (SERVER.getResources().containsI(mid, type, id))
-   return SERVER.getResources().getRid(mid, type, id);
-  else
-   return new Rid(mid, type, id);
- }
- 
- protected Rid ( String s ) {
+ @Deprecated
+ public Rid ( String s ) {
   this(s.split(":"));
  }
 
- protected Rid ( String[] s ) {
+  @Deprecated
+ public Rid ( String[] s ) {
   super(s[0], s[1], s[2]);
   type = Resource.getType(s[3]);
   rid = s[4];
  }
 
- protected Rid ( Mid mid, Type type, String id ) {
+  @Deprecated
+ public Rid ( Mid mid, Type type, String id ) {
   super(mid);
   this.rid = id;
   this.type = type;
