@@ -1,9 +1,9 @@
 package level;
 
 import java.util.*;
-import level.chunk.Chunk;
 import mods.basemod.LevBlock;
 import mods.basemod.containers.Server;
+import utils.containers.pos.ChunkPos;
 
 public class LevelGen {
  private final Random random;
@@ -18,16 +18,30 @@ public class LevelGen {
   sseed = false;
  }
 
- public void gen ( Chunk ch ) {
+// public void gen ( Chunk ch ) {
+//  for ( int x = 0 ; x < 16 ; x++ ) {
+//   for ( int y = 0 ; y < 16 ; y++ ) {
+//    //for ( int z = 0 ; z < 255 ; z++ ) {
+//    // if ( z < 100 ) {
+//    ch.setBlock(Server.instanceBlockPos(x, y, 100), new LevBlock());
+//    // }
+//    //  }
+//   }
+//  }
+// }
+
+ public LevBlock[][][] gen ( ChunkPos ch ) {
+  LevBlock[][][] t = new LevBlock[16][16][256];
   for ( int x = 0 ; x < 16 ; x++ ) {
    for ( int y = 0 ; y < 16 ; y++ ) {
-    //for ( int z = 0 ; z < 255 ; z++ ) {
-    // if ( z < 100 ) {
-      ch.setBlock(Server.instanceBlockPos(x, y, 100), new LevBlock());
-    // }
-  //  }
+    for ( int z = 0 ; z < 255 ; z++ ) {
+     if ( z < 100 ) {
+      t[x][y][z] = Server.instatnceLevBlock();
+     }
+    }
    }
   }
+  return t;
  }
 
  public void setSeed ( long seed ) {

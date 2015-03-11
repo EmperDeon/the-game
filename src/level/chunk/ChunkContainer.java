@@ -30,6 +30,7 @@ public final class ChunkContainer {
   gen(SERVER.getWorldGen());
   System.out.println("Saving");
   save(dir);
+  System.out.println("Saved");
  }
 
  private void gen ( LevelGen gen ) {

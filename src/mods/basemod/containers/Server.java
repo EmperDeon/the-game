@@ -1,5 +1,6 @@
 package mods.basemod.containers;
 import java.awt.event.ActionEvent;
+import java.util.Map;
 import level.*;
 import level.player.Player;
 import main.Main;
@@ -153,11 +154,15 @@ public class Server {
   }
  }
  
-  public static LevBlock instanceLevBlock ( Rid id, String url ) {
+ public static LevBlock instatnceLevBlock(){
+  return instanceLevBlock(Server.instanceRid(Server.instanceMid("main","base"), Resource.Type.Model , ""), "base", null);
+ }
+ 
+  public static LevBlock instanceLevBlock ( Rid id, String url , Map<String, String> param) {
   if ( Main.SERVER.ids.getLBI().contains(id, url)) {
    return Main.SERVER.ids.getLBI().get(id, url);
   } else {
-   LevBlock lev= new LevBlock(id, instanceModel(id, url), null);
+   LevBlock lev= new LevBlock(id, instanceModel(id, url), param);
    Main.SERVER.ids.getLBI().put(lev);
    return lev;
   }

@@ -1,12 +1,13 @@
 package level.chunk;
 
 import java.io.Serializable;
+import level.LevelGen;
 import mods.basemod.LevBlock;
 import utils.containers.pos.*;
 
 public class Chunk implements Serializable {
  private final ChunkPos id;
- private final LevBlock map[][][] = new LevBlock[16][16][256];
+ private LevBlock map[][][] = new LevBlock[16][16][256];
 
  public Chunk ( ChunkPos pos ) {
   this.id = pos;
@@ -43,6 +44,10 @@ public class Chunk implements Serializable {
 
  public LevBlock[][][] getMap () {
   return map;
+ }
+ 
+ public void gen (LevelGen gen){
+  this.map = gen.gen(id);
  }
 }
 
