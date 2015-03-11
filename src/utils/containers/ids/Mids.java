@@ -1,5 +1,6 @@
 package utils.containers.ids;
 import java.util.*;
+import utils.containers.id.Mid;
 
 public class Mids {
  private final List<Mid> list = new ArrayList<>();
@@ -14,14 +15,14 @@ public class Mids {
  
  public Mid get(String m, String i, String s){
   for(Mid id : list){
-   if(m.equals(id.mid) && i.equals(id.iid) && s.equals(id.sid))
+   if(m.equals(id.getMid()) && i.equals(id.getIid()) && s.equals(id.getSid()))
     return id;
   }return null;
  }
  
  public boolean contains(String m, String i, String s){
   for(Mid id : list){
-   if(m.equals(id.mid) && i.equals(id.iid) && s.equals(id.sid))
+   if(m.equals(id.getMid()) && i.equals(id.getIid()) && s.equals(id.getSid()))
     return true;
   }
   

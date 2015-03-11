@@ -5,7 +5,7 @@ import java.net.*;
 import mods.basemod.containers.*;
 import mods.basemod.interfaces.BaseMod;
 import utils.Unzipper;
-import utils.containers.ids.Mid;
+import utils.containers.id.Mid;
 import utils.containers.json.JSONObject;
 
 public class TextMod implements BaseMod {

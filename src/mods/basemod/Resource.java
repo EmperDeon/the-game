@@ -2,9 +2,8 @@ package mods.basemod;
 
 import java.io.Serializable;
 import static main.Main.LOG;
-import static mods.basemod.resources.Model.Model;
-import static mods.basemod.resources.Sound.Sound;
-import utils.containers.ids.Rid;
+import mods.basemod.containers.Server;
+import utils.containers.id.Rid;
 
 public abstract class Resource implements Serializable {
 
@@ -37,9 +36,9 @@ public abstract class Resource implements Serializable {
  public static Resource getResource ( Rid k, String v ) {
   switch ( k.getType() ) {
    case Model:
-    return Model(k, v);
+    return Server.instanceModel(k, v);
    case Sound:
-    return Sound(k, v);
+    return Server.instanceSound(k, v);
    default:
     LOG.addE("Error with parse Resource type " + k.toString());
     return null;

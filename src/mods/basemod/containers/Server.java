@@ -3,9 +3,11 @@ import java.awt.event.ActionEvent;
 import level.*;
 import level.player.Player;
 import main.Main;
-import mods.basemod.Resource;
+import mods.basemod.*;
 import mods.basemod.Resource.Type;
+import mods.basemod.resources.*;
 import utils.MActionListener;
+import utils.containers.id.*;
 import utils.containers.ids.*;
 import utils.containers.pos.BlockPos;
 
@@ -13,8 +15,7 @@ public class Server {
  private final MActionListener actions = new MActionListener();
  private final Level level = new Level();
  private final LevelGen gen = new LevelGen();
- private final Mids mids = new Mids();
- private final BlockIds bids = new BlockIds();
+ private final Ids ids = new Ids();
  private final ModsContainer mods = new ModsContainer();
  private final Player player = new Player();
  private final Resources RES = new Resources();
@@ -22,13 +23,17 @@ public class Server {
  private boolean running = true;
 
  public BlockIds getBids () {
-  return bids;
+  return ids.getBids();
  }
 
  public Mids getMids () {
-  return mids;
+  return ids.getMids();
  }
 
+ public LevelBlockIds getLBI(){
+  return ids.getLBI();
+ }
+ 
  public void init () {
   main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
    main.Main.LOG.export("now.log");
@@ -79,6 +84,7 @@ public class Server {
    return id;
   }
  }
+
  public static Mid instanceMid ( String m, String i ) {
   if ( Main.SERVER.getMids().contains(m, i, "") ) {
    return Main.SERVER.getMids().get(m, i, "");
@@ -88,6 +94,7 @@ public class Server {
    return id;
   }
  }
+
  public static Mid instanceMid ( String m, String i, String s ) {
   if ( Main.SERVER.getMids().contains(m, i, s) ) {
    return Main.SERVER.getMids().get(m, i, s);
@@ -125,6 +132,34 @@ public class Server {
    return id2;
   }
  }
+
+ public static Model instanceModel ( Rid id, String file ) {
+  if ( Main.SERVER.getResources().containsR(id, Resource.Type.Model, file) ) {
+   return Main.SERVER.getResources().getModel(id, Resource.Type.Model, file);
+  } else {
+   Model model = new Model(id, file);
+   Main.SERVER.getResources().putModel(model);
+   return model;
+  }
+ }
+
+ public static Sound instanceSound ( Rid id, String url ) {
+  if ( Main.SERVER.getResources().containsR(id, Resource.Type.Sound, url) ) {
+   return Main.SERVER.getResources().getSound(id, Resource.Type.Sound, url);
+  } else {
+   Sound sound = new Sound(id, url);
+   Main.SERVER.getResources().putSound(sound);
+   return sound;
+  }
+ }
  
- 
+  public static LevBlock instanceLevBlock ( Rid id, String url ) {
+  if ( Main.SERVER.ids.getLBI().contains(id, url)) {
+   return Main.SERVER.ids.getLBI().get(id, url);
+  } else {
+   LevBlock lev= new LevBlock(id, instanceModel(id, url), null);
+   Main.SERVER.ids.getLBI().put(lev);
+   return lev;
+  }
+ }
 }

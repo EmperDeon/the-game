@@ -8,7 +8,6 @@ import javax.tools.*;
 import main.Main;
 import mods.basemod.*;
 import mods.basemod.containers.Server;
-import static mods.basemod.resources.Model.Model;
 import utils.*;
 import utils.containers.json.JSONObject;
 
@@ -178,8 +177,8 @@ public final class ModEditor extends QMainWindow {
 
   public void add ( String iid, String sid, String model,
                     Map<String, String> params ) {
-   add(new IItem(Server.instanceMid(modname.text(), iid, sid), Model(Server.instanceRid(Server.instanceMid(modname.
-                 text(), iid, sid), mods.basemod.Resource.Type.Model, "model"), model), params));
+   add(new IItem(Server.instanceMid(modname.text(), iid, sid), Server.instanceModel(Server.instanceRid(Server.instanceMid(modname.
+                 text(), iid, sid), Resource.Type.Model, "model"), model), params));
   }
 
   public void add () {

@@ -1,6 +1,6 @@
 package mods.basemod.interfaces;
 
-import utils.containers.ids.Mid;
+import utils.containers.id.Mid;
 
 public interface Base {
 

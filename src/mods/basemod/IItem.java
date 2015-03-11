@@ -5,8 +5,7 @@ import java.util.*;
 import mods.basemod.containers.Server;
 import mods.basemod.interfaces.InvItem;
 import mods.basemod.resources.Model;
-import static mods.basemod.resources.Model.Model;
-import utils.containers.ids.Mid;
+import utils.containers.id.Mid;
 import utils.containers.json.JSONObject;
 
 public class IItem implements Serializable, InvItem {
@@ -31,7 +30,7 @@ public class IItem implements Serializable, InvItem {
 
  public IItem ( String m, JSONObject o ) {
   this.id = Server.instanceMid(m, o.getString("Iid"), o.getString("Sid"));
-  this.model = Model(Server.instanceRid(id, Resource.Type.Model, "model"), o.getString("Model"));
+  this.model = Server.instanceModel(Server.instanceRid(id, Resource.Type.Model, "model"), o.getString("Model"));
   this.param = new TreeMap<>(o.getJSONObject("Params").getMap());
  }
 

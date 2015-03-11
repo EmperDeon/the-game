@@ -1,4 +1,4 @@
-package utils.containers.ids;
+package utils.containers.id;
 
 import java.io.Serializable;
 import utils.containers.vec.Vec3;

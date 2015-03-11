@@ -1,5 +1,7 @@
 package mods.basemod.containers;
 
+import utils.containers.id.Rid;
+import utils.containers.id.Mid;
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;

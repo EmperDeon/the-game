@@ -4,20 +4,22 @@ import java.io.Serializable;
 import java.util.*;
 import mods.basemod.containers.Server;
 import mods.basemod.resources.Model;
-import static mods.basemod.resources.Model.Model;
-import utils.containers.ids.Mid;
+import utils.containers.id.Mid;
 import utils.containers.json.JSONObject;
 
 public class LevBlock extends IItem implements Serializable {
 
+ @Deprecated
  public LevBlock () {
-  super(Server.instanceMid("main", "base"), Model(Server.instanceRid(Server.instanceMid("main","base"), Resource.Type.Model , ""), "base"), null);
+  super(Server.instanceMid("main", "base"), Server.instanceModel(Server.instanceRid(Server.instanceMid("main","base"), Resource.Type.Model , ""), "base"), null);
  }
 
+ @Deprecated
  public LevBlock ( Mid id, Model model, Map<String, String> map ) {
   super(id, model, map);
  }
 
+ @Deprecated
  public LevBlock ( String m, JSONObject o ) {
   super(m, o);
  }

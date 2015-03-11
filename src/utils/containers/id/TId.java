@@ -1,4 +1,4 @@
-package utils.containers.ids;
+package utils.containers.id;
 
 public class TId {
 

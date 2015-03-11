@@ -1,5 +1,5 @@
 package mods.basemod.containers;
-import utils.containers.ids.Mid;
+import utils.containers.id.Mid;
 
 public class Repository {
 

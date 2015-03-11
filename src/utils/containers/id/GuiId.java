@@ -1,4 +1,4 @@
-package utils.containers.ids;
+package utils.containers.id;
 
 import java.util.Objects;
 

@@ -6,7 +6,7 @@
 package mods.basemod.interfaces;
 
 import java.util.Map;
-import utils.containers.ids.Mid;
+import utils.containers.id.Mid;
 import utils.containers.json.JSONObject;
 
 /**

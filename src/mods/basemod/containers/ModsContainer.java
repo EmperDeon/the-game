@@ -6,7 +6,7 @@ import java.util.zip.*;
 import static main.Main.LOG;
 import mods.basemod.*;
 import mods.basemod.interfaces.*;
-import utils.containers.ids.Mid;
+import utils.containers.id.Mid;
 
 public final class ModsContainer implements Serializable {
 
