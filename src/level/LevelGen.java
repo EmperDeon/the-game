@@ -29,15 +29,12 @@ public class LevelGen {
 //   }
 //  }
 // }
-
  public LevBlock[][][] gen ( ChunkPos ch ) {
   LevBlock[][][] t = new LevBlock[16][16][256];
   for ( int x = 0 ; x < 16 ; x++ ) {
    for ( int y = 0 ; y < 16 ; y++ ) {
-    for ( int z = 0 ; z < 255 ; z++ ) {
-     if ( z < 100 ) {
-      t[x][y][z] = Server.instatnceLevBlock();
-     }
+    for ( int z = 0 ; z < 65 ; z++ ) {
+     t[x][y][z] = Server.instatnceLevBlock();
     }
    }
   }
