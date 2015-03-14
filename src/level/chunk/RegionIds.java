@@ -10,14 +10,15 @@ public final class RegionIds implements Serializable {
 
  }
 
- public void put(RegionPos pos){
+ public void put ( RegionPos pos ) {
   list.add(pos);
  }
- 
- public RegionPos search(ChunkPos pos){
-  for(RegionPos t : list){
-   if (t.isContains(pos))
+
+ public RegionPos search ( ChunkPos pos ) {
+  for ( RegionPos t : list ) {
+   if ( t.isContains(pos) ) {
     return t;
+   }
   }
   return RegionPos.nullP;
  }

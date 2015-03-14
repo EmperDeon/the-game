@@ -1,9 +1,8 @@
 package mods.basemod.resources;
 
-import utils.containers.id.Rid;
 import java.io.Serializable;
 import mods.basemod.*;
-import utils.containers.ids.*;
+import utils.containers.id.Rid;
 
 public class Model extends Resource implements Serializable {
 
@@ -11,7 +10,7 @@ public class Model extends Resource implements Serializable {
  public Model ( Rid id, Type type, String url ) {
   super(id, type, url);
  }
- 
+
  @Deprecated
  public Model ( Rid k, String url ) {
   super(k, Resource.Type.Model, url);

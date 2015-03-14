@@ -25,7 +25,7 @@ public final class Main implements Runnable {
  public void run () {
   LibLoader.loadLibs();
   SERVER.init();
- 
+
   SERVER.getLevel().create("World1");
  }
 

@@ -29,8 +29,8 @@ public class RegionPos extends Position {
  public String toString () {
   return "Region: x = " + x + "; y = " + y + ";";
  }
- 
- public String getName(){
-  return "region/region"+x+"-"+y+".rg";
+
+ public String getName () {
+  return "region/region" + x + "-" + y + ".rg";
  }
 }

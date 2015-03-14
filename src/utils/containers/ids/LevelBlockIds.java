@@ -25,7 +25,7 @@ public class LevelBlockIds {
 
  public boolean contains ( Rid id, String url ) {
   for ( LevBlock b : list ) {
-   if ( b.getModel().getId().equals(id)  && b.getModel().getUrl().equals(url) ) {
+   if ( b.getModel().getId().equals(id) && b.getModel().getUrl().equals(url) ) {
     return true;
    }
   }

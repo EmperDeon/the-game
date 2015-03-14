@@ -342,11 +342,11 @@ public final class JSONObject {
   }
  }
 
- public void load(JSONObject o){
+ public void load ( JSONObject o ) {
   this.map.clear();
   this.map.putAll(o.map);
  }
- 
+
  public void save ( String file ) {
   try ( FileWriter t = new FileWriter(file) ) {
    t.write(this.write(new StringWriter()).toString());

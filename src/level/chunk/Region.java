@@ -8,7 +8,7 @@ import utils.containers.pos.*;
 public class Region implements Serializable {
  private final Map<ChunkPos, Chunk> map = new HashMap<>();
  private final RegionPos pos;
- 
+
  public Region ( RegionPos pox ) {
 //  this.dir = main.Main.DIR + "saves/" + nm + "/rg/";
 //  fl = "region" + x + "" + y + ".rg";
@@ -22,7 +22,7 @@ public class Region implements Serializable {
    }
   }
  }
- 
+
  public void gen ( LevelGen gen ) {
   map.values().stream().
      forEach(( ch ) -> {
@@ -30,11 +30,11 @@ public class Region implements Serializable {
       ch.gen(gen);
      });
  }
- 
+
  public RegionPos getPos () {
   return pos;
  }
- 
+
  public String getName () {
   return pos.getName();
  }

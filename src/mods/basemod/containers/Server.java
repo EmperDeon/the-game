@@ -31,10 +31,10 @@ public class Server {
   return ids.getMids();
  }
 
- public LevelBlockIds getLBI(){
+ public LevelBlockIds getLBI () {
   return ids.getLBI();
  }
- 
+
  public void init () {
   main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
    main.Main.LOG.export("now.log");
@@ -153,16 +153,16 @@ public class Server {
    return sound;
   }
  }
- 
- public static LevBlock instatnceLevBlock(){
-  return instanceLevBlock(Server.instanceRid(Server.instanceMid("main","base"), Resource.Type.Model , ""), "base", null);
+
+ public static LevBlock instatnceLevBlock () {
+  return instanceLevBlock(Server.instanceRid(Server.instanceMid("main", "base"), Resource.Type.Model, ""), "base", null);
  }
- 
-  public static LevBlock instanceLevBlock ( Rid id, String url , Map<String, String> param) {
-  if ( Main.SERVER.ids.getLBI().contains(id, url)) {
+
+ public static LevBlock instanceLevBlock ( Rid id, String url, Map<String, String> param ) {
+  if ( Main.SERVER.ids.getLBI().contains(id, url) ) {
    return Main.SERVER.ids.getLBI().get(id, url);
   } else {
-   LevBlock lev= new LevBlock(id, instanceModel(id, url), param);
+   LevBlock lev = new LevBlock(id, instanceModel(id, url), param);
    Main.SERVER.ids.getLBI().put(lev);
    return lev;
   }

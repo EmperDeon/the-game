@@ -20,7 +20,7 @@ public class Render implements Runnable {
 
  private Gui gui;
 
- public void init (){
+ public void init () {
   this.gui = new Gui();
   gui.setTitle("The Game");
   gui.setVisible(true);
@@ -33,7 +33,7 @@ public class Render implements Runnable {
 
  @Override
  public void run () {
-   init();
+  init();
 
  }
 

@@ -45,8 +45,8 @@ public class Chunk implements Serializable {
  public LevBlock[][][] getMap () {
   return map;
  }
- 
- public void gen (LevelGen gen){
+
+ public void gen ( LevelGen gen ) {
   this.map = gen.gen(id);
  }
 }

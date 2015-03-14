@@ -10,7 +10,6 @@ import utils.containers.json.JSONObject;
 public class Level {
  private final Map<String, JSONObject> map;
 
-
 //private final ChunkContainer lch;
  protected final ChunkContainer rch;
  protected String name = "";
@@ -38,12 +37,12 @@ public class Level {
   this.dir = main.Main.DIR + "saves/" + name + "/";
   this.dbfile = dir + "level.json";
   new File(dir).mkdirs();
-  
+
   options.put("name", name);
   options.put("last", new Date().getTime());
   rch.create(dir);
  }
- 
+
  public void destroy () {
   rch.destroy(dir);
   options.save(dbfile);

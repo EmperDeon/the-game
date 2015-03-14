@@ -12,20 +12,20 @@ public class Player {
  public Player () {
   this.coord = new PlayerPos();
  }
- 
- public void init ( PlayerPos coord, Health health ){
+
+ public void init ( PlayerPos coord, Health health ) {
   this.coord.init(coord);
   this.health.init(health);
  }
- 
+
  public Vec3<Double> getCam () {
   return cam;
  }
- 
+
  public PlayerPos getCoord () {
   return coord;
  }
- 
+
  public Health getHealth () {
   return health;
  }
@@ -33,5 +33,5 @@ public class Player {
  public void tick () {
 
  }
- 
+
 }

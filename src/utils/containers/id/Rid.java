@@ -7,20 +7,20 @@ public class Rid extends Mid implements Comparable {
 
  protected final String rid;
  private final Type type;
- 
+
  @Deprecated
  public Rid ( String s ) {
   this(s.split(":"));
  }
 
-  @Deprecated
+ @Deprecated
  public Rid ( String[] s ) {
   super(s[0], s[1], s[2]);
   type = Resource.getType(s[3]);
   rid = s[4];
  }
 
-  @Deprecated
+ @Deprecated
  public Rid ( Mid mid, Type type, String id ) {
   super(mid);
   this.rid = id;
@@ -30,8 +30,8 @@ public class Rid extends Mid implements Comparable {
  public String getRid () {
   return rid;
  }
- 
- public Mid getId(){
+
+ public Mid getId () {
   return new Mid(mid, iid, sid);
  }
 

@@ -1,14 +1,12 @@
 package mods.basemod.containers;
 
-import utils.containers.id.Rid;
-import utils.containers.id.Mid;
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 import static main.Main.LOG;
 import mods.basemod.*;
 import mods.basemod.resources.*;
-import utils.containers.ids.*;
+import utils.containers.id.*;
 import utils.containers.json.JSONObject;
 
 public class Resources {
@@ -46,19 +44,18 @@ public class Resources {
  public void reScan () {
 
  }
- 
- public void putModel(Model model ){
+
+ public void putModel ( Model model ) {
   this.models.put(model.getId(), model);
  }
- 
- public void putSound(Sound sound){
+
+ public void putSound ( Sound sound ) {
   this.sounds.put(sound.getId(), sound);
  }
- 
- public void putRid(Rid id){
+
+ public void putRid ( Rid id ) {
   this.list.add(id);
  }
- 
 
  public boolean containsR ( Rid id, Resource.Type type, String url ) {
   return models.values().stream().anyMatch(( r ) -> (id.equals(r.getId()) && type.equals(r.getType()) && url.equals(r.getUrl())));
@@ -85,7 +82,7 @@ public class Resources {
   }
   return null;
  }
- 
+
  public Rid getRid ( Mid id, Resource.Type type, String rid ) {
   for ( Rid r : list ) {
    if ( id.equals(r.getId()) && type.equals(r.getType()) && rid.equals(r.getRid()) ) {
