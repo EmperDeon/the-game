@@ -1,13 +1,15 @@
 package level;
 
 import java.util.*;
-import mods.basemod.LevBlock;
+import level.chunk.*;
 import mods.basemod.containers.Server;
 import utils.containers.pos.ChunkPos;
 
 public class LevelGen {
  private final Random random;
  private boolean sseed;
+ private Chunk[][] ch;
+
  public LevelGen ( long seed ) {
   this.random = new Random(seed);
   sseed = true;
@@ -29,16 +31,75 @@ public class LevelGen {
 //   }
 //  }
 // }
- public LevBlock[][][] gen ( ChunkPos ch ) {
-  LevBlock[][][] t = new LevBlock[16][16][256];
-  for ( int x = 0 ; x < 16 ; x++ ) {
-   for ( int y = 0 ; y < 16 ; y++ ) {
-    for ( int z = 0 ; z < 65 ; z++ ) {
-     t[x][y][z] = Server.instatnceLevBlock();
-    }
+// public LevBlock[][][] gen ( ChunkPos ch ) {
+//  LevBlock[][][] t = new LevBlock[16][16][256];
+//  for ( int x = 0 ; x < 16 ; x++ ) {
+//   for ( int y = 0 ; y < 16 ; y++ ) {
+//    for ( int z = 0 ; z < 65 ; z++ ) {
+//     t[x][y][z] = Server.instatnceLevBlock();
+//    }
+//   }
+//  }
+//  return t;
+// }
+ private void genFirst ( ChunkContainer cont, ChunkPos center ) {
+  ch = new Chunk[17][17];
+
+  for ( int x = -8 ; x < 8 ; x++ ) {
+   for ( int y = -8 ; y < 8 ; y++ ) {
+    ch[x][y] = cont.getChunk(new ChunkPos(center.gX() + x, center.gY(), 0));
    }
   }
-  return t;
+
+  int x;
+  for ( x = 1 ; x <= 2 ; x++ ) {
+   gen4(x, 8);
+  }
+  for ( x = 1 ; x <= 4 ; x++ ) {
+   gen4(x, 7);
+  }
+  for ( x = 1 ; x <= 5 ; x++ ) {
+   gen4(x, 6);
+  }
+  for ( x = 1 ; x <= 6 ; x++ ) {
+   gen4(x, 5);
+  }
+  for ( x = 1 ; x <= 7 ; x++ ) {
+   gen4(x, 4);
+  }
+  for ( x = 1 ; x <= 7 ; x++ ) {
+   gen4(x, 3);
+  }
+  for ( x = 1 ; x <= 8 ; x++ ) {
+   gen4(x, 2);
+  }
+  for ( x = 1 ; x <= 8 ; x++ ) {
+   gen4(x, 1);
+  }
+
+  for ( x = -8 ; x <= 8 ; x++ ) {
+   genl(x, 0);
+  }
+
+  for ( x = -8 ; x < 0 ; x++ ) {
+   genl(0, x);
+  }
+  for ( x = 1 ; x <= 8 ; x++ ) {
+   genl(0, x);
+  }
+ }
+
+ private void genl ( int x, int y ) {
+
+ }
+
+ private void gen4 ( int x, int y ) {
+  for ( int x1 = 0 ; x1 < 16 ; x1++ ) {
+   for ( int y1 = 0 ; y1 < 16 ; y1++ ) {
+    ch[x][y].setBlock(Server.instanceBlockPos(x1, y1, 64), Server.instatnceLevBlock());
+    ch[x][y].setBlock(Server.instanceBlockPos(x1, y1, 65), Server.instatnceLevBlock());
+   }
+  }
  }
 
  public void setSeed ( long seed ) {

@@ -34,11 +34,7 @@ public final class ChunkContainer {
  }
 
  private void gen ( LevelGen gen ) {
-  reg.values().stream().
-     forEach(( r ) -> {
-      r.gen(gen);
-      System.gc();
-     });
+
  }
 
  public void destroy ( String dir ) {
@@ -90,5 +86,12 @@ public final class ChunkContainer {
 
  public void edit ( ChunkPos pos ) {
   rch.add(pos);
+ }
+
+ public Chunk getChunk ( ChunkPos pos ) {
+  if ( this.reg.containsKey(new RegionPos(pos.gX() / 8, pos.gY() / 8)) ) {
+   return this.reg.get(new RegionPos(pos.gX() / 8, pos.gY() / 8)).getChunk(pos);
+  }
+  return new Chunk(pos);
  }
 }

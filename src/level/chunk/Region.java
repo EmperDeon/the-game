@@ -2,7 +2,6 @@ package level.chunk;
 
 import java.io.Serializable;
 import java.util.*;
-import level.LevelGen;
 import utils.containers.pos.*;
 
 public class Region implements Serializable {
@@ -23,19 +22,19 @@ public class Region implements Serializable {
   }
  }
 
- public void gen ( LevelGen gen ) {
-  map.values().stream().
-     forEach(( ch ) -> {
-      System.out.println(ch.getId().toString());
-      ch.gen(gen);
-     });
- }
-
  public RegionPos getPos () {
   return pos;
  }
 
  public String getName () {
   return pos.getName();
+ }
+
+ public boolean contains ( ChunkPos pos ) {
+  return this.map.containsKey(pos);
+ }
+
+ public Chunk getChunk ( ChunkPos pos ) {
+  return this.map.get(pos);
  }
 }
