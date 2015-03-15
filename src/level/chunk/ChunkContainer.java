@@ -20,12 +20,12 @@ public final class ChunkContainer {
 
  public void create ( String dir ) {
   new File(dir + "region/").mkdirs();
-//  for ( int px = -2 ; px <= 2 ; px++ ) {
-//   for ( int py = -2 ; py <= 2 ; py++ ) {
-//    reg.put(new RegionPos(px, py), new Region(new RegionPos(px, py)));
-//   }
-//  }
-  reg.put(new RegionPos(0, 0), new Region(new RegionPos(0, 0)));
+  for ( int px = -8 ; px <= 8; px++ ) {
+   for ( int py = -8 ; py <= 8 ; py++ ) {
+    reg.put(new RegionPos(px, py), new Region(new RegionPos(px, py)));
+   }
+  }
+//  reg.put(new RegionPos(0, 0), new Region(new RegionPos(0, 0)));
   System.out.println("Generate");
   gen(SERVER.getWorldGen());
   System.out.println("Saving");
@@ -34,7 +34,7 @@ public final class ChunkContainer {
  }
 
  private void gen ( LevelGen gen ) {
-  gen.genFirst(this, new ChunkPos(0, 0, 0));
+  gen.genFirst(this, new ChunkPos(0,0,0));
  }
 
  public void destroy ( String dir ) {
