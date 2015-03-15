@@ -34,7 +34,7 @@ public final class ChunkContainer {
  }
 
  private void gen ( LevelGen gen ) {
-
+  gen.genFirst(this, new ChunkPos(0, 0, 0));
  }
 
  public void destroy ( String dir ) {

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class MActionListener {
 
- private final TreeMap<String, ActE> cont = new TreeMap<>();
+ private final Map<String, ActE> cont = new TreeMap<>();
 
  public MActionListener () {
 
@@ -24,6 +24,10 @@ public class MActionListener {
   }
   cont.get(name).add(delay, e);
  }
+ 
+ public void call (String name ){
+  cont.get(name).callAll();
+ }
 
  private static class ActE {
 
@@ -34,9 +38,7 @@ public class MActionListener {
    timer.schedule(new TimerTask() {
     @Override
     public void run () {
-     arr.stream().forEach(( ActionListener e1 ) -> {
-      e1.actionPerformed(null);
-     });
+     callAll();
     }
    }, 10, delay);
    arr.add(e);
@@ -44,6 +46,12 @@ public class MActionListener {
 
   public synchronized void add ( ActionListener e ) {
    arr.add(e);
+  }
+
+  public synchronized void callAll () {
+   arr.stream().forEach(( ActionListener e1 ) -> {
+    e1.actionPerformed(null);
+   });
   }
  }
 }

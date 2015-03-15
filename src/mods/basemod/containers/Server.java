@@ -20,6 +20,8 @@ public class Server {
  private final ModsContainer mods = new ModsContainer();
  private final Player player = new Player();
  private final Resources RES = new Resources();
+ 
+ private final static LevBlock base = new LevBlock(new Rid(new Mid("main", "base"), Resource.Type.Model, ""), "base", null); 
  // public final static Repository REP = new Repository();
  private boolean running = true;
 
@@ -39,7 +41,7 @@ public class Server {
   main.Main.SERVER.getActions().addT("loggerExport", 200, ( ActionEvent e ) -> {
    main.Main.LOG.export("now.log");
   });
-
+  
   mods.init();
  }
 
@@ -155,7 +157,7 @@ public class Server {
  }
 
  public static LevBlock instatnceLevBlock () {
-  return instanceLevBlock(Server.instanceRid(Server.instanceMid("main", "base"), Resource.Type.Model, ""), "base", null);
+  return base;
  }
 
  public static LevBlock instanceLevBlock ( Rid id, String url, Map<String, String> param ) {

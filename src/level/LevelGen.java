@@ -42,62 +42,23 @@ public class LevelGen {
 //  }
 //  return t;
 // }
- private void genFirst ( ChunkContainer cont, ChunkPos center ) {
+ public void genFirst ( ChunkContainer cont, ChunkPos center ) {
   ch = new Chunk[17][17];
 
   for ( int x = -8 ; x < 8 ; x++ ) {
    for ( int y = -8 ; y < 8 ; y++ ) {
-    ch[x][y] = cont.getChunk(new ChunkPos(center.gX() + x, center.gY(), 0));
+    gen(cont.getChunk(new ChunkPos(center.gX() + x, center.gY(), 0)));
+    System.out.println("Chunk " + x + " " + y + " generated");
    }
   }
 
-  int x;
-  for ( x = 1 ; x <= 2 ; x++ ) {
-   gen4(x, 8);
-  }
-  for ( x = 1 ; x <= 4 ; x++ ) {
-   gen4(x, 7);
-  }
-  for ( x = 1 ; x <= 5 ; x++ ) {
-   gen4(x, 6);
-  }
-  for ( x = 1 ; x <= 6 ; x++ ) {
-   gen4(x, 5);
-  }
-  for ( x = 1 ; x <= 7 ; x++ ) {
-   gen4(x, 4);
-  }
-  for ( x = 1 ; x <= 7 ; x++ ) {
-   gen4(x, 3);
-  }
-  for ( x = 1 ; x <= 8 ; x++ ) {
-   gen4(x, 2);
-  }
-  for ( x = 1 ; x <= 8 ; x++ ) {
-   gen4(x, 1);
-  }
-
-  for ( x = -8 ; x <= 8 ; x++ ) {
-   genl(x, 0);
-  }
-
-  for ( x = -8 ; x < 0 ; x++ ) {
-   genl(0, x);
-  }
-  for ( x = 1 ; x <= 8 ; x++ ) {
-   genl(0, x);
-  }
  }
 
- private void genl ( int x, int y ) {
-
- }
-
- private void gen4 ( int x, int y ) {
+ private void gen ( Chunk chun ) {
   for ( int x1 = 0 ; x1 < 16 ; x1++ ) {
    for ( int y1 = 0 ; y1 < 16 ; y1++ ) {
-    ch[x][y].setBlock(Server.instanceBlockPos(x1, y1, 64), Server.instatnceLevBlock());
-    ch[x][y].setBlock(Server.instanceBlockPos(x1, y1, 65), Server.instatnceLevBlock());
+    chun.setBlock(x1, y1, 64, Server.instatnceLevBlock());
+    chun.setBlock(x1, y1, 65, Server.instatnceLevBlock());
    }
   }
  }

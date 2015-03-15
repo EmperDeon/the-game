@@ -41,6 +41,10 @@ public class Chunk implements Serializable {
   map[pos.gX()][pos.gY()][pos.gZ()] = block;
  }
 
+ public void setBlock ( int x, int y, int z, LevBlock block ) {
+  map[x][y][z] = block;
+ }
+
  public LevBlock[][][] getMap () {
   return map;
  }

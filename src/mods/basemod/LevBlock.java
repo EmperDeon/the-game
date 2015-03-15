@@ -3,7 +3,7 @@ package mods.basemod;
 import java.io.Serializable;
 import java.util.*;
 import mods.basemod.resources.Model;
-import utils.containers.id.Mid;
+import utils.containers.id.*;
 import utils.containers.json.JSONObject;
 
 public class LevBlock extends IItem implements Serializable {
@@ -11,6 +11,11 @@ public class LevBlock extends IItem implements Serializable {
  @Deprecated
  public LevBlock ( Mid id, Model model, Map<String, String> map ) {
   super(id, model, map);
+ }
+
+ @Deprecated
+ public LevBlock ( Rid id, String url, Map<String, String> map ) {
+  super(id, new Model(id, url), map);
  }
 
  @Deprecated
