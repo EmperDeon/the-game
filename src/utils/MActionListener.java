@@ -24,8 +24,8 @@ public class MActionListener {
   }
   cont.get(name).add(delay, e);
  }
- 
- public void call (String name ){
+
+ public void call ( String name ) {
   cont.get(name).callAll();
  }
 
