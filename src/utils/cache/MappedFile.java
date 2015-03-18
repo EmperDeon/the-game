@@ -1,13 +1,13 @@
 package utils.cache;
 
 import java.io.RandomAccessFile;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.nio.channels.FileChannel;
 import sun.nio.ch.FileChannelImpl;
 
 public class MappedFile {
- private static Method map0 = JavaInternals.getMethod(FileChannelImpl.class, "map0", int.class, long.class, long.class);
- private static Method unmap0 = JavaInternals.getMethod(FileChannelImpl.class, "unmap0", long.class, long.class);
+ private static final Method map0 = JavaInternals.getMethod(FileChannelImpl.class, "map0", int.class, long.class, long.class);
+ private static final Method unmap0 = JavaInternals.getMethod(FileChannelImpl.class, "unmap0", long.class, long.class);
 
  private long addr;
  private long size;
@@ -35,7 +35,7 @@ public class MappedFile {
   if ( addr != 0 ) {
    try {
     unmap0.invoke(null, addr, size);
-   } catch ( Exception e ) {
+   } catch ( IllegalAccessException | IllegalArgumentException | InvocationTargetException e ) {
     // ignore
    }
    addr = 0;

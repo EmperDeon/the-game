@@ -3,8 +3,7 @@ package utils.cache;
 import java.util.concurrent.Semaphore;
 import sun.misc.Unsafe;
 
-
-public class UnsafeMemoryCache implements ICache {
+public class UnsafeMemoryCache {
  private static final Unsafe unsafe = JavaInternals.getUnsafe();
  private static final int BYTE_ARRAY_OFFSET = unsafe.arrayBaseOffset(byte[].class);
  private static final int WRITE_PERMITS = 1024;
@@ -61,6 +60,10 @@ public class UnsafeMemoryCache implements ICache {
   }
  }
 
+ public UnsafeMemoryCache () throws Exception {
+  this(new MemoryCacheConfiguration());
+ }
+
  public UnsafeMemoryCache ( MemoryCacheConfiguration configuration ) throws Exception {
   long requestedCapacity = configuration.getCapacity();
   long desiredSegmentSize = configuration.getSegmentSize();
@@ -77,13 +80,11 @@ public class UnsafeMemoryCache implements ICache {
   }
  }
 
- @Override
  public void close () {
   mmap.close();
   segments = null;
  }
 
- @Override
  public byte[] get ( long key ) {
   Segment segment = segmentFor(key);
   segment.acquireUninterruptibly();
@@ -106,7 +107,6 @@ public class UnsafeMemoryCache implements ICache {
   }
  }
 
- @Override
  public boolean put ( long key, byte[] value ) {
   int length = value.length;
   if ( length >= segmentSize >> 1 ) {
