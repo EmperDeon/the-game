@@ -75,7 +75,7 @@ public class CacheTest {
 //        } else if ("chm".equals(type)) {
 //  testAll(new ConcurrentHashMapCache(3000000, 256));
 //        } else {
-  testAll(new UnsafeMemoryCache(new MemoryCacheConfiguration(2 * G, 200 * K, "/dev/shm/cache-test")));
+  testAll(new UnsafeMemoryCache(new MemoryCacheConfiguration(2 * G, 200 * K, main.Main.DIR+"level.cache")));
 //        }    
  }
 }

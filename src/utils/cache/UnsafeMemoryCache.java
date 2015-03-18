@@ -1,7 +1,8 @@
 package utils.cache;
 
 import java.util.concurrent.Semaphore;
-import utils.unsafe.Unsafe;
+import sun.misc.Unsafe;
+
 
 public class UnsafeMemoryCache implements ICache {
  private static final Unsafe unsafe = JavaInternals.getUnsafe();

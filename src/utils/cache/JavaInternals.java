@@ -2,7 +2,7 @@ package utils.cache;
 
 import java.lang.reflect.*;
 import java.nio.*;
-import utils.unsafe.*;
+import sun.misc.*;
 
 public class JavaInternals {
     private static final Unsafe unsafe;
